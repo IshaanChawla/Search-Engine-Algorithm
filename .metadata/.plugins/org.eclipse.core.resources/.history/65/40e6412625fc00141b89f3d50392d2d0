@@ -1,0 +1,51 @@
+public class AfterSearch 
+{
+	public String[] keywordretrival(String text, int i, char endchar, char delimitter)
+	{
+		int x = i,count=1,index=0;
+		while(text.charAt(x) != endchar)
+		{
+			if(text.charAt(x) == delimitter)
+				count++;
+			x++;
+		}
+		x=i;
+		String[] arr = new String[count];
+		while(index != count)
+		{
+			int k = 0,t = x;
+			while(text.charAt(t) != delimitter && text.charAt(t) != endchar)
+			{
+				if((k == 0 && text.charAt(t) != ' ' && text.charAt(t) != '(') || (k>0) && (text.charAt(t) != ')' && text.charAt(t) != '\n'))
+					k++;
+				t++;
+			}
+			char[] line = new char[k];
+			k=0;
+			while(text.charAt(x) != delimitter && text.charAt(x) != endchar)
+			{
+				if((k == 0 && text.charAt(x) != ' ' && text.charAt(x) != '(') || (k>0) && (text.charAt(x) != ')' && text.charAt(x) != '\n'))
+				{
+					line[k] = text.charAt(x);
+					k++;
+				}
+				x++;
+			}
+			arr[index] = new String(line);
+			index++;
+			x++;
+		}
+		return arr;
+	}
+	public int keywordcountretrival(String text, int i, char endchar, char delimitter)
+	{
+		int x = i,count=1,index=0;
+		while(text.charAt(x) != endchar)
+		{
+			if(text.charAt(x) == delimitter)
+				count++;
+			x++;
+		}
+		return count;
+	}
+}

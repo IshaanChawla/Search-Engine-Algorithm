@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Create a Table using SQL</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Creating Tables with SQL and PHP</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>You can create tables using SQL (and whole databases), and specify the fields 
+  you want to go in the table. However, doing it this way is not recommended: 
+  you tend to forget which fields are in the table, their data types, which field 
+  is the primary keys, and which ones are set to NULL values. If you can get to 
+  grips with visual tools like phpMyAdmin then so much the better.</P>
+<p>To create a table then, you use the CREATE keyword (known as a clause, in database 
+  speak). Here's the SQL to create the simple address book we've been using. This 
+  assumes that the database itself already exists, and that the PHP code to open 
+  a connection has already been written (you saw how to do this in a previous 
+  section):</p>
+<p class="indent_big_no_bold">$SQL=&quot;<b>CREATE TABLE</b> AddressBook <br>
+  (<br>
+  ID int(7) NOT NULL auto_increment,<br>
+  First_Name varchar(50) NOT NULL,<br>
+  Surname varchar(50) NOT NULL,<br>
+  email varchar(50),<br>
+  PRIMARY KEY (ID),<br>
+  UNIQUE id (ID)<br>
+  )&quot;;</p>
+<p class="indent_big">mysql_query($SQL);</p>
+<p>So you start with the Clause <b>CREATE TABLE</b>. Then you type the name of 
+  the table you want to create. In between round brackets, you type the name of 
+  your table Columns, followed by some formatting. In the code above, the first 
+  field being set up is this:</p>
+<p class="TextIndent3">ID int(7) NOT NULL auto_increment,</p>
+<p>The column name will be ID. The data type is an integer that is no longer that 
+  7 digits. NOT NULL means you want something in this field, and that it can't 
+  be left blank. The ID number will be auto incremented, whenever a new record 
+  is added. Notice that there is only one comma in the line. The comma separates 
+  each field you want to create in your table.</p>
+<p>We're also setting up three other columns here: First_Name, Surname, and email. 
+  First_Name and Surname can't be left blank ( NOT NULL), but email can be.</p>
+<p>At the end, we have these two lines:</p>
+<p class="indent_big_no_bold"><b>PRIMARY KEY</b> (ID),<br>
+  <b>UNIQUE</b> id (ID)</p>
+<p>The primary key is used for things like joining data from one table to the 
+  data from another. We've set this to our ID field. Primary keys don't have duplicate 
+  values, so we've set this to be a UNIQUE field.</p>
+<p>Once you've written your SQL statement, you can go ahead and execute it:</p>
+<p class="TextIndent3">mysql_query($SQL);</p>
+<p>Creating tables like this means a lot of extra, tricky work for you as a PHP 
+  programmer. If you can use a tool to do the job for you, then your coding life 
+  gets easier!<br>
+</p>
+<p>In the next part, you'll see how to the Update command works.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php13p5.html">&lt;-- Back One Page</a> | <a href="php13p7.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

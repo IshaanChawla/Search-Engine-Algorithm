@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The results page</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">The Forum results.php page </H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p9.html">here</a>.</i></P>
+<p>There's not too much code in the <b>results.php</b> page. All we need to do 
+  here is to INSERT a reply to a post into the correct database table. Open up 
+  the code, and we'll take a look at it.</p>
+<p>The first thing to notice is the function at the top of the page &#150; <b>getReplySQL</b>( 
+  ). This takes one argument &#150; the section code for the forum. <br>
+</p>
+<p>After the function, we check to see if the form was submitted using the POST 
+  method:</p>
+<p class="TextIndent3">if ($_SERVER['REQUEST_METHOD'] == 'POST') {</p>
+<p class="TextIndent3">}</p>
+<p>If this returns a value of true, then we grab that data from the form:</p>
+<P class="indent_big">$secID = $_POST['h1'];<br>
+  $posID = $_POST['h2'];<br>
+  $memID = $_POST['h3'];<br>
+  $repText = $_POST['post'];</P>
+<p>We're grabbing all those HIDDEN values from the form (which had the NAMES <b>h1</b>, 
+  <b>h2</b>, and <b>h3</b>), as well as the text in the textarea (which had the 
+  NAME post). </p>
+<p>The next three lines just add some single quotes. This is NOT how you'd want 
+  to do it in your own forum! There are security issues here, because you're grabbing 
+  text from a textarea and trying to INSERT it into a database. We covered the 
+  security issues in an earlier section, but try this exercise:</p>
+<p><b>Exercise</b><br>
+  Login to the forum with one of the username/passwords you saw earlier (these 
+  are in the textfile called <b>uandp.txt</b>, in your <b>forum</b> folder). Reply 
+  to the post &quot;A Brand New Forum&quot;. You'll see this basic form:</p>
+<p align="center"><img src="images/forum22.jpg" width="530" height="374" alt="A Basic Reply Form" border="1"></p>
+<p align="left">If you just go ahead and click the button, the text <b>Some text 
+  here</b> should get added to the database.</p>
+<p>But surround the text with single quotes. Type this:</p>
+<p class="indent_big_no_bold"><b>'</b>Some text here<b>'</b></p>
+<p>Now click the button. You should see the message &quot;<b>No results</b>&quot;. 
+  This is because the code couldn't execute the SQL with those single quotes added. 
+  How would you solve this? Review the section on security, especially the parts 
+  about SQL injection attacks. Wasn't there something about magic quotes, and 
+  strip slashes? How would you use these to lessen a SQL injection attack? </p>
+<p>Another secrurity issue to worry about is how much text to allow the user to 
+  type into the textarea. You can check how long a string is with the strlen( 
+  ) function. A good run-down on how to use this can be found in the PHP manual 
+  here:</p>
+<p align="center"><a href="http://uk.php.net/manual/en/function.strlen.php" target="_blank">http://uk.php.net/manual/en/function.strlen.php</a></p>
+<p>A simple way to use this would be:</p>
+<p class="TextIndent1">$strCount = strlen($repText);</p>
+<p class="TextIndent1">if ($strCount &gt; 255) {</p>
+<p class="TextIndent3">print &quot;too many characters in your reply&quot;;</p>
+<p class="TextIndent1">}<br>
+  else {</p>
+<p class="TextIndent3">//Do the rest of the code here</p>
+<p class="TextIndent1">}</p>
+<p>This just prints an error message if the user types in more than 255 characters. 
+  (However, we've set the reply text field in the database tables to MEDIUMTEXT. 
+  This can hold far more characters than 255. If you're restricting users to 255 
+  characters, then TINYTEXT would be a better option.)</p>
+<p><br>
+  But back to our (less than secure) code. We've just grabbed the data from the 
+  FORM and placed it into variables:</p>
+<P class="TextIndent3">$secID = $_POST['h1'];<br>
+  $posID = $_POST['h2'];<br>
+  $memID = $_POST['h3'];<br>
+  $repText = $_POST['post'];</P>
+<P>The secID will contain something like &quot;secWP&quot;, the posID will contain 
+  something like &quot;pos1&quot;, and the member ID is always &quot;mem&quot; 
+  plus a number (mem1, me2, etc). The $repText variable holds the reply the user 
+  typed in the textarea.</P>
+<p>The next code we have is some date code:</p>
+<P class="TextIndent3">$date_today = date(&quot;Y-m-d H:i:s&quot;);<br>
+  $date_today = &quot;'&quot; . $date_today . &quot;'&quot;;</P>
+<p>The characters we're using between the round brackets of the date function 
+  mean we want the year first, then the month, then the day. These will be separated 
+  with the &quot;-&quot; character. We're also adding a time part that returns 
+  Hours, Minutes, and Seconds. The second line adds single quotes to the date, 
+  so we can use it in the SQL.</p>
+<p>The next line is a call to the function at the top of the page:</p>
+<p class="TextIndent3">$tableSQL = getReplySQL($secID);</p>
+<p>The function returns SQL to be used against the database table. But it only 
+  returns part of the SQL we need:</p>
+<P class="TextIndent2">$sql = &quot;INSERT INTO wpreplies (threadID, memberID, 
+  reply, dateReplied) VALUES &quot;;</P>
+<P>In between the round brackets, we have the fields from the table. But we don't 
+  yet have the VALUES we need to insert into these fileds. The next line in our 
+  code adds the values. It's a long line that spills over into two on these pages:</P>
+<P class="TextIndent2">$tableSQL = $tableSQL . &quot;(&quot; . $posID . &quot;,&quot; 
+  . $memID . &quot;,&quot; . $repText . &quot;,&quot; . $date_today . &quot;)&quot;;</P>
+<P>We're building up the $tableSQL string variable here. It already holds the 
+  first part of the SQL we need. We're now adding the VALUES. We need the round 
+  brackets, the data from the variables, and the commas. After the line is executed, 
+  the string would be something like this:</P>
+<P class="TextIndent2">&quot;INSERT INTO wpreplies (threadID, memberID, reply, 
+  dateReplied) VALUES (pos1, mem1, &quot;My Reply&quot;, &quot;2006-10-22 13:30:14&quot;)&quot;</P>
+<P>After we open a connection to the database, we try to execute the query:</P>
+<p class="TextIndent2"> $result = mysql_query($tableSQL);</p>
+<p>Then we check to see if the SQL is executed successfully:</p>
+<p class="TextIndent2">if ($result) {</p>
+<p class="TextIndent3">print &quot;Your Reply has been added to the Forum.&quot; 
+  . &quot;&lt;BR&gt;&quot;;<br>
+  print &quot;&lt;A HREF = forumTest.php&gt;Back to the forum&lt;/A&gt;&quot; 
+  . &quot;&lt;BR&gt;&quot;;</p>
+<p class="TextIndent2">}<br>
+  else {</p>
+<p class="TextIndent3">print &quot;no results&quot; . &quot;&lt;BR&gt;&quot;;</p>
+<p class="TextIndent2">}</p>
+<p>And that's all we need to do on the this page: try to insert the reply into 
+  a reply table in the database. Some of the error checking has been left out, 
+  so as not to confuse the main techniques used. But you should implement the 
+  error checking in your own code. Especially the checks to ward off attacks on 
+  your database!<br>
+</p>
+<p align="left">In the next part, we'll see how to write the code to post a Topic 
+  on the Forum</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p9.html">&lt;-- Back One Page</a> | <a href="php17p11.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

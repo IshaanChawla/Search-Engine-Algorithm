@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://www.programiz.com/sites/tutorial2program/files/favicon_0.ico" type="image/vnd.microsoft.icon" />
+<meta name="description" content="C language inherently does not has any technique to allocated memory dynamically but, there are 4 library functions: calloc(), malloc(), realloc() and free() under &quot;stdlib.h&quot; for dynamic memory allocation..." />
+<meta name="generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="canonical" href="http://www.programiz.com/c-programming/c-dynamic-memory-allocation" />
+<link rel="shortlink" href="http://www.programiz.com/node/155" />
+  <title>C Programming Dynamic Memory Allocation - C Tutorial</title>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic' rel='stylesheet' type='text/css'>
+  <link type="text/css" rel="stylesheet" href="http://www.programiz.com/sites/tutorial2program/files/advagg_css/css__FygXEh-ZMl1Vihk4zdfgRvWcriCKj-S-OzoKO_ks228__7vALktEVvVVkp3qmUEUZqhRJU1DiHVketzzOt4Xe7go__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.programiz.com/sites/tutorial2program/files/advagg_css/css__rQ1alF2wtRJheC4MwbTGQHhDW1u3JWtM73MeXej8ZCI__3kvjnhPlSmY57EDBJoMy3KR5TXQNEBzxP2MxnGPwPPE__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.css" media="screen" />
+<link type="text/css" rel="stylesheet" href="http://www.programiz.com/sites/tutorial2program/files/advagg_css/css__6g__ONRgpJDcNR6a79oMUUalKGWriAXhtqQAxCpaBMs__zln-HWbpTvswAg3afyhLtq7CdbvxVvRHqrTJYdzUHwc__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://www.programiz.com/sites/tutorial2program/files/advagg_css/css__qeka5hDNGqFE0TbgGZI3WftTLDxXF0H10p7Mt-fotxM__iZIbHO3bP-UYYm5onvnMDXKh5Cm37F-EFeIOScAS9s0__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.css" media="screen" />
+  <script type="text/javascript" src="http://www.programiz.com/sites/tutorial2program/files/advagg_js/js__1j-vOQz2u-6IZr2tsn2u1_aUcYO8guUPfPdEygTX7mo__gc8gXZsmvbm10HO8S4RCO5iA8DupyrvJcDGIX5aw0LU__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.js"></script>
+<script type="text/javascript" src="http://www.programiz.com/sites/tutorial2program/files/advagg_js/js__s8koV42BrNEz7tE4ZYZ1qXy99PxMGukocK7vBMeKKOQ__qgtjwMoj5I1ajI7U0bSGcjUT9-xuqiKUz82JP1Wwm9M__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.js"></script>
+<script type="text/javascript" src="http://www.programiz.com/sites/tutorial2program/files/advagg_js/js__x1SPG53SHRbnB1HFHIYWga-Yj00JusQbI9xjYzR-3zg__h6ZybJGs8tiwEl5YlLug_SYEUKjVjUHj2-otw6PCvhY__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+(function(i,s,o,g,r,a,m){i.GoogleAnalyticsObject=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create","UA-36675496-1",{cookieDomain:"auto"});ga("set","anonymizeIp",true);ga("send","pageview");
+//--><!]]>
+</script>
+<script type="text/javascript" src="http://www.programiz.com/sites/tutorial2program/files/advagg_js/js__CV2_UISGyvuKAPeC_vj6P8tVlqF9h_makc2CpYyl_i0__oQFaMpJnH7dyFi4Qc26Z-EshT04rBpud2UsXgdNfJYQ__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.js"></script>
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+jQuery.extend(Drupal.settings,{basePath:"\/",pathPrefix:"",ajaxPageState:{theme:"programiz",theme_token:"JPCWHj4UY0eBFKFSRZBcdo_49XaCAqcsUPmg-lclOSQ",css:{"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.tabs.css":1,"sites\/all\/modules\/codefilter\/codefilter.css":1,"modules\/field\/theme\/field.css":1,"modules\/node\/node.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/views\/css\/views.css":1,"sites\/all\/modules\/ctools\/css\/ctools.css":1,"sites\/all\/themes\/programiz\/programiz.css":1,"sites\/all\/modules\/prettify\/styles\/stackoverflow.css":1},js:{"sites\/all\/libraries\/prettify\/prettify.js":1,"sites\/all\/modules\/prettify\/prettify.loader.js":1,"sites\/all\/modules\/jquery_update\/replace\/jquery\/1.10\/jquery.min.js":1,"misc\/jquery.once.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"misc\/drupal.js":1,"sites\/all\/modules\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.tabs.min.js":1,"sites\/all\/modules\/jquery_ui_filter\/jquery_ui_filter.js":1,"sites\/all\/modules\/codefilter\/codefilter.js":1,"sites\/all\/modules\/jquery_ui_filter\/tabs\/jquery_ui_filter_tabs.js":1,"sites\/all\/modules\/google_analytics\/googleanalytics.js":1,"sites\/all\/themes\/programiz\/programiz.js":1}},jQueryUiFilter:{disabled:0,tabsOptions:{collapsible:"false",event:"click",fx:0,paging:0,selected:"",scrollTo:0,history:"false"},tabsHeaderTag:"h3"},prettify:{linenums:false,match:"",nocode:"nocode",custom:[],markup:{precode:true,code:false,pre:false}},googleanalytics:{trackOutbound:1,trackMailto:1,trackDownload:1,trackDownloadExtensions:"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"}});
+//--><!]]>
+</script>
+
+</head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-155 node-type-c-tutorial" >
+  <div id="skip-link">
+    <a href="#main-content" class="element-invisible element-focusable">Skip to main content</a>
+  </div>
+    <!-- Header starts -->
+<header id="pageHeader" class="cf" role="banner">
+<div class="headerWrapper">
+<div class="headerContent cf"> <a href="/" title="Home" >Programiz</a>
+</div>
+
+</header>
+<!-- Header end -->
+
+<!-- Main Navigation starts-->
+<nav id="mainNav" role="navigation">
+<h2>Main Menu</h2><ul class="expand"><li class="menu-218 first"><a href="/">Home</a></li>
+<li class="menu-438"><a href="/c-programming" title="C Programming Tutorial">C Programming</a></li>
+<li class="menu-439"><a href="/cpp-programming" title="C++ Programming Tutorial">C++</a></li>
+<li class="menu-440"><a href="/python-programming" title="Python Tutorial">Python</a></li>
+<li class="menu-561 last"><a href="/r-programming">R Programming</a></li>
+</ul></nav>
+<!-- Main Navigation ends-->
+
+<!-- Fixed navigation slide starts
+<div class="fixedNav cf">
+  <div class="fixWrapper">
+    <div class="fixLogo">Programiz Logo</div>
+    <ul class="fixSocial">
+      <li><a href="https://www.facebook.com/sharer/sharer.php?u=http:///c-programming/c-dynamic-memory-allocation">Share on Facebook</a></li>
+      <li><a href="https://twitter.com/share?url=http:///c-programming/c-dynamic-memory-allocation">Share on Twitter</a></li>
+    </ul>
+  </div>
+</div> -->
+
+<article id="main" role="main">
+  
+<div id="content">
+	
+<!-- Content Top Starts -->	
+	<!-- Content Top Ends -->	
+
+    
+<!-- Main Content Starts-->
+    <section class="mainContent">
+	            <h1>C Programming Dynamic Memory Allocation</h1>                
+        	<div class="contentInside">
+	    	  <div class="region region-content-inside">
+      
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- programiz 728 * 90 (new top) -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-9007421361448641"
+     data-ad-slot="8228194420"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>  </div>
+ 	</div>
+				
+	 	<div class="tabs"></div>	    		       	  <div class="region region-content">
+      
+    <div id="node-155" class="node node-c-tutorial clearfix" about="/c-programming/c-dynamic-memory-allocation" typeof="sioc:Item foaf:Document">
+       <span property="dc:title" content="C Programming Dynamic Memory Allocation" class="rdf-meta element-hidden"></span>
+  <div class="content">
+    <div class="field field-name-body field-type-text-with-summary field-label-hidden"><div class="field-items"><div class="field-item even" property="content:encoded"><p>The exact size of array is unknown untill the compile time,i.e., time when a compier compiles code written in a programming language into a executable form. The size of array you have declared initially can be sometimes insufficient and sometimes more than required. Dynamic memory allocation allows a program to obtain more memory space, while running or to release space when no space is required.</p><p>Although, C language inherently does not has any technique to allocated memory dynamically, there are 4 library functions under <code>"stdlib.h"</code> for dynamic memory allocation.</p><table summary=" list of library functions for dynamic memory allocation in C programming" border="1" cellpadding="1" cellspacing="1"><thead><tr><th scope="col">Function</th><th scope="col">Use of Function</th></tr></thead><tbody><tr><td>malloc()</td><td>Allocates requested size of bytes and returns a pointer first byte of allocated space</td></tr><tr><td>calloc()</td><td>Allocates space for an array elements, initializes to zero and then returns a pointer to memory</td></tr><tr><td>free()</td><td>dellocate the previously allocated space</td></tr><tr><td>realloc()</td><td>Change the size of previously allocated space</td></tr></tbody></table><h2>malloc()</h2><p>The name malloc stands for "memory allocation". The function <code>malloc()</code> reserves a block of memory of specified size and return a pointer of type <code>void</code> which can be casted into pointer of any form.</p><h3>Syntax of malloc()</h3>
+<pre>ptr=(cast-type*)malloc(byte-size)</pre>
+<p>Here, <var>ptr</var> is pointer of cast-type. The <code>malloc()</code> function returns a pointer to an area of memory with size of byte size. If the space is insufficient, allocation fails and returns NULL pointer.</p>
+<pre>ptr=(int*)malloc(100*sizeof(int));</pre>
+<p>This statement will allocate either 200 or 400 according to size of <code>int</code> 2 or 4 bytes respectively and the pointer points to the address of first byte of memory.</p><h2>calloc()</h2><p>The name calloc stands for "contiguous allocation". The only difference between malloc() and calloc() is that, malloc() allocates single block of memory whereas calloc() allocates multiple blocks of memory each of same size and sets all bytes to zero.</p><h3>Syntax of calloc()</h3>
+<pre>ptr=(cast-type*)calloc(n,element-size);</pre>
+<p>This statement will allocate contiguous space in memory for an array of <var>n</var> elements. For example:</p>
+<pre>ptr=(float*)calloc(25,sizeof(float));</pre>
+<p>This statement allocates contiguous space in memory for an array of 25 elements each of size of float, i.e, 4 bytes.</p><h2>free()</h2><p>Dynamically allocated memory with either calloc() or malloc() does not get return on its own. The programmer must use free() explicitly to release space.</p><h3>syntax of free()</h3>
+<pre>free(ptr);</pre>
+<p>This statement cause the space in memory pointer by ptr to be deallocated.</p><h2>Examples of calloc() and malloc()</h2><p><b>Write a C program to find sum of n elements entered by user. To perform this program, allocate memory dynamically using malloc() function.</b></p>
+<pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(){
+    int n,i,*ptr,sum=0;
+    printf("Enter number of elements: ");
+    scanf("%d",&amp;n);
+    ptr=(int*)malloc(n*sizeof(int));  //memory allocated using malloc
+    if(ptr==NULL)                     
+    {
+        printf("Error! memory not allocated.");
+        exit(0);
+    }
+    printf("Enter elements of array: ");
+    for(i=0;i&lt;n;++i)
+    {
+        scanf("%d",ptr+i);
+        sum+=*(ptr+i);
+    }
+    printf("Sum=%d",sum);
+    free(ptr);
+    return 0;
+}
+</code>
+</pre>
+<p><b>Write a C program to find sum of n elements entered by user. To perform this program, allocate memory dynamically using calloc() function.</b></p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(){
+    int n,i,*ptr,sum=0;
+    printf("Enter number of elements: ");
+    scanf("%d",&amp;n);
+    ptr=(int*)calloc(n,sizeof(int));
+    if(ptr==NULL)
+    {
+        printf("Error! memory not allocated.");
+        exit(0);
+    }
+    printf("Enter elements of array: ");
+    for(i=0;i&lt;n;++i)
+    {
+        scanf("%d",ptr+i);
+        sum+=*(ptr+i);
+    }
+    printf("Sum=%d",sum);
+    free(ptr);
+    return 0;
+}
+</code></pre>
+<h2>realloc()</h2><p>If the previously allocated memory is insufficient or more than sufficient. Then, you can change memory size previously allocated using realloc().</p><h3>Syntax of realloc()</h3>
+<pre>ptr=realloc(ptr,newsize);</pre>
+<p>Here, <var>ptr</var> is reallocated with size of newsize.</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(){
+    int *ptr,i,n1,n2;
+    printf("Enter size of array: ");
+    scanf("%d",&amp;n1);
+    ptr=(int*)malloc(n1*sizeof(int));
+    printf("Address of previously allocated memory: ");
+    for(i=0;i&lt;n1;++i)
+         printf("%u\t",ptr+i);
+    printf("\nEnter new size of array: ");
+    scanf("%d",&amp;n2);
+    ptr=realloc(ptr,n2);
+    for(i=0;i&lt;n2;++i)
+         printf("%u\t",ptr+i);
+    return 0;
+}</code></pre>
+</div></div></div>	
+</div>
+
+
+</div>
+  </div>
+       	    </section>
+<!-- Main Content Ends-->
+
+<!-- Content Bottom Starts -->
+    <div class="mainBottom">
+	    	  <div class="region region-content-bottom">
+      
+    
+<div class="chapter cf">
+	  <div class="prev"><a href="http://www.programiz.com/c-programming/c-pointer-functions" title="Pointer & Function" > ? Previous Page</a></div>
+  <div class="next"><a href="http://www.programiz.com/c-programming/pointer-arrays-examples" title="Array Examples" >Next Page ? </a></div>
+</div>
+  
+    <div>
+<div style="float: left; margin-left: 10px;">
+<script id="mNCC" language="javascript">  medianet_width='300';  medianet_height= '250';  medianet_crid='683527876';  </script>  <script id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU166D9L" language="javascript"></script> 
+</div>
+<div style="float: right; margin-right: 10px;">
+<script id="mNCC" language="javascript">  medianet_width='300';  medianet_height= '250';  medianet_crid='258231851';  </script>  <script id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU166D9L" language="javascript"></script> 
+</div>
+</div>
+<div style="clear: both"></div>  </div>
+    </div>
+
+<!-- Content Bottom Ends -->
+  </div>
+
+<!-- Left sidebar Starts -->
+  <aside id="sidebar" role="complementary">
+      <div class="region region-sidebar-left">
+      
+    <h2>C Programming</h2>
+<nav role="navigation">
+<ul class="topMenu">
+	<li>
+		<h3>C Introduction</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-keywords-identifier" target="_top">Keywords &amp;&nbsp;Identifier</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-variables-constants" target="_top">Variables &amp;&nbsp;Constants</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-data-types" target="_top">C Data Types</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-input-output" target="_top">C Input/Output</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-operators" target="_top">C Operators</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-introduction-examples" target="_top">C Introduction Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Flow Control</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-if-else-statement" target="_top">C&nbsp;if...else</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-for-loop" target="_top">C for Loop</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-do-while-loops" target="_top">C do...while Loop</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-break-continue-statement" target="_top">C break and&nbsp;continue</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-switch-case-statement" target="_top">C&nbsp;switch...case</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-goto-statement">C Programming goto</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-decision-making-loops-examples" target="_top">Control Flow Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Functions</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-functions" target="_top">C Programming Functions</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-user-defined-functions" target="_top">C User-defined Functions</a></li>
+			<li><a href="http://www.programiz.com/c-programming/types-user-defined-functions">C&nbsp;Function Types</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-recursion" target="_top">C Recursion</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-storage-class" target="_top">C Storage Class</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-functions-examples" target="_top">C Function Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Programming Arrays</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-arrays">C Programming Arrays</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-multi-dimensional-arrays" target="_top">C Multi-dimensional Arrays</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-arrays-functions" target="_top">C Arrays &amp; Function</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Programming Pointers</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-pointers" target="_top">C Programming Pointers</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-pointers-arrays" target="_top">C Pointers &amp;&nbsp;Arrays</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-pointer-functions" target="_top">C Pointers And Functions</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-dynamic-memory-allocation" target="_top">C Memory Allocation</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-pointer-examples" target="_top">Array &amp; Pointer Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Programming Strings</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-strings">C Programming String</a></li>
+			<li><a href="http://www.programiz.com/c-programming/string-handling-functions" target="_top">C String Functions</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-string-examples">C String Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>Structure And Union</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-structures" target="_top">C Structure</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-structures-pointers" target="_top">Structures &amp;&nbsp;Pointers</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-structure-function" target="_top">C Structure &amp;&nbsp;Function</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-unions" target="_top">C Programming&nbsp;Union</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-structure-examples" target="_top">Structure Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>C Programming Files</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-file-input-output" target="_top">C Files Input/Output</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-file-examples">C Files Examples</a></li>
+		</ul>
+	</li>
+	<li>
+		<h3>Additional Topics</h3>
+		<ul class="subMenu">
+			<li><a href="http://www.programiz.com/c-programming/c-enumeration" target="_top">C&nbsp;Enumeration</a></li>
+			<li><a href="http://www.programiz.com/c-programming/c-preprocessor-macros" target="_top">C&nbsp;Preprocessors</a></li>
+			<li><a href="http://www.programiz.com/c-programming/library-function">C Library Functions</a></li>
+			<li><a href="http://www.programiz.com/c-programming/examples">C Programming Examples</a></li>
+		</ul>
+	</li>
+</ul>
+</nav  
+    <br>
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- medium rectangle latest -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-9007421361448641"
+     data-ad-slot="3518793228"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+<br>  <h2>Related Examples</h2>
+  
+    <div class="view view-c-programming-related-examples view-id-c_programming_related_examples view-display-id-block view-dom-id-60227b8666be2ce76750707402f99b4b">
+        
+  
+  
+      <div class="view-content">
+      <table class="views-table cols-0" >
+       <tbody>
+          <tr >
+                  <td class="views-field views-field-title" >
+            <a href="/c-programming/examples/dynamic-memory-allocation-largest">C Program to Find Largest Number Using Dynamic Memory Allocation</a>          </td>
+              </tr>
+          <tr >
+                  <td class="views-field views-field-title" >
+            <a href="/c-programming/examples/structure-dynamic-memory-allocation">C Program to Store Information Using Structures with Dynamically Memory Allocation</a>          </td>
+              </tr>
+      </tbody>
+</table>
+    </div>
+  
+  
+  
+  
+  
+  
+</div>  
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- 300 * 600 (sidebar bottom) -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-9007421361448641"
+     data-ad-slot="6773310825"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>  </div>
+  </aside>
+<!-- Left sidebar Ends -->
+
+<!-- Footer Right and Footer Left Starts-->
+  <div class="bottom cf">
+	</div>
+<!-- Footer Right and Footer Left Ends-->
+</article>
+
+<footer id="footer">
+
+
+
+  <div class="footerContent"> <a href="http://www.programiz.com" class="footerLogo">Programiz - Programming Tutorial</a>
+    <ul class="navFooter">
+      <li><a href="http://www.programiz.com/about-us">About Us</a></li>
+      <li><a href="http://www.programiz.com/contact">Contact Us</a></li>
+      <li><a href="http://www.programiz.com/advertising">Advertise With Us</a></li>
+    </ul>
+  </div>
+  <div class="copyRight" role="contentinfo">
+    <p>Copyright © by Programiz | All rights reserved | <a href="http://www.programiz.com/privacy-policy">Privacy Policy</a></p>
+  </div>
+</footer>
+  <script type="text/javascript" src="http://www.programiz.com/sites/tutorial2program/files/advagg_js/js__sd4vsxffhg0cL1km_YHOlFfpfckWnd6PRAu5v0MAC-U__dusYUiWWOX2tRJblHTKMmN63euNzUSvQObGEdN8cFRw__RIXYFtDBytms-w0gk8NDY3SFSmp_gXRm7WNqSCDhksg.js"></script>
+
+</body>
+</html>
+

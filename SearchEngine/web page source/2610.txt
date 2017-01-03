@@ -1,0 +1,1367 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Unit tests with Mockito - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Testing with Mockito This tutorial explains testing with the Mockito framework from within the Eclipse IDE.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d464670e1"></a>Unit tests with Mockito - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 1.5</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2012, 2013, 2014, 2015 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">13.05.2015</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Testing with Mockito</b></p>
+                     <p> This tutorial explains testing with the Mockito framework
+                        from
+                        within the Eclipse IDE.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#prerequisites">1. Prerequisites</a></span></dt>
+               <dt><span class="section"><a href="#testingwithmocks">2. Testing with test doubles</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#testingwithmocks_targets">2.1. Target and challenge of unit testing</a></span></dt>
+                     <dt><span class="section"><a href="#stubsvsmockobject">2.2. Test doubles</a></span></dt>
+                     <dt><span class="section"><a href="#usingstubsandmocks">2.3. Mock object generation</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#mockframeworks">3. Mock frameworks</a></span></dt>
+               <dt><span class="section"><a href="#mockito">4. Mockito</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#mockito_definition">4.1. Mockito for mocking objects</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_usage">4.2. Using Mockito</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_limitations">4.3. Limitations</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_configuremockobjects">4.4. Configuring the mock objects</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_verify">4.5. Verify the calls on the mock objects</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_spy">4.6. Spy</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#mockito_android">5. Mockito on Android</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#mockito_overview">5.1. Using Mockito on Android</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_installation">5.2. Installation</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#exercise_mockito_android">6. Exercise: Using Mockito in Android tests</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#mockito_android1">6.1. Create Application under tests on Android</a></span></dt>
+                     <dt><span class="section"><a href="#mockito_android2">6.2. Create test</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#supportandlicense">7. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">7.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">7.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">7.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">8. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">8.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#resources">8.2. Links and Literature</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">8.3. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="prerequisites"></a>1.&nbsp;Prerequisites
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               The following tutorial requires an understanding of unit
+               testing
+               with the
+               JUnit framework.
+               
+            </p>
+            <p>
+               In case your are not familiar with JUnit, please check the following
+               <a class="ulink" href="http://www.vogella.com/tutorials/JUnit/article.html" target="_top">JUnit Tutorial</a>.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="testingwithmocks"></a>2.&nbsp;Testing with test doubles
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="testingwithmocks_targets"></a>2.1.&nbsp;Target and challenge of unit testing
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  A unit test should test a class in isolation. Side effects from
+                  other
+                  classes or the system should be eliminated if possible.
+                  The
+                  achievement of this desired goal is typical complicated by the fact
+                  that Java classes
+                  usually depend on other classes.
+                  
+               </p>
+               <p>
+                  To solve this, you can use test doubles.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="stubsvsmockobject"></a>2.2.&nbsp;Test doubles
+                        </h3>
+                     </div>
+                  </div>
+               </div><a class="indexterm" name="d464670e65"></a><a class="indexterm" name="d464670e68"></a><a class="indexterm" name="d464670e71"></a><a class="indexterm" name="d464670e74"></a><a class="indexterm" name="d464670e77"></a><p>
+                  A
+                  <em class="wordasword">dummy object</em>
+                  is passed around but never used, i.e., its methods are never called.
+                  Such an object can for example be used to fill the parameter list of
+                  a method.
+                  
+               </p>
+               <p>
+                  <em class="wordasword">Fake</em>
+                  objects have
+                  working implementations, but are usually simplified, for
+                  example they use an in
+                  memory
+                  database and not a real database.
+                  
+               </p>
+               <p>
+                  A
+                  <em class="wordasword">stub</em>
+                  class is an partial implementation for an interface or class with
+                  the
+                  purpose
+                  of using an instance of this stub class during testing. Stubs
+                  usually do
+                  responding at all to anything
+                  outside what's
+                  programmed in
+                  for the
+                  test.
+                  Stubs may
+                  also record
+                  information about
+                  calls
+                  
+               </p>
+               <p>
+                  A
+                  <em class="wordasword">mock object</em>
+                  is a
+                  dummy implementation for an interface or a
+                  class in which you
+                  define
+                  the
+                  output of
+                  certain method calls.
+                  
+               </p>
+               <p>Test doubles can be passed to other
+                  objects which are
+                  tested. Your
+                  tests can validate
+                  that the class reacts
+                  correctly during
+                  tests, i.e.,
+                  you can validate
+                  if certain methods on the mock
+                  object
+                  were called. This
+                  helps to ensure that you only test the class
+                  while
+                  running tests and
+                  that your tests are not affected by any side
+                  effects.
+                  
+               </p>
+               <p>Mock objects
+                  are typically configured. Mock objects typically
+                  require less code to
+                  configure and should therefore be preferred.
+                  
+               </p>
+               <p>
+                  For a detailed discussion on this topic, see
+                  <a class="ulink" href="http://martinfowler.com/articles/mocksArentStubs.html" target="_top">Mocks Aren't Stubs from Martin Fowler</a>.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="usingstubsandmocks"></a>2.3.&nbsp;Mock object generation
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  You can create these mock objects manually (via code)
+                  or use
+                  a
+                  mock
+                  framework
+                  to
+                  simulate these classes. Mock frameworks allow you to
+                  create
+                  mock
+                  objects at runtime and define their behavior.
+                  
+               </p>
+               <p> The classical example for a
+                  mock object is
+                  a data provider. In
+                  production a real database is used,
+                  but for testing a
+                  mock object
+                  simulates the database and ensures that
+                  the test conditions
+                  are
+                  always
+                  the same.
+                  
+               </p>
+               <p>
+                  These mock objects can be provided
+                  to
+                  the
+                  class which
+                  is tested.
+                  Therefore
+                  the
+                  class to be tested should
+                  avoid any hard
+                  dependency on
+                  external
+                  data.
+                  
+               </p>
+               <p>Mock frameworks also allow to test the expected interaction with
+                  the mock
+                  object, e.g., you test which methods have been called on the
+                  mock
+                  object.
+                  
+               </p>
+            </div>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="mockframeworks"></a>3.&nbsp;Mock frameworks
+                     </h2>
+                  </div>
+               </div>
+            </div><a class="indexterm" name="d464670e125"></a><p>Popular mock frameworks are EasyMock, jMock and Mockito. The
+               following lists the links to these frameworks.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"># jMock
+http://jmock.org/
+
+# EasyMock
+http://easymock.org/
+
+# Mockito
+http://code.google.com/p/mockito/ </pre><p>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="mockito"></a>4.&nbsp;Mockito
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_definition"></a>4.1.&nbsp;Mockito for mocking objects
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <em class="wordasword">Mockito</em>
+                  is a popular mock framework which can be used
+                  in
+                  conjunction
+                  with
+                  JUnit.
+                  Mockito
+                  allows you to create
+                  and configure mock objects.
+                  
+               </p>
+               <p>
+                  The Mockito framework is hosted under the following URL:
+                  <a class="ulink" href="http://code.google.com/p/mockito/" target="_top">Mockito homepage</a>.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_usage"></a>4.2.&nbsp;Using Mockito
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Mockito supports the creation of mock objects with the static
+                  <code class="code">mock()</code>
+                  method call. It also supports the creation of mock objects based on
+                  the
+                  <code class="code">@Mock</code>
+                  annotation. If you use annotations, you must initialize this mock
+                  objects with a
+                  <code class="code">MockitoAnnotations.initMocks(this)</code>
+                  method call or annotate your class with the
+                  <code class="code">@RunWith(MockitoJUnitRunner.class)</code>
+                  annotation to use the Mockito test runner.
+                  
+               </p>
+               <p>
+                  For example, the following code demonstrate the usage of Mockito to
+                  test a class called
+                  <code class="code">ClassToTest</code>.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@RunWith(MockitoJUnitRunner.class)</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MockitoTest  {
+
+  <em class="hl-comment" style="color: #080">// assume there is a class MyDatabase</em>
+  <em><span class="hl-annotation" style="color: gray">@Mock</span></em>
+  MyDatabase databaseMock;
+
+  <em><span class="hl-annotation" style="color: gray">@Test</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> testQuery()  {
+    <em class="hl-comment" style="color: #080">// assume there is a class called ClassToTest</em>
+    <em class="hl-comment" style="color: #080">// which could be tested</em>
+    ClassToTest t  = <span class="hl-keyword">new</span> ClassToTest(databaseMock);
+
+    <em class="hl-comment" style="color: #080">// call a method</em>
+    <span class="hl-keyword">boolean</span> check = t.query(<span class="hl-string" style="color:blue">"* from t"</span>);
+
+    <em class="hl-comment" style="color: #080">// test the return type</em>
+    assertTrue(check);
+
+    <em class="hl-comment" style="color: #080">// test that the query() method on the </em>
+    <em class="hl-comment" style="color: #080">// mock object was called</em>
+    Mockito.verify(databaseMock).query(<span class="hl-string" style="color:blue">"* from t"</span>);
+  }
+} </pre><p>
+                  
+               </p>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <h3 class="title">Note</h3>
+                  <p>The example code is just for demonstration purposes. In case
+                     you
+                     are interested, it is
+                     actually based on Android. The direct usage
+                     of
+                     Mockito
+                     on
+                     Android is possible.
+                     
+                  </p>
+               </div>
+               <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <h3 class="title">Tip</h3>
+                  <p>
+                     Static imports allows you to call static members, i.e., methods
+                     and
+                     fields of a class directly without specifying the class. If you
+                     declare Mockito.* as static member, you can access methods like
+                     <code class="code">mock()</code>
+                     directly.
+                     
+                  </p>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_limitations"></a>4.3.&nbsp;Limitations
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Mockito has certain limitations. It can not test the following
+                  constructs:
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>final classes</p>
+                     </li>
+                     <li class="listitem">
+                        <p>anonymous classes</p>
+                     </li>
+                     <li class="listitem">
+                        <p>primitive types</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_configuremockobjects"></a>4.4.&nbsp;Configuring the mock objects
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <em class="wordasword">Mockito</em>
+                  has a fluent API. You can use the
+                  <code class="code">verify()</code>
+                  method to ensure that a method was called.
+                  
+               </p>
+               <p>
+                  <code class="code">when(....).thenReturn(....)</code>
+                  can be used to specify a condition and a return value for this
+                  condition.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Test</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">void</span> test1()  {
+  MyClass test = Mockito.mock(MyClass.<span class="hl-keyword">class</span>);
+  <em class="hl-comment" style="color: #080">// define return value for method getUniqueId()</em>
+  test.when(test.getUniqueId()).thenReturn(<span class="hl-number">43</span>);
+  
+  <em class="hl-comment" style="color: #080">// TODO use mock in test.... </em>
+} </pre><p>
+                  
+               </p>
+               <p>
+                  <code class="code">doReturn(object).when(kdskfsk).methodCall</code>
+                  works similar.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_verify"></a>4.5.&nbsp;Verify the calls on the mock objects
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Mockito keeps track of all the method calls and their parameters to
+                  the mock object. You can use the
+                  <code class="code">verify()</code>
+                  method on the mock object to verify that the specified conditions are
+                  met, i.e., that a method has been called with certain parameters.
+                  
+               </p>
+               <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                  <h3 class="title">Note</h3>
+                  <p>
+                     This kind of testing is sometimes called
+                     <em class="wordasword">behavior testing</em>,
+                     because it does not check the result of a method call, but it
+                     checks
+                     that a method is called with the right parameters.
+                     
+                  </p>
+               </div>
+               <p>
+                  
+               </p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@Test</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">void</span> test1()  {
+  MyClass test = Mockito.mock(MyClass.<span class="hl-keyword">class</span>);
+  <em class="hl-comment" style="color: #080">// define return value for method getUniqueId()</em>
+  test.when(test.getUniqueId()).thenReturn(<span class="hl-number">43</span>);
+  
+  <em class="hl-comment" style="color: #080">// TODO use mock in test.... </em>
+  
+  <em class="hl-comment" style="color: #080">// now check if method testing was called with the parameter 12 </em>
+  Mockito.verify(test).testing(Matchers.eq(<span class="hl-number">12</span>));
+  
+  <em class="hl-comment" style="color: #080">// was the method called twice?</em>
+  Mockito.verify(test, Mockito.times(<span class="hl-number">2</span>));
+  
+  
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_spy"></a>4.6.&nbsp;Spy
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  @Spy or the
+                  <code class="code">spy()</code>
+                  method can be used to wrap a real object. Every call, unless
+                  specified otherwise, is delegated to the object.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><em class="hl-comment" style="color: #080">// Lets mock a LinkedList</em>
+List list = <span class="hl-keyword">new</span> LinkedList();
+List spy = spy(list);
+
+<em class="hl-comment" style="color: #080">//You have to use doReturn() for stubbing</em>
+doReturn(<span class="hl-string" style="color:blue">"foo"</span>).when(spy).get(<span class="hl-number">0</span>);
+
+<em class="hl-comment" style="color: #080">// this would not work</em>
+<em class="hl-comment" style="color: #080">// real method is called so spy.get(0) </em>
+<em class="hl-comment" style="color: #080">// throws IndexOutOfBoundsException (list is still empty)</em>
+when(spy.get(<span class="hl-number">0</span>)).thenReturn(<span class="hl-string" style="color:blue">"foo"</span>); </pre><p>
+                  
+               </p>
+               <p>
+                  The
+                  <code class="code">verifyNoMoreInteractions()</code>
+                  allows you to check that no other method was called.
+                  
+               </p>
+               <p>
+                  You also have the
+                  <code class="code">@InjectMocks</code>
+                  annotation which tries to do constructor dependency injection based
+                  on the type. The following code is a slightly modified example
+                  from
+                  the Javadoc.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><em><span class="hl-annotation" style="color: gray">@RunWith(MockitoJUnitRunner.class)</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ArticleManagerTest  {
+
+       <em><span class="hl-annotation" style="color: gray">@Mock</span></em> <span class="hl-keyword">private</span> ArticleCalculator calculator;
+       <em><span class="hl-annotation" style="color: gray">@Mock</span></em> <span class="hl-keyword">private</span> ArticleDatabase database;
+       <em><span class="hl-annotation" style="color: gray">@Spy</span></em> <span class="hl-keyword">private</span> UserProvider userProvider = <span class="hl-keyword">new</span> ConsumerUserProvider();
+
+       <em class="hl-comment" style="color: #080">// creates instance of ArticleManager</em>
+       <em class="hl-comment" style="color: #080">// and performs constructor injection on it</em>
+       <em><span class="hl-annotation" style="color: gray">@InjectMocks</span></em> <span class="hl-keyword">private</span> ArticleManager manager = <span class="hl-keyword">new</span> ArticleManager();
+
+       <em><span class="hl-annotation" style="color: gray">@Test</span></em> <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> shouldDoSomething() {
+         MockitoAnnotations.initMocks(<span class="hl-keyword">this</span>);
+           verify(database).addListener(any(ArticleListener.<span class="hl-keyword">class</span>));
+       }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="mockito_android"></a>5.&nbsp;Mockito on Android
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_overview"></a>5.1.&nbsp;Using Mockito on Android
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Mockito can also be directly used in
+                  Android tests (since the
+                  release 1.9.5).
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_installation"></a>5.2.&nbsp;Installation
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  To
+                  use Mockito for the tests of your Android projects add a dependency to your Gradle build file for it.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">dependencies {
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="exercise_mockito_android"></a>6.&nbsp;Exercise: Using Mockito in Android tests
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_android1"></a>6.1.&nbsp;Create Application under tests on Android
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create an Android application which allows to trigger an intent
+                  with certain parameters as in the following example.
+                  
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">static</span> Intent createQuery(Context context, String query, String value) {
+    Intent i = <span class="hl-keyword">new</span> Intent(context, MyListActivity.<span class="hl-keyword">class</span>);
+    i.putExtra(<span class="hl-string" style="color:blue">"QUERY"</span>, query);
+    i.putExtra(<span class="hl-string" style="color:blue">"VALUE"</span>, value);
+    <span class="hl-keyword">return</span> i;
+  } </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="mockito_android2"></a>6.2.&nbsp;Create test
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create a new test project for the application and a new test
+                  class. Write a test, using Mockito to check that the intent is
+                  triggered with the correct extra data.
+                  
+               </p>
+               <p>
+                  For this you mock the 
+                  <code class="code">Context</code>
+                  object with Mockito as in the following example.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> com.vogella.android.mockito.intent.test;
+
+<span class="hl-keyword">import</span> org.mockito.Mock;
+<span class="hl-keyword">import</span> org.mockito.Mockito;
+<span class="hl-keyword">import</span> org.mockito.MockitoAnnotations;
+
+<span class="hl-keyword">import</span> android.content.Context;
+<span class="hl-keyword">import</span> android.content.Intent;
+<span class="hl-keyword">import</span> android.os.Bundle;
+<span class="hl-keyword">import</span> android.test.AndroidTestCase;
+
+<span class="hl-keyword">import</span> com.vogella.android.mockito.intent.MainActivity;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MainActivtityTest <span class="hl-keyword">extends</span> AndroidTestCase {
+  <em><span class="hl-annotation" style="color: gray">@Mock</span></em>
+  Context context;
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">protected</span> <span class="hl-keyword">void</span> setUp() <span class="hl-keyword">throws</span> Exception {
+    MockitoAnnotations.initMocks(<span class="hl-keyword">this</span>);
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> testQuery() <span class="hl-keyword">throws</span> Exception {
+    Intent intent = MainActivity.createQuery(context, <span class="hl-string" style="color:blue">"query"</span>, <span class="hl-string" style="color:blue">"value"</span>);
+    assertNotNull(intent);
+    Bundle extras = intent.getExtras();
+    assertNotNull(extras);
+    assertEquals(<span class="hl-string" style="color:blue">"query"</span>, extras.getString(<span class="hl-string" style="color:blue">"QUERY"</span>));
+    assertEquals(<span class="hl-string" style="color:blue">"value"</span>, extras.getString(<span class="hl-string" style="color:blue">"VALUE"</span>));
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>7.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>7.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>7.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>7.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>8.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>8.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/index.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources"></a>8.2.&nbsp;Links and Literature
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="section">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="resources_easymock"></a>8.2.1.&nbsp;Mockito
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>
+                     <a class="ulink" href="http://site.mockito.org/" target="_top">Mockito home page</a>
+                     
+                  </p>
+                  <p>
+                     <a class="ulink" href="https://github.com/mockito/mockito" target="_top">Mockito project hosting page</a>
+                     
+                  </p>
+                  <p>
+                     <a class="ulink" href="https://code.google.com/p/mockito/issues/detail?id=442" target="_top">
+                        Support dependency injection feature request for Mockito
+                        </a>
+                     
+                  </p>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>8.3.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <table border="0">
+                     <colgroup>
+                        <col width="50%" align="left">
+                        <col width="50%" align="left">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/training/" target="_top">TRAINING</a></th>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/consulting/" target="_top">SERVICE &amp; SUPPORT</a></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              The vogella company provides comprehensive <a class="ulink" href="http://www.vogella.com/training/" target="_top">training and education services</a> 
+                              from experts in the areas of Eclipse RCP, Android, Git, Java, Gradle and Spring.
+                              We offer both public and inhouse training. Whichever course you decide to take, you are guaranteed to experience 
+                              what many before you refer to as 
+                              <a class="ulink" href="http://www.vogella.com/training/" target="_top">&#8220;The best IT class I have ever attended&#8221;</a>.
+                              
+                           </td>
+                           <td align="left">
+                              The vogella company offers <a class="ulink" href="http://www.vogella.com/consulting/" target="_top">expert consulting</a> services, development support and coaching. Our customers range from
+                              Fortune 100 corporations to individual developers.  
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div><img src="http://vg08.met.vgwort.de/na/27d90952a5254731bed50a1ef8bd6fb3" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/Mockito/article.html');
+//]]></script></body>
+</html>
+

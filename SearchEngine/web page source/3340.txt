@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Viewing the Results of the Survey</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">View the Survey Results</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P><i>This lesson is part of an ongoing Survey/Poll tutorial. The first part is 
+  here: <a href="php15p1.html">Build your own Survey/Poll</a>, along with all 
+  the files you need.</i></P>
+<p>On the <b>survey.php </b>page, there is a button that can be clicked to View 
+  the Results. If this button is clicked, the user will see something like this:</p>
+<p align="center"><img src="images/survey9.jpg" width="345" height="189" alt="The results of the survey"></p>
+<p>The red line represents how many people voted for a particular option. After 
+  that, we have the number as a percentage, and what the option was.</p>
+<p>On the previous page, survey.php, The HTML form was this:</p>
+<p class="TextIndent2">&lt;FORM NAME =&quot;form2&quot; METHOD =&quot;GET&quot; 
+  ACTION =&quot;viewResults.php&quot;&gt;</p>
+<p class="indent_small">&lt;INPUT TYPE = &quot;Submit&quot; Name = &quot;Submit2&quot; 
+  VALUE = &quot;View results&quot;&gt;<br>
+  &lt;INPUT TYPE = &quot;Hidden&quot; Name = &quot;h1&quot; VALUE = &lt;?PHP print 
+  $qID; ?&gt;&gt;</p>
+<p class="TextIndent2">&lt;/FORM&gt;</p>
+<p>The value in the variable <b>$qID</b>(part of the Hidden HTML form element) 
+  is coming from the PHP code you saw earlier. This is the QID field that is in 
+  both the questions and answers tables in our database. We need to pass this 
+  QID number over to the <b>viewResults.php</b> page so that the correct results 
+  can be displayed.<br>
+</p>
+<p align="left">If you open up the code for <b>viewResults.php</b> page (in the 
+  survey folder), you'll see there's quite a lot there! But most of the code is 
+  taken up with manipulating the <b>red.jpg</b> graphic! We're just stretching 
+  a red line, depending on how many votes were cast for an option. The rest of 
+  the code pulls the data from the table, and puts values into variables. We'll 
+  keep the two separate, for explanation purposes.</p>
+<p align="left">&nbsp;</p>
+<h3 align="left">How many people voted for a particular option?</h3>
+<p>To see how many people voted for A, B or C, we first have to get that value 
+  from the <b>viewResults.php</b> page.</p>
+<p class="indent_big">if (isset($_GET['Submit2'])) {</p>
+<p class="indent_bigger">$qNum = $_GET['h1'];</p>
+<p class="indent_big">}</p>
+<p>First, we check to see if the Submit button was clicked on the previous page. 
+  If it was then we can GET the hidden value:</p>
+<p class="TextIndent3">$qNum = $_GET['h1'];</p>
+<p>The Hidden form element had the NAME &quot;<b>h1</b>&quot;. It's this NAME 
+  that goes between the square brackets of $_GET. The VALUE of the <b>h1</b> hidden 
+  element is coming from the <b>$qID</b> variable. This will be the QID field 
+  in the database tables tblQuestions and answers. We can use this value to pull 
+  records from the tables, which the next two lines do:</p>
+<P class="TextIndent2">$SQL = &quot;SELECT * FROM tblquestions, answers WHERE 
+  tblquestions.QID = answers.QID AND answers.QID = '$qNum'&quot;;</P>
+<p class="TextIndent2">$result = mysql_query($SQL);</p>
+<p>Here, we're selecting all the records from two tables:</p>
+<p class="TextIndent3">SELECT * FROM tblquestions, answers</p>
+<p>But we need a WHERE part. The WHERE clause is quite tricky:</p>
+<p class="TextIndent3">WHERE tblquestions.QID = answers.QID AND answers.QID = 
+  '$qNum'</p>
+<p>To match the two QID fields, we have this:</p>
+<p class="TextIndent3">tblquestions.QID = answers.QID</p>
+<p>The name of the table goes first, followed by a dot. After the dot, we've typed 
+  the QID field. This is present in both tables.</p>
+<p>But we only need the records where the QID field matches the qNum that was 
+  handed over from the previous page:</p>
+<p class="TextIndent3">AND answers.QID = '$qNum'</p>
+<p>We're saying &quot;Only bring back the records where the two QID fields match 
+  AND where the QID value in the answers table is equal to the value in the variable 
+  called $qNum&quot;. A bit more complex, but go over it a few times and it will 
+  make sense. Hopefully!</p>
+<p>After the SQL has been run, we put the results into an array:</p>
+<p class="TextIndent3">$db_field = mysql_fetch_assoc($result);</p>
+<P class="TextIndent3">$question = $db_field['Question'];<br>
+  $answerA = $db_field['A'];<br>
+  $answerB = $db_field['B'];<br>
+  $answerC = $db_field['C'];</P>
+<p class="TextIndent3">$qA = $db_field['qA'];<br>
+  $qB = $db_field['qB'];<br>
+  $qC = $db_field['qC'];</p>
+<P>If you look at the values in the square brackets, you'll see that they are 
+  the field names from both tables. We're getting the value for the Question, 
+  the answers A, B and C, as well as the original options for each questions (qA, 
+  qB and qC). All of these values are then placed into variables, ready for displaying 
+  on the page.</P>
+<p>We could just print the values to the page, like this:</p>
+<p class="TextIndent3">print $question;<br>
+  print $answerA;<br>
+  print $answerB;<br>
+  print $answerC;</p>
+<p>But that's not very interesting for the viewer. Better is some form of graphic, 
+  like the one at the top of this page. This is what you'll see when you click 
+  the button to View the Results. Here's how it works.</p>
+<p>&nbsp;</p>
+<h3 align="left">Display a graphic for the results</h3>
+<p>At the top of the code, you'll notice some variables are set up:</p>
+<p class="TextIndent3">$imgTagA = '';<br>
+  $imgWidthA = '0';</P>
+<p class="TextIndent3">$imgTagB = '';<br>
+  $imgWidthB = '0';</p>
+<p class="TextIndent3">$imgTagC = '';<br>
+  $imgWidthC = '0';</p>
+<p class="TextIndent3">$imgHeight = '10';<br>
+  $totalP = '';<br>
+  $percentA = '0';<br>
+  $percentB = '0';<br>
+  $percentC = '0';</p>
+<p>What we're going to do here is to manipulate the HTML IMG tag. This tag is 
+  used to display an image, and ordinarily would look something line this:</p>
+<p class="TextIndent3">&lt;IMG SRC = 'red.jpg' HEIGHT = '10' <font color="#0000FF">WIDTH</font> 
+  = '100'&gt;</p>
+<p>The part we want to manipulate with our PHP code is the WIDTH value. Instead 
+  of setting it to a fixed value, we can set it to a value from the answers table. 
+</p>
+<p>In the answers table, the columns for A, B and C hold how many people voted 
+  for a particular option. We have three separate IMG tags in our code, one for 
+  each of the columns. If, for example, A held a value of 45 (meaning 45 people 
+  voted for this option), we can make the WIDTH of the red line image 45 pixels.</p>
+<p>Except, 45 pixels is not very wide. Much better to turn them all in to percentages. 
+  Which is what the following code does:</p>
+<p class="TextIndent3">$totalP = $answerA + $answerB + $answerC;</p>
+<p><b><span class="TextIndent3">$percentA = (($answerA * 100) / $totalP);</span><br>
+  <span class="TextIndent3">$percentA = floor($percentA);</span></b></p>
+<p><b><span class="TextIndent3">$percentB = (($answerB * 100) / $totalP);</span><br>
+  <span class="TextIndent3">$percentB = floor($percentB);</span></b></p>
+<p><b><span class="TextIndent3">$percentC = (($answerC * 100) / $totalP);</span><br>
+  <span class="TextIndent3">$percentC = floor($percentC);</span></b></p>
+<p><b><span class="TextIndent3">$imgWidthA = $percentA * 2;</span><br>
+  <span class="TextIndent3">$imgWidthB = $percentB * 2;</span><br>
+  <span class="TextIndent3">$imgWidthC = $percentC * 2;</span></b></p>
+<p>First you need to total up how many people voted:</p>
+<p class="TextIndent3">$totalP = $answerA + $answerB + $answerC;</p>
+<p>Next, you can multiply A, B and C by 100 and then divide by the total:</p>
+<p class="TextIndent3">$percentA = (($answerA * 100) / $totalP);</p>
+<p>Because this would give an answer like 24.567, we can use the inbuilt Math 
+  function floor to strip the &quot;point something&quot; at the end:</p>
+<p class="TextIndent3">$percentA = floor($percentA);</p>
+<p>Finally, you can multiply by, say, 2 to give the red line some extra width:</p>
+<p class="TextIndent3">$imgWidthA = $percentA * 2;</p>
+<p>The values in $imgWidthA, $imgWidthB and $imgWidthC can then be used to build 
+  an IMG tag:</p>
+<p class="TextIndent2">$imgTagA = &quot;&lt;IMG SRC = 'red.jpg' Height = &quot; 
+  . $imgHeight . &quot; WIDTH = &quot; . $imgWidthA . &quot;&gt;&quot;;</p>
+<p>To display this on the page, we use the following:</p>
+<p class="TextIndent3">print $imgTagA . &quot; &quot; . $percentA . &quot;% &quot; 
+  . $qA . &quot;&lt;BR&gt;&quot;;</p>
+<p>So the red line gets displayed first, followed by the percentage of people 
+  who voted for this option. A percent sign and the option itself complete the 
+  line.</p>
+<p>And that completes the survey walkthrough. Feel free to adapt and amend the 
+  code you downloaded. But don't forget to make a backup of the original files!</p>
+<p></p>
+<p>Next, we'll take a look at how to build your own online Forum.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php15p5.html">&lt;-- Back One Page</a> | <a href="php16p1.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

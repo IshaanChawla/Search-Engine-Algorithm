@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; Queues | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; Queues" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,612] -->
+<meta name="description"  content="In this C programming language tutorial we take a quick look at what a queue is and how to implement a queue using C. What is a Queue? Almost everybody" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-queues" />
+<!-- /all in one seo pack -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial – Error Handling (Exception Handling)' href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=1376' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-1376">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">
+		C Tutorial &#8211; Queues</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C programming language tutorial we take a quick look at what a queue is and how to implement a queue using C.</p>
+<h2>What is a Queue?</h2>
+<p>Almost everybody knows printer queues. A print queue is a list where from where print jobs (an item) are used and then deleted from one end (front). At the other end of the queue new print jobs (or items are inserted (rear). It is also referred to as a first-in-first-out (FIFO) data structure.<span id="more-1376"></span></p>
+<p>So in short on one side you put things in and from the other side you take things out.</p>
+<h2>The Queue Source Code</h2>
+<p>Below you’ll find the queue source code example for this tutorial. You should note that there is no input checkin done in this example, so only use the numbers from one to four.</p>
+<div id="cl">
+<pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define QUEUESIZE 10
+int queue[QUEUESIZE], f=0, r=-1;
+
+// Check if queue is full
+int queuefull() {
+	if(r == QUEUESIZE - 1) {
+		return 1;
+	}
+	return 0;
+}
+
+// Check if the queue is empty
+int queueempty() {
+	if(f &gt; r) {
+		return 1;
+	}
+	return 0;
+}
+
+// Show queue content
+int queueshow() {
+	int i;
+	if(queueempty()) {
+		printf(" \n The queue is empty\n");
+	} else {
+		printf("Start-&gt;");
+		for(i=f; i&lt;=r; i++) {
+			printf("%d ", queue[i]);
+		}
+		printf("&lt;-End");
+	}
+	return 0;
+}
+
+// Perform an insert operation.
+int queueinsert(int oneelement) {
+	if( queuefull()) { 
+		printf("\n\n Overflow!!!!\n\n");
+	} else {
+		++r;
+		queue[r] = oneelement;
+	}
+	return 0;
+}
+
+// Perform a delete operation
+int queuedelete() {
+	int elem;
+	if(queueempty()) {
+		printf(" \n The queue is empty\n");
+		return(-1);
+	} else {
+		elem=queue[f];
+		f=f+1;
+		return(elem);
+	}
+}
+
+int main() {
+ 	int option, element; 
+ 	char    ch;
+
+ 	do {
+ 	printf("\n Press 1-Insert, 2-Delete, 3-Show, 4-Exit\n");
+ 	printf("\n Your selection? ");
+ 	scanf("%d",&#038;option);
+ 	switch(option) {
+ 		case 1:
+ 			printf("\n\nContent to be Inserted?");
+ 			scanf("%d",&#038;element);
+			queueinsert(element);
+ 			break;
+ 		case 2:
+			element=queuedelete();
+			if( element != -1 ) {
+				printf("\n\nDeleted element (with content %d) \n",element); 
+			}				
+			break;
+		case 3:
+			printf("\n\nStatus of the queue\n\n");
+			queueshow();
+			break;
+		case 4:
+			printf("\n\n Ending the program \n\n");
+			break; 
+		default:
+			printf("\n\nInvalid option, please retry! \n\n");
+			break;
+		}
+    } while(option != 4);
+    return 0; 
+}
+
+</code></pre>
+</div>
+<p>We start the queue example by defining a queue length of 10 (items). The first helper function is show if our queue if full or not. The second helper function is to check if the queue is empty or not. The third function is to show the content of the queue (the items). The fourth function is to add (insert) an item to our queue. The fifth function can be used to delete an item from our queue.</p>
+<p>In the main we use a do-while loop (until four is pressed) to get user input with scanf and a switch statement to switch between our options. We will explain only the insert option, the rest of the functions use the same concept.</p>
+<p>If the insert option is chosen then we get user input to insert integer value. Then the queuinsert() function is called. The queue insert function check if the queue is full or not. The variable r is raised with one and the user input is added to our queue (array).</p>
+<p>That’s all for this quick tutorial about queue’s using arrays. </p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-queues/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; Queues http://www.codingunit.com/c-tutorial-queues" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+
+  		<!-- If comments are closed. -->
+		<p class="nocomments">Comments are closed.</p>
+
+	
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 27 queries. 0.549 seconds. -->
+</body>
+</html>
+

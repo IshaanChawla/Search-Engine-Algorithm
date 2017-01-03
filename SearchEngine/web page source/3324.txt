@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: SQL injection</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">PHP and SQL injection</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>(This lessons follows on from <a href="php13p4.html">the previous one</a>.)</P>
+<p>When you open the <b>magicTest2.php</b> page in your browser, you'll see three 
+  textboxes: one for a username, one for a password, and one for an email address. 
+  There is also a button on the form.</p>
+<p>Enter the following in the email address text box:</p>
+<p class="TextIndent3"><b>test1@test1.com</b></p>
+<p>Click the button, and you should see following print out:</p>
+<p class="indent_big">1<br>
+  test1<br>
+  test1<br>
+  test1@test1.com</p>
+<p>These correspond to the four fields in the database. The four fields are:</p>
+<p class="indent_big">ID<br>
+  username<br>
+  password<br>
+  email</p>
+<p>So the username is <b>test1</b>, the password is <b>test1</b>, and the email 
+  address is <b>test1@test1.com</b>.</p>
+<p>Now, suppose you were na&iuml;ve enough to have a database table exactly like 
+  that one. An attacker will test to see if any syntax error messages can be returned. 
+  If so, this means that the author of the script has not dealt with single/double 
+  quotes correctly. The attacker can then go ahead with further probes.</p>
+<p>Try your script again. Only this time, add a single quote to the end of the 
+  test email address in the textbox:</p>
+<p class="indent_big">test1@test1.com'</p>
+<p>Now click the Submit button. What you should find is that an error message 
+  is indeed returned. Something like this:</p>
+<p align="center"><b>Warning: mysql_fetch_assoc(): supplied argument is not a 
+  valid MySQL result resource</b></p>
+<p>Because Magic Quotes are off, that single quote is not being escaped. The line 
+  in our new script that is doing the damage is the one:<br>
+</p>
+<p class="TextIndent3">$SQL = &quot;SELECT * FROM members WHERE email = '$email' 
+  &quot;;</p>
+<p>The SQL this time has a <b>WHERE</b> clause added. The WHERE clause is used 
+  when you want to limit the results to only records that you need. After the 
+  word &quot;WHERE&quot;, you type a column name from your database (<b>email</b>, 
+  in our case). You then have an equals sign, followed by the value you want to 
+  check. The value we want to check is coming from the variable called <b>$email</b>. 
+  This is surrounded with single quotes. </p>
+<p>When an email address is entered in the text box on our form, this value goes 
+  straight into the variable without any checks. When you type that extra single 
+  quote on the end, that will be added to the SQL. This is then run on the database. 
+  Because it's a stray single quote, you'll get a syntax error. It's this syntax 
+  error that an attacker is looking for.</p>
+<p>Next, the attacker will try to add some SQL to yours. Try this. In the email 
+  address textbox, type the following. Type it exactly as it is, with the single 
+  quotes:</p>
+<p class="TextIndent3">hi' OR 'x'='x</p>
+<p>When you click the Submit button, you should find that there are no errors, 
+  and that the username, password and email address are printed out!</p>
+<p>The attacker is trying to find out whether or not the SQL can be manipulated. 
+  If the answer is yes, further attacks will be launched. Can the table and field 
+  names be guessed? Can a username and password be guessed? It's this kind of 
+  attack that you want to thwart.</p>
+<p>Try this last one. Enter the following into the email address box:</p>
+<p class="TextIndent3">' OR ''='</p>
+<p>Now click Submit.</p>
+<p>Again, the details are printed out. This is because an <b>OR</b> clause has 
+  been added. The OR clause is set to a blank string. Meaning that the records 
+  will be brought back if it's a valid email address or not!</p>
+<p>To stop this kind of attack, you MUST use some inbuilt PHP functions. The one 
+  to use for this kind of attack is:</p>
+<p class="TextIndent3">mysql_real_escape_string( )</p>
+<p>Between the round brackets, you type the string you need to check, followed 
+  by an optional database handle. To test this out, there is another script like 
+  the one you've just tried. This one is called <b>magicTest3.php</b> (in the 
+  same scripts folder). If you open this up in your text editor, you should see 
+  this added to the code:</p>
+<p class="TextIndent3">$email = mysql_real_escape_string($email, $db_handle);</p>
+<p>Now, the $email variable is being checked for any of the following:</p>
+<p align="center"><b>\x00<br>
+  \n<br>
+  \r<br>
+  \<br>
+  '<br>
+  &quot;<br>
+  \x1a</b></p>
+<p>If any of the above characters are found, a backslash is added. Try the new 
+  script. Enter the following in the email address text box (with the single quote 
+  on the end):</p>
+<p class="TextIndent3">test1@test1.com'</p>
+<p>What you should find is that the following gets returned:</p>
+<p class="TextIndent3">test1@test1.com\'</p>
+<p>So the single quote has had a backslash added to it. The point is that the 
+  dangerous SQL doesn't get executed. Try the above attacks again. This time, 
+  you shouldn't be able to get in, if any of the listed escape characters have 
+  been used.</p>
+<p>But you need to use the function on all variables or data that will be used 
+  in your SQL. So you should do this kind of thing:</p>
+<p class="indent_big">$username = mysql_real_escape_string($username, $db_handle);<br>
+  $password = mysql_real_escape_string($password, $db_handle);<br>
+  $email = mysql_real_escape_string($email, $db_handle);</p>
+<p>Examine the code in the new script. Pay attention to where the new lines go: 
+  after you have opened a connection to your database. </p>
+<p>The PHP manual recommends the following sample script, when working with SQL 
+  (all comments are theirs; bold and colour is ours):</p>
+<p align="center"><a href="quoteSmart.htm" target="_blank">The PHP manual script</a></p>
+<p>We have adapted the <b>magicTest3</b> script, with the recommended code added, 
+  so that you can see it in action. The new script is <a href="../downloads.html">magicTest4.php</a>. 
+  Open the script and study the code. See if you can figure out how the new additions 
+  work.</p>
+<p>As well as using mysql_real_escape_string( ), you'll need to use the other 
+  function you saw earlier, in the forms section - <b>htmlspecialchars</b>().</p>
+<p>It can be a lot of work, dealing with SQL injection attacks, and handling all 
+  those escape characters. But if you don't want your databases attacked, you 
+  HAVE to defend yourself!</p>
+<p>&nbsp;</p>
+<h3>Limit the charcters that a user can enter</h3>
+<p>Another security technique that some advocate is to limit the characters that 
+  can be entered. For example, you might have this in your script:</p>
+<p class="indent_big">$valid_chars = &quot;abcdefghijklmnopqrstuvwxyz&quot;;<br>
+  $valid_nums = &quot;1234567890&quot;;<br>
+  $valid_other = &quot;&pound;$^&amp;_@#~&quot;;</p>
+<p>You can then use some Conditional Logic to test if the character the user entered 
+  was on your list. If it's not, then you can display an error message.</p>
+<p>An excellent walkthrough of security blunders can be found at: </p>
+<p align="center"><a href="http://www.sitepoint.com/article/php-security-blunders" target="_blank">http://www.sitepoint.com/article/php-security-blunders</a><br>
+</p>
+<p><br>
+  In the next part, we'll take a look at how to create a table using SQL.</p>
+</SECTION></ARTICLE></SECTION> <FOOTER> 
+<p align="right"><a href="php13p4.html">&lt;-- Back One Page</a> |<a href="php13p6.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

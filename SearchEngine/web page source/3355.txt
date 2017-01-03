@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The Reply Form</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Forum Replies</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p8.html">here</a>.</i></p>
+<p>&nbsp;</p>
+<p>In the last section, there was a variable called <b>$replyHTML</b>. This is 
+  a hyperlink that, when clicked on, leads to a page called replyForm.php. Here's 
+  the code:</p>
+<P class="indent_big">$replyHTML = &quot;?pid=&quot; . $postID . &quot;&amp;sec=&quot; 
+  . $secCode;</P>
+<p>When the link is displayed, and the mouse held over the link, you'll see this 
+  in the status bar at the bottom (you'll only see this link of you're logged 
+  in as a member):</p>
+<P align="center"><img src="images/forum21a.jpg" width="305" height="140" alt="Reply hyperlink" border="1"></P>
+<p>The code above for the $replyHTML variable is adding the following after the 
+  question mark:</p>
+<p class="indent_big">pid=pos1<br>
+  sec = secWP</p>
+<p>When the link is clicked, we're passing these two variables to the page called 
+  replyForm.php. The pos1 is which post the member wants to reply to, while the 
+  secWP is the forum section for Word Processing. When the member types the reply, 
+  we'll use these values to update the database table.</p>
+<p>So, open up the code for replyForm.php (in your forum folder), and we'll see 
+  how it works.</p>
+<p>(If you display the page in a browser, you'll see it's just a text area and 
+  a button. The member types the reply, and clicks the button.)</p>
+<p>The first bit of code is just the usual checks to see if the user accessing 
+  the page has logged in. If they have, we grab the memberID, and put it in a 
+  variable:</p>
+<p class="indent_small">session_start();<br>
+  if (!(isset($_SESSION['login']) &amp;&amp; $_SESSION['login'] != '')) {</p>
+<p class="indent_big">header (&quot;Location: login.php&quot;);</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">$memberid = $_SESSION['memID'];</p>
+<p class="indent_small">}</p>
+<p>We also need to grab those variables from the previous page:</p>
+<p class="indent_small">if ($_SERVER['REQUEST_METHOD'] == 'GET') {</p>
+<p class="indent_big">$secCode = '';<br>
+  $postID = '';</p>
+<p class="indent_big">if (isset($_GET['pid'])) {</p>
+<p class="indent_bigger">$postID = $_GET['pid'];<br>
+  $secCode = $_GET['sec'];</p>
+<p class="indent_big">}</p>
+<p class="indent_small">}</p>
+<p>So the pid variable (the one that contained &quot;pos1&quot;, from the previous 
+  page) is handed over to a variable called $postID:</p>
+<p class="TextIndent3">$postID = $_GET['pid'];</p>
+<p>And the sec variable (the one that contained secWP) is handed to a variable 
+  called $secCode:</p>
+<p class="TextIndent3">$secCode = $_GET['sec'];</p>
+<p>All the PHP code does is to print out HTML for a FORM. The form will contain 
+  a textarea and a button. When the button is clicked, we'll process the data 
+  on another php page. The ACTION attribue of the FORM tag is where the processing 
+  page is located:</p>
+<p class="TextIndent3">&#133; METHOD ='POST' ACTION ='results.php'&gt;&quot;;</p>
+<p>We're going to be using the POST method to hand over our values to a page called 
+  results.php. Notice that the FORM also has hidden values:</p>
+<p class="TextIndent2">$hidSec = &quot;&lt;INPUT TYPE = Hidden Name = h1 VALUE 
+  =&quot; . $secCode . &quot;&gt;&quot;;<br>
+  $hidPost = &quot;&lt;INPUT TYPE = Hidden Name = h2 VALUE =&quot; . $postID . 
+  &quot;&gt;&quot;;<br>
+  $hidMem = &quot;&lt;INPUT TYPE = Hidden Name = h3 VALUE =&quot; . $memberid 
+  . &quot;&gt;&quot;;</p>
+<p>And there's our three variables: <b>$secCode</b>, <b>$postID</b>, and <b>$memberid.</b> 
+  When the button on the form is clicked, these hidden variables will get handed 
+  over to the page that processes the data - the results.php page.</p>
+<p>Notice, too, that the NAME attributes for these hidden variables are <b>h1</b>, 
+  <b>h2</b>, and <b>h3</b>. The NAME of the textarea on the form is post. We'll 
+  be passing all these values to the processing page ( <b>results.php</b>).<br>
+</p>
+<p align="left">We'll have a look at that page in the next part.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p8.html">&lt;-- Back One Page</a> | <a href="php17p10.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

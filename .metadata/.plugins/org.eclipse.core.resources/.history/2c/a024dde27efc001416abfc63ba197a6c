@@ -1,0 +1,132 @@
+import java.util.Stack;
+
+public class Kmp
+{
+	private static void computelps(int lps[],int m,String pat)
+	{
+		int len = 0,i = 1;
+		lps[0] = 0;
+		while(i < m)
+		{
+			if(pat.charAt(i) == pat.charAt(len))
+				lps[i++]=++len;
+			else
+			{
+				if(len != 0)
+					len = lps[len-1];
+				else
+				{
+					lps[i]=0;
+					i++;
+				}
+			}
+		}
+	}
+	public int kmpfirstindexsearch(String text,String pattern) throws Exception
+	{
+		Exception e = new Exception();
+		int m = pattern.length(),n = text.length(),i=0,j=0;
+		int[] lps = new int[m];
+		computelps(lps,m,pattern);
+		while(i<n)
+		{
+			if(pattern.charAt(j) == text.charAt(i))
+			{
+				i++;
+				j++;
+			}
+			else
+			{ 
+				if(j != 0)
+					j = lps[j-1];
+				else
+					i++;
+			}
+			if(j == m)
+				return i;
+		}
+		throw e;
+	}
+	public double kmpsearch(String text,String pattern,ZoneIndexing table)
+	{
+		int m = pattern.length(),n = text.length(),i=0,j=0;
+		double zoneweight=0,weight=0;
+		int[] lps = new int[m];
+		computelps(lps,m,pattern); 
+		StringBuilder s = new StringBuilder(),slast = null;
+		StackSb stk = new StackSb();
+		while(i<n)
+		{
+			if(text.charAt(i) == '<')
+			{
+				while(text.charAt(i) != '>')
+				{
+					if(text.charAt(i) == '<')
+						s = new StringBuilder();
+					s.append(text.charAt(i));
+					i++;
+				}
+				s.append(text.charAt(i));
+				zoneweight = table.getzoneweight(s.toString());
+				if(slast != null)
+				{
+					if(s.toString().contains("</"))
+						s = stk.pop();
+					else
+						stk.push(slast);
+					System.out.println(s.toString() + " " + slast.toString());
+				}
+				slast = new StringBuilder(s);
+			}
+			if(pattern.charAt(j) == text.charAt(i) || pattern.charAt(j) - 32 == text.charAt(i))
+			{
+				i++;
+				j++;
+			}
+			else
+			{
+				if(j != 0)
+					j = lps[j-1];
+				else
+					i++;
+			}
+			if(j == m)
+			{
+				weight += zoneweight; 
+				j = lps[j-1];
+			}
+		}
+		return weight;
+	}
+	public int kmpzonesearch(String text,String pattern)
+	{
+		int m = pattern.length(),n = text.length(),i=0,j=0,count=0;
+		int[] lps = new int[m];
+		computelps(lps,m,pattern);
+		AfterSearch as = new AfterSearch();
+		while(i<n)
+		{
+			if(pattern.charAt(j) == text.charAt(i))
+			{
+				i++;
+				j++;
+			}
+			else
+			{ 
+				if(j != 0)
+					j = lps[j-1];
+				else
+					i++;
+			}
+			if(j == m)
+			{
+				int x = i;
+				while(text.charAt(x)!='>')
+					x++;
+				count += as.keywordcountretrival(text,x,'<',' ');
+				j = lps[j-1];
+			}
+		}
+		return count;
+	}
+}

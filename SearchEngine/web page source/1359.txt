@@ -1,0 +1,2130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/"><channel><title><![CDATA['Net Instructions]]></title><description><![CDATA[Sometimes a guide for the Internet, programming, & technology... and sometimes just my weird thoughts and ideas.]]></description><link>http://www.netinstructions.com/</link><generator>Ghost 0.6</generator><lastBuildDate>Sat, 16 May 2015 19:50:11 GMT</lastBuildDate><atom:link href="http://www.netinstructions.com/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title><![CDATA[Updating a Node.js web application without downtime]]></title><description><![CDATA[I have a Node.js/Express web application running on localhost:3010 that's on, say, version 1.2. Suppose I want to update the web application to version 1.3]]></description><link>http://www.netinstructions.com/updating-a-stateless-web-application-behind-nginx/</link><guid isPermaLink="false">f5da0552-b2f4-4a2b-b68c-802c2e6cb168</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Sat, 16 May 2015 19:44:24 GMT</pubDate><content:encoded><![CDATA[<p>I have a Node.js/Express web application running on <code>localhost:3010</code> that's on, say, version 1.2.2. Suppose I want to update the web application to version 1.3.0 without any downtime. What's the best way?</p>
+
+<h2 id="usingnginxinfrontofthenodejswebapplication">Using NGINX in front of the Node.js web application</h2>
+
+<p>Fortunately NGINX sits in front of my web application. Incoming HTTP requests are sent first to NGINX, and then NGINX forwards the requests to my Node.js/Express web application. Here's what my configuration file looks like from <code>/etc/nginx/sites-available/www.arepeopletalkingaboutit.com</code></p>
+
+<pre><code>server {
+  server_name www.arepeopletalkingabout.com;
+  listen 80;
+  listen [::]:80;
+
+  root /home/arp/apps/arepeopletalkingaboutit-3010/public;
+
+ location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://localhost:3010;
+ }
+}
+</code></pre>
+
+<p>There are two things worth noting. The root directory and the port. In this situation, my Node.js application is hanging out at <code>/home/arp/apps/arepeopletalkingaboutit-3010/</code> and is being served on <code>port 3010</code>. In my Node.js/Express application's <code>bin/www</code> I have:</p>
+
+<pre><code>var port = normalizePort(process.env.PORT || '3010');
+</code></pre>
+
+<h2 id="spinupasecondnodejswebapplication">Spin up a second Node.js web application</h2>
+
+<p>I'll actually start up a second Node.js web application with the new version in a new directory and on a new port. Your process may look different than mine, but mine looked something like this:</p>
+
+<pre><code>$ git clone git@mygitlab.com/arepeopletalkingaboutit.git arepeopletalkingaboutit-3011
+$ cd arepeopletalkingaboutit-3011
+$ npm install
+(update bin/www to use new port)
+$ export NODE_ENV=production
+$ forever start --uid "1.3.0:3011" bin/www
+</code></pre>
+
+<p>In the above example, I just give the process a unique identifier of "1.3.0:3011" so I could differentiate between other processes.</p>
+
+<p>When I'm done, I'll have two Node.js/Express web applications at these locations:</p>
+
+<pre><code>/home/arp/apps/arepeopletalkingaboutit-3010 (on version 1.2.2)
+/home/arp/apps/arepeopletalkingaboutit-3011 (on version 1.3.0)
+</code></pre>
+
+<p>And in <code>/home/arp/apps/arepeopletalkingaboutit-3010/bin/www</code></p>
+
+<pre><code>var port = normalizePort(process.env.PORT || '3010');
+</code></pre>
+
+<p>And in <code>/home/arp/apps/arepeopletalkingaboutit-3011/bin/www</code></p>
+
+<pre><code>var port = normalizePort(process.env.PORT || '3011');
+</code></pre>
+
+<p>At this point, both Node.js/Express web applications are running, but only one is reachable from the world wide web due to our configuration of NGINX:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/05/nginx-nodejs-and-express-web-application-load-balancer-1.png" alt=""></p>
+
+<h2 id="ahotreloadofnginx">A hot reload of NGINX</h2>
+
+<p>NGINX has a neat feature where you can reload its settings without any downtime. This means we can change the settings in <code>/etc/nginx/sites-available/www.arepeopletalkingaboutit.com</code> and save the file, but the changes won't go into effect until we <code>reload</code> or <code>restart</code> NGINX.</p>
+
+<p>I'm going to take advantage of that by changing the file:</p>
+
+<pre><code>server {
+  server_name www.arepeopletalkingaboutit.com;
+  listen 80;
+  listen [::]:80;
+
+  root /home/arp/apps/arepeopletalkingaboutit-3011/public;
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://localhost:3011;
+  }
+}
+</code></pre>
+
+<p>And then execute a <code>service nginx reload</code>.</p>
+
+<p>NGINX should now be forwarding requests to the new web application:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/05/nginx-hot-reload-without-downtime.png" alt=""></p>
+
+<h2 id="verifyingthechanges">Verifying the changes</h2>
+
+<p>I always like to do a sanity check to make sure this is working. The easiest is to make sure I can still go to the web application at <a href="http://www.arepeopletalkingaboutit.com/">www.arepeopletalkingaboutit.com</a>. I'll keep both logs open by using the <code>tail</code> command and see which web application handles the request.</p>
+
+<p>I really like <a href="https://github.com/foreverjs/forever">forever</a> to keep my Node.js / Express web applications alive and running, so check that out if you're curious.</p>]]></content:encoded></item><item><title><![CDATA[How to perform a gentle migration to Git from SVN]]></title><description><![CDATA[After experimenting with many different ways of migrating from SVN to Git, I came up with the perfect strategy that kept our history and our existing tools.]]></description><link>http://www.netinstructions.com/a-slow-migration-to-git-from-svn/</link><guid isPermaLink="false">3678a35e-936f-4376-8f3f-08a5724a0479</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Thu, 07 May 2015 16:37:23 GMT</pubDate><content:encoded><![CDATA[<p>There are <a href="http://www.netinstructions.com/the-case-for-git/">many reasons to use Git</a>. There are lots of different ways of migrating from SVN to Git. After experimenting with a few I found the wonderful <code>git svn</code> command to be the perfect tool to bring all our SVN history to our Git repository slowly and surely. Here's how I did it.</p>
+
+<h3 id="assumptionsandgoals">Assumptions and Goals</h3>
+
+<p>I have an existing SVN repository that a team of four or five developers have been contributing to on a regular basis for the last few years. We have a main development trunk that we regularly update from and commit to. We want to migrate all of our code over to a Git repository, but until we have our Jenkins/Nexus/Bugzilla/etc hooked up to Git, we want to continue using Subversion. Any commits to Subversion should end up in Git as well. Once we can hook up Jenkins/Nexus/Bugzilla/etc to Git, we can retire Subversion. </p>
+
+<h3 id="createanauthorsfile">Create an authors file</h3>
+
+<p>The point of this is to match up our Git authors with the SVN authors. We'll be creating an <code>authors.txt</code> file that we'll later feed to Git when we initialize the repository. </p>
+
+<p>First I checked out the trunk of our SVN repository. You can skip this step if you already a local copy checked out.</p>
+
+<pre><code>$ mkdir svn-migration
+$ cd svn-migration
+$ svn co http://build.company.intra/svn/repo/web-project/project-parent/trunk
+</code></pre>
+
+<p>Then wait a few minutes to check everything out. Now we'll go into the trunk and run the <code>svn log</code> command feeding it into <code>grep</code> or <code>awk</code> to generate our authors. There are two commands I've seen floating around the internet, the latter that worked for me.</p>
+
+<pre><code>$ cd trunk
+$ svn log --xml | grep author | sort -u | perl -pe 's/.*&gt;(.*?)&lt;.*/$1 = /'
+</code></pre>
+
+<p>or</p>
+
+<pre><code>$ cd trunk
+$ svn log -q | awk -F '|' '/^r/ {sub("^ ", "", $2); sub(" $", "", $2); print $2" = "$2" &lt;"$2"&gt;"}' | sort -u &gt; authors.txt
+</code></pre>
+
+<p>After a few minutes I ended up with a file that looked roughly like this:</p>
+
+<pre><code>$ more authors.txt
+alices = alices &lt;alices&gt;
+jimb = jimb &lt;jimb&gt;
+susanq = susanq &lt;susanq&gt;
+bobo = bobo &lt;bobo&gt;
+stephen = stephen &lt;stephen&gt;
+katyp = katyp &lt;katyp&gt;
+</code></pre>
+
+<p>However Git prefers a slightly different format, so I manually modified the authors.txt file to look like this:</p>
+
+<pre><code>alices = Alice Swoo &lt;alice.swoo@company.com&gt;
+jimb = Jim Bimbo &lt;jim.bimbo@company.com&gt;
+susanq = Susan Queue &lt;susan.queue@company.com&gt;
+bobo = Bob Obo &lt;bob.obo@company.com&gt;
+stepheny = Stephen Yep &lt;stephen.yep@company.com&gt;
+katyp = Katy Perry &lt;katy.perry@company.com&gt;
+</code></pre>
+
+<p>Note that if you have issues where you don't have an author, you can add this line to your <code>authors.txt</code></p>
+
+<pre><code>(no author) = noauthor &lt;noauthor@noauthor&gt;
+</code></pre>
+
+<h3 id="configureyourgitsettings">Configure your Git settings</h3>
+
+<p>Make sure Git knows about you. I ran</p>
+
+<pre><code>$ git config --list
+</code></pre>
+
+<p>and it returned nothing. Time to add myself</p>
+
+<pre><code>$ git config --global user.name "Stephen Yep"
+$ git config --global user.email "stephen.yep@company.com"
+</code></pre>
+
+<p>I also told Git about the <code>authors.txt</code> file and confirmed it was there:</p>
+
+<pre><code>$ git config --global svn.authorsfile authors.txt
+$ git config --list
+user.name=Stephen Yep
+user.email=stephen.yep@company.com
+svn.authorsfile=authors.txt
+</code></pre>
+
+<h3 id="tryoutthatgitsvncommand">Try out that git svn command</h3>
+
+<p>Here's where I ran into trouble. I created a new folder where I was going to initialize the Git repository and fetch from the existing SVN for the first time.</p>
+
+<pre><code>$ git svn
+git: 'svn' is not a git command. See 'git --help'.
+
+Did you mean one of these?
+    fsck
+    mv
+    show
+</code></pre>
+
+<p>(Note that on some versions of git, the hyphen is necessary, so the command may be <code>git-svn</code>)</p>
+
+<p>If I was on a Ubuntu machine or a flavor of Linux that had apt-get as the package manager I could have just ran <code>sudo apt-get install git-svn</code>. But I was on a RHEL 6.5 system. I tried all sorts of things. I upgraded my version of Git. I compiled Git from the source. I upgraded my version of SVN. I banged my head on the desk. At one point I got something like this:</p>
+
+<pre><code>$ git svn
+Can't locate SVN/Core.pm in @INC (@INC contains:      /usr/lib/perl5/site_perl/5.10.0
+</code></pre>
+
+<p>Then I realized I could try this command out on a Windows machine instead of the RHEL 6.5 machine.</p>
+
+<pre><code>$ git --version
+git version 1.9.5.msysgit.1
+$ git svn
+fatal: Not a git repository (or any of the parent directories): .git
+Unable to find .git directory
+</code></pre>
+
+<p>Okay, great, the command is installed and available to use. Let's carry on then.</p>
+
+<pre><code>$ mkdir new-git-repo-from-svn
+$ cd new-git-repo-from-svn
+$ git svn init http://build.company.intra/svn/repo/web-project/project-parent/trunk --stdlayout
+</code></pre>
+
+<p>It then asked me for my username and password for SVN. Then it ran through a bunch of steps searching SVN for authors and revisions and getting a sense of what was in there. Once you do the <code>git svn init</code> you'll still end up with an empty directory, so you follow it with a <code>git svn fetch</code> to actually start sucking down the files from SVN and matching up the revisions and authors.</p>
+
+<pre><code>$ git svn fetch
+(many hours later)
+</code></pre>
+
+<p>For a big project this may be the longest step. What's convenient is that you can run it multiple times and pick up where you left off. </p>
+
+<p>Once it's all done you should have your familiar project structure in the new folder, only this time it's managed by Git <em>and</em> Subversion. You will not see any .svn files though. I confirmed there were no remotes or branches set up:</p>
+
+<pre><code>$ git remote -v
+(nothing listed)
+$ git branch
+* master
+</code></pre>
+
+<p>Okay. Perfect. Since we're going to stick this file into our company's internal GitLab instance, I'll add the remote and push it there for the first time.</p>
+
+<pre><code>$ git remote add origin git@gitlab.company.intra:GroupName/our-super-rad-project.git
+$ git push -u origin master
+</code></pre>
+
+<p>I checked our GitLab page and was happy to see our first push. And you'll notice that <strong>there's 3,017 commits, so all our SVN history came with it</strong>.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/05/gitlab-initial-commit-from-svn.png" alt=""></p>
+
+<h3 id="keepinggitinsyncwithsvn">Keeping Git in sync with SVN</h3>
+
+<p>Okay, so now that I have the Git repository set up, imagine a few days pass and the developers on my team continue to commit to our "old fashioned" SVN repository. How do I keep the Git repository up to date?</p>
+
+<p>Well, in the same repository that I performed the <code>git svn init</code> in, we'll do a few more commands to bring the Git repository up to date:</p>
+
+<pre><code>(something changed in SVN)
+$ git svn fetch
+$ git svn rebase
+$ git push
+</code></pre>
+
+<p>Cool, now if I look at GitLab (where I just pushed the changes to) I'll see the latest SVN commits there:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/05/svn-to-gitlab-migration-with-history.png" alt=""></p>
+
+<h3 id="nextsteps">Next steps</h3>
+
+<p>This concludes the gentle migration to Git from SVN. Our team is still going to keep committing to SVN because we have other tools (like Maven, Nexus, Jenkins, and Bugzilla) that depend on SVN, but now we have an identical Git repository that we can start interfacing Maven, Nexus, Jenkins, and Bugzilla to, allowing us to perform a gentle migration to Git.</p>
+
+<h3 id="anoteonthenometadataparameterforgitinit">A note on the<code>--no-metadata</code> parameter for <code>git init</code></h3>
+
+<p>I came across many migration guides that suggested doing a <code>git init</code> like this:</p>
+
+<pre><code>$ git svn init http://build.company.intra/svn/repo/web-project/project-parent/trunk --stdlayout --no-metadata
+$ git svn fetch
+</code></pre>
+
+<p>The problem is that if SVN changes after the initial fetch, Git can't figure that out. That means these commands don't work, if you included that <code>--no-metadata</code> parameter:</p>
+
+<pre><code>$ git svn log .
+Unable to determine upstream SVN information from working tree history
+$ git svn info .
+Unable to determine upstream SVN information from working tree history
+</code></pre>
+
+<p>So I would <strong>recommend against that parameter</strong>. The SVN metadata lets you match up SVN revision numbers to Git commits, say for bug tracking purposes. It won't litter your project with <code>.svn</code> folders either, so I don't see any reason not to use it.</p>
+
+<h3 id="resources">Resources</h3>
+
+<ul>
+<li>The <a href="http://git-scm.com/docs/git-svn">git svn</a> docs</li>
+<li><a href="http://stackoverflow.com/questions/527037/git-svn-not-a-git-command">git-svn not a git command</a> Stackoverflow discussion</li>
+<li><a href="http://stackoverflow.com/questions/79165/how-to-migrate-svn-repository-with-history-to-a-new-git-repository?rq=1">Migrate svn repository with history</a> Stackoverflow discussion</li>
+<li><a href="http://www.netinstructions.com/the-case-for-git/">The case for Git in 2015</a> - My article advocating for the use of Git</li>
+<li><a href="http://www.netinstructions.com/getting-eclipse-maven-git-to-play-nice-together/">A guide on getting Eclipse, Maven, and Git to work together</a></li>
+</ul>]]></content:encoded></item><item><title><![CDATA[Getting Eclipse, Maven, and Git to play nice together]]></title><description><![CDATA[How I made Eclipse recognize my project as a Maven project and my team/Git plugins to recognize that it's managed by Git by using a SCM Connector.]]></description><link>http://www.netinstructions.com/getting-eclipse-maven-git-to-play-nice-together/</link><guid isPermaLink="false">38c3cac9-2287-4ebe-be2f-7beab9159f85</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 07 Apr 2015 00:51:40 GMT</pubDate><content:encoded><![CDATA[<p>I've read a lot of how-to guides and tutorials online that quickly tell you how to do something, making it look easy. Sometimes when I ask friends how to do something, they just say, "Oh you need that? You just install it. Easy."</p>
+
+<p><strong>I've heard coworkers and colleagues talk about <em>how simple, how easy</em> it is to use Tool X or Framework Y or Service Z.</strong></p>
+
+<p><strong>I've heard coworkers and colleagues say Tool X or Framework Y or Service Z is a <em>pain in the ass</em>, don't use it.</strong> </p>
+
+<p>I've even caught myself doing one or the other.</p>
+
+<p>Well, in the spirit of documenting my success and my failures, allow me to present to you <strong>my journey to getting Eclipse, Maven and Git to work nicely together</strong>.</p>
+
+<h3 id="whatsmyproblem">What's my problem?</h3>
+
+<p>It's always great to state the problem. Sometimes <a href="http://blog.codinghorror.com/rubber-duck-problem-solving/">talking to your duck</a> is all you need. Though my duck isn't going to save me here... But let's lay down the issue:</p>
+
+<p>I have a project hosted in a Git repository somewhere (maybe on Github or <a href="https://about.gitlab.com/features/">Gitlab</a>, our internal version of Github), and it's managed by Maven. How do I check it out using Eclipse? To be clear, I want both my Maven plugins to recognize it as a Maven project (download and resolve dependencies, recognize the <code>pom.xml</code> files) and I want my Git plugins to recognize that it's managed by Git, so I get history and revision info, etc.</p>
+
+<h3 id="okayletsbegin">Okay, let's begin</h3>
+
+<p>I went to the <a href="http://www.eclipse.org/downloads/?">eclipse website</a> and downloaded the top package, titled Eclipse IDE for Java Developers (Luna 4.4.1). I'll pick the 64 bit version because I have a 64 bit operating system.</p>
+
+<p>I extracted it and fired it up. I created a brand new workspace. </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/eclipse-new-workspace.png" alt=""></p>
+
+<p>Then I went to the options (<strong>Window -> Preferences</strong>) and saw that it recognized some settings for Git that I must have configured in a previous lifetime. If you haven't done this, just add some entries for your user settings (or System settings). I think those two settings are the most important.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/important-git-settings.png" alt=""></p>
+
+<p>Okay... so Git is there... how do I check out the maven project? Some Googling reveals <a href="http://stackoverflow.com/questions/4869815/importing-a-maven-project-into-eclipse-from-git">this</a> Stackoverflow discussion that suggests the M2Eclipse plugin. Do I have that installed?</p>
+
+<p>Eclipse has a handy feature called <strong>Installation Details</strong> and can be accessed by <strong>Help -> Installation Details</strong></p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/eclipse-installation-details.png" alt=""></p>
+
+<h2 id="dohnotthere">Doh, not there.</h2>
+
+<p>Two options: I can try to install this plugin... Or maybe I should just try a different Eclipse package, perhaps the 'Eclipse IDE for Java EE Developers' as that looks to include a bunch of Maven integration tools. Ohh, and it also looks like the EE version includes JavaScript development tools, and I know we do a lot of JavaScript in our project, and bandwidth is cheap, so let's try this route.</p>
+
+<p>I extracted it and fired it up. I created <em>another</em> brand new workspace, just to be safe.[1]</p>
+
+<p>Out of curiosity I checked the <strong>Maven</strong> settings (<strong>Window -> Preferences</strong> again) and saw that it picked up on my user settings. This is good because we have an internal Maven repository where we keep our company .jars and a cache of approved dependencies, and those settings are in the <code>Users\stephen\.m2\settings.xml</code> file. Also some settings for our HTTP proxy, and when to use it. Looks good.</p>
+
+<p>Then I tried to create a new project. I right-clicked on the empty Project Explorer view. <strong>New -> Project... -> Maven -> Check out Maven Projects from SCM</strong>.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/maven-checkout-from-SCM.png" alt=""></p>
+
+<p>I entered in the URL from gitlab. Strange, I have no idea what this box is for and why it's empty. </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/scm-connector-eclipse.png" alt=""></p>
+
+<p>It let me click Next. At the next screen I accepted the default settings and clicked Finish.</p>
+
+<p>And....</p>
+
+<p>Nothing. No projects or folders in the Project Explorer. I waited a moment. Maybe there's debugging info in the console? I had to open that up. <strong>Window -> Show View -> Console</strong>.</p>
+
+<p>Nope, nothing in there.</p>
+
+<p>Was that empty box indicative of a problem? What's an SCM Connector? If I Google 'SCM connector' I get that Stackoverflow question again, or <a href="http://stackoverflow.com/questions/6981001/m2eclipse-no-connectors-for-scm">this SO question</a>, and the SCM tools section from Eclipse Marketplace... but nothing that tells me <em>what</em> an SCM connector is.</p>
+
+<p>If I Google 'what is a SCM connector' I still don't get answers. I get the <a href="http://maven.apache.org/scm/maven-scm-plugin/usage.html">Apache Maven SCM configuration</a> article that explains how to use a SCM Plugin.</p>
+
+<h2 id="whattheheckisascmconnector">What the heck is a SCM Connector?</h2>
+
+<p>This drives me crazy in software development. <strong>So many developers/tech evangelists are quick to tell you why you should use something, or how to use something, but always before telling you what it even is or what purpose it serves</strong>. Thank goodness I know what the acronym SCM stands for, or else I'd be lost even further.</p>
+
+<p>From <em>context</em> alone let me tell you what I <em>think</em> an SCM connector is. First, SCM stands for <a href="http://en.wikipedia.org/wiki/Revision_control">Source Control Management</a> and examples are Git or SVN (Subversion). Secondly a SCM Connector is the intermediary tool between Maven and your SCM. You can use Maven with Git, or you can use Maven with SVN, and the <em>connector</em> is just the tool or interface between the two. At least that's my guess.</p>
+
+<p>Okay, so I click the link to the m2e Marketplace. Maybe I can find the Git &lt;-> Maven SCM connector there.</p>
+
+<p>And...</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/failed-to-find-connectors.png" alt=""></p>
+
+<p>That's a funny, not super helpful, error message. Failed to discover all connectors? All? Surely you mean to say: Failed to find <strong>ANY</strong> connectors. And surely you mean to tell me it's because of an HTTP error, possibly related to the fact that I'm behind a corporate firewall, right? Right?! </p>
+
+<p>Now, I've ran into things like this before so I have a rough idea of what to do next. I'm not going to get so easily discouraged, but my developer friends or skeptics may, and here's the part where they spend hours scratching their heads or slamming their keyboard against the wall, hopefully persevering but potentially giving up and dismissing Git (or Maven, or Eclipse, or some other tool/framework/technology that's not even tangentially related but they have preconceived notions of being too troublesome, and not worth their time and energy, so it gets put on the shit-pile) and why can't they just go back to the days when version control was so simple, why do they have to learn something new?</p>
+
+<p>After some digging around in Eclipse I think I found the proxy settings:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/network-connections-eclipse-1.png" alt=""></p>
+
+<p>I hit apply and close it. I right-clicked on the empty Project Explorer view again. <strong>New -> Project... -> Maven -> Check out Maven Projects from SCM</strong>. I click on the m2e Marketplace link.</p>
+
+<p>And... Nothing. What the heck? Let's go <em>back</em> to the Network Connections preference. What? The Host and Port are empty, but the User and Password are filled out?</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/empty-proxy-host-port-bug.png" alt=""></p>
+
+<p><strong>Am I going crazy</strong>? Okay, let's try setting BOTH the HTTP and HTTPS proxy to use the same thing. I click Apply and OK <em>again</em>. </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/set-both-http-and-https-eclipse-network-settings.png" alt=""></p>
+
+<p>I right-clicked on the empty Project Explorer view again. <strong>New -> Project... -> Maven -> Check out Maven Projects from SCM</strong>. I click on the m2e Marketplace link and......</p>
+
+<p>It works! Holy crap! I find the m2e-egit connector which I assume is what I want, only because it has the word Git in it. From context I'm guessing EGit is the name of the Git plugin for Eclipse. Purely out of curiosity I click <strong>the little info button which displays contextually relevant, super helpful information.</strong></p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/eclipse-m2e-connector.png" alt=""></p>
+
+<p>Heeheehee. That's not helpful at all.</p>
+
+<p>Okay, the fourth time is the charm. I right-clicked on the empty Project Explorer view again. <strong>New -> Project... -> Maven -> Check out Maven Projects from SCM</strong>.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/checkout-with-git-maven-SCM-eclipse.png" alt=""></p>
+
+<p>Woohoo! This looks promising. Turns out that blank field was a good clue. Okay, I click through these screens and....</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/proxy-problem-with-git.png" alt=""></p>
+
+<p>Today is NOT my day! At last this error message is more helpful. Looks like a proxy error, probably related to not having turned off the proxy. A little strange, because I thought I had disabled the proxy for internal addresses (and this host is clearly an internal one). Both SSH/Git protocols should not be operating over HTTP. I thought the proxy was only for HTTP and HTTPS... But let's change those settings again.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/undo-proxy.png" alt=""></p>
+
+<p>I guess I don't have the proxy settings ignoring internal hosts correctly. Whatever. I just clicked the proxy settings to say Direct and hit Apply then OK.</p>
+
+<p>Okay, fifth time is the charm. I right-clicked on the empty Project Explorer view again. <strong>New -> Project... -> Maven -> Check out Maven Projects from SCM</strong>. I click through these screens and....</p>
+
+<h3 id="holycrapitworked">Holy crap! It worked!</h3>
+
+<p>After a few minutes of copying the repository and building the project, everything is there. Maven recognizes it and the Git plugin recognizes it! Awesome.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/04/eclipse-maven-and-git-together.png" alt=""></p>
+
+<p>[1] This is one of my rules to use Eclipse without going insane: Never fear creating new workspaces. Use <a href="http://stackoverflow.com/questions/2078476/how-to-share-eclipse-configuration-over-different-workspaces">the second, not accepted answer here</a> to transfer your settings over quickly. You followed <a href="http://12factor.net/dependencies">rule 2</a> right? You should be using a package manager / build tool to be able to checkout a project from scratch, resolve dependencies, and get it running in 5 minutes or less.</p>]]></content:encoded></item><item><title><![CDATA[How I built ArePeopleTalkingAboutIt.com]]></title><description><![CDATA[Building a web application from scratch using NodeJS, Express, Redis, and NGINX sitting on top of a cheap Amazon EC2 virtual machine. The fun begins!]]></description><link>http://www.netinstructions.com/how-i-built-arepeopletalkingaboutit-com/</link><guid isPermaLink="false">13bc6983-c926-4fb9-a05d-8420ca59a4be</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 17 Feb 2015 03:07:43 GMT</pubDate><content:encoded><![CDATA[<p>This is the story of how I built <a href="http://www.arepeopletalkingaboutit.com">arepeopletalkingaboutit.com</a>.</p>
+
+<p>The idea came to me when I was <a href="http://www.netinstructions.com/the-case-for-git/">advocating for Git</a> on my team at work (we're still stuck on SVN). I decided to use the number of tags on Stackoverflow to get a sense of whether or not people were talking about certain tools or technologies, and to what extent. </p>
+
+<p>I manually visited the pages on Stackoverflow for a few popular source and version control tools to count the number of questions. Two important values were the total number of questions and how many questions had answers. I threw the numbers in a Google spreadsheet, graphed it out, then took a screenshot of the graph and uploaded it to the blog post as a PNG.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/version-control-systems-on-stackoverflow.png" alt=""></p>
+
+<p>As I was manually visiting those pages and compiling the chart I realized how easy it would be to write a crawler to do so. After all, my last pet project involved a lot of web scraping (I tried Ruby's <a href="https://github.com/sparklemotion/mechanize">Mechanize</a>, <a href="http://phantomjs.org/">PhantomJS</a>, and <a href="http://casperjs.org/">CasperJS</a>). Wouldn't it be neat to have a website where you could type in a few tags and instantly get a graph? And then I realized how silly it would be to crawl a technology site that probably has an API.</p>
+
+<h2 id="theapi">The API</h2>
+
+<p>The documentation for the StackExchange API is over <a href="https://api.stackexchange.com/docs">here</a>. I glanced through it to see if I could get the total number of questions and the total number of answers from a single API, but wasn't able to find anything that would do the trick. I ended up combining these two API calls:</p>
+
+<ul>
+<li><a href="https://api.stackexchange.com/docs/tags-by-name">https://api.stackexchange.com/docs/tags-by-name</a></li>
+<li><a href="https://api.stackexchange.com/docs/unanswered-questions">https://api.stackexchange.com/docs/unanswered-questions</a> (with a <code>&amp;tagged=tag</code> and <code>&amp;filter=total</code> appended)</li>
+</ul>
+
+<p>The API had a pretty neat page to test out the different queries and to see what the responses would like look. I'm a big believer that <strong>the faster you can get feedback, the faster you can iterate and test new ideas</strong>, so I commend StackExchange for providing that API feature.</p>
+
+<h2 id="theminimumviableproduct">The minimum viable product</h2>
+
+<p>I'm used to contributing to big enterprise Java applications at work. The way that we make web applications is kind of painful, complicated, and involved. They're arguably more maintainable this way, but that's besides the point. I wanted to try something different for this project, because it's mine and I get to choose! (I don't always get to choose things at work). </p>
+
+<p>Fortunately I did lots of research the last time I was going to architecture a web application so it was easy for me to do it again.</p>
+
+<p>I picked Node.js + Express running on a single Amazon t2.micro EC2 machine. We're not allowed to use these trendy, fancy new cloud services at work so it always feels so liberating to do it at home. </p>
+
+<p>I've already set up web applications this way in the past, so I was able to get a minimum viable product in a few hours. Here's what it looked like:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/02/minimum-viable-product.gif" alt=""></p>
+
+<p>The very first thing I did was create a bare bones page with a single text input field. I used jQuery because I was familiar with it to submit the form and send a <code>GET</code> request to the server. On the server Express was there to retrieve the incoming request and parse the request parameter. I then made the two requests to the StackExchange API. Originally the two requests were written sequentially, but then I figured out how to use <a href="https://www.promisejs.org/patterns/#all">promises</a> to send them both at the same time. I'm still wrapping my head around the "asynchronous event-driven callback" magic Javascript and Node.js love to do (and I'm starting to appreciate it too!). I combine the two Stackoverflow API responses and send them back to the client web browser which displays them on the screen.</p>
+
+<p>You've must have noticed the chart. I'm a big believer in charts and visualization tools, and <strong>humans are bad at quickly comparing numbers without some sort of graphical representation</strong>. For the charts I debated using D3.js because <em>a)</em> all the cool kids are using it and <em>b)</em> because I have <a href="http://www.pricepatient.com/stats">some</a> experience with it.</p>
+
+<p>And then I remembered how long it took me to make a bar chart with it. </p>
+
+<p>Let's be real, D3.js is a <em>wonderful</em> visualization library where the <a href="https://github.com/mbostock/d3/wiki/Gallery">sky is the limit</a>. All I wanted was a simple bar chart. I checked out <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/columnchart">Google's visualization libraries</a> which had great documentation and examples. In under half an hour I was able to take the server response and throw it into a chart.</p>
+
+<p>Let's recap what's going on, in a very crude diagram: <br>
+<img src="http://www.netinstructions.com/content/images/2015/02/ec2-vm-stack-exchange-api-nodejs-express.png" alt=""></p>
+
+<h2 id="optimizing">Optimizing</h2>
+
+<p>I had some ideas to refine the product. For starters, some of stack exchange responses came with a little bit of extra information, specifically:</p>
+
+<pre><code>{"items":[{"has_synonyms":false,"is_moderator_only":false,"is_required":false,"count":1321,"name":"cvs"}],"has_more":false                                                                                     ,"quota_max":300,"quota_remaining":248}
+</code></pre>
+
+<p>Spot an issue? I was only allowed 300 requests per day. After reading the <a href="https://api.stackexchange.com/docs/throttle">throttling documentation</a> I learned I can eventually get 10,000 requests per day by requesting an API key.</p>
+
+<p>But how often are these numbers changing? What if I cached the responses? Would a six hour, 12 hour hour, three day, seven day, or one month old, stale, count of answered/unanswered questions  still be helpful and relevant? Probably not a month. Ideally I'd like to watch these trends to pick a good number, but off the top of my head I decided to cache any response for one day. It's a starting point.</p>
+
+<p>What's the tool for this job? <a href="http://redis.io/">Redis</a>! I really like working with Redis.</p>
+
+<p>I've installed, configured, and used Redis on a t2.micro VM in the past so it was pretty quick to do again. I would use the <a href="http://redis.io/commands/set">SET</a> command like <code>SET "cvs" "{"totalQuestions":1321,"totalAnswers":996,"totalUnanswered":325}" 86400</code> to store it in memory for one day.</p>
+
+<p>Then I modified my requests to the StackExchange API to first check Redis for a value (using the <a href="http://redis.io/commands/get">GET</a> command) and only proceed to make the expensive query across the internet to the API if the key wasn't found in my local Redis cache. Upon getting a response from StackExchange, I would stick it in Redis (using that <code>SET</code> command) in addition to sending it back to the client web browser.</p>
+
+<p>In another rough diagram <br>
+<img src="http://www.netinstructions.com/content/images/2015/02/nodejs-express-and-redis-cache.png" alt=""></p>
+
+<p>How do you verify the cache is working? The easiest way is to wrap a flag on the response and make two requests. The second request should come from the cache, and if I timed the HTTP request/response (maybe using the Chrome/Firefox dev tools in the browser) it should be significantly faster.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/02/redis-cache-working.gif" alt=""></p>
+
+<h2 id="makingitproductionready">Making it production ready</h2>
+
+<p>As I was testing the web application I used <a href="http://nodemon.io/">nodemon</a> to listen for changes and restart the web application so I could iterate quickly. I tested it by going to my <code>host:port</code> address in a web browser that was firewalled to only accept connections from my IP address. </p>
+
+<p>This is not ideal for the real world. Before I deployed to a world wide web, I wanted to stick a robust webserver in front of the Node/Express webserver. This way I could put up multiple Node/Express applications and use the Internet-facing webserver to load balance (hah, if I ever get so popular) but more importantly for being able to update and deploy any fixes or changes to the Node/Express web apps without downtime.</p>
+
+<p>What's the tool for this job? I'm familiar with Apache, but it looks like NGINX is <a href="http://wiki.dreamhost.com/Web_Server_Performance_Comparison">more relevant in my use case</a>. Also I wanted to learn something new.</p>
+
+<p>Here's the latest version, along with a few other technologies that I used listed out. <br>
+<img src="http://www.netinstructions.com/content/images/2015/02/nginx-load-balancer-nodejs-express-redis-1.png" alt=""></p>
+
+<p>Now, for example, If I want to deploy a hot fix I can:</p>
+
+<p>1) Edit the NGINX configuration to <strong>only forward requests to port 54001</strong> followed by a <code>nginx reload</code> <br>
+2) On the web app at <strong>port 54002</strong> do a <code>forever stop</code>, <code>git pull</code> then <code>forever start</code> to start it back up. <br>
+4) Edit the NGINX configuration to <strong>only forward requests to port 54002</strong> followed by a <code>nginx reload</code> <br>
+4) On the web app at <strong>port 54001</strong> repeat the <code>forever stop</code> <code>git pull</code> and <code>forever start</code> to get it updated. <br>
+5) Edit the NGINX configuration to forward requests to <strong>either</strong> web applications since they're both now on the same version.</p>
+
+<p>Obviously there are many improvements to make this more fault tolerant and scalable, the most glaring of which is that everything is sitting on a single t2.micro EC2 machine. Considering this is a stateless web application it should be simple enough to throw more EC2 machines at the problem (maybe in different availability regions), perhaps by resolving to different hostnames <a href="http://aws.amazon.com/route53/">via DNS</a> or by using Amazon's <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html">Elastic IP</a>. I'll add that feature to my TODO list as soon as this becomes a raging viral success.</p>
+
+<h2 id="polishing">Polishing</h2>
+
+<p>The last step was making sure the web UI looked pretty. I wanted a simple FAQ and an explanation of how it worked. I imagined developers would approach it differently than how business/managers approached it, and I wanted it to appeal to both of them. </p>
+
+<p>I also wanted to make sure it was easy to interact with and share those results with friends/colleagues/decision makers. It was important that the URL was readable and that you could send it in an instant message or email to someone and both be looking at the same thing.</p>
+
+<p>I also wanted a way for people to get in touch with me and offer feedback or suggestions. <strong>I welcome constructive criticism</strong>, and the only way I'm going to get better at these things is by learning, doing and listening. It's probably how I got a job as an entry level developer two years ago without much prior experience (I have a B.S. in Optics). I've been coding for a few years, and only recently professionally.</p>
+
+<p>Oh, and the site needed to be mobile friendly, of course. </p>
+
+<p>What's the tool for this job? I've used <a href="http://getbootstrap.com/">Twitter Bootstrap</a> in the past and liked it a lot, so I'm picking it again. On the server side, Node.js had a few templating engines to choose from, and after some research <a href="http://jade-lang.com/">Jade</a> looked favorable over <a href="http://www.embeddedjs.com/">EJS</a>. But don't take my word for it: <br>
+<img src="http://www.netinstructions.com/content/images/2015/02/ejs-vs-jade-for-express-and-nodejs.png" alt="">
+<span style="font-size: 60%">Heeheehee. See an <a href="http://www.arepeopletalkingaboutit.com/tags/ejs,jade">interactive version here</a>.</span></p>
+
+<h2 id="shipit">Ship it</h2>
+
+<p>This is always the hardest part for me. It plagued me while I was designing <a href="http://www.pricepatient.com/">pricepatient.com</a> (and still does today-- there's <em>so much</em> room for improvement on that website). But it's important to get the product out there and then iterate like crazy. </p>
+
+<p>For one thing <strong>it forces you get used to deploying regularly</strong>. You're have to learn how to check in code changes in a dev environment, pull them down in a production environment, and deploy without any downtime. That's the goal anyways, right? That's what this whole agile idea is about. I'm not building a rocket, nor am I dealing with sensitive or private data. This is the perfect place to fail fast, or to succeed iteratively and slowly.</p>
+
+<p>I registered the domain, deployed my code, and opened up the firewall to port 80 for the whole world to see. <a href="http://www.arepeopletalkingaboutit.com/tags/cvs,svn,git,perforce,bazaar,mercurial">Check it out</a> and let me know what you think!</p>]]></content:encoded></item><item><title><![CDATA[The case for Git in 2015]]></title><description><![CDATA[Git is 10 years old. Why should we be using it? Is there anything better? How can we make the migration from SVN or a legacy SCM to use this shiny new toy?]]></description><link>http://www.netinstructions.com/the-case-for-git/</link><guid isPermaLink="false">df80db9d-d092-40aa-aa17-42cc54d7a925</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 20 Jan 2015 05:44:44 GMT</pubDate><content:encoded><![CDATA[<p>This might be an exceptionally strange article for you to read. Perhaps you fully understand the enormous benefits that Git provides and perhaps your team (or yourself, for individual projects) has already made the switch to Git and you wouldn't think to use anything else.</p>
+
+<p>Or maybe you use Mercurial. In that case please note that I when I say Git, I usually mean (Git <em>or</em> Mercurial). Usually.</p>
+
+<p>But keep in mind that there are still teams or projects out in the world that are still stuck using SVN[1]. Or maybe even CVS (shudder). Those people are my target today.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/02/git-svn-cvs-mercurial.png" alt="">
+<span style="font-size: 60%">Graph from Google Trends. See an <a href="http://www.google.com/trends/explore?hl=en-US&amp;q=/m/05vqwg,+/m/09d6g,+/m/012ct9,+/m/08441_&amp;cmpt=q&amp;tz&amp;tz&amp;content=1">interactive version here</a>.</span></p>
+
+<p>So now that we've got that out of the way...</p>
+
+<h1 id="whygit">Why Git?</h1>
+
+<p>Well, besides Git's <a href="http://git-scm.com/about">own feature list</a>, and besides <a href="http://colans.net/blog/business-case-switching-vcses-what-git-provides-over-subversion">this consulting article</a> or this <a href="http://stackoverflow.com/questions/871/why-is-git-better-than-subversion">stack overflow discussion</a> or <a href="https://summit.atlassian.com/archives/2014/software-teams/a-business-case-for-git">this Atlassian talk addressing business needs and benefits</a> or <a href="http://www.drdobbs.com/architecture-and-design/migrating-from-subversion-to-git-and-the/240009175">this article on Dr. Dobb's</a> or <a href="http://blog.teamtreehouse.com/why-you-should-switch-from-subversion-to-git">this article suggesting moving specifically from SVN to Git</a> or <a href="https://www.youtube.com/watch?v=4XpnKHJAok8">Linus Torvalds' talk</a> let me try to come up with even more reasons.</p>
+
+<h3 id="itseverywhere">It's everywhere</h3>
+
+<p>Git is practically an industry standard. If you know how to use Git:</p>
+
+<ul>
+<li>You're able to get started faster at new companies</li>
+<li>You're able to get started faster on new projects</li>
+<li>You're probably already familiar with pull requests so you can contribute easier to open source projects</li>
+<li>You don't fear branching, merging or having concurrent development paths </li>
+<li>(<em>Here's the part where I have to hold back from just repeating the 7 linked articles above. For real, please read those articles</em>).</li>
+</ul>
+
+<p>But so what if Git is an "industry standard"? Well, for one, it means that there's a healthy <a href="http://stackoverflow.com/questions/tagged/git">Stackoverflow discussion</a> (50,019 questions and 40,515 answers). In other words, <strong>someone has already run into whatever your problem is, has already asked it, and has already received an answer</strong>. By comparison, there are <a href="http://stackoverflow.com/questions/tagged/svn">16,507 answers</a> for SVN, and <a href="http://stackoverflow.com/questions/tagged/cvs">985</a> for CVS (as of this writing).</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/version-control-systems-on-stackoverflow.png" alt="">
+<span style="font-size: 60%">Graph from ArePeopleTalkingAboutIt.com. See an <a href="http://www.arepeopletalkingaboutit.com/tags/cvs,svn,git,perforce,bazaar,mercurial">interactive version here</a>.</span></p>
+
+<p>It also means that the world wide web is rife with documentation, tutorials, and how-to guides. Or already a million essays advocating for it (<em>whoops!</em>).</p>
+
+<p>It also means that there's a wide variety of modern plugins, tools, and integration points. There's entire services and businesses that have seen immense growth based solely around this tool (hi <a href="https://growthhackers.com/companies/github/">GitHub</a>!). It's a huge platform. </p>
+
+<p>Have you seen this <a href="http://pcottle.github.io/learnGitBranching/">awesome learning tool</a>? Have you seen this <a href="http://www.wei-wang.com/ExplainGitWithD3/#">fantastic visualization tool</a>? <strong>Some nut job evangelists are so passionate about a revision/source control system (<em>how does this happen?</em>) that they made these websites to get you aboard the Git bandwagon.</strong> What a bunch of weirdos! It's just a RCS/SCS, right?</p>
+
+<h3 id="itsthefuture">It's the "future"</h3>
+
+<p>I can imagine those of you who have already switched to Git laughing at this point. You're probably thinking I'm <em>insane</em>.</p>
+
+<p>But there's people out there who don't realize that this April Git will be celebrating its 10 year birthday. Take a look at the <a href="https://github.com/git/git/commit/e83c5163316f89bfbde7d9ab23ca2e25604af290">initial commit</a> if the world flew past you and you missed it. <strong>Git is not some new trendy tool that the cool kids are using. It's stable. It's robust. It's 10 years old.</strong> In the software/tech timeline Git is equivalent to the Mesozoic era on the prehistoric timeline.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/eclipse-community-talk-1.png" alt="">
+<span style="font-size: 60%">Slide from <a href="http://www.slideshare.net/caniszczyk/evolution-of-version-control-in-open-source">Chris Aniszczyk's talk</a>  from 2010 while he was on the board of Eclipse (arrow added).</span></p>
+
+<p>Companies all over have realized this. Did you know Microsoft has hosted open source projects on their <a href="http://en.wikipedia.org/wiki/CodePlex">CodePlex platform</a> since 2006? Well, Microsoft is <a href="http://www.theregister.co.uk/2015/01/15/codeplex_repository_out_of_favour_as_microsoft_moves_major_projects_to_github/">migrating .NET</a> and many of its <a href="http://blogs.msdn.com/b/fsharpteam/archive/2015/01/13/visual-f-has-moved-to-github.aspx">other open source projects</a> over to GitHub <em>off of Codeplex.</em> Here's Microsoft's projects <a href="https://github.com/microsoft">managed by Git and hosted on GitHub</a>.</p>
+
+<p>Google, not wanting to miss out of the fun, began hosting open source projects on their <a href="http://en.wikipedia.org/wiki/Google_Developers#Project_hosting">Google Code</a> platform in 2009. But then they announced that they're migrating their <a href="https://groups.google.com/forum/#!topic/golang-dev/sckirqOWepg%5B51-75-false%5D">Go language to GitHub</a> <em>off of Google Code</em>. This was met with a <a href="https://news.ycombinator.com/item?id=8605204">positive reaction</a> from the developer community and there was much praise for Git and Github. Google has many projects <a href="https://github.com/google">managed by Git and hosted on GitHub</a>.</p>
+
+<p>Or <a href="https://github.com/facebook">Facebook</a>. Or <a href="https://twitter.github.io/">Twitter</a>. </p>
+
+<p>Or look at it a different way, which popular <a href="https://github.com/search?q=stars:%3E1&amp;s=stars&amp;type=Repositories">tool or platform are you using that's managed by Git</a>?</p>
+
+<h2 id="itsafundamentallydifferentrevisioncontrolsystem">It's a fundamentally different revision control system</h2>
+
+<p>There's things about Git that make it so... <em>special</em>. </p>
+
+<p><a href="http://en.wikipedia.org/wiki/Linus_Torvalds">Linus Torvalds</a> had good reasons to create it out of frustrations with SVN and previous revision control systems (RCMs). Or if you don't trust the guy behind Linux, consider Twitter's senior engineering manager's revelations in 2009 (while he was on the board at Eclipse). In 2010 he announced that CVS was dead and SVN is dying. You can see his dusty five year old slides stating that Git is the latest in the evolution of version control <a href="http://www.slideshare.net/caniszczyk/evolution-of-version-control-in-open-source">here</a>.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/evolution-of-version-control.png" alt="">
+<span style="font-size: 60%">Table from <a href="http://ericsink.com/vcbe/html/history_of_version_control.html">Eric Sink's history of version control</a></span></p>
+
+<p>How's it special? For one it's distributed. What does this mean to you? In the interest of not repeating what hundreds (if not thousands) of other people have already already written about, please consult the <a href="http://www.netinstructions.com/the-case-for-git/#whygit">links above</a>. The TL;DR is that you reduce the single point of failures, you can commit and work faster locally, and you can collaborate better.</p>
+
+<p>Git handles branching differently too. When was the last time you performed a branch on a large enterprise codebase in SVN? How long did it take you? It literally took me minutes. (<em>Oh no, not entire minutes!</em>) But the last time I branched a large piece of code in Git it literally took me fractions of seconds. Before you say, "So what if you just saved 8 minutes of time" let me tell you that <strong>when things happen orders of magnitude faster, you start to think about them differently.</strong></p>
+
+<p>Again, please consult the <a href="http://www.netinstructions.com/the-case-for-git/#whygit">links above</a>, but the TL;DR is that you're never going to fear branching or merging again. And Git will never result in any weird branching or merging errors that you'll occasionally see while using SVN. And that makes entirely new development processes possible, such as always having a stable trunk, and only releasing releases when they're stable and ready (weird idea, I know). <strong>It's almost like Git can be used to achieve that tech-babble "continuous integration" thing that people keep talking loudly about, whatever it is.</strong></p>
+
+<h3 id="sohowdoyouswitch">So... how do you switch?</h3>
+
+<p>If you're starting a new project it's easy. <strong>Just use Git from the beginning</strong> (<em>well duhh!</em>). All it takes is a simple <code>git init</code> in the project's root directory. You can commit all you want and down the road you can decide to open it up to others by pushing to a remote like GitHub/GitLab, or having others clone from you. <strong>My rule of thumb is that if I spend longer than a few hours on unversioned code or I'm about to perform any rewrites / refactoring (or anything slightly "risky") I'll initialize and commit to a local Git repository.</strong></p>
+
+<p><strong>If you're on a big team that refuses to make the switch, you can use the <code>git svn</code> command</strong> outlined <a href="http://git-scm.com/book/en/v1/Git-and-Other-Systems-Git-and-Subversion">here</a> to get some benefits of Git while at the end of the day checking into a canonical SVN repository. From their docs:</p>
+
+<blockquote>
+  <p>This means you can do local branching and merging, use the staging area, use rebasing and cherry-picking, and so on, while your collaborators continue to work in their dark and ancient ways.</p>
+</blockquote>
+
+<p>But I cannot fully recommend using <code>git svn</code> like this if you have the opportunity to migrate entirely away from SVN. From their docs, which is worth repeating:</p>
+
+<blockquote>
+  <p>If you follow those guidelines, working with a Subversion server can be more bearable. However, if it’s possible to move to a real Git server, doing so can gain your team a lot more.</p>
+</blockquote>
+
+<p>Which comes to the final issue...</p>
+
+<h3 id="howcanyoumakeatransitionfromsaysvntogitinthemostpainfreewaypossible">How can you make a transition from say, SVN, to Git in the most pain free way possible?</h3>
+
+<p>GitHub or <a href="https://about.gitlab.com/features/">GitLab</a> (an internally hosted equivalent to GitHub, for those companies afraid of the cloud) do wonders to ease the transition. They both provide a fast, intuitive, web-based UI to help visualize your project as it's managed by Git. You get pretty charts, graphs, and helpful collaborative <strong>tools that <a href="http://zachholman.com/talk/move-fast-break-nothing/">build into your existing process</a> instead of adding vertically (overhead)  to a process.</strong></p>
+
+<p>If you see the light while your coworkers remain in the dark, consider updating the internal wiki at your work with a concise tutorial (full of pretty pictures -- everyone likes pictures) for installing Git on your local machines or creating SSH key pairs. If you don't have an internal wiki, consider a tutorial-in-an-email for your team. You may want to document how you installed say, the Git plugin for Eclipse or how you got Maven/Gradle/Ant/Make/Jenkins/Hudson/Nexus/whatever to interface with it. </p>
+
+<p>Stackoverflow has a great discussion <a href="http://stackoverflow.com/questions/79165/migrate-svn-repository-with-history-to-a-new-git-repository">here</a> on migrating from SVN to Git if you have a big meaningful SVN history (hint: scroll past the accepted answer). <a href="http://jmoses.co/2014/03/21/moving-from-svn-to-git.html">This guide</a> talks about handling all your authors and <a href="http://blokspeed.net/blog/2010/09/converting-from-subversion-to-git/">this guide</a> talks about handling all your branches and tags. Both use the <code>git svn</code> command as part of the migration.</p>
+
+<p><strong>If you have no interest in keeping your SVN history and if you're only on one trunk in SVN</strong>, you can just checkout from SVN, <code>git init</code>, use Git's <a href="http://git-scm.com/docs/gitignore">ignore feature</a> to ignore all the pesky <code>.svn</code> files scattered everywhere, and then make your initial <code>git add .</code> and <code>git commit</code> to the new Git repository. Make that repository accessible, either by pushing to GitHub/GitLab, or by following this <a href="http://git-scm.com/book/en/v1/Git-on-the-Server">brief but excellent guide</a>. You and your teammates can now use Git. Also then please read <a href="http://who-t.blogspot.com/2009/12/on-commit-messages.html">this</a> to because <strong>you're missing the point of commit messages.</strong></p>
+
+<h3 id="amicrazyorareyoucrazy">Am I crazy or are you crazy*?</h3>
+
+<p>Finally, if you can provide any compelling reasons to keep using SVN or any previous source control management / revision control tools please share them below.</p>
+
+<p>Additionally, if you can offer any easy ways to make a migration to Git easier, perhaps from SVN or your previous revision/source control system, please let me know.</p>
+
+<p>Are you using something newer, better, more amazing than Git? I'd like to hear about it too.</p>
+
+<p><span style="font-size: 80%">* It's cool, we can both be crazy[2][3].</span></p>
+
+<hr>
+
+<p><span style="font-size: 80%">[1] I was very hesitant to share <a href="http://i.imgur.com/1GyzwPJ.png">this slide</a> from the <a href="http://www.slideshare.net/IanSkerrett/eclipse-community-survey-2014">2014 Eclipse Community Survey</a> of 876 respondents because from first glance, it's quite misleading. If you focus on 2014 Git holds the majority ringing in at 33.3% relative to second place, SVN at 30.7%. Not only that, but there are separate categories for Git and GitHub, but you're only supposed to choose one (!!!). I'd wager that almost all of the folks using GitHub are also using Git, so a better representation would look something <a href="http://i.imgur.com/CEkIHSQ.png">like this</a>. Keep in mind that's already a year old and Git has seen explosive growth while SVN keeps shrinking.</span></p>
+
+<p><span style="font-size: 80%">[2] I'm guessing some of you will say you have a ton of legacy systems or build processes that rely on SVN. Sure, I understand the hesitancy to make the switch. But I bet it's easier than you think it is, and any 3rd party tool worth its salt should have integration points for Git at this point in time. Or if it's actually that hard to migrate some special home-brewed tool, you already know this and the 100th essay you read about this amazing tool isn't going to convince you anyways :)</span></p>
+
+<p><span style="font-size: 80%">[3] Worried of a big monopoly on source/revision control systems? If everyone uses Git, will Git no longer have any compelling reason to improve? We're probably okay as it's just an open source protocol. But what if everyone in the world one day uses GitHub... does GitHub have any compelling reason to improve? What if GitHub forks Git and develops it in secrecy, or introduces some non-compatible feature? These are not real concerns of mine, but it's good to be a little paranoid every now and then.</span></p>]]></content:encoded></item><item><title><![CDATA[Redundant host names on Nginx and Apache]]></title><description><![CDATA[A discussion on whether or not to add the www subdomain to your website. How to do it on Nginx or Apache, and how to verify the change when you're all done.]]></description><link>http://www.netinstructions.com/redundant-host-name-fixes-for-nginx-and-apache/</link><guid isPermaLink="false">e731ced3-f9af-43e5-9a0b-96b84bcef42d</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 13 Jan 2015 04:19:34 GMT</pubDate><content:encoded><![CDATA[<p>Shortly after <a href="http://netinstructions.com/my-live-migration-from-wordpress-to-ghost/">switching my site from Wordpress over to Ghost</a> I was taking a look at Google Analytics and noticed this alert:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/google-analytics-redundant-hostnames-error.png" alt=""></p>
+
+<blockquote>
+  <p>Property <a href="http://www.netinstructions.com">http://www.netinstructions.com</a> is receiving data from redundant hostnames. Consider setting up a 301 redirect on your website, or make a search and replace filter that strips "www." from hostnames. Examples of redundant hostnames: example.com, www.example.com.</p>
+</blockquote>
+
+<p>Okay, I must have overlooked that in the migration. I didn't think it was that big of a deal until I read <a href="https://www.polemicdigital.com/2015/01/every-web-developer-know-seo/">the section on redirects here</a> regarding SEO. <strong>The solution involves a simple Nginx or Apache change</strong> (depending on which web server you have) that I explain at the bottom. <strong>I also include a way to figure out which server you have, and a way to test/verify the change</strong>. </p>
+
+<p>But first, I had to decide which I preferred...</p>
+
+<h2 id="tousewwwortonotusewww">To use www or to not use www</h2>
+
+<p>This turned out to be the more difficult question. I found no less than three versions of this question on various stack exchange websites:</p>
+
+<ul>
+<li>The <a href="http://stackoverflow.com/questions/486621/when-should-one-use-a-www-subdomain">(most helpful) stackoverflow</a> discussion</li>
+<li>The <a href="http://superuser.com/questions/60006/what-is-the-purpose-of-the-www-subdomain">superuser</a> discussion</li>
+<li>The <a href="http://serverfault.com/questions/273696/is-it-ok-to-not-use-www-in-my-website-subdomain-url">serverfault</a> discussion</li>
+</ul>
+
+<p>Not only that, but apparently <strong>someone felt so strongly about this issue that they went and created a whole website about the topic suitably named <a href="http://no-www.org/">no-www.org</a></strong>.</p>
+
+<p>And then I learned that <strong>someone felt so strongly about having the www subdomain that there's a website dedicated entirely to the inverse, named <a href="http://www.yes-www.org/">www.yes-www.org</a></strong></p>
+
+<p>So... what the heck? Did I stumble upon something similar to the <a href="http://en.wikipedia.org/wiki/Editor_war">Emacs vs. Vi (Vim)</a> debate? Curly braces on <a href="http://programmers.stackexchange.com/questions/2715/should-curly-braces-appear-on-their-own-line">this line or the next line</a>? <a href="http://programmers.stackexchange.com/questions/57/tabs-versus-spaces-what-is-the-proper-indentation-character-for-everything-in-e">Tabs or spaces</a>?</p>
+
+<p>Oh well! People will disagree on things and I'm glad we have the discussion.</p>
+
+<p>I decided to direct <code>netinstructions.com</code> requests to <code>www.netinstructions.com</code> since I like the extra verbosity and the bit about the cookies made sense. Also the <a href="http://no-www.org/">no-www website</a> made my eyes hurt.</p>
+
+<h2 id="removingoraddingwwwonnginx">Removing (or adding) www on Nginx</h2>
+
+<p>My file was located at <code>/etc/nginx/sites-available/www.netinstructions.com</code> that I edited.</p>
+
+<p>If you want to <strong>add the www</strong> on Nginx (this is what I decided to do):</p>
+
+<pre><code> server {
+    server_name example.com;
+    return 301 http://www.example.com$request_uri;
+}
+server {
+    server_name  www.example.com;
+    // Anything else here...
+}
+</code></pre>
+
+<p>On the other hand, to <strong>remove the www</strong> and redirect to the non-www domain on Nginx:</p>
+
+<pre><code>server {
+  server_name www.example.com;
+  return 301 $scheme://example.com$request_uri;
+}
+server {
+  server_name example.com;
+  // Anything else here...
+}
+</code></pre>
+
+<p>There's more information <a href="http://stackoverflow.com/questions/7947030/nginx-no-www-to-www-and-www-to-no-www">at this stackoverflow discussion</a> which also discusses the slight differences if it's over HTTPS, or you can read the <a href="http://nginx.org/en/docs/http/converting_rewrite_rules.html">nginx docs</a> or <a href="http://wiki.nginx.org/Pitfalls">nginx pitfalls wiki</a></p>
+
+<p>Also, don't forget to restart or reload Nginx by typing <code>sudo service nginx reload</code></p>
+
+<h2 id="removingoraddingwwwonapache">Removing (or adding) www on Apache</h2>
+
+<p>You can copy these rules to the <code>.htaccess</code> file. </p>
+
+<p>To <strong>remove www</strong> on Apache:</p>
+
+<pre><code>RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteCond %{HTTPS}s ^on(s)|
+RewriteRule ^ http%2://%1%{REQUEST_URI} [L,R=301]
+</code></pre>
+
+<p>Or to <strong>add www</strong> on Apache:</p>
+
+<pre><code>RewriteCond %{HTTP_HOST} !^www\.
+RewriteCond %{HTTPS}s ^on(s)|
+RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</code></pre>
+
+<p>The above are discussed <a href="http://stackoverflow.com/questions/7669200/yet-another-beautiful-way-to-remove-www-via-rewrite-in-htaccess">here</a> and I also found this <a href="http://stackoverflow.com/questions/14245668/redirect-www-to-non-www-or-the-other-way-around">slightly newer</a> answer.</p>
+
+<h2 id="verifyingthefix">Verifying the fix</h2>
+
+<p>Before I made the change I did two simple <code>curl</code> requests (<code>curl</code> is a unix command). <strong>Regardless of your webserver, you should see a redirect happening after you make this fix</strong>. If you're not sure which webserver you have, you can also use <code>curl</code> to find out</p>
+
+<pre><code>$ curl -I -L http://netinstructions.com
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 13 Jan 2015 03:57:08 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 8968
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"sTDclBz1wzhztqkd6TLTbg=="
+Vary: Accept-Encoding
+</code></pre>
+
+<p>And with the www:</p>
+
+<pre><code>$ curl -I -L http://www.netinstructions.com
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 13 Jan 2015 03:57:19 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 8968
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"sTDclBz1wzhztqkd6TLTbg=="
+Vary: Accept-Encoding
+</code></pre>
+
+<p>Now, after I made the change (and reloaded Nginx) I performed the same requests. <strong>Since I decided to always add the www, you'll see the 301 redirect</strong>  when I make a request to the non-www domain <code>netinstructions.com</code></p>
+
+<pre><code>$ curl -I -L http://netinstructions.com
+HTTP/1.1 301 Moved Permanently &lt;-------- Success!
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 13 Jan 2015 04:08:27 GMT
+Content-Type: text/html
+Content-Length: 193
+Connection: keep-alive
+Location: http://www.netinstructions.com/
+
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 13 Jan 2015 04:08:27 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 8968
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"sTDclBz1wzhztqkd6TLTbg=="
+Vary: Accept-Encoding
+</code></pre>
+
+<p>And with the www (should expect <strong>no changes</strong> for my case, since I want www to always be used):</p>
+
+<pre><code>$ curl -I -L http://www.netinstructions.com
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 13 Jan 2015 04:08:34 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 8968
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"sTDclBz1wzhztqkd6TLTbg=="
+Vary: Accept-Encoding
+</code></pre>
+
+<p>Perfect. All done.</p>]]></content:encoded></item><item><title><![CDATA[Charts are awesome]]></title><description><![CDATA[A few choice graphs can show incredible insight into your entire application, touching on many areas. And best of all, they're often easy to implement.]]></description><link>http://www.netinstructions.com/charts-are-awesome/</link><guid isPermaLink="false">1b4c87eb-4783-4aa7-b08b-5ac5468db712</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Wed, 07 Jan 2015 20:11:37 GMT</pubDate><content:encoded><![CDATA[<p>Have you ever watched Coda Hale's <a href="https://www.youtube.com/watch?v=czes-oa0yik">Metrics, Metrics Everywhere</a> talk? A few choice graphs can show incredible insight into your entire application, touching on many areas. And best of all, they're often easy to implement.</p>
+
+<h3 id="twosimplesupercriticalcharts">Two simple super critical charts</h3>
+
+<p>Towards the end of summer I decided to create a little <a href="http://pricepatient.com/">side project</a>. The idea was that I would build a swatch of web crawlers, they'd crawl a boutique camera store, and record the price and inventory levels of products into a database. I'd then wrap a simple web application around that database. Users can <a href="http://pricepatient.com/view-price-history">view price history</a> or <a href="http://pricepatient.com/create-price-watch">sign up for price drop alerts</a>.</p>
+
+<p>Right from the beginning I realized I could make two charts to get an idea of how my web crawlers were behaving. All I did was create a few simple SQL queries (think <code>select count(*) from table t where t.created_on = today</code>) that ran on a schedule and appended to a .txt file that <a href="http://d3js.org/">D3.js</a> would use to populate some charts. Here's what they <a href="http://pricepatient.com/stats/">look</a> like:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/price-patient-stats.png" alt=""></p>
+
+<p>What do these two charts and stats cover? <strong>A lot!</strong></p>
+
+<ul>
+<li>How many products I'm monitoring</li>
+<li>The rate at which new products are being added</li>
+<li>How my web crawlers are doing <em>right now</em>, in the last 6 hours, and in the last 24 hours (think of <code>top</code>'s <a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages">load averages</a>)</li>
+<li>How my web crawlers were doing yesterday, or the day before, or any day in the last 6 months. </li>
+<li>Any trends or slowdowns. For example, there were some dips in the bottom chart which corresponded to days I performed data migrations.</li>
+<li>How performant my web crawlers are after 3 rewrites in 3 different languages/frameworks. I can point to this chart and be certain my rewrites are working better than before. Look at the first month where I was getting 5k to 20k price checks per day, compared to the 35k I get these days.</li>
+</ul>
+
+<p><strong>Based on historical data, I know what to expect tomorrow</strong>. If the numbers aren't performing to where I would expect, I immediately know something is up. <strong>It turned out to be trivial to wire up an an <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/SES.html#sendEmail-property">email alert</a></strong> if I don't get >6k price checks in the last 6 hours, allowing me to be proactive in hunting down the problem[1]. Could it be my database? Could it be the crawlers? Could it be one of the EC2 instances my crawlers are running on? Could it be the proxies that my crawlers are using? Could it be that the website (that I'm crawling) is down? Could it be the website (that I'm crawling) changed its content or format?</p>
+
+<p>These graphs don't necessarily isolate the problem, but <strong>they very quickly let me know of anything out of the ordinary</strong> so I can start investigating. And after a few months of these graphs I realized the six potential "problem areas" in the last paragraph haven't ever been problems at all. <strong>In the few hours that I took creating these graphs I saved countless days of needlessly  optimizing or worrying over my architecture.</strong></p>
+
+<p>But if you can't be spared a few hours...</p>
+
+<h3 id="howaboutfreegraphs">How about free graphs?</h3>
+
+<p>I use Google Analytics and Google Webmaster tools on all of my side projects. It takes about 5 minutes to sign up or add the javascript snippet.</p>
+
+<p>About a month ago I was perusing the Google crawl stats graphs. I noticed a steady climb of the average time spent downloading a page. When I launched this little project of mine the average download time was around 100-200ms. <strong>Over the course of a few months it was increasing, up to around 3000ms!</strong></p>
+
+<p>Of course you're now thinking, "3 seconds to load a page! What's going on!?"</p>
+
+<p>I was thinking the same thing. I performed some investigations and it turned out I totally forgot to add an index on a column that's used as the key in part of a query that gets ran on each page request. Not only that, but other services were adding to this table on a regular basis, thereby increasing the page response time every day!</p>
+
+<p>I slapped my head when I realized this silly mistake and added the index. A few months later I checked the crawl stats and was happy to see this (last chart at the bottom):</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/google-webmaster-tools.png" alt=""></p>
+
+<p>That's pretty good <strong>evidence of the problem AND the solution</strong>. Rock on!</p>
+
+<hr>
+
+<p><em>Update on 1/16/2014:</em></p>
+
+<p>I spent some time playing around with <a href="http://influxdb.com/">InfluxDB</a> a couple days ago and... Wow. If I need pretty charts (or super specific ones) for the end-user to see, I'll use the methods described here (SQL selects appended to .txt and drawn with D3.js). </p>
+
+<p>If on the other hand I just a place to throw metrics at, to later monitor (historical or realtime) I'm most certainly going to use InfluxDB (the <a href="https://news.ycombinator.com/item?id=8739208">successor</a> to <a href="http://graphite.wikidot.com/">Graphite</a> as far as I can tell). There's also <a href="http://grafana.org/">Grafana</a> that I haven't had a chance to explore, but that looks like an awesome way to design monitors and dashboards. It's on my to do.</p>
+
+<p><em>Update on 2/4/2014:</em></p>
+
+<p>I think I'd also like to check out <a href="http://prometheus.io/">Promethus</a> as well, and see how it <a href="http://prometheus.io/docs/introduction/comparison/">compares</a> to Graphite/InfluxDB/Grafana.</p>
+
+<hr>
+
+<p><span style="font-size: 80%">[1]: Although I wonder, since this is a little low-traffic side project of mine, if I were to get an email alert while I'm out with friends... just how proactive I would be in running home and firing up a bunch of remote terminals in a hurry, furiously crunching out SQL queries and grepping over logs...</span></p>]]></content:encoded></item><item><title><![CDATA[Git and SVN together]]></title><description><![CDATA[Ever wonder if you could use git and svn together? In other words, git doesn't care about svn, and svn doesn't care about git? Commit or update from either.]]></description><link>http://www.netinstructions.com/git-and-svn-together/</link><guid isPermaLink="false">f60d235e-e019-4c41-ad0b-f6b78b4c4042</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 06 Jan 2015 05:26:37 GMT</pubDate><content:encoded><![CDATA[<p>Ever wonder if you can use git and svn to manage the same codebase? In this demonstration I check out a project from SVN, initialize a git repository within that SVN repository, and push it to GitLab, which is basically a self-hosted GitHub instance. Git doesn't notice svn, and svn doesn't notice git. Update from one and commit to the other!</p>
+
+<h4 id="prereqs">Pre-reqs</h4>
+
+<p>In my instance GitLab was already set up somewhere and a user had been created with permissions to create a new project. It may be worth noting that for GitLab to be set up somewhere correctly, a UNIX user needs to be created with appropriate permissions. In these examples (and I'm guessing this is a convention for GitLab) that UNIX user is named <code>git</code>. </p>
+
+<h3 id="letsputasvnrepositoryongitlab">Let's put a SVN repository on GitLab!</h3>
+
+<p>Create an empty project on GitLab. Then I set up SSH keys. In other words, I already had a private key on my Windows PC that lived in <code>C:\Users\stephen\.ssh\private_key.ppk</code>. Note that this is a PuTTY private key. I used PuttyGen to convert it into an OpenSSH private key since Git on Windows prefers to use that form of a private key. I named this file <code>id_rsa</code> and stuck it in the same directory as the <code>.ppk</code> file. </p>
+
+<p>I put my public key onto GitLab. </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/gitlab-ssh-keys.png" alt=""></p>
+
+<p>I then verified I could SSH to the GitLab server from my Windows PC by opening up the Git Bash and typing</p>
+
+<pre><code>$ ssh -vT git@gitlab.company.intra
+</code></pre>
+
+<p>That command shows helpful debugging information such as what private keys it's attempting to use.</p>
+
+<p>Once that was all verified, I performed Git global setup (this is all in Git Bash on my Windows PC)</p>
+
+<pre><code>git config --global user.name "Stephen"
+git config --global user.email "stephens@company.com"
+</code></pre>
+
+<p>And then created a local (on my Windows PC) git repository.</p>
+
+<pre><code>mkdir test_project
+cd test_project
+git init
+touch README
+git add README
+git commit -m 'First commit'
+</code></pre>
+
+<p>And pushed it to GitLab</p>
+
+<pre><code>git remote add origin git@gitlab.company.intra:testproject/test_project.git
+git push -u origin master
+</code></pre>
+
+<p>On GitLab you can see this initial commit and the empty README file.</p>
+
+<h2 id="getyourcodefromsvn">Get your code from SVN</h2>
+
+<p>Leaving the Git Bash window open I opened up a second window... The good ol' windows command prompt. I have SVN installed on my Windows PC. I can verify this by running <code>svn --version</code> in the windows command prompt.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/windows-git-bash-and-windows-svn.png" alt=""></p>
+
+<p>I then checked out the existing SVN repository.</p>
+
+<pre><code>(in Windows command prompt)
+cd test_project
+svn checkout http://build.company.intra:8001/svn/repo1/webapp-projects/project-parent/trunk
+</code></pre>
+
+<p>In the Git Bash window you can run a <code>git status</code> to see all the new untracked files Git noticed. We don't want Git to notice the SVN files and directories though. To make Git ignore all those .svn directories</p>
+
+<pre><code>(in Git Bash)
+cd test_project
+touch .gitignore
+</code></pre>
+
+<p>This just creates an empty file. I opened <code>.gitignore</code> in a text editor and added one line: <code>.svn</code> and saved it. Run <code>git status</code> once more and you should no longer see any .svn directories.</p>
+
+<p>Let's commit everything to Git (including the .gitignore file).</p>
+
+<pre><code>(in Git Bash)
+git add .
+git status (notice the untracked files are now tracked and staged for commit)
+git commit -m 'First commit of all files from SVN'
+git push -u origin master
+</code></pre>
+
+<p>You should now see all your code on GitLab and none of the .svn directories.</p>
+
+<p>Almost done. The last step is to get SVN to ignore the .git directory and the .gitignore file. Create a text file in your project directory <code>ignorelist.txt</code> with two lines</p>
+
+<pre><code>.git
+.gitignore
+README.md
+</code></pre>
+
+<p>And save that file.</p>
+
+<pre><code>(In Windows command line)
+svn propset svn:ignore -F ignorelist.txt .
+</code></pre>
+
+<p>If you run <code>svn status</code> it should only complain about the <code>ignorelist.txt file</code>. Go ahead and delete <code>ignorelist.txt</code> now. The next time you run <code>svn status</code> it should be all be blissfully unaware of Git and the empty README file you had created.</p>
+
+<p>Or, in picture form (my <code>test_project</code> in these photos is called <code>allocation</code>): <br>
+<img src="http://www.netinstructions.com/content/images/2015/01/svn-ignoring-multiple-files-svn-status.png" alt=""></p>
+
+<p>If you run <code>git status</code> in Git Bash it should say everything's all good and be blissfully unaware of SVN.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2015/01/git-bash-ignoring-svn.png" alt=""></p>
+
+<h2 id="somethoughtsonthisprocess">Some thoughts on this process</h2>
+
+<p>One thing I noticed while ensuring Git ignores SVN and SVN ignores Git is that SVN likes to store a <code>.svn</code> <strong>inside every directory</strong> whereas Git likes to store a <code>.git</code> <strong>only at the root directory</strong>.</p>
+
+<p>Git makes it really intuitive and easy to ignore files or directories. You edit one text file that accepts different easy-to-understand syntax. The documentation regarding Git's ignore took just a minute to read and figure out. On the other hand, <strong>SVN's ignore features were very confusing to me</strong> and <a href="http://svnbook.red-bean.com/en/1.7/svn.advanced.props.special.ignore.html">their documentation</a> didn't help much. I had to consult <a href="http://stackoverflow.com/questions/1452493/why-does-svn-ignore-not-ignore">this StackOverflow question</a> and <a href="http://superchlorine.com/2013/08/getting-svn-to-ignore-files-and-directories/">this blog post</a> or <a href="http://sdesmedt.wordpress.com/2006/12/10/how-to-make-subversion-ignore-files-and-folders/">this blog post</a>. Seems like SVN's documentation needed documentation.</p>
+
+<p>One thing this guide didn't cover is keeping track of all the SVN history and any branches or tags in SVN. We just simply copied the trunk of SVN into a new Git repository. <strong>If you look in Git, you won't see any of SVN's history</strong>. This was acceptable to our team, but may not be acceptable to other teams.</p>
+
+<p>There is a <code>git svn</code> command. Read about it <a href="http://git-scm.com/book/en/v1/Git-and-Other-Systems-Git-and-Subversion">here</a>. This does something differently (the second paragraph there is very helpful). The TL;DR is that it lets you use Git locally (say on your Windows PC) but at the end of the day commit to a SVN repository.</p>
+
+<blockquote>
+  <p>This means you can do local branching and merging, use the staging area, use rebasing and cherry-picking, and so on, while your collaborators continue to work in their dark and ancient ways.</p>
+</blockquote>
+
+<p>But note that that is different than what we've done here. In this case, we have both SVN repository and a Git repository. We can commit to either. Which comes to another issue...</p>
+
+<h2 id="howoftenshouldyoucommitandtowhichrepository">How often should you commit, and to which repository?</h2>
+
+<p>This is a tough question. My team likes SVN and we have 1-2 years of commit messages and versions of code saved there. I think for now I'll continue to consider SVN as the canonical repository but try to push to Git on a weekly (or daily?) basis so the Git repository stays up to date. When the day comes that we want to all use Git, we'll already have it set up!</p>
+
+<p>We can also use Git to perform fast branches and experiments. Features that we want to keep around can be merged into <code>master</code> on Git and then committed to the canonical SVN repository.</p>]]></content:encoded></item><item><title><![CDATA[Please read the comments section]]></title><description><![CDATA[What to do about crazy Facebook friends or the negativity found in comments sections. In favor of reading the comments despite all the arguments against it.]]></description><link>http://www.netinstructions.com/please-read-the-comments-section/</link><guid isPermaLink="false">7ca65a21-aa61-4989-8aeb-534f5a821119</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Sun, 28 Dec 2014 00:32:00 GMT</pubDate><content:encoded><![CDATA[<p>I've seen friends share articles with which they agree on Facebook including the caveat, "just don't read the comments section." I've learned there's even a <a href="https://twitter.com/avoidcomments">don't read the comments</a> movement (or at least a 40.3k following) as well as <a href="http://www.theguardian.com/science/brain-flapping/2014/sep/12/comment-sections-toxic-moderation">many</a> <a href="http://www.salon.com/2012/10/25/im_never_reading_the_comments_again/">articles</a> suggesting against reading the comments.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/don-t-read-the-comments.png" alt=""></p>
+
+<p>I keep hearing the idea that <strong>reddit (which can be considered as a site composed almost entirely of comments) is toxic</strong>. That there's too much <a href="http://en.wikipedia.org/wiki/Groupthink">groupthink</a>.</p>
+
+<p>Then I read Jeff Atwood's piece entitled <a href="http://blog.codinghorror.com/please-read-the-comments/">Please read the comments section</a> (a title that I shamelessly stole). That got me thinking, are comments really so bad? <strong>Are we doing a disservice to ourselves to dismiss what others have to say?</strong></p>
+
+<p>Let me offer three stories:</p>
+
+<h3 id="story1afilmcriticisquestioned">Story #1: A film critic is questioned</h3>
+
+<p>Have you seen <em>The Good Lie</em>? I haven't, but I was reading <a href="http://www.rottentomatoes.com/m/the_good_lie_2013/reviews/?type=top_critics">some reviews</a> recently and noticed a few negative reviews in a mix of predominately positive reviews. I was curious why, so I read <a href="http://www.npr.org/2014/10/02/352992008/good-hearted-but-simplistic-the-good-lie-fails-to-satisfy">one of the reviews from a film critic at NPR</a>.</p>
+
+<p>Okay, she had some interesting points, and now I'm actually more curious to watch the film. But what really caught my eye was <a href="http://www.npr.org/2014/10/02/352992008/good-hearted-but-simplistic-the-good-lie-fails-to-satisfy#commentBlock">one of the comments</a> below the article which I'll highlight:</p>
+
+<blockquote>
+  <p>Hi Ella, I am one of the Lost Boys in US. I read your article on "The Good Lie" movie and I am slightly confuse of what you were trying to get at. First, what do you suppose this Lost Boys movie should be about? Did you want it to be a Sudan civil war documentary, or about Lost Boys immigration struggles to US? Note that there is another Lost Boys movie, "God Grew Tired of Us" that talk about their life struggles[...]</p>
+</blockquote>
+
+<p>Well! What a great point to make. I have seen <a href="http://www.imdb.com/title/tt0301555/">God Grew Tired of Us</a> and this commentator is spot on. The commentator goes on to offer additional perspective that the film critic is lacking (nothing against her though). By reading the comments section I was pointed to an important complementary film that is not even mentioned in the original review.</p>
+
+<h3 id="story2afrontpageredditpostframedasinjusticetowardsmeninawomenvsmenworld">Story #2: A front page reddit post framed as injustice towards men in a women vs. men world</h3>
+
+<p>Just yesterday <a href="http://www.reddit.com/r/videos/comments/2qiait/woman_accuses_man_of_rape_man_gets_1_year_jail/">this (incorrectly titled) post hit the front page of Reddit</a>. I happened to see it only about 30 minutes after it was posted. It was skyrocketing to the front page and as much as I didn't <em>want</em> to read the comments section, I  did want to speak up for women and rape victims. I wanted to offer my opinions on it at this unique opportunity before millions of people around the world for the next few days would be looking at it. </p>
+
+<p><strong>So I bit. I clicked the comments section.</strong> I was expecting a lot of toxic groupthink comments for which reddit is so well known (and yes there were some), but I also found some people already had stepped in to support women and rape victims. Some of the discussion was not even centered on the women vs. men debate the video and title were trying to provoke. They were picking apart how absurdly sensationalist this story even was:</p>
+
+<blockquote>
+  <p>This link came from a YouTube channel that preys upon uninformed people.</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>People, the title of this post is incorrect.</p>
+</blockquote>
+
+<p>It really sucks that reddit is a male-dominated website and we live in a world where rape runs rampant[1]. It also sucks that these red herring, inaccurate stories show up on reddit. And no, it was not completely free of disrespectful comments, but it was a start. Buried in the comments, perhaps too deeply, <strong>were some smart and pithy statements to support future arguments I may have on such topics</strong> such as rape and feminism[2]. I learned <em>why</em> the punishment for rape is much higher than the punishment for making a false rape accusation.[3] By reading the comments section I learned something new.</p>
+
+<p>Not only that, but today when I checked on it, the highest voted comment was about how misleading the headline was, and so the title itself got a <em>misleading title</em> tag.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/reddit-comments-section.png" alt=""></p>
+
+<p>Granted, the reddit discussion was missing something a feminist friend later brought to my attention[4]. More than anything I am really bummed some feminists are hesitant to speak up on these matters (see proposition #1 below) or <strong>avoiding the comments</strong> (see proposition #3), which <strong>is perhaps why this perspective is missing from the comments section on this reddit thread.</strong> Although it's little wonder <a href="http://www.latimes.com/opinion/opinion-la/la-ol-anita-sarkeesian-gamergate-20141017-story.html">why</a> they're hesitant[6][7].</p>
+
+<h3 id="story3apotentiallycontroversialarticleregardingsexandgender">Story #3: A (potentially) controversial article regarding sex and gender</h3>
+
+<p>A few years ago I read this <a href="http://arstechnica.com/science/2012/09/pregnant-males-and-pseudopenises-complex-sex-in-the-animal-kingdom/">fascinating article on complex sex and gender in the animal kingdom</a> as part of a <a href="http://arstechnica.com/series/ars-kate-shaw-on-sex/">series</a> published in Ars Technica.</p>
+
+<p>I won't summarize the article here, but in it the author discusses the importance of defining and differentiating between sex vs. gender[5]. Now the question, I wonder, would <em>you</em> have read the comments section?</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/saturday-morning-breakfast-cereal-don-t-read-the-comments-1.gif" alt="">
+<span style="font-size: 60%">Graph from <a href="http://www.smbc-comics.com/?id=2696">Saturday Morning Breakfast Cereal</a></span></p>
+
+<p>Well, you can go ahead right <a href="http://arstechnica.com/science/2012/09/pregnant-males-and-pseudopenises-complex-sex-in-the-animal-kingdom/?comments=1">here</a> if you'd like. In the forum I was glad to see things like this:</p>
+
+<blockquote>
+  <p>Expand your horizons.</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>It's pretty common for scientific terminology to have a more nuanced but precise definition than what the general population uses. For a quick example, "mass" and "weight" have extremely different meanings to a scientist or an engineer, but are used completely interchangeably by the general public.</p>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <p>Which is exactly why it might be good practice in papers to specify exactly which definition one is using, if the term may potentially be ambiguous. I think the relationship between sex and gender is poorly understood enough to warrant clarification.</p>
+</blockquote>
+
+<p>Sweet! Respectful and thoughtful comments! I'll point out that you'll see an editor of Ars Technica jumping in right away only three comments down, and another Ars staff member down the page as well (this is related to one of my proposals below).</p>
+
+<p>Allow me to me make <em>three proposals:</em></p>
+
+<h3 id="p1speakuprespectfully">P1: Speak up respectfully</h3>
+
+<p>If you see something that drives you crazy, say something, and say it respectfully. <strong>Don't unfriend that annoying Facebook friend that's always spewing crazy shit.</strong> Tell them how it makes you feel. Then if they can't respect how you feel, the onus is on <em>them</em> to either unfriend you or think about it.</p>
+
+<p>Out on the rest of the internet (the public) if you're afraid to speak up using your name, use an alias. If you're afraid of <a href="http://www.theguardian.com/technology/2014/oct/23/felicia-days-public-details-online-gamergate">getting doxxed</a>, consider creating a unique username separate from any of your other usernames out on the internet. I know this <a href="http://www.bbc.com/news/technology-29028236">really sucks</a> but you can also use a proxy or <a href="https://www.torproject.org/">Tor</a> to remain protected <strong>if you fear for your life from speaking up</strong>[6].</p>
+
+<h3 id="p2becarefulmoderatingyourcommentsbutpleasepleasedoit">P2: Be careful moderating your comments, but please, please do it</h3>
+
+<p>If you're a site owner, a writer/blogger, a journalist, or thinking of launching the next reddit or <a href="http://stackoverflow.com/">stackoverflow</a> (another site that consists almost entirely of comments) please consider moderating your comments. I applaud Ars Technica for doing so, and commend Reddit for trying to improve. As <a href="http://blog.codinghorror.com/please-read-the-comments/">Jeff</a> said it best:</p>
+
+<blockquote>
+  <p>If you are unwilling to moderate your online community, you don't deserve to have an online community</p>
+</blockquote>
+
+<p>A big caveat is that bad moderators (and censorship) is often worse than no moderator. But you can still encourage respectful opinions. Discourage bad behavior. <strong>Comments like "Nope." or "Wrong." or "This!" or the ones full of toxic vitriol like "You suck, bitch" need to be moderated out of the picture.</strong></p>
+
+<h3 id="p3pleasereadthecommentssection">P3: Please read the comments section</h3>
+
+<p>I know we're all pressed for time, and many comments are terrible, but the next time you read the comments, you may be surprised. I hope you find a reasonable, respectful discussion from which everyone can benefit.</p>
+
+<p><strong>Thank you</strong> for reading <em>my comment here today</em> on this topic. That's right, I'm referring to this 1400-word long <em>comment</em> masquerading as an article. I'd like to <a href="http://www.netinstructions.com/please-read-the-comments-section/#disqus_thread">hear yours</a>.</p>
+
+<hr>
+
+<p><span style="font-size: 80%">[1] Some quick Googling looks <a href="http://www.huffingtonpost.com/soraya-chemaly/50-facts-rape_b_2019338.html">like rape happens every 30-60 seconds</a>. I'd imagine it's very difficult to find accurate numbers like that because it's so often under reported. Regardless it happens at an alarming rate and is something we should be talking about in addition to providing support for the victims.</span></p>
+
+<p><span style="font-size: 80%">[2] Most feminists are just men and women who realize that it's harder for a woman to get ahead than men.</span></p>
+
+<p><span style="font-size: 80%">[3] In short, because we have disparate punishments for raping someone vs. making a false rape accusation (maybe in the form of perjury) the accuser is more likely to come forth and free an innocent person. The idea is that if the accusor was lying and isn't going to face years of punishment, they'll eventually come forth. The nuances of this are discussed <a href="http://www.reddit.com/r/videos/comments/2qiait/woman_accuses_man_of_rape_man_gets_1_year_jail/cn6ecbt">here</a> and <a href="http://www.reddit.com/r/videos/comments/2qiait/woman_accuses_man_of_rape_man_gets_1_year_jail/cn6eo5z">here</a> but the TL;DR is that different crimes get different punishments for (probably) good reason.</span></p>
+
+<p><span style="font-size: 80%">[4] False rape accusations are <a href="http://web.stanford.edu/group/maan/cgi-bin/?page_id=297">incredibly rare</a> (probably because the ramifications are prohibitive, accusing someone of rape is so hard that most victims don't even do it), but whenever anyone is talking about the current rape crisis it always comes up as a serious consideration before someone should even be accused, so people think it is a legitimate point to discuss, and has become a huge red herring for the anti-feminist side of this issue.</span></p>
+
+<p><span style="font-size: 80%">[5] From the article (<a href="http://arstechnica.com/science/2012/09/pregnant-males-and-pseudopenises-complex-sex-in-the-animal-kingdom/">which you should read</a>):</span>  </p>
+
+<blockquote>
+  <p><span style="font-size: 80%">Sex is a scientific concept, referring to the biological and physiological differences between males and females [...] Gender, meanwhile, is a sociological construct. Most often, the term “gender” describes how men and women fulfill certain cultural norms defined by their sex.</span></p>
+</blockquote>
+
+<p><span style="font-size: 80%">[6] How fucked up is that? Reminds me of oppressive countries or how our pal <a href="http://en.wikipedia.org/wiki/Galileo_Galilei#Controversy_over_heliocentrism">Galileo</a> was treated for thinking the earth revolved around the sun, but alas, <a href="http://www.latimes.com/opinion/opinion-la/la-ol-anita-sarkeesian-gamergate-20141017-story.html">we get to live in a world like this</a>. Sad.</span></p>
+
+<p><span style="font-size: 80%">[7] Some reasons why feminists are hesitant to publicly speak up regarding issues are contained within <a href="http://www.theguardian.com/society/2015/feb/02/what-happened-confronted-cruellest-troll-lindy-west">the first few paragraphs</a> of this article in addition to a surprising example of why it may make sense to publicly speak up. A really tough call that makes me frustrated and uncertain about the issue.</span></p>]]></content:encoded></item><item><title><![CDATA[A developer's thoughts on estimating software development]]></title><description><![CDATA[While I believe the value in estimating I am also extremely wary of making too big of science out of something that is inherently imprecise.]]></description><link>http://www.netinstructions.com/a-developers-guide-to-estimating-software/</link><guid isPermaLink="false">26f351fb-c2ea-4366-9247-d9c6a8099d3e</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Mon, 22 Dec 2014 21:54:00 GMT</pubDate><content:encoded><![CDATA[<p>I recently attended a class on estimation. While I believe in the value of estimating I am extremely wary of making too big of science out of something that is inherently imprecise. The course was two hours long which I found to be a perfect amount of time to remind everyone the process and benefits that go into estimation but without over analyzing and over thinking it.</p>
+
+<h2 id="thealltoocommonexample">The all too common example</h2>
+
+<p>How often do you see or have a conversation between a project manager and developer like this?</p>
+
+<blockquote>
+  <p><strong>PM</strong>: "Can you give me an estimate of the time necessary to develop feature xyz?" <br>
+  <strong>Programmer</strong>: "One month" <br>
+  <strong>PM</strong>: "That's far too long, we've got only one week!" <br>
+  <strong>Programmer</strong>: "I need at least three" <br>
+  <strong>PM</strong>: "I can give you two at most" <br>
+  <strong>Programmer</strong>: "Deal!" <br></p>
+</blockquote>
+
+<p>Uh oh. What do you think is going to happen? If you find yourself in these situations take a quick look at the definitions and relationships of an <strong>estimate</strong> vs. <strong>target</strong> vs. <strong>commitment</strong> about halfway down <a href="http://www.methodsandtools.com/archive/archive.php?id=79">this page here</a> so you and your team can have more productive conversations in the future. It's a short couple of paragraphs.</p>
+
+<p>Fortunately for my team we do not have too many of the above, ludicrous, conversations, so we didn't have to dwell on this topic.</p>
+
+<h2 id="asuccinctgraphthatresultedinverydifferentconclusions">A succinct graph that resulted in very different conclusions</h2>
+
+<p>During the training a graph was shown to us to stress the importance of having a precise estimate. I crudely reconstructed it in MS Paint for your viewing pleasure:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/underestimation-vs-overestimation-in-software-development-1.png" alt=""></p>
+
+<p><span style="font-size: 60%">Graph adopted from <a href="http://www.amazon.com/Software-Estimation-Demystifying-Developer-Practices/dp/0735605351?tag=netinstr-20">McConnell, Steve, Software Estimation: Demystifying the Black Art</a></span></p>
+
+<p>The point of this was to show that having a precise estimate is what you want to aim for. <strong>I disagree. In fact, I would argue that we should aim somewhere to the right of a 100% accurate estimate</strong>. </p>
+
+<p>Why? Estimation is an inherently imprecise science. Though there are many, many ways (perhaps more <a href="http://www.computing.dcu.ie/~renaat/ca421/LWu1.html">than</a> <a href="http://www.cs.odu.edu/~price/cs451/Lectures/04mgmt/costest/costest_htse1.html#costest_htsu3.html">necessary</a>) to become better at estimating, there will always be a cloud of uncertainty. I agree that <strong>to be 100% precise on every estimate is best on paper but in practice we'll never get there[1]</strong></p>
+
+<p>Not only that, but <strong>the cost of underestimating is huge</strong>. We went through some examples:</p>
+
+<ul>
+<li>The project could fail (worst case scenario).</li>
+<li>Late nights at the office</li>
+<li>Stress and anxiety</li>
+<li>The project could be delayed</li>
+<li>The quality suffers</li>
+<li>The cost increases</li>
+<li>Customers get upset</li>
+</ul>
+
+<p>The distinction between bounded and unbounded results is important. <strong>When people overestimate, the feature will still get done, just at the expense of wasted time. When people underestimate, it's possible that the feature will <em>never</em> get done.</strong></p>
+
+<p>Later in the training do you know what was cited as one of the reasons for errors in estimating?</p>
+
+<blockquote>
+  <p>Too much chaos in the project to derive accurate estimates.</p>
+</blockquote>
+
+<p>Do you know what causes chaos in a project? Behind schedule projects! This sounds like a perfect recipe for disaster, and this phenomenon is known as a <a href="http://en.wikipedia.org/wiki/Positive_feedback">positive feedback loop</a> (which despite its name, is not always a positive thing).</p>
+
+<p>Another big takeaway in the estimation training was to always give a range. I'm not going to argue on the benefit/cost of doing that, but if you want more information, perhaps <a href="http://spin.atomicobject.com/2009/01/14/making-better-estimates-range-estimates/">start here</a>. As an example to my point, let's use a range to estimate a feature that turned out to be underestimated:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/underestimating-cost.png" alt=""></p>
+
+<p>And an example where it turns out we overestimated:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/overestimating-cost.png" alt=""></p>
+
+<p>The area under the curve[2] which represents <strong>effort, cost and schedule is drastically less when you overestimate than when you underestimate your features.</strong></p>
+
+<p>Again, I agree that 100% estimation accuracy is ideal, but the costs of being wrong are too high in practice.</p>
+
+<p>How often is your team staying late? How often are projects running behind? This line buried in the middle of this <a href="http://www.benjamincburns.com/2014/11/30/from-hacker-to-hospice-in-seven-weeks.html">scary, heart-wrenching article</a> was especially poignant to me:</p>
+
+<blockquote>
+  <p>Per usual in software development, the project was behind schedule. It was no time for anyone on that team to be slacking off.</p>
+</blockquote>
+
+<p>I hate this idea that's so pervasive in our industry. I reject this mentality. <strong>It's not fair for anyone that software projects are so "typically behind schedule"</strong>.</p>
+
+<p>With all these thoughts in mind[3][4], it seems to make the most sense to aim for precise estimation accuracy, but more importantly, <strong>err on overestimating.</strong> </p>
+
+<hr>
+
+<p>Hate estimating? Love estimating? Do you think it's helpful or useless, or somewhere in between? There is plenty of discussion over  <a href="http://www.reddit.com/r/programming/comments/2q6x39/a_developers_thoughts_on_giving_estimates/">here</a> or in the comments section of <a href="http://arstechnica.com/gaming/2015/01/pc-version-of-grand-theft-auto-v-pushed-back-to-march/?comments=1">this article</a> (A preview: <strong>most developers don't like estimates at all, for many good reasons</strong>.) </p>
+
+<p>Or <a href="http://netinstructions.com/a-developers-guide-to-estimating-software/#disqus_thread">leave a comment</a> below.</p>
+
+<hr>
+
+<p><span style="font-size: 80%">[1]: There's plenty of discussion around the trade off between estimating / time it takes to estimate. My training instructor said that there are rapidly diminishing returns after estimating a feature more than three times.</span></p>
+
+<p><span style="font-size: 80%">[2]: Otherwise known as an integral in calculus</span></p>
+
+<p><span style="font-size: 80%">[3]: I also found this little fact in <a href="http://www.methodsandtools.com/archive/archive.php?id=79">this article on estimating</a> that states:</span></p>
+
+<blockquote>
+  <p><span style="font-size: 80%">...developers already tend to be 20%-30% too optimistic [in estimating]</span></p>
+</blockquote>
+
+<p><span style="font-size: 80%">which I certainly believe anecdotally. In other words developers generally <em>underestimate.</em> <a href="http://help.fogcreek.com/7624/estimating-software-tasks">Fog creek</a> actually makes the case to ignore business needs in order to avoid falling into this trap of underestimating.</span></p>
+
+<p><span style="font-size: 80%">[4]: I am aware that if I consistently overestimate, and then my project manager takes that result and overestimates on top of that, and then her/his project coordinator takes that and overestimates that value, the final estimation can be drastically overestimated. I <em>wonder</em> if that's actually so bad in practice vs. the alternative.[5]</span></p>
+
+<p><span style="font-size: 80%">[5]: I <em>propose</em> that someone somewhere should inflate their estimates by some amount, and the developer is a good candidate since they're prone to underestimating.</span></p>]]></content:encoded></item><item><title><![CDATA[How to make a simple web crawler in Java]]></title><description><![CDATA[After making a simple crawler in 50 lines of Python,  I wrote one in 150 lines of Java spread over just two classes. I also walk through projects in Eclipse]]></description><link>http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/</link><guid isPermaLink="false">f3ad3c97-0097-455f-9c0d-91af1e00e6af</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Thu, 18 Dec 2014 22:43:47 GMT</pubDate><content:encoded><![CDATA[<p>A year or two after I created the <a href="http://netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/">dead simple web crawler in Python</a>, I was curious how many lines of code and classes would be required to write it in Java. It turns out <strong>I was able to do it in about 150 lines of code spread over two classes</strong>. That's it! </p>
+
+<h3 id="howdoesitwork">How does it work?</h3>
+
+<p>You give it a URL to a web page and word to search for. The spider will go to that web page and collect all of the words on the page as well as all of the URLs on the page. If the word isn't found on that page, it will go to the next page and repeat. Pretty simple, right? There are a few small edge cases we need to take care of, like handling HTTP errors, or retrieving something from the web that isn't HTML, and avoid accidentally visiting pages we've already visited, but those turn out to be pretty simple to implement. I'll show you how.</p>
+
+<p>I'll be using <a href="https://www.eclipse.org/downloads/">Eclipse</a> along the way, but any editor will suffice. There are only two classes, so even a text editor and a command line will work.</p>
+
+<p>Let's fire up Eclipse and start a new workspace. <br>
+<img src="http://www.netinstructions.com/content/images/2014/10/eclise-workspace.png" alt="eclipse workspace"></p>
+
+<p>We'll create a new project. <br>
+<img src="http://www.netinstructions.com/content/images/2014/10/new-java-project-eclipse.png" alt="eclipse new project"></p>
+
+<p>And finally create our first class that we'll call <code>Spider.java</code>. <br>
+<img src="http://www.netinstructions.com/content/images/2014/10/eclipse-new-class.png" alt="eclipse new class"></p>
+
+<p>We're almost ready to write some code. But first, let's think how we'll separate out the logic and decide which classes are going to do what. Let's think of all the things we need to do:</p>
+
+<ul>
+<li>Retrieve a web page (we'll call it a document) from a website</li>
+<li>Collect all the links on that document</li>
+<li>Collect all the words on that document</li>
+<li>See if the word we're looking for is contained in the list of words</li>
+<li>Visit the next link</li>
+</ul>
+
+<p>Is that everything? What if we start at Page A and find that it contains links to Page B and Page C. That's fine, we'll go to Page B next if we don't find the word we're looking for on Page A. But what if Page B contains a bunch more links to other pages, and one of those pages links back to Page A? <br>
+<img src="http://www.netinstructions.com/content/images/2014/10/page-links-circle-recursion.png" alt="circular dependency"></p>
+
+<p>We'll end up back at the beginning again! So let's add a few more things our crawler needs to do:</p>
+
+<ul>
+<li>Keep track of pages that we've already visited</li>
+<li>Put a limit on the number of pages to search so this doesn't run for eternity.</li>
+</ul>
+
+<p>Let's sketch out the first draft of our <code>Spider.java</code> class:</p>
+
+<pre><code>public class Spider
+{
+    // Fields
+    private static final int MAX_PAGES_TO_SEARCH = 10;
+    private Set&lt;String&gt; pagesVisited = new HashSet&lt;String&gt;();
+    private List&lt;String&gt; pagesToVisit = new LinkedList&lt;String&gt;();
+}
+</code></pre>
+
+<p>Why is <code>pagesVisited</code> a <code>Set</code>? Remember that a set, by definition, contains unique entries. In other words, no duplicates. All the pages we visit will be unique (or at least their URL will be unique). We can enforce this idea by choosing the right data structure, in this case a set.</p>
+
+<p>Why is <code>pagesToVisit</code> a <code>List</code>? This is just storing a bunch of URLs we have to visit next. When the crawler visits a page it collects all the URLs on that page and we just append them to this list. Recall that Lists have special methods that Sets ordinarily do not, such as adding an entry to the end of a list or adding an entry to the beginning of a list. Every time our crawler visits a webpage, we want to collect all the URLs on that page and add them to the end of our big list of pages to visit. Is this necessary? No. But it makes our crawler a little more consistent, in that it'll always crawl sites in a breadth-first approach (as opposed to a depth-first approach).</p>
+
+<p>Remember how we don't want to visit the same page twice? Assuming we have values in these two data structures, can you think of a way to determine the next site to visit?</p>
+
+<p>...</p>
+
+<p>Okay, here's my method for the <code>Spider.java</code> class:</p>
+
+<pre><code>private String nextUrl()
+    {
+        String nextUrl;
+        do
+        {
+            nextUrl = this.pagesToVisit.remove(0);
+        } while(this.pagesVisited.contains(nextUrl));
+        this.pagesVisited.add(nextUrl);
+        return nextUrl;
+    }
+</code></pre>
+
+<p>A little explanation: We get the first entry from pagesToVisit, make sure that URL isn't in our set of URLs we visited, and then return it. If for some reason we've already visited the URL (meaning it's in our set pagesVisited) we keep looping through the list of pagesToVisit and returning the next URL.</p>
+
+<p>Okay, so we can determine the next URL to visit, but then what? We still have to do all the work of HTTP requests, parsing the document, and collecting words and links. But let's leave that for another class and wrap this one up. This is an idea of separating out functionality. Let's assume that we'll write another class (we'll call it <code>SpiderLeg.java</code>) to do that work and this other class provides three public methods:</p>
+
+<pre><code>public void crawl(String nextURL) // Give it a URL and it makes an HTTP request for a web page
+public boolean searchForWord(String word) // Tries to find a word on the page
+public List&lt;String&gt; getLinks() // Returns a list of all the URLs on the page
+</code></pre>
+
+<p>Assuming we have this other class that's going to do the work listed above, can we write one public method for this <code>Spider.java</code> class? What are our inputs? A word to look for and a starting URL. Let's flesh out that method for the <code>Spider.java</code> class:</p>
+
+<pre><code>public void search(String url, String searchWord)
+    {
+        while(this.pagesVisited.size() &lt; MAX_PAGES_TO_SEARCH)
+        {
+            String currentUrl;
+            SpiderLeg leg = new SpiderLeg();
+            if(this.pagesToVisit.isEmpty())
+            {
+                currentUrl = url;
+                this.pagesVisited.add(url);
+            }
+            else
+            {
+                currentUrl = this.nextUrl();
+            }
+            leg.crawl(currentUrl); // Lots of stuff happening here. Look at the crawl method in
+                                   // SpiderLeg
+            boolean success = leg.searchForWord(searchWord);
+            if(success)
+            {
+                System.out.println(String.format("**Success** Word %s found at %s", searchWord, currentUrl));
+                break;
+            }
+            this.pagesToVisit.addAll(leg.getLinks());
+        }
+        System.out.println(String.format("**Done** Visited %s web page(s)", this.pagesVisited.size());
+    }
+</code></pre>
+
+<p>That should do the trick. We use all of our three fields in the Spider class as well as our private method to get the next URL. We assume the other class, SpiderLeg, is going to do the work of making HTTP requests and handling responses, as well as parsing the document. This separation of concerns is a big deal for many reasons, but the gist of it is that it makes code more readable, maintainable, testable, and flexible. </p>
+
+<p><strong>Let's look at our complete <code>Spider.java</code> class, with some added comments and javadoc:</strong></p>
+
+<pre><code>package com.stephen.crawler;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public class Spider
+{
+  private static final int MAX_PAGES_TO_SEARCH = 10;
+  private Set&lt;String&gt; pagesVisited = new HashSet&lt;String&gt;();
+  private List&lt;String&gt; pagesToVisit = new LinkedList&lt;String&gt;();
+
+
+  /**
+   * Our main launching point for the Spider's functionality. Internally it creates spider legs
+   * that make an HTTP request and parse the response (the web page).
+   * 
+   * @param url
+   *            - The starting point of the spider
+   * @param searchWord
+   *            - The word or string that you are searching for
+   */
+  public void search(String url, String searchWord)
+  {
+      while(this.pagesVisited.size() &lt; MAX_PAGES_TO_SEARCH)
+      {
+          String currentUrl;
+          SpiderLeg leg = new SpiderLeg();
+          if(this.pagesToVisit.isEmpty())
+          {
+              currentUrl = url;
+              this.pagesVisited.add(url);
+          }
+          else
+          {
+              currentUrl = this.nextUrl();
+          }
+          leg.crawl(currentUrl); // Lots of stuff happening here. Look at the crawl method in
+                                 // SpiderLeg
+          boolean success = leg.searchForWord(searchWord);
+          if(success)
+          {
+              System.out.println(String.format("**Success** Word %s found at %s", searchWord, currentUrl));
+              break;
+          }
+          this.pagesToVisit.addAll(leg.getLinks());
+      }
+      System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
+  }
+
+
+  /**
+   * Returns the next URL to visit (in the order that they were found). We also do a check to make
+   * sure this method doesn't return a URL that has already been visited.
+   * 
+   * @return
+   */
+  private String nextUrl()
+  {
+      String nextUrl;
+      do
+      {
+          nextUrl = this.pagesToVisit.remove(0);
+      } while(this.pagesVisited.contains(nextUrl));
+      this.pagesVisited.add(nextUrl);
+      return nextUrl;
+  }
+</code></pre>
+
+<p>}</p>
+
+<p>Okay, one class down, one more to go. Earlier we decided on three public methods that the SpiderLeg class was going to perform. The first was public void crawl(nextURL) that would make an HTTP request for the next URL, retrieve the document, and collect all the text on the document and all of the links or URLs on the document. Unfortunately Java doesn't come with all of the tools to <a href="https://github.com/jhy/jsoup/blob/master/src/main/java/org/jsoup/helper/HttpConnection.java">make an HTTP request</a> and <a href="https://github.com/jhy/jsoup/tree/master/src/main/java/org/jsoup/parser">parse the page</a> in a super easy way. Fortunately there's a really lightweight and super easy to use package called <a href="http://jsoup.org/">jsoup</a> that makes this very easy. There's about 700 lines of code to form the HTTP request and the response, and a few thousand lines of code to parse the response. But because this is all neatly bundled up in this package for us, we just have to write a few lines of code ourselves.</p>
+
+<p>For example, here's three lines of code to make an HTTP request, parse the resulting HTML document, and get all of the links:</p>
+
+<pre><code>Connection connection = Jsoup.connect("http://www.example.com")
+Document htmlDocument = connection.get();
+Elements linksOnPage = htmlDocument.select("a[href]");
+</code></pre>
+
+<p>That could even be condensed into one line of code if we really wanted to. jsoup is a really awesome project. But how do we start using jsoup?</p>
+
+<p>You import the jsoup jar into your project!</p>
+
+<p>Okay, now that we have access to the jsoup jar, let's get back to our crawler. Let's start with the most basic task of making an HTTP request and collecting the links. Later we'll improve this method to handle unexpected HTTP response codes and non HTML pages.</p>
+
+<p>First let's add two private fields to this <code>SpiderLeg.java</code> class:</p>
+
+<pre><code>private List&lt;String&gt; links = new LinkedList&lt;String&gt;(); // Just a list of URLs
+private Document htmlDocument; // This is our web page, or in other words, our document
+</code></pre>
+
+<p>And now the simple method in the SpiderLeg class that we'll later improve upon</p>
+
+<pre><code>public void crawl(String url)
+    {
+        try
+        {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
+            Document htmlDocument = connection.get();
+            this.htmlDocument = htmlDocument;
+
+            System.out.println("Received web page at " + url);
+
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            System.out.println("Found (" + linksOnPage.size() + ") links");
+            for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+        }
+        catch(IOException ioe)
+        {
+            // We were not successful in our HTTP request
+            System.out.println("Error in out HTTP request " + ioe);
+        }
+    }
+</code></pre>
+
+<p>Still following? Nothing too fancy going on here. There are two little tricks in that we have to know how to specify all the URLs on a page such as <code>a[href]</code> and that we want the absolute URL to add to our list of URLs.</p>
+
+<p>Great, and if we remember the other thing we wanted this second class (<code>SpiderLeg.java</code>) to do, it was to search for a word. This turns out to be surprisingly easy:</p>
+
+<pre><code>public boolean searchForWord(String searchWord)
+    {
+        System.out.println("Searching for the word " + searchWord + "...");
+        String bodyText = this.htmlDocument.body().text();
+        return bodyText.toLowerCase().contains(searchWord.toLowerCase());
+    }
+</code></pre>
+
+<p>We'll also improve upon this method later.</p>
+
+<p>Okay, so this second class (<code>SpiderLeg.java</code>) was supposed to do three things: <br>
+1. Crawl the page (make an HTTP request and parse the page) <br>
+2. Search for a word <br>
+3. Return all the links on the page</p>
+
+<p>We've just written methods for the first two actions. Remember that we store the links in a private field in the first method? It's these lines:</p>
+
+<pre><code>//... code above
+for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+//... code below
+</code></pre>
+
+<p>So to return all the links on the page we just provide a getter to this field</p>
+
+<pre><code>public List&lt;String&gt; getLinks() 
+{
+  return this.links;
+}
+</code></pre>
+
+<p>Done!</p>
+
+<p>Okay, let's look at this code in all its glory. You'll notice I added a few more lines to handle some edge cases and do some defensive coding. Here's the complete <code>SpiderLeg.java</code> class:</p>
+
+<pre><code>package com.stephen.crawler;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class SpiderLeg
+{
+    // We'll use a fake USER_AGENT so the web server thinks the robot is a normal web browser.
+    private static final String USER_AGENT =
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+    private List&lt;String&gt; links = new LinkedList&lt;String&gt;();
+    private Document htmlDocument;
+
+
+    /**
+     * This performs all the work. It makes an HTTP request, checks the response, and then gathers
+     * up all the links on the page. Perform a searchForWord after the successful crawl
+     * 
+     * @param url
+     *            - The URL to visit
+     * @return whether or not the crawl was successful
+     */
+    public boolean crawl(String url)
+    {
+        try
+        {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
+            Document htmlDocument = connection.get();
+            this.htmlDocument = htmlDocument;
+            if(connection.response().statusCode() == 200) // 200 is the HTTP OK status code
+                                                          // indicating that everything is great.
+            {
+                System.out.println("\n**Visiting** Received web page at " + url);
+            }
+            if(!connection.response().contentType().contains("text/html"))
+            {
+                System.out.println("**Failure** Retrieved something other than HTML");
+                return false;
+            }
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            System.out.println("Found (" + linksOnPage.size() + ") links");
+            for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+            return true;
+        }
+        catch(IOException ioe)
+        {
+            // We were not successful in our HTTP request
+            return false;
+        }
+    }
+
+
+    /**
+     * Performs a search on the body of on the HTML document that is retrieved. This method should
+     * only be called after a successful crawl.
+     * 
+     * @param searchWord
+     *            - The word or string to look for
+     * @return whether or not the word was found
+     */
+    public boolean searchForWord(String searchWord)
+    {
+        // Defensive coding. This method should only be used after a successful crawl.
+        if(this.htmlDocument == null)
+        {
+            System.out.println("ERROR! Call crawl() before performing analysis on the document");
+            return false;
+        }
+        System.out.println("Searching for the word " + searchWord + "...");
+        String bodyText = this.htmlDocument.body().text();
+        return bodyText.toLowerCase().contains(searchWord.toLowerCase());
+    }
+
+
+    public List&lt;String&gt; getLinks()
+    {
+        return this.links;
+    }
+
+}
+</code></pre>
+
+<p>Why the <code>USER_AGENT</code>? This is because some web servers get confused when robots visit their page. Some web servers return pages that are formatted for mobile devices if your user agent says that you're requesting the web page from a mobile web browser. If you're on a desktop web browser you get the page formatted for a large screen. If you don't have a user agent, or your user agent is not familiar, some websites won't give you the web page at all! This is rather unfortunate, and just to prevent any troubles, we'll set our user agent to that of Mozilla Firefox. </p>
+
+<p>Ready to try out the crawler? Remember that we wrote the <code>Spider.java</code> class and the <code>SpiderLeg.java</code> class. Inside the <code>Spider.java</code> class we instantiate a <code>spiderLeg</code> object which does all the work of crawling the site. But where do we instantiate a <code>spider</code> object? We can write a simple test class (<code>SpiderTest.java</code>) and method to do this.</p>
+
+<pre><code>package com.stephen.crawler;
+
+public class SpiderTest
+{
+    /**
+     * This is our test. It creates a spider (which creates spider legs) and crawls the web.
+     * 
+     * @param args
+     *            - not used
+     */
+    public static void main(String[] args)
+    {
+        Spider spider = new Spider();
+        spider.crawl("http://arstechnica.com/", "computer");
+    }
+}
+</code></pre>]]></content:encoded></item><item><title><![CDATA[My live migration from Wordpress to Ghost]]></title><description><![CDATA[From a Dreamhost Wordpress blog to a dirt cheap self-hosted EC2 instance. And how I learned to prevent broken URLs and migrate all of the posts and photos.]]></description><link>http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/</link><guid isPermaLink="false">0a57254d-0c30-4dbb-8457-0d28d321b947</guid><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 16 Dec 2014 03:41:18 GMT</pubDate><content:encoded><![CDATA[<p>A few months ago I heard about the Ghost blogging platform as it picked up some momentum and was being talked about in all the tech circles. My initial thoughts were "Why do we need another blogging platform? What's wrong with WordPress?"</p>
+
+<p>Well, to get to get to the point, there's not a whole lot wrong with WordPress. Sure it's kind of old, but that also means it's a stable, functional, and feature-packed framework. If it doesn't do something out of the box then there's a variety of plugins available that'll do the trick.</p>
+
+<p>What drew me to Ghost were four things that are fundamentally different than WordPress, starting with...</p>
+
+<h4 id="markdown">Markdown!</h4>
+
+<p>I'm sure there's a plugin somewhere that'll let you write your posts in Markdown on Wordpress, but it comes out of the box with Ghost. If you haven't ever composed an article with Markdown before, you may not know what you're missing. I started using it to compose Stackoverflow questions and realized how powerful it was. It's especially useful if I want to write some <code>inline code</code> without worrying about the HTML or using some special WYSIWYG editor. Basically I can express my thoughts faster in Markdown than I can if I was writing in HTML. I also can't stand the superfluous <code>&lt;span&gt;&lt;span&gt;&lt;p&gt;some&lt;/p&gt;&lt;/span&gt;text&lt;/span&gt;</code> that you often get when WYSIWYG editors convert your article to HTML.</p>
+
+<h4 id="responsivedesign">Responsive design</h4>
+
+<p>What does responsive mean? A website is considered "responsive" if all the elements on the page get automatically resized to fit your web browser's viewport. Your web browser's viewport (window size) is going to be different depending on if you're viewing and interacting with the site on a mobile device, a tablet, or a desktop computer. While there's probably some sort of responsive theme for WordPress that'll do this, it's built into the core of Ghost and comes out of the box. More and more people are visiting sites on mobile devices so it's important that your site can offer a pleasant experience.</p>
+
+<h4 id="speed">Speed</h4>
+
+<p>Ghost is fast! How fast? I don't know, but it sure feels zippy creating articles and navigating around the site. I hope to have some benchmarks soon. WordPress often needs some help via plugins like WP Super Cache.</p>
+
+<h4 id="builtonnodejs">Built on NodeJS</h4>
+
+<p>This is more of a bonus than anything in that I have some familiarity with NodeJS. Since I've built websites and services using NodeJS, I should have some comfort digging into the source code or following along with the new feature developments. Making modifications and plugins should be easier as well. I've also set up Amazon EC2 instances to run NodeJS web applications (sitting behind Nginx), and I'm already familiar with NPM (Node's excellent package manager) and some of the helpful NPM packages like Forever that are used to keep this site up. </p>
+
+<h3 id="okaysohowdidyoudoit">Okay, so how did you do it?</h3>
+
+<p>My plan was to get an empty Ghost blog up and running on an Amazon EC2 instance and then import my data over from WordPress. Afterwards I would point the domain name <strong>netinstructions.com</strong> over to the IP address of the EC2 instance by modifying the A record. Then I could safely power down the WordPress instance.</p>
+
+<h2 id="installingghostonanamazonec2instance">Installing Ghost on an Amazon EC2 instance</h2>
+
+<p>A few months ago the <a href="http://aws.amazon.com/blogs/aws/low-cost-burstable-ec2-instances/">t2.micro instances were announced</a>. Theses are super low cost machines that are perfect for running websites. If you plan on using one for the next three years you can order a <em>heavy utilization reserved instance</em>, pay $109 upfront and $1.46 per month ($0.002 per hour). Over three years, that comes out to $161.60 total or <strong>$4.49 per month</strong>. If you're afraid of a 3 year comittment you can do:</p>
+
+<ul>
+<li>1 year commitment and pay $6.44 per month ($51 upfront and $0.003 per hour).</li>
+<li>No commitments with on-demand instance prices and pay $9.50 per month ($0.013 per hour).</li>
+</ul>
+
+<p>I spun up a t2.micro instance with a Ubuntu 14.04 LTS operating system, converted my <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">.pem private key to a .ppk PuTTY key</a>  and used PuTTY to SSH onto the box. There were three things I wanted to install</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get install nginx
+sudo apt-get install nodejs
+sudo apt-get install npm
+</code></pre>
+
+<p>My plan was to have nginx webserver sit in front of the nodeJS webserver and act as a forwarding proxy. There are pros (ability to host more than one website on one EC2 instance) and cons (two webservers to configure and manage) to doing this, but I think the pros outweight the cons. In this configuration a request comes in, nginx looks at the headers and decides which webserver it should be sent to. Perhaps a request came in for <code>netinstructions.com</code> so my ghost blog should handle it. But maybe I want to set up a test blog at <code>test.netinstructions.com</code> or host <code>catsarereallysuperawesome.com</code> here as well. Nginx can inspect those requests and send them to the right place. </p>
+
+<p>Anyways... We have almost everything except the Ghost blogging software itself. We need to download and run that. The <a href="http://support.ghost.org/installing-ghost-linux/">offical guide is here</a> but the TL;DR version is:</p>
+
+<pre><code>$ curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip
+$ unzip -uo ghost.zip -d ghost
+$ cd /ghost
+$ npm install --production
+$ npm start
+</code></pre>
+
+<p>You should see something like</p>
+
+<pre><code>Ghost is running in development...
+Listening on 127.0.0.1:2368
+Url configured as: http://localhost:2368
+Ctrl+C to shut down
+</code></pre>
+
+<p>Find your EC2's public IP address and attempt to visit your site with that IP and the default Ghost port. Do you get something like this? </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/ec2-security-group-can-t-connect.png" alt=""></p>
+
+<p>Well, you need to change your security settings to allow inbound connections to port 2368.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/modify-ec2-security-groups.png" alt=""></p>
+
+<p>You <em>also</em> need to change the server to <code>0.0.0.0</code>. In <code>config.json</code></p>
+
+<pre><code>// ### Development **(default)**
+development: {
+    url: 'http://localhost:3050',
+    database {
+        // snip
+    },
+    server: {
+        host: '0.0.0.0',
+        port: 2368
+    }
+    paths {
+        // snip
+    }
+},
+</code></pre>
+
+<p>Restart ghost with <code>npm start</code>. You should now be able to run <strong>in development mode</strong> and <strong>directly by IP + Port</strong></p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/success-direct-by-ip.png" alt=""></p>
+
+<h2 id="buthowdoirunghostinproductionandbehindnginx">But how do I run Ghost in production and behind Nginx?</h2>
+
+<p>Well, you can delete that firewall rule for port 2368 since incoming requests will be passing through Nginx on port 80, then make sure you allow incoming HTTP requests on port 80. In <code>config.json</code> well be editing the part for production:</p>
+
+<pre><code>production: {
+    url: 'http://54.68.205.33',
+    mail: {},
+    database: { // snip },
+    server: {
+        host: '127.0.0.1',
+        port: '2368'
+    }
+   }
+</code></pre>
+
+<p>I then used <code>forever</code> to start up the process</p>
+
+<pre><code>$ NODE_ENV=production forever start index.js
+</code></pre>
+
+<p>If we tail the <code>forever</code> log (use <code>forever list</code> to find the UID and then <code>tail -20f ~/.forever/UID.log</code>)</p>
+
+<pre><code>Ghost is running...
+Your blog is now available on http://54.68.205.33
+</code></pre>
+
+<p>Okay, now to teach Nginx about it. I created a file in <code>/etc/nginx/sites-available/www.netinstructions.com</code> that looks like this:</p>
+
+<pre><code>server {
+  server_name netinstructions.com www.netinstructions.com;
+  listen 80;
+  listen [::]:80;
+
+  location / {
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header HOST $http_host;
+  proxy_set_header X-NginX-Proxy true;
+
+  proxy_pass http://127.0.0.1:2368;
+  proxy_redirect off;
+  }
+}
+</code></pre>
+
+<p>which essentially tells Nginx to listen on port 80 and forward incoming HTTP requests to 127.0.0.1:2368 which is where our ghost blog is listening.</p>
+
+<p>A convention of Apache and Nginx is to keep two separate directories <code>sites-enabled</code> and <code>sites-available</code> and symlink the sites you want to activate. One advantage of this is you can shut down a misbehaving site by just breaking that symlink. </p>
+
+<p>But we want to <em>activate</em> the site. So I'll do that by creating the symlink and reloading Nginx:</p>
+
+<pre><code>sudo ln -s /etc/nginx/sites-available/www.netinstructions.com /etc/nginx/sites-enabled/
+sudo service nginx reload
+</code></pre>
+
+<p>So the tricky part here is that I can't just go to www.netinstructions.com and see this new Ghost blog. Remember that the DNS is still pointing to my old host? My <code>A</code> record is pointing to a Dreamhost machine with the Wordpress blog.</p>
+
+<pre><code>DNS for testinstructions.com:
+Record Type Value
+       A    75.119.222.60
+www    A    75.119.222.60
+</code></pre>
+
+<p>But my new blog will be hosted at 54.68.205.33 which is the IP address of the EC2 instance. And unfortunatly Nginx doesn't let you define a <code>server_name: 54.68.205.33;</code></p>
+
+<p>There's three options to get around this:</p>
+
+<ol>
+<li>Update your A record to point to the EC2 instance. But this sends all visitors to the not-yet-complete Ghost blog.  </li>
+<li>Add another A record for a subdomain. Maybe <code>www.netinstructions.com</code> points to <code>75.119.222.60</code> but <code>test.netinstructions.com</code> points to <code>54.68.205.33</code>.  </li>
+<li>Modify your HTTP request headers when accessing <code>54.68.205.33</code> in a web browser and add in a value for the <code>Host</code>.</li>
+</ol>
+
+<p>Option 1 is bad if you have frequent traffic going to your existing wordpress blog. Option 2 is not a bad one, but you'll need to change your Ghost <code>config.js</code> file so it knows about the subdomain. I actually went with option 3 and found a <a href="https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj">Chrome extension</a> to modify my headers.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/modify-http-headers.png" alt=""></p>
+
+<p>Then I was able to go to <code>http://54.68.205.33/admin</code> and walk through the first-time account setup process like creating a username and password.</p>
+
+<h2 id="migratingallthatdatafromwordpress">Migrating all that data from Wordpress...</h2>
+
+<p>The first step is installing the <a href="https://wordpress.org/plugins/ghost/">Ghost WordPress plugin</a> on your WordPress blog. Once it's installed you can navigate to the <strong>Tools</strong> section and click the <strong>export</strong> button. You'll end up with a (potentially large) <code>wp2ghost_export.json</code> file containing all your posts. You might want to save this file somewhere safe as a restore point if anything crazy happens.</p>
+
+<p>The next step is importing that data to your Ghost blog which is probably empty at this point. If it contains a 'Hello World' post or anything else, that should be fine as well, since importing your data is just adding additional posts to your existing Ghost blog.</p>
+
+<p>I headedad over to the top secret URL at <code>http://54.68.205.33/ghost/debug/</code> and imported the .json file. Voila! All my wordpress data was now on the ghost blog.</p>
+
+<p>However, there were some small things to fix. For example, the picture captions in Wordpress didn't translate very well onto the new Ghost blog. In fact, as of right now (12/6/2014) Ghost does not support picture captions out of the box. You would have to <a href="https://ghost.org/forum/using-ghost/2797-image-captions/">jury-rig</a> something up yourself if that is important to you. I just went through the ten or so posts I had and manually cleaned up the image captions. If you have more than that you may want to write a script to go through the .json file to clean it up before importing it onto the Ghost blog.</p>
+
+<h2 id="fixingandpreventingbrokenurlswithredirects">Fixing (and preventing) broken URLs with redirects</h2>
+
+<p>One last thing to worry about are all the URLs out there in the world that link to my site. Google webmaster shows me that there are 229 links out in the world to my site. </p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/URLs-linked-to-site.png" alt=""></p>
+
+<p>It would really suck if some visitor found a link to one of my posts (perhaps on someone else's blog or a different website), clicked on it, and was met with a 404 not found page.</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/404-not-found-ghost.png" alt=""></p>
+
+<p>If you consult the <a href="https://trello.com/b/EceUgtCL/ghost-roadmap/">Ghost roadmap</a> it looks like custom permalinks are in the works. Until then we can use Nginx 301 redirects. I wrote a regular expression to translate </p>
+
+<pre><code>http://54.68.205.33/2011/10/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+</code></pre>
+
+<p>into</p>
+
+<pre><code>http://54.68.205.33/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+</code></pre>
+
+<p>Have a look at the rewrite line in <code>/etc/nginx/sites-available/www.netinstructions.com/</code></p>
+
+<pre><code>server {
+  server_name netinstructions.com www.netinstructions.com;
+  listen 80;
+  listen [::]:80;
+
+  rewrite '^/\d{4}/\d{2}/(.*)$' /$1 last;
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header HOST $http_host;
+    proxy_set_header X-NginX-Proxy true;
+
+    proxy_pass http://127.0.0.1:2368;
+    proxy_redirect off;
+  }
+}
+</code></pre>
+
+<p>I reloaded Nginx and was on my way. This will take care of any /YYYY/DD/ patterns that Wordpress liked to use but is not yet supported in Ghost. It looks like Wordpress tags are supported in Ghost so I didn't need any special rewrites for that.</p>
+
+<p>If you want an easy way to test this, try the <code>curl</code> command (and don't forget your header if you need it)</p>
+
+<pre><code>$ curl -I -L --header "Host: netinstructions.com" http://54.68.205.33/2011/10/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 09 Dec 2014 04:21:13 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 35681
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"uKAIXdXPOi/Oaw+ZQwcilA=="
+Vary: Accept-Encoding
+</code></pre>
+
+<h2 id="goinglive">Going live</h2>
+
+<p>Once I was satisfied with how the Ghost blog looked it was just a simple matter of updating the A record for my hostname <code>netinstructions.com</code> so that new requests were routed to Nginx on my EC2 instance instead of to my Wordpress blog on Dreamhost.</p>
+
+<p>Does this mean I can shutdown my Wordpress blog? No, as the pictures are still hosted there. For example, the images are linked something like this</p>
+
+<pre><code>http://www.netinstructions.com/wp-content/uploads/2012/05/google-header-animated.gif
+</code></pre>
+
+<p>But on Ghost the images are linked like this</p>
+
+<pre><code>http://www.netinstructions.com/content/images/2014/12/404-not-found-ghost.png
+</code></pre>
+
+<p>Can you guess what the Nginx redirect looks like? In <code>/etc/nginx/sites-available/www.netinstructions.com</code></p>
+
+<pre><code>rewrite '^/wp-content/uploads/(.*)$' /content/images/$1 last;
+</code></pre>
+
+<p>Don't forget to reload Nginx. And now we need to transfer all the files from the Dreamhost machine in the <code>/wp-content/uploads/</code> directory and put them in the <code>/content/images/</code> directory of the EC2 machine. I just used FileZilla for that, but SCP would also work.</p>
+
+<p>The very last step was just to point the domain name to the EC2 machine that's now all ready to handle incoming requests. It was pointing to the Dreamhost machine (which hung out at IP <code>75.119.222.60</code>), but I'll be overwriting that:</p>
+
+<p><img src="http://www.netinstructions.com/content/images/2014/12/updating-dns-A-record.png" alt=""></p>
+
+<p>And that's it! A migration to a self-hosted installation of Ghost on a dirt-cheap EC2 instance without any downtime and without breaking any of my URLs out on the web.</p>]]></content:encoded></item><item><title><![CDATA[Automating Picture Capture Using Webcams on Linux/Ubuntu]]></title><description><![CDATA[<p>Ever want to turn a laptop into a webcam surveillance monitoring tool, or use a USB webcam to take pictures every 5 minutes to record a timelapse video? Or maybe you just want to monitor your room remotely and on demand? Here's a good weekend (or day) project:  </p>
+
+<ul>  
+    <li>
+<h3>Installing Linux/</h3></li></ul>]]></description><link>http://www.netinstructions.com/automating-picture-capture-using-webcams-on-linuxubuntu/</link><guid isPermaLink="false">a8ee933b-c7fe-429b-ae9b-646f5f07c291</guid><category><![CDATA[automation]]></category><category><![CDATA[cronjob]]></category><category><![CDATA[crontab]]></category><category><![CDATA[ffmpeg]]></category><category><![CDATA[fswebcam]]></category><category><![CDATA[logitech quickcam pro 9000]]></category><category><![CDATA[mplayer]]></category><category><![CDATA[ssh]]></category><category><![CDATA[ubuntu]]></category><category><![CDATA[vlc]]></category><category><![CDATA[webcam]]></category><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Mon, 03 Jun 2013 10:11:27 GMT</pubDate><content:encoded><![CDATA[<p>Ever want to turn a laptop into a webcam surveillance monitoring tool, or use a USB webcam to take pictures every 5 minutes to record a timelapse video? Or maybe you just want to monitor your room remotely and on demand? Here's a good weekend (or day) project:  </p>
+
+<ul>  
+    <li>
+<h3>Installing Linux/Ubuntu on a laptop computer</h3>  
+</li>  
+    <li>
+<h3>Setting up SSH so I could remotely connect to the computer</h3>  
+</li>  
+    <li>
+<h3>Make sure Linux detects the webcam</h3>  
+</li>  
+    <li>
+<h3>Trying various command line webcam tools (<em>fswebcam, ffmpeg, MPlayer, VLC</em>)</h3>  
+</li>  
+    <li>
+<h3>Configuring crontab (creating a cronjob) to run every 5 minutes or hourly</h3>  
+</li>  
+    <li>
+<h3>Viewing the pictures in a web browser</h3>  
+</li>  
+</ul>  
+
+<h2>Installing Linux (Ubuntu) on my laptop</h2>  
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2013/06/asus-1201n-netbook.jpg"> <br>
+<img class="alignright  wp-image-251" alt="asus-1201n-netbook" src="http://www.netinstructions.com/wp-content/uploads/2013/06/asus-1201n-netbook.jpg" width="305" height="202"></a></p>
+
+<p>Over the weekend I decided to turn one of my old laptops into a Linux server. My old netbook, the<a href="https://www.amazon.com/dp/B002ZLOR56/ref=as_li_ss_til?tag=netinstr-20"> ASUS 1201N</a> was a perfect candidate since netbooks are designed to run with extremely low power consumption. Though the AC adapter for the ASUS 1201N is rated to output a maximum of 40 watts, I used my handy dandy <a href="http://www.amazon.com/dp/B00009MDBU/ref=as_li_ss_til?tag=netinstr-20">Kill-O-Watt meter</a> to measure the real power usage. Turns out it's typically only 20W at idle, and around 25W under load. While this isn't as ideal as a Raspberry Pi (which can run on only 5W) the difference in cost isn't too crazy.</p>
+
+<p>5 Watts for 1 month = 3.65 kilowatt hours at current prices = $0.32 / month <br>
+20 Watts for 1 month = 14.6 kilowatt hours at current prices = $1.28 / month</p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2013/06/kill-a-watt-measure-power.jpg"><img class="wp-image-252 aligncenter" alt="kill-a-watt-measure-power" src="http://www.netinstructions.com/wp-content/uploads/2013/06/kill-a-watt-measure-power.jpg" width="175" height="225"></a></p>
+
+<p>So I am happily paying $1.28 per month in electricity to have my very own Linux server running 24/7, complete with a 1.60 GHz dual core Intel Atom N330 CPU and 2 GB of memory. Quite a bit more than the Raspberry Pi, which can be helpful for doing video and image encoding.</p>
+
+<p>How do you install Ubuntu? You just go to the <a href="http://www.ubuntu.com/download">Ubuntu website</a> and download it. I actually used the <a href="http://www.ubuntu.com/download/help/create-a-usb-stick-on-windows">Windows bootable USB utility</a> which made the process pretty simple. Note that the desktop version of Ubuntu does not come (by default) with an SSH server (more on that below), but its pretty easy to set up. The server version of Ubuntu can come with an SSH server if you select it during the install process.  </p>
+
+<h2>Installing SSH and Configuring SSH Open Server</h2>  
+
+<p>If you want to be able to connect to your new Ubuntu machine remotely, you'll need to install and have an SSH server running. You can do this if you have the desktop version of Ubuntu too. (I downloaded the desktop version). It's pretty simple to get an SSH server:  </p>
+
+<pre class="brush: bash; gutter: true">sudo aptitude install openssh-server</pre>  
+
+<p>That's it! For more information on configuring SSH, see <a href="https://help.ubuntu.com/10.04/serverguide/openssh-server.html">this excellent openSSH server guide</a> that the Ubuntu community put together.</p>
+
+<p>I changed the default port number from 22 to a random higher number to make it a little harder for random people out on the internet to try to log in. (They would still have to guess the username and password anyways, but this helps too). Speaking of which, if you're behind a router (like if you live at home), you'll need to set up port forwarding so you can log in remotely. Some more information about port forwarding can be found <a href="http://portforward.com">here</a>.  </p>
+
+<h2>How does Linux detect your webcam?</h2>  
+
+<p>Well if it's a USB webcam, plug it in. If it's an integrated webcam built into the laptop, there's nothing to plug in. Ubuntu should automatically detect and install drivers for the webcam. To see if its detected, let's run some commands:</p>
+
+<p>Here's a command to see if any video device nodes exist:  </p>
+
+<pre class="brush: bash; gutter: true">stephen@ubuntu:~$ ls -l /dev/video*  
+crw-rw----+ 1 root video 81, 0 Mar 18 20:29 /dev/video0  
+crw-rw----+ 1 root video 81, 1 Apr 2 08:03 /dev/video1</pre>  
+
+<p>And here's another command to find out about the devices:  </p>
+
+<pre class="brush: bash; gutter: true">stephen@ubuntu:~$ lsusb  
+Bus 001 Device 003: ID 046d:0990 Logitech, Inc. QuickCam Pro 9000  
+Bus 001 Device 002: ID 13d3:5111 IMC Networks Integrated Webcam  
+Bus 004 Device 002: ID 0b05:1788 ASUSTek Computer, Inc.  
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub  
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub  
+Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub  
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</pre>  
+
+<p>More information on lsusb can be found by reading the <a href="http://manpages.ubuntu.com/manpages/precise/en/man8/lsusb.8.html">lsusb 'man page'</a> (otherwise known as the manual). You can also use the lsusb command to learn more about the resolution of the webcams. Just change the Bus and Device numbers that you found above.  </p>
+
+<pre class="brush: bash; gutter: true">stephen@ubuntu:~$ lsusb -s 001:002 -v | egrep &quot;Width|Height&quot;  
+wWidth 640  
+wHeight 480  
+wWidth 800  
+wHeight 600  
+wWidth 1024  
+wHeight 768  
+wWidth 1280  
+wHeight 720</pre>  
+
+<h2>fswebcam, ffmpeg, MPlayer, and VLC</h2>  
+
+<p>There are a few command line tools that will let you take a picture using your webcam. I've tried three different tools and found that I liked fswebcam the most, but I've listed all of the options here:</p>
+
+<p>Note that you might need to change your device from /dev/video0 to perhaps /dev/video1! Check the above section to see what webcam is detected.  </p>
+
+<h4>ffmpeg</h4>  
+
+<pre class="brush: bash; gutter: true">ffmpeg -f video4linux2 -i /dev/video0 -vframes 1 test.jpeg  
+ffmpeg -f video4linux2 -s 640x480 -i /dev/video1 -vframes 1 /home/stephen/webcamphotos/$(date +\%Y\%m\%d\%H\%M).jpeg</pre>  
+
+<ul>  
+    <li><a href="http://linux.die.net/man/1/ffmpeg">ffmpeg man page</a></li>
+    <li><a href="http://ffmpeg.org/ffmpeg.html">ffmpeg documentation</a></li>
+</ul>  
+
+<h4>fswebcam</h4>  
+
+<ul>  
+    <li><a href="http://manpages.ubuntu.com/manpages/lucid/man1/fswebcam.1.html">fswebcam man page</a></li>
+</ul>  
+
+<h4>MPlayer</h4>  
+
+<pre class="brush: actionscript3; gutter: true">mplayer tv:// -tv driver=v4l2:device=/dev/video0:width=640:height=480 -frames 3 -vo jpeg</pre>  
+
+<ul>  
+    <li><a href="http://www.mplayerhq.hu/DOCS/HTML/en/index.html">MPlayer documentation</a></li>
+    <li><a href="https://wiki.archlinux.org/index.php/MPlayer">archLinux article on MPlayer</a></li>
+</ul>  
+
+<h4>VLC</h4>  
+
+<pre class="brush: actionscript3; gutter: true">vlc -I dummy v4l2:///dev/video0 --video-filter scene --no-audio --scene-path /home/stoppal/test --scene-prefix image_prefix --scene-format png vlc://quit --run-time=1</pre>  
+
+<h2>Some notes about the Logitech Quickcam Pro 9000</h2>  
+
+<p style="text-align: center;"><a href="http://www.netinstructions.com/wp-content/uploads/2013/06/logitech-quickcam-pro-9000.jpg"><img class="wp-image-250 aligncenter" alt="logitech-quickcam-pro-9000" src="http://www.netinstructions.com/wp-content/uploads/2013/06/logitech-quickcam-pro-9000-300x214.jpg" width="210" height="150"></a></p>  
+
+<p>If you are using the Logitech Quickcam Pro 9000 it has an advertised maximum resolution of 1600x1200. Let's try to run that with fswebcam.</p>
+
+<pre><code>stephen@ubuntu:~$ fswebcam -d /dev/video1 -r 1600x1200 --jpeg 85 -F 5 /home/stephen/webcamphotos/$(date +\%Y\%m\%d\%H\%M).jpeg
+--- Opening /dev/video1...
+Trying source module v4l2...
+/dev/video1 opened.
+No input was specified, using the first.
+Adjusting resolution from 1600x1200 to 960x720.
+--- Capturing 5 frames...
+Captured 5 frames in 0.40 seconds. (12 fps)
+--- Processing captured image...
+Setting output format to JPEG, quality 85
+Writing JPEG image to ~/home/stephen/webcamphotos/201304051633.jpeg.
+</code></pre>
+
+<p>Wait a second! Why did it adjust the resolution to 960x720?</p>
+
+<p>It turns out we need to force it to use a YUYV palette instead of the default  </p>
+
+<pre class="brush: actionscript3; gutter: true">stephen@ubuntu:~$ fswebcam -d /dev/video1 -p YUYV -r 1600x1200 --jpeg 85 -F 5 /home/stephen/webcamphotos/$(date +\%Y\%m\%d\%H\%M).jpeg</pre>  
+
+<h2>Configure crontab (make a cronjob) to take a picture every minute or hour</h2>  
+
+<p>Crontab is a popular *nix utility that executes a command on a user defined interval. Maybe you just want to take a picture every minute, or maybe you want to shutdown your computer Monday through Friday at 10pm. Or maybe you want to run some scripts that backup your data once every 3 months. If you want to run multiple commands you can do so by chaining them with the &amp;&amp; keyword, but it's also sometimes worth making a bash script (or maybe a simple Python/Perl/Ruby script) that gets executed as part of the cronjob.</p>
+
+<p>To view the current cron jobs for the current user, type crontab -e</p>
+
+<p>Here are some cronjobs I have set up:  </p>
+
+<pre class="brush: actionscript3; gutter: true"># To take a picture every minute  
+# */1 * * * * streamer -f jpeg -s 1024x768 -o /home/stephen/timelap/$(date +\%m\%d\%k\%M).jpeg
+
+# To take a picture every hour on the 15 minute mark using a different tool
+# 15 * * * * fswebcam -r 1024x768 --jpeg 85 -D 4 -F 10 /home/stephen/webcamphotos/$(date +\%Y\%m\%d\%k\%M).jpeg
+
+# Take a picture and upload it to the webserver every hour
+@hourly bash /home/stephen/scripts/take_photo_and_push.sh</pre>
+
+<p>The last cronjob calls a bash script that looks like this:  </p>
+
+<pre class="brush: actionscript3; gutter: true">#!/bin/bash  
+#Take a picture, then push it to a remote webserver
+
+#Take a photo
+fswebcam -d /dev/video1 -p YUYV -r 1600x1200 --jpeg 85 -D 2 -F 15 /home/stephen/webcamphotos/$(date +\%Y\%m\%d\%H\%M).jpeg
+
+#Navigate to the directory
+cd /home/stephen/webcamphotos/
+
+#Find the most recent jpeg
+NEW_JPEG=$(ls -t | grep &#039;\&gt;.jpeg&#039; | head -1)
+
+#Push it to the remote webserver
+scp /home/stephen/webcamphotos/$NEW_JPEG stephen@netinstructions.com:/home/stephen/netinstructions.com/homeserver/latest.jpeg</pre>  
+
+<p>For more information on cronjobs and crontab, <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?crontab+5">take a look at this guide</a>.  </p>
+
+<h2>Viewing/Transfering the Pictures</h2>  
+
+<p>Okay, so you found a command line utility that takes pictures, and perhaps a cronjob that runs that command every 5 minutes or 10 minutes or every hour or once a day, but how do you look at the picture?</p>
+
+<p>There are a couple of ways of doing this. If you're using the desktop version of Ubuntu (with a nice graphical user interface) you just double click on the photo. For the rest of us who are SSH'ing in to a remote machine or are using the server version of Ubuntu or some other Linx distro, we have a few options:  </p>
+
+<ul>  
+    <li>FileZilla to grab the files and transfer them to our local machines</li>
+    <li>If you have a web server (Apache, ngnix, or something else) on the server, move the file to the web directory</li>
+    <li>SCP the file to a remote web server. For example, I have a few websites (such as this one) hosted by Dreamhost, and they provide shell access</li>
+</ul>  
+
+<p>The command to securely transfer a file on one machine to another looks like this:</p>
+
+<pre><code>scp /home/stephen/webcamphotos/$NEW_JPEG stephen@netinstructions.com:/home/stephen/netinstructions.com/homeserver/latest.jpeg&lt;/pre&gt;
+</code></pre>]]></content:encoded></item><item><title><![CDATA[I Wish I Was Excited About The GoPro Camera Craze]]></title><description><![CDATA[<p>Let's take a moment to talk about technology in the consumer space. A few years ago, an exciting little device started popping up. At first it lurked around on the some small tech blogs and action sport forums. Then it moved onto mainstream technology blogs, and once the ball started</p>]]></description><link>http://www.netinstructions.com/gopro-the-product-i-want-to-love-the-company-i-cant-help-but-hate/</link><guid isPermaLink="false">3c1c6e19-7f40-4b1f-a4aa-26257d1c0703</guid><category><![CDATA[gopro]]></category><category><![CDATA[gopro defects]]></category><category><![CDATA[gopro hero]]></category><category><![CDATA[gopro-1]]></category><category><![CDATA[original gopro]]></category><category><![CDATA[poor customer service]]></category><category><![CDATA[software limited number of photos]]></category><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Fri, 22 Feb 2013 13:16:02 GMT</pubDate><content:encoded><![CDATA[<p>Let's take a moment to talk about technology in the consumer space. A few years ago, an exciting little device started popping up. At first it lurked around on the some small tech blogs and action sport forums. Then it moved onto mainstream technology blogs, and once the ball started rolling, I started seeing it on television commercials. I don't even own a television, yet the few times I found myself near a television this thing seemed to show up on every commercial break. Towards the end of last year, there was <a href="http://www.inc.com/janine-popick/4-things-you-didnt-know-about-gopro-3-big-lessons.html">one GoPro video titled, tagged, and uploaded every minute</a> on YouTube. How did this little device explode into popularity?</p>
+
+<p>Let's talk about what these little 'GoPro' cameras do:  </p>
+
+<ul>  
+    <li>Shoots video (in a <em>wide variety</em> of different resolutions and framerates)</li>
+    <li>Shoots still images (in a <em>wide variety</em> of delays, timers, and bursts)</li>
+    <li>Shoots underwater, in the dirt, in the rain, in space, or just about anywhere you want.</li>
+</ul>  
+
+<p>See a theme here? <strong>It's crazy flexible</strong>. When I was debating purchasing one I thought about all the different use cases and what sort of audiences this camera was being marketed to. It's great for documenting action sports. It's great for people who just want to take some pictures or video underwater. It's great for people who want to add a high-quality video recording unit to their remote controlled airplane. I was thinking it'd be awesome for some time-lapse video because of the built-in intervalometers. <strong>Some expensive DSLR's don't even have built in intervalometers!</strong></p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2013/02/gopro.png"><img class=" wp-image-207 alignright" alt="a camera you want to love made by a company you can't help but hate" src="http://www.netinstructions.com/wp-content/uploads/2013/02/gopro.png" width="432" height="272"></a></p>
+
+<p>Let's talk about features:  </p>
+
+<ul>  
+    <li><span style="line-height: 13px;" data-mce-mark="1">Rugged</span></li>
+    <li>Cheap</li>
+    <li>Simple to use</li>
+</ul>  
+
+<p>And let's elaborate on the simple to use part. There are <em><strong>two buttons</strong></em> (at least on the second generation unit I had) -- Power and Mode. There's no camera focus to deal with. There's no LCD screen for people to fiddle with composition, and the wide-angle lens means if the camera is pointed at your subject, it's going to be in the shot. The ruggedness factors into the simplicity as well, because I can throw it in my backpack, tie it to a kite, use it in the rain or the leave it near the swimming pool. It requires little thought or worries. <strong>It's a brilliant, flexible, easy-to-use, inexpensive device</strong>. But I am worried.  </p>
+
+<h2>Though You Had Strong Hardware and Insane Viral Marketing Success, your Software and Customer Support Failed.</h2>  
+
+<h3>(And Failed in the Most Ridiculous, Absurd, How-The-Hell-Did-This-Get-Past-Your-QA-Department Way)</h3>  
+
+<p>What's my complaint? Well, as mentioned I was planning on doing some time lapse photography using the built in intervalometer that came with the camera. I was also going on a family vacation the next week, and wanted to try out the underwater video recording in the pool and ocean. So I ordered their newest (at the time) <a href="http://gopro.com/cameras/hd-hero-naked-camera/#specs">$300 GoPro Hero HD</a>, a chest strap, and a few days later was happily recording video and shooting pictures. Looking at the footage, the quality impressed the hell out of me. I finally understood why everyone wanted HD televisions. The time-lapse footage came out pretty great as well. A big, wide-angle shot, perfect for watching clouds and shadows race across the the screen. But little did I know that with each of these experiments <strong>my camera was slowing ticking away, it's life and usefulness decreasing with every single shot.</strong></p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2013/02/gopro-tied-to-a-kite.jpg"><img class="size-medium wp-image-216" title="go pro tied to a kite" alt="gopro-tied-to-a-kite" src="http://www.netinstructions.com/wp-content/uploads/2013/02/gopro-tied-to-a-kite-300x225.jpg" width="300" height="225"></a> <br>
+(Yup, at one point I tied it to a kite.)</p>
+
+<p>Fast-forward to the end of my vacation. I shot probably 50 or so videos of my family jumping off the diving board into the water and thousands of still images that would later become some neat time lapse segments  I was getting slightly less than ideal battery life which I thought was an okay compromise for all the great shots, but what was really starting to get on my nerves was that I couldn't seem to take more than a couple time lapse photos. I'd set it to the timed image mode, press the shutter button, and it would take a couple photos (I could see the little red light blink), but then it would mysteriously stop. Also, the 3 digit LCD display seemed to be stuck at 999. I saw this before when doing extended time lapses. It meant I had taken over 999 videos or pictures, exceeding the LDC display limit, but when plugged into the computer, I would find my files rolled over like GOPR0999.jpg and then GOPR1000.jpg, GOPR1001.jpg, etc.</p>
+
+<p><strong>Turns out that although it was smart enough to roll over after 999 photos, it wasn't smart enough to roll over a few more times</strong>. After some hours of troubleshooting (which included connecting it to the computer, transferring files, reformatting the SD card, trying different SD cards, power cycling the camera, etc) I gave up. I couldn't get it to take any more photos or video. Thankfully it was the last day of my vacation. Although that meant I would miss recording my four year old cousin finally get up the nerve to swim across the pool without floaters, I would have the next couple days alone to get my new camera working again.</p>
+
+<p>Eventually I felt helpless. I decided to shoot GoPro an email (on 7/21/10):  </p>
+
+<blockquote><em>Hello I recently purchased a GoPro HD Hero and it worked fine for a few weeks. Now however when I try to set up an image sequence (set to once every 5 seconds), it takes about 8 or 9 photos and then locks up. I cannot turn it off or stop its capture. When I plug it into my computer, I see that there are hundreds of empty folders. Only in the first folder are there about 8 or 9 photos.</em>
+
+<em>I tried powercycling it by taking the battery out and putting it back in. I also wipe out the memory card both via the computer, as well as selecting the 'delete all' option on-camera. Whenever I try to do an image sequence, it just locks up after the first 8 or 9 photos. I am guessing it just starts making empty folders every 5 seconds on the memory card at that point.</em>
+
+<em>I was happy with the product initially, but this is a very frustrating problem. I have missed opportunities to take awesome image sequences. Please advise what I can do about this.</em>
+
+<em>Stephen</em></blockquote>  
+
+<p>The next day I received this response:  </p>
+
+<blockquote><em>Hi Stephen,</em>
+
+<em>Do you take many time lapse pictures? What may have happened, is <strong>you may have encountered a known issue with our current firmware, in which the camera is no longer able to save files after it has taken 9999 images.</strong> Could you please let me know what the name of the last successfully captured image was? If this is the case, we would need you to send in your camera, and would reflash your firmware to fix the issue.</em>
+
+<em>Otherwise, what brand/specification of SD card are you using? We have had many users facing issues with less reputable SD card manufacturers, and this could potentially creating the issue. In house we use Kingston and Patriot brand Class 4 or higher SD cards, and can fully recommend these.</em>
+
+<em>Please let me know if this helps.</em>
+
+<em>Many Thanks,</em>  
+<em>GoPro Support</em></blockquote>  
+
+<p>to which I replied:  </p>
+
+<blockquote><em>Yes, I do take many time lapse pictures. That was one of the reasons why I purchased the camera not too long ago. The last successfully captured image filename is GOPR9999.jpg in the folder 100GOPRO and there are a lot of empty folders such as 101GOPRO and 102GOPRO etc.</em>
+
+<em>I have a Kingston SDHC 16GB Class 4 memory card, which I do not believe is the issue.</em>
+
+<em>Is the only solution to send this camera to you to reflash the firmware? Is this something I cannot do if you send me the firmware and instructions? Is there not a reset button on the camera somewhere?</em>
+
+<em>This is a frustrating experience that the firmware will not let the user take over 9,999 pictures. I do not understand how this is a "known issue" and yet you still shipped me a camera that has such an arbitrary limit to the number of pictures. <strong>It is unfair to your customers to sell a camera that only takes XX number of pictures before it needs to get shipped back (on the customer's dime) and "reset" due to a software error.</strong></em>
+
+<em>Stephen</em></blockquote>  
+
+<p>And here was the last email from them:  </p>
+
+<blockquote><em>Update for Case #57639 - "Picture sequence not working"</em>
+
+<em>Hi Stephen,</em>
+
+<em>I'm sorry for the inconvenience. You are indeed experiencing an issue with our current firmware, in that its internal file counter cannot exceed 9999 and so is unable to save past this point. The only immediate fix we have is to reflash the firmware, which we need you to send the camera in to accomplish.</em>
+
+<em>We are currently completing testing on our latest firmware release, which will fix the issue you are facing. We hope to have this released and available on our website by the end of summer, hopefully sooner, but need to make absolutely sure that image quality in all the new features is preserved. If you are in no hurry, you may elect to wait for this firmware upgrade, and will be notified of its release if you sign up for our newsletter:</em>
+
+<em><a href="http://www.goprocamera.com/newsletter">http://www.goprocamera.com/newsletter</a></em>
+
+<em>Please let me know how you would like to proceed.</em>
+
+<em>Many Thanks,</em>  
+<em>GoPro Support</em></blockquote>  
+
+<p>And that was it. <strong>They wanted me to either pay $20 in shipping to send my new camera across the United States, wait a week without it, just so they could "reset" a software bug and I could take another 9,999 photos.</strong> Or my only other option was to sign up for their marketing campaign so I could be notified of a new firmware release which was expected to be due by the end of summer. In troubleshooting this issue and browsing online forums, I noticed that users were complaining of repeated firmware release delays that the GoPro website had boldly advertised for.</p>
+
+<p>What did I do? I quietly cursed at GoPro, paid the $20 in shipping and insurance, spent a week without my new camera, and silently vented my anger and frustration. Well, that was until now, with the publication of this blog post, nearly two years later.</p>
+
+<p>Even though this happened long ago and the GoPro craze has only grown, looking back it still rubs me the wrong way. This is <strong>a product that I wanted to love</strong>, but made by <strong>a company that I cannot trust</strong>, and one that seriously shit on its customers.  </p>
+
+<h3><em><strong>You do not sell a fucking camera with a software-defined limited number of shots.</strong> </em></h3>  
+
+<p>Not to a few hundred people, not to a few thousand people, and in no way should you be selling hundreds of thousands of cameras around the world with a critical firmware or software bug that arbitrarily limits the number of photos you can take with it. But GoPro did exactly that. And even though I'll probably get a next generation Hero at some point soon, I'll be calling them assholes in my head as I click the order button, but that's only because there isn't a viable alternative to be seen on the market. Not yet.</p>
+
+<p>But <a href="http://www.amazon.com/GoPro-HD-HERO3-Black-Edition/dp/B009TCD8V8/?tag=netinstr-20">according to the latest reviews on Amazon</a>, it doesn't look like I'm alone at all.  </p>
+
+<h3>Update on 3/21/2013</h3>  
+
+<p>And if you thought it was absurd of them to sell a camera with a 'cap' to the number of photos you could take, they recently<a title="gopro go to hell" href="http://arstechnica.com/tech-policy/2013/03/gopro-can-fall-from-planes-with-no-parachute-cant-get-copyright-law/"> tried to use the Digital Millennium Copyright Act to forcibly remove a negative review</a> of one of their products on a website. Yup, that's pretty low.</p>]]></content:encoded></item><item><title><![CDATA[Google's re-branded header makes me go (slightly) crazy]]></title><description><![CDATA[<p>Since I'm such a devout Google user, I often have GMail, Google Calendar, and Google Drive (formerly Google Docs) open in three different tabs on Google web browser - Google Chrome. I'm often switching between tabs. Here's what it looks like when I switch from each one on <a href="http://googlesystem.blogspot.com/2012/01/googles-black-navigation-bar-is-back.html">Google's re-branded</a></p>]]></description><link>http://www.netinstructions.com/googles-re-branded-header-makes-me-go-slightly-crazy/</link><guid isPermaLink="false">13566855-5891-4204-82e5-a7e9a58338aa</guid><category><![CDATA[calendar]]></category><category><![CDATA[drive]]></category><category><![CDATA[gmail]]></category><category><![CDATA[google]]></category><category><![CDATA[inconsistent size]]></category><category><![CDATA[navigation]]></category><category><![CDATA[re-brand]]></category><category><![CDATA[ui]]></category><category><![CDATA[user interface]]></category><dc:creator><![CDATA[Stephen]]></dc:creator><pubDate>Tue, 22 May 2012 14:08:03 GMT</pubDate><content:encoded><![CDATA[<p>Since I'm such a devout Google user, I often have GMail, Google Calendar, and Google Drive (formerly Google Docs) open in three different tabs on Google web browser - Google Chrome. I'm often switching between tabs. Here's what it looks like when I switch from each one on <a href="http://googlesystem.blogspot.com/2012/01/googles-black-navigation-bar-is-back.html">Google's re-branded user interface</a>:</p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2012/05/google-header-animated.gif"><img class="aligncenter size-full wp-image-194" title="google header animated" src="http://www.netinstructions.com/wp-content/uploads/2012/05/google-header-animated.gif" alt="showing the inconsistencies in Google's new navigation header" width="600" height="192"></a></p>
+
+<p>These sorts of tiny details make me go crazy! The logos are different sizes, the buttons are different sizes, and the width of the sections are different sizes. There's also different spacing and indentations.</p>
+
+<p>It makes me wonder what happened. Google <a href="http://googlesystem.blogspot.com/2012/02/strange-google-mobile-experiment.html">tirelessly optimizes its user interface</a> based off A/B testing of millions of users. Is it perhaps that I am in the "A" test group for GMail, and in the "B" test group for Drive? Some people <a href="http://webdesign.tutsplus.com/articles/design-theory/what-we-can-learn-from-googles-new-ui/">think this is fantastic</a>. Although we're getting there, this is still not what I would call a <em>unified user interface</em>.</p>
+
+<p><strong>Update 6/5/2012: </strong>Looks like it's just a matter of changing the settings from cozy, compact, to comfortable, which doesn't carry over from service to service.</p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2012/05/compact-settings.png"><img class="size-full wp-image-200 alignleft" title="compact settings" src="http://www.netinstructions.com/wp-content/uploads/2012/05/compact-settings.png" alt="" width="255" height="224"></a><a href="http://www.netinstructions.com/wp-content/uploads/2012/05/cozy-settings.png"><img class="alignleft size-full wp-image-199" title="cozy settings" src="http://www.netinstructions.com/wp-content/uploads/2012/05/cozy-settings.png" alt="" width="350" height="369"></a></p>]]></content:encoded></item></channel></rss>
+

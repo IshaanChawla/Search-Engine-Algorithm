@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Add the Vote to the Database</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Adding the Survey Vote to the Database</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Survey/Poll tutorial. The first part is 
+  here: <a href="php15p1.html">Build your own Survey/Poll</a>, along with all 
+  the files you need.</i></p>
+<p>&nbsp;</p>
+<p>When the Vote button is clicked, the user will be sent to a new page. Behind 
+  the scenes, you're recording the vote and adding it the database.</p>
+<p>As well as adding the vote to the database, you'll probably want to implement 
+  some sort of check to prevent people from voting over and over again. If you 
+  open up the code for the <b>process.php</b> page (in the survey folder), you'll 
+  see that the checking is done via a session variable. You met this code during 
+  the username/password walkthrough.</p>
+<p class="indent_small">session_start();<br>
+  if ( (isset($_SESSION['hasVoted'])) ) {</p>
+<p class="indent_big">//Already Voted</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">//Process the Vote</p>
+<p class="indent_small">}</p>
+<p>(NOTE: Session variables work by sending you an ID as a cookie. If you have 
+  cookies disabled then the session variable won't work, and you can vote over 
+  and over again! You might want to check that cookies are enabled in the browser.)</p>
+<p>So we start a session, and check if the session variable called hasVoted has 
+  been set. If it has, then a vote from this user has already been added to the 
+  database. In which case, a message is displayed.</p>
+<p>If no session has been set, then the else part of the if statement is executed. 
+  The first line of this is another if statement:</p>
+<p class="indent_small">if ( isset($_GET['Submit1']) &amp;&amp; isset($_GET['q']) 
+  ) {</p>
+<p class="indent_small">}</p>
+<p>Here's we're checking for two things: was the Submit button called Submit1 
+  clicked on the previous page, and has the radio button data been handed over 
+  to this page (the radio button data will be in the variable called 'q')? If 
+  the answer to both questions is Yes then we can go ahead and process the data; 
+  if the answer is No, then we can assume that the button was clicked but the 
+  user didn't select a radio button. In which case, this message is displayed: 
+  print &quot;You didn't selected a voting option!&quot;;</p>
+<p>If all went OK, though, the first line of the new if statement to get executed 
+  is this:</p>
+<p class="TextIndent3">$selected_radio = $_GET['q'];</p>
+<p>This just gets which radio button was clicked. The value comes from the HTML 
+  form, and will be A, B or C. This is then placed into the variable called<b> 
+  $selected_radio</b>.</p>
+<p>The next few lines open a connection to the database, like we did before. After 
+  the database has been successfully opened, we have this:</p>
+<p class="TextIndent3">$_SESSION['hasVoted'] = '1';</p>
+<p>This is our &quot;hasVoted&quot; session variable, and we're placing a value 
+  of &quot;1&quot; into it. If the user tries to vote again, a message of &quot;You've 
+  already voted&quot; will be displayed. </p>
+<p>The next line is where we add the record to the answers table in our database:</p>
+<p class="indent_small">$SQL = &quot;UPDATE answers SET $selected_radio = $selected_radio 
+  + 1&quot;;</p>
+<p>Here, we're using the SQL command UPDATE. After the word UPDATE, you type the 
+  name of the table you want to UPDATE (answers, for us). We only want to update 
+  the field that was passed to the page in the &quot;q&quot; variable. This will 
+  be either A, B or C, which are the column names from the answers table. We can 
+  then use the SET keyword to set just that column from the table. Because the 
+  variable called <b>$selected_radio</b> will contain only A, B or C we can just 
+  add 1 to whatever is currently there:</p>
+<p class="TextIndent3">SET $selected_radio = $selected_radio + 1&quot;;</p>
+<p>You'll notice that we're not making sure to move to the end of the records 
+  in the answers table (which we should do), but trusting MySQL to do it for us. 
+</p>
+<p>This is not a good idea! In your own code, you should make sure that the correct 
+  record is being updated. We're taking shortcuts for simplicity's sake.</p>
+<p>After the table is updated, we close the connection to the database, and print 
+  out a message: &quot;Thanks for voting&quot;.</p>
+<p>And that's it - a vote has been added to the table.</p>
+<p>You can add a &quot;back&quot; link to the HTML, or do anything else you like 
+  with your page. Or perhaps you could add a link so that the results of the voting 
+  can be viewed? We'll take a look at the code for the <b>results</b> page now.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php15p4.html">&lt;-- Back One Page</a> | <a href="php15p6.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

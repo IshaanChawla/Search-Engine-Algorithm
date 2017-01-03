@@ -1,0 +1,915 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; The functions malloc and free | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; The functions malloc and free" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,635] -->
+<meta name="description"  content="The function malloc is used to allocate a certain amount of memory during the execution of a program. The malloc function will request a block of memory from" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; The functions malloc and free Comments Feed" href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; File I/O (using text files)' href='http://www.codingunit.com/c-tutorial-file-io-using-text-files' />
+<link rel='next' title='C Tutorial &#8211; Binary File I/O' href='http://www.codingunit.com/c-tutorial-binary-file-io' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=216' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-216">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">
+		C Tutorial &#8211; The functions malloc and free</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>The function malloc is used to allocate a certain amount of memory during the execution of a program. The malloc function will request a block of memory from the heap. If the request is granted, the operating system will reserve the requested amount of memory.</p>
+<p>When the amount of memory is not needed anymore, you must return it to the operating system by calling the function free.</p>
+<p>Take a look at the following example:<span id="more-216"></span></p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+		int *ptr_one;
+
+		ptr_one = (int *)malloc(sizeof(int));
+
+		if (ptr_one == 0)
+		{
+			printf("ERROR: Out of memory\n");
+			return 1;
+		}
+
+		*ptr_one = 25;
+		printf("%d\n", *ptr_one);
+
+		free(ptr_one);
+
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> If you compile on windows the windows.h file should be included to use malloc.</p>
+<p>The malloc statement will ask for an amount of memory with the size of an integer (32 bits or 4 bytes). If there is not enough memory available, the malloc function will return a NULL. If the request is granted a block of memory is allocated (reserved). The address of the reserved block will be placed into the pointer variable.</p>
+<p>The if statement then checks for the return value of NULL. If the return value equals NULL, then a message will be printed and the programs stops. (If the return value of the program equals one, than that&#8217;s an indication that there was a problem.)</p>
+<p>The number twenty-five is placed in the allocated memory. Then the value in the allocated memory will be printed. Before the program ends the reserved memory is released.</p>
+<h2>Malloc and structures</h2>
+<p>A structure can also be used in a malloc statement.</p>
+<p>Take a look at the example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	typedef struct rec
+	{
+    		int i;
+    		float PI;
+    		char A;
+	}RECORD;
+
+	int main()
+	{
+    		RECORD *ptr_one;
+
+    		ptr_one = (RECORD *) malloc (sizeof(RECORD));
+
+    		(*ptr_one).i = 10;
+    		(*ptr_one).PI = 3.14;
+    		(*ptr_one).A = 'a';
+
+    		printf("First value: %d\n",(*ptr_one).i);
+    		printf("Second value: %f\n", (*ptr_one).PI);
+    		printf("Third value: %c\n", (*ptr_one).A);
+
+    		free(ptr_one);
+
+    		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> the parentheses around *ptr_one in the printf statements.<br />
+This notation is not often used. Most people will use ptr_one-&gt;i instead. So (*ptr_one).i = 25 and ptr_one-&gt;i = 25 are the same.</p>
+<p>If you want to use the structure without the typedef the program will look like this:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	struct rec
+	{
+    		int i;
+    		float PI;
+    		char A;
+	};
+
+	int main()
+	{
+		struct rec *ptr_one;
+		ptr_one =(struct rec *) malloc (sizeof(struct rec));
+
+		ptr_one-&gt;i = 10;
+    		ptr_one-&gt;PI = 3.14;
+    		ptr_one-&gt;A = 'a';
+
+    		printf("First value: %d\n", ptr_one-&gt;i);
+    		printf("Second value: %f\n", ptr_one-&gt;PI);
+    		printf("Third value: %c\n", ptr_one-&gt;A);
+
+    		free(ptr_one);
+
+   		return 0;
+	}
+
+</code></pre>
+</div>
+<p>One last tip before we end the tutorial: Always use sizeof. Never use this notation malloc(4). (Requesting 4bytes for the integer in the examples). This will make your code much more portable.</p>
+<p>If you look at the dynamic memory functions of the stdlib.h library you will see that there are more functions that you can use to allocate dynamic memory. The following four dynamic memory functions can be found in the stdlib.h library:</p>
+<ul>
+<li><a title="Allocate space for an array in memory" href="http://www.codingunit.com/c-reference-stdlib-h-function-calloc"> To allocate space for an array in memory you use calloc()</a></li>
+<li><a title="Allocate a memory block" href="http://www.codingunit.com/c-reference-stdlib-h-function-malloc">To allocate a memory block you use malloc()</a></li>
+<li><a title="Reallocate a memory block" href="http://www.codingunit.com/c-reference-stdlib-h-function-realloc">To reallocate a memory block with specific size you use realloc()</a></li>
+<li><a title="Free previously allocated memory" href="http://www.codingunit.com/c-reference-stdlib-h-function-free">To de-allocate previously allocated memory you use free()</a></li>
+</ul>
+<p>That&#8217;s all for this tutorial.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; The functions malloc and free http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 39 responses to &#8220;C Tutorial &#8211; The functions malloc and free&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-7">
+
+            			<cite>ruth</cite> on <small>September 16th, 2009</small>:
+			
+			<p>you people have quality well explained info</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-13">
+
+            			<cite>vikash</cite> on <small>September 24th, 2009</small>:
+			
+			<p>this tutorial is excellent, great work , thanks alot&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-181">
+
+            			<cite>Nishan senevirathna</cite> on <small>November 21st, 2009</small>:
+			
+			<p>Thanks a lot, this tutorial is explained malloc() as well as how to struct handle&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-799">
+
+            			<cite>bob</cite> on <small>February 6th, 2010</small>:
+			
+			<p>Thanks so much!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-818">
+
+            			<cite>Kenji</cite> on <small>February 8th, 2010</small>:
+			
+			<p>Hi guys, i know this may not be related but i urgently need help from your expertise, hoping to seek advices from you.</p>
+<p>im trying to declare things like,</p>
+<p>char *TTLSnote[] = {&#8220;C1&#8243;,&#8221;C1&#8243;,&#8221;G1&#8243;,&#8221;G1&#8243;,&#8221;A1&#8243;,&#8221;A1&#8243;,&#8221;G2&#8243;,&#8221;F1&#8243;,&#8221;F1&#8243;,&#8221;E1&#8243;,&#8221;E1&#8243;,&#8221;D1&#8243;,&#8221;D1&#8243;,&#8221;C2&#8243;,<br />
+&#8220;G1&#8243;,&#8221;G1&#8243;,&#8221;F1&#8243;,&#8221;F1&#8243;,&#8221;E1&#8243;,&#8221;E1&#8243;,&#8221;D2&#8243;,&#8221;G1&#8243;,&#8221;G1&#8243;,&#8221;F1&#8243;,&#8221;F1&#8243;,&#8221;E1&#8243;,&#8221;E1&#8243;,&#8221;D2&#8243;,<br />
+&#8220;C1&#8243;,&#8221;C1&#8243;,&#8221;G1&#8243;,&#8221;G1&#8243;,&#8221;A1&#8243;,&#8221;A1&#8243;,&#8221;G2&#8243;,&#8221;F1&#8243;,&#8221;F1&#8243;,&#8221;E1&#8243;,&#8221;E1&#8243;,&#8221;D1&#8243;,&#8221;D1&#8243;,&#8221;C2&#8243;,&#8221;END&#8221;};</p>
+<p>and i got ERROR L107: ADDRESS SPACE OVERFLOW and &#8216;DATA': SEGMENT TOO LARGE during compilation. Anyone may help?<br />
+btw, im using Keil C51 compiler. Many thank in advance.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-821">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>February 9th, 2010</small>:
+			
+			<p>@kenji  First of, I never used the Keil C51 compiler. The declaration looks fine (and also is good in VC2008 compiler.)</p>
+<p>I found the following on keil compiler website:</p>
+<blockquote><p>This error message indicates that a segment named ?CO?MAIN, which is a COnstant in the MAIN segment, is 8000h bytes long and <strong>will not fit in the remaining CODE memory space</strong>. This may be an indication that your program is growing too large or it may indicate that you need to increase the amount of ROM or RAM space available to your target hardware.</p></blockquote>
+<p>The link to the page and the possible solution <a href="http://www.keil.com/support/docs/1481.htm" rel="nofollow">here</a></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1823">
+
+            			<cite>Vidhya</cite> on <small>August 29th, 2010</small>:
+			
+			<p>Thanx&#8230;&#8230;<br />
+Good work!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1873">
+
+            			<cite>Hugo I. Ramirez</cite> on <small>October 3rd, 2010</small>:
+			
+			<p>Thank you! This tutorial helped me a lot! I would recommend it a lot.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1950">
+
+            			<cite>sadun</cite> on <small>November 20th, 2010</small>:
+			
+			<p>Thanks a lot. I would recommend it.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3225">
+
+            			<cite>ruhi sharma</cite> on <small>February 3rd, 2011</small>:
+			
+			<p>thanks&#8230;&#8230;.<br />
+n keep it up</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3554">
+
+            			<cite>vimal</cite> on <small>June 28th, 2011</small>:
+			
+			<p>char *TTLSnote = {“C1?,”C1?,”G1?,”G1?,”A1?,”A1?,”G2?,”F1?,”F1?,”E1?,”E1?,”D1?,”D1?,”C2?,<br />
+“G1?,”G1?,”F1?,”F1?,”E1?,”E1?,”D2?,”G1?,”G1?,”F1?,”F1?,”E1?,”E1?,”D2?,<br />
+“C1?,”C1?,”G1?,”G1?,”A1?,”A1?,”G2?,”F1?,”F1?,”E1?,”E1?,”D1?,”D1?,”C2?,”END”};<br />
+dis is correct format&#8230; whn using dynamic initialization,,, dnt write *TTLSnote[],,<br />
+avoid [] symbols</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3674">
+
+            			<cite>Joseph</cite> on <small>August 10th, 2011</small>:
+			
+			<p>I am attempting to read in data from a csv file with two columns: the first I am reading in as character string; the second column as a float. The column headers have been removed. I represent each row as atruct rec; the entire data should then be represented by an array of structs. My problem is that in the while loop I get segment fault when attempting to read the first row. Can anyone see why? Thanks.</p>
+<p>#include<br />
+#include<br />
+#define MAXROWS 400</p>
+<p>struct rec{<br />
+	char *date;<br />
+	float *yld;<br />
+};</p>
+<p>struct rec *readFile();</p>
+<p>/* read the input file */<br />
+struct rec *readFile(char *filname){<br />
+	FILE *fp;<br />
+	char *line;<br />
+	struct rec rw;<br />
+	int i=0;<br />
+	struct rec *data[MAXROWS];<br />
+	for(i = 0; i &lt; MAXROWS; i++){<br />
+		data[i] = (struct rec *)malloc(sizeof(struct rec));<br />
+	}<br />
+	i = 0;<br />
+	rw = *data[0];<br />
+	if((fp = fopen(filname, &quot;r&quot;)) != NULL){<br />
+		while(fscanf(fp, &quot;%s,%f&quot;, rw.date, rw.yld) == 2){<br />
+			i++;<br />
+			rw = *data[i];<br />
+		}<br />
+		return data;<br />
+	}else{<br />
+		exit(1);<br />
+	}<br />
+	return NULL;<br />
+}</p>
+<p>int main(){</p>
+<p>	struct rec *data;<br />
+	data = readFile(&quot;temp_test.csv&quot;);<br />
+	return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4184">
+
+            			<cite><a href='http://no' rel='external nofollow' class='url'>neeraj</a></cite> on <small>November 14th, 2011</small>:
+			
+			<p>thanks&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4420">
+
+            			<cite>Deepak</cite> on <small>January 14th, 2012</small>:
+			
+			<p>good</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4634">
+
+            			<cite>venkatesh</cite> on <small>March 31st, 2012</small>:
+			
+			<p>thanks a lot for clear cut definitions</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4753">
+
+            			<cite>mani</cite> on <small>April 25th, 2012</small>:
+			
+			<p>Thanks a lot&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4801">
+
+            			<cite>jamshed</cite> on <small>May 4th, 2012</small>:
+			
+			<p>good</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5423">
+
+            			<cite>bharat</cite> on <small>October 16th, 2012</small>:
+			
+			<p>excellent&#8230;&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5424">
+
+            			<cite>Xerxes</cite> on <small>October 16th, 2012</small>:
+			
+			<p>Perfecto ! Appreciate this tutorial for helping me a lot ! Thank you very much ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5452">
+
+            			<cite>vignesh.p</cite> on <small>October 26th, 2012</small>:
+			
+			<p>nice.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5479">
+
+            			<cite><a href='http://www.proudengineers.com' rel='external nofollow' class='url'>Nimish</a></cite> on <small>November 8th, 2012</small>:
+			
+			<p>Nice explanation <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5531">
+
+            			<cite>praveen kumar (bvicam)</cite> on <small>November 19th, 2012</small>:
+			
+			<p>the way of explaining of topic is very nice..thanx a lot&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6398">
+
+            			<cite>HEAVENZ</cite> on <small>January 31st, 2013</small>:
+			
+			<p>great tutorial. thnks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6459">
+
+            			<cite>parveen</cite> on <small>February 6th, 2013</small>:
+			
+			<p>nice to explain all the things i was so confused before to read it thanx a lot&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6501">
+
+            			<cite>Himanshu pratap</cite> on <small>February 14th, 2013</small>:
+			
+			<p>nice tutorials</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6555">
+
+            			<cite>Sylvio Marcos B. C.</cite> on <small>February 28th, 2013</small>:
+			
+			<p>Very good explanation, and easy to understand. Thank You.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6650">
+
+            			<cite><a href='http://gusainhimanshu.wordpress.com/2013/03/24/valgrind-memory-saviour/' rel='external nofollow' class='url'>VALGRIND: Memory Saviour | Himanshu Gusain</a></cite> on <small>March 24th, 2013</small>:
+			
+			<p>[&#8230;] allocate memory using malloc() and forget to free it. this also cause the leakage of [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6742">
+
+            			<cite>vinodh</cite> on <small>April 21st, 2013</small>:
+			
+			<p>hi,<br />
+  I want to check whether a particular word is present in FILE or not.someone pls help</p>
+<p>Regards<br />
+vinodh.s</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6797">
+
+            			<cite>Khet kumar</cite> on <small>May 2nd, 2013</small>:
+			
+			<p>Very very nice work &#8230;&#8230;&#8230;&#8230;. Thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7096">
+
+            			<cite>KY</cite> on <small>June 18th, 2013</small>:
+			
+			<p>Thanks for your tutorial. It helps me a lot.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7834">
+
+            			<cite>Debolina</cite> on <small>August 18th, 2013</small>:
+			
+			<p>Thank you .. the tutorial was excellent !!! nd so what i required!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7998">
+
+            			<cite>jeet</cite> on <small>September 27th, 2013</small>:
+			
+			<p>thanks!   the explanation helped me create my program&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8713">
+
+            			<cite>Nikhil</cite> on <small>October 15th, 2013</small>:
+			
+			<p>Nice and detailed explanation.Thank You so much.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8747">
+
+            			<cite>suresh</cite> on <small>October 16th, 2013</small>:
+			
+			<p>Thank you, this is a good tutorial.<br />
+also can you please refer if any material or books&#8230;i want to learn c in depth in a way that i can understand strucurtes, pointers and d.s in depth</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9223">
+
+            			<cite>DILWAR KAPRWAN</cite> on <small>December 12th, 2013</small>:
+			
+			<p>excellent</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9304">
+
+            			<cite>beka</cite> on <small>December 28th, 2013</small>:
+			
+			<p>thanks .. that&#8217;s helpful <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9377">
+
+            			<cite><a href='http://gmail' rel='external nofollow' class='url'>latha shree</a></cite> on <small>January 19th, 2014</small>:
+			
+			<p>really helpfull&#8230; tanks alot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9729">
+
+            			<cite>Indhuja</cite> on <small>February 23rd, 2014</small>:
+			
+			<p>hey ! great job! thanks!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-10284">
+
+            			<cite>DT Samrat</cite> on <small>April 4th, 2014</small>:
+			
+			<p>what if the allocated memory is not freed?</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.731 seconds. -->
+</body>
+</html>
+

@@ -1,0 +1,788 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; Arrays and Multi-Dimensional Arrays | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,641] -->
+<meta name="description"  content="In this C programming language tutorial, we are going to talk about arrays. An array lets you declare and work with a collection of values of the same type." />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; Arrays and Multi-Dimensional Arrays Comments Feed" href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; for loop, while loop, break and continue' href='http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue' />
+<link rel='next' title='C Tutorial &#8211; Functions and Global/Local variables' href='http://www.codingunit.com/c-tutorial-functions-and-global-local-variables' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=178' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-178">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">
+		C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C programming language tutorial, we are going to talk about arrays.</p>
+<p>An array lets you declare and work with a collection of values of the same type. Let&#8217;s say you want to declare four integers. With the knowledge from the last few tutorials you would do something like this:<span id="more-178"></span></p>
+<div id="cl"><code><br />
+     int a , b , c , d;</p>
+<p></code></div>
+<p>What if you wanted to declare a thousand variables? That will take you a long time to type. This is where arrays come in handy. An easier way is to declare an array of four integers:</p>
+<div id="cl"><code><br />
+     int a[4];</p>
+<p></code></div>
+<p>The four separate integers inside this array are accessed by an index. Each element can be accessed by using square brackets with the element number inside. All arrays start at element zero and will go to n-1. (In this case from 0 to 3). So if we want to fill each element you get something like this:</p>
+<div id="cl">
+<pre><code>
+     int a[4];
+     a[0] = 1;
+     a[1] = 2;
+     a[2] = 3;
+     a[3] = 4;
+
+</code></pre>
+</div>
+<p>If you want to use an element, for example for printing, you can do this:</p>
+<div id="cl"><code><br />
+     printf("%d", a[1]);</p>
+<p></code></div>
+<h2>Arrays and loops</h2>
+<p>One of the nice things about arrays is that you can use a loop to manipulate each element. When an array is declared, the values of each element are not set to zero automatically. In some cases you want to &#8220;initialize&#8221; the array (which means, setting every element to zero). This can be done like in the example above, but it is easier to use a loop. Here is an example:</p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+
+int main()
+{
+	int a[4];
+	int i;
+
+	for ( i = 0; i &lt; 4; i++ )
+		a[i] = 0;
+
+	for ( i = 0; i &lt; 4; i++ )
+		printf("a[%d] = %d\n", i , a[i]);
+
+	return 0;
+}
+
+</code></pre>
+</div>
+<h2>Multi-dimensional arrays</h2>
+<p>The arrays we have been using so far are called one-dimensional arrays.<br />
+Here is an example of an one-dimensional array:</p>
+<div id="cl"><code><br />
+int a[2];<br />
+</code></div>
+<table border="1" cellspacing="0" cellpadding="2" width="34">
+<colgroup>
+<col width="13"></col>
+<col width="13"></col>
+</colgroup>
+<tbody>
+<tr>
+<td width="13">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>0</strong></span></p>
+</td>
+<td width="13"><span style="font-family: Courier New,monospace;">1</span></td>
+</tr>
+<tr>
+<td width="13">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>1</strong></span></p>
+</td>
+<td width="13"><span style="font-family: Courier New,monospace;">2</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> A one-dimensional array has one column of elements.</p>
+<p>Two-dimensional arrays have rows and columns. See the example below:</p>
+<div id="cl"><code><br />
+int a[2][2];<br />
+</code></div>
+<table border="1" cellspacing="0" cellpadding="2" width="64">
+<colgroup>
+<col width="18"></col>
+<col width="17"></col>
+<col width="17"></col>
+</colgroup>
+<tbody>
+<tr>
+<td width="18">
+<p lang="en-GB" align="center">
+</td>
+<td width="17">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>0</strong></span></p>
+</td>
+<td width="17">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>1</strong></span></p>
+</td>
+</tr>
+<tr>
+<td width="18">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>0</strong></span></p>
+</td>
+<td width="17"><span style="font-family: Courier New,monospace;">1</span></td>
+<td width="17"><span style="font-family: Courier New,monospace;">2</span></td>
+</tr>
+<tr>
+<td width="18">
+<p align="center"><span style="font-family: Courier New,monospace;"><strong>1</strong></span></p>
+</td>
+<td width="17"><span style="font-family: Courier New,monospace;">4</span></td>
+<td width="17"><span style="font-family: Courier New,monospace;">5</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> a[0][0] contains the value 1. a[0][1] contains the value 2. a[1][0] contains the value 4. a[1][1] contains the value 5.</p>
+<p>So let&#8217;s look at an example that initialize a two-dimensional array and prints each element:</p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+
+int main()
+{
+	int a[4][4], i , j;
+
+	for (i = 0; i &lt; 4; i++)
+	{
+		for ( j = 0; j &lt; 4; j++)
+		{
+			a[i][j] = 0;
+			printf("a[%d][%d] = %d \n", i, j, a[i][j]);
+		}
+	}
+	return 0;
+}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> As you can see, we use two &#8220;for loops&#8221; in the example above. One to access the rows and the other to access the columns.</p>
+<p>A last word before we end this tutorial. The language C has no range checking, so if you index (choose an element) past the end of the array, it will not tell you. Instead the program will give you garbage data or it will crash.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; Arrays and Multi-Dimensional Arrays http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 26 responses to &#8220;C Tutorial &#8211; Arrays and Multi-Dimensional Arrays&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-3767">
+
+            			<cite>via cals</cite> on <small>September 15th, 2011</small>:
+			
+			<p>what about for strings?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4108">
+
+            			<cite><a href='http://www.penzfolyam.hu' rel='external nofollow' class='url'>Csaba</a></cite> on <small>November 8th, 2011</small>:
+			
+			<p>For Strings you just use like this (Example with initialisation):</p>
+<p>char*  strArray[5][3] = {&#8220;[0].[0]&#8221;,&#8221;[0].[1]&#8221;,&#8221;[0].[2]&#8221;,&#8221;[0].[3]&#8221;<br />
+                        ,&#8221;[1].[0]&#8221;,&#8221;[1].[1]&#8221;,&#8221;[1].[2]&#8221;,&#8221;[1].[3]&#8221;,<br />
+                        ,&#8221;[2].[0]&#8221;,&#8221;[2].[1]&#8221;,&#8221;[2].[2]&#8221;,&#8221;[2].[3]&#8221;,<br />
+                        ,&#8221;[3].[0]&#8221;,&#8221;[3].[1]&#8221;,&#8221;[3].[2]&#8221;,&#8221;[3].[3]&#8221;,<br />
+                        ,&#8221;[4].[0]&#8221;,&#8221;[4].[1]&#8221;,&#8221;[4].[2]&#8221;,&#8221;[4].[3]&#8221;<br />
+                        };</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4275">
+
+            			<cite>cn</cite> on <small>November 24th, 2011</small>:
+			
+			<p>should be<br />
+char* strArray[5][4]<br />
+doesn&#8217;t it?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4339">
+
+            			<cite>hiren</cite> on <small>December 6th, 2011</small>:
+			
+			<p>very helpful n easy to unterstand</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4384">
+
+            			<cite>binub m</cite> on <small>December 31st, 2011</small>:
+			
+			<p>thanks for helpfull information&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4461">
+
+            			<cite>Gharib</cite> on <small>February 4th, 2012</small>:
+			
+			<p>on array looping<br />
+a[i] = 0;<br />
+where it come from and how?<br />
+pls help</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5121">
+
+            			<cite>iola</cite> on <small>July 25th, 2012</small>:
+			
+			<p>very helpful</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5380">
+
+            			<cite>monu</cite> on <small>October 3rd, 2012</small>:
+			
+			<p>thnx sir</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5406">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>Sonu</a></cite> on <small>October 10th, 2012</small>:
+			
+			<p>very easy to unterstand<br />
+thnx</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5519">
+
+            			<cite>amit</cite> on <small>November 18th, 2012</small>:
+			
+			<p>i want to know,how many dimensional array can be made?i mean one,two,three&#8230;.and so on,&#8230;.but up to which range?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5520">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>November 18th, 2012</small>:
+			
+			<p>@amit: I assume you mean the max number of indices (or dimensions). Multidimensional arrays are not limited, they can contain as many indices as needed. It is only restricted by memory usage, the amount of memory needed for an array can rapidly increase with each dimension you add. Take a look at the following array:</p>
+<p>char very-large-array[20][100][100][100][100];</p>
+<p>That are 2 billion chars in very-large-array and that is around 2 gigabyte of memory. Also you should notice the speed of your program, the larger the array the slower the usage (for instance in a loop).</p>
+<p>Hope this helps!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6410">
+
+            			<cite>ayub</cite> on <small>February 1st, 2013</small>:
+			
+			<p>explanation is very clear and understandable is easy</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6483">
+
+            			<cite>farheen</cite> on <small>February 10th, 2013</small>:
+			
+			<p>It was very helpful and is easy to understand.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6947">
+
+            			<cite>Shivam Soni</cite> on <small>May 25th, 2013</small>:
+			
+			<p>Good one but it is basic information,<br />
+need more explanation in this Topic.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7020">
+
+            			<cite><a href='http://www.google.com' rel='external nofollow' class='url'>deep</a></cite> on <small>June 3rd, 2013</small>:
+			
+			<p>i understood array program thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7080">
+
+            			<cite>aijaz</cite> on <small>June 13th, 2013</small>:
+			
+			<p>thanks i got it&#8230;&#8230;:)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7741">
+
+            			<cite>SUNIL SINGH</cite> on <small>August 4th, 2013</small>:
+			
+			<p>what is an automatic array?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7779">
+
+            			<cite>sujit</cite> on <small>August 6th, 2013</small>:
+			
+			<p>a[i][j] = 0;<br />
+what is it does?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7826">
+
+            			<cite>deepika</cite> on <small>August 17th, 2013</small>:
+			
+			<p>i want to know how can we print arrays from a .txt input file??</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7906">
+
+            			<cite>Abbas</cite> on <small>September 8th, 2013</small>:
+			
+			<p>Automatic arrays are declared using the keyword &#8220;auto&#8221;. This keyword is one of the 4 storage classes ! Even if not declared as auto, a variable is set default as auto. Its scope is within the blocks. If not initialized , it takes garbage value and it is stored in the memory i.e, RAM .</p>
+<p>Gracia!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8233">
+
+            			<cite><a href='http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays' rel='external nofollow' class='url'>ronk</a></cite> on <small>October 8th, 2013</small>:
+			
+			<p>In the sample about multi-dimensional arrays it would be faster to grasp if you define the heading and row cells with a different colour to differentiate that from the content. Other wise simple and easy to grasp.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8974">
+
+            			<cite>Prasad</cite> on <small>October 29th, 2013</small>:
+			
+			<p>How can sort the 2-dimensional array sorting(Bubble sort)..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9172">
+
+            			<cite><a href='http://nicewebsiteoflearning..........' rel='external nofollow' class='url'>Abdul Hafeez</a></cite> on <small>December 2nd, 2013</small>:
+			
+			<p>thank&#8217;s for Good job&#8230;&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9187">
+
+            			<cite>pramod</cite> on <small>December 6th, 2013</small>:
+			
+			<p>how to find out integer value from the list of an array contain integer, float number.<br />
+like &#8211; a[1,0.2,3,4.5]<br />
+how to find integer values from this list</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9196">
+
+            			<cite>abdul manan</cite> on <small>December 7th, 2013</small>:
+			
+			<p>i want to make an array and store multiple digits like 1,2 and 3 in multi variables like 1 in a ,2 in b and 3 in c can you tell me how to do it</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-25557">
+
+            			<cite>sai bharathi</cite> on <small>April 26th, 2014</small>:
+			
+			<p>what is the advantage of having the datatype as  char*</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.567 seconds. -->
+</body>
+</html>
+

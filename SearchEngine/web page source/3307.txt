@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Opening a file with fopen</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">The fopen function in PHP</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>A better method to open files is with <b>fopen</b>( ). This function gives 
+  you more options that, such as setting whether the file is for reading only, 
+  for writing to as well, and a few more options. Here's an example (this assumes 
+  that you've read the short introduction on <a href="php10p1.html">the previous 
+  page</a>):</P>
+<p class="TextIndent2">&lt;?PHP</p>
+<p class="indent_big_no_bold">$file_contents = <b>fopen(</b> &quot;dictionary.txt&quot;, 
+  &quot;r&quot; <b>)</b>;<br>
+  print $file_contents;<br>
+  fclose($file_contents);</p>
+<p class="TextIndent2">?&gt;</p>
+<p>Run this script and see what happens. You should see something like the following 
+  printed out:</p>
+<p class="TextIndent3">Resource id #2</p>
+<p>Not quite what you were expecting! The reason is that <b>fopen</b>( ) doesn't 
+  actually read the contents of a file. All it does is to set a <b>pointer</b> 
+  to the file you want to open. It then returns what's call a file handle. All 
+  you're doing is telling PHP to remember the location of the file. </p>
+<p>The &quot;r&quot; on the end means &quot;open this file for reading only&quot;. 
+  We'll see <a href="php10p4.html">other options</a> in a moment. But now that 
+  you've told PHP to remember the location of the file you want to open, how do 
+  you read the contents of the file?</p>
+<p>One way is to use <b>fgets</b>( ). This will read a specified number of character 
+  on a single line of text. It's typically used to loop round and read each line 
+  of text. In the example below, we're printing out each line separately. When 
+  you're using <b>fgets</b>( ), you also need to check when the end of the file 
+  has been reached. This is done with the inbuilt function <b>feof</b> - <b>f</b>ile, 
+  <b>e</b>nd <b>o</b>f <b>f</b>ile. Try the script out, then we'll explain what's 
+  happening:</p>
+<p class="TextIndent2">&lt;?PHP</p>
+<p class="indent_big">$file_handle = fopen(&quot;dictionary.txt&quot;, &quot;r&quot;);</p>
+<p class="indent_big">while (!feof($file_handle)) {</p>
+<p class="indent_bigger">$line_of_text = fgets($file_handle);<br>
+  print $line_of_text . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_big">}</p>
+<p class="indent_big">fclose($file_handle);</p>
+<p class="TextIndent2">?&gt;</p>
+<p>What you should find is that the contents are printed out on separate lines. 
+  But how does it work?</p>
+<p>The first line is this:</p>
+<p class="indent_big_no_bold">$file_handle = <b>fopen(</b> &quot;dictionary.txt&quot;, 
+  &quot;r&quot; <b>)</b>;</p>
+<p>What we're doing here is asking PHP to open up a file, and remember the location. 
+  The location is stored as a file handle. We're putting this into a variable 
+  called <b>$file_handle</b>. So we haven't yet read the contents of the file 
+  &#150; we've just asked PHP to remember where it is.</p>
+<p>The next line is tricky! It's a while loop:</p>
+<p class="indent_big_no_bold">while ( <b>!feof(</b> $file_handle <b>)</b> ) {</p>
+<p class="indent_big_no_bold">}</p>
+<p>There's really two parts to this. There's the while loop:</p>
+<p class="indent_big">while () {</p>
+<p class="indent_big">}</p>
+<p>And then there's the condition for the while loop:</p>
+<p class="indent_big_no_bold"><b>!feof(</b> $file_handle <b>)</b></p>
+<p>A while loop, remember, just goes round and round until you tell it to stop. 
+  It goes round and round while a condition is true. The condition between the 
+  round brackets was our strange <b>!feof</b> line.</p>
+<p>The function feof( ) means &quot;file end of file&quot;. It tells PHP when 
+  the end of a file has been reached. You put the file between the round brackets 
+  of the function:</p>
+<p class="indent_big_no_bold"><b>feof(</b> $file_handle <b>)</b></p>
+<p>This means, end of the file referred to in the variable called <b>$file_handle</b>. 
+  Except, we've used the NOT operator ( ! ):</p>
+<p class="indent_big_no_bold"><b>!feof(</b> $file_handle <b>)</b></p>
+<p>That's because we want to keep looping while the end of the has NOT been reached:</p>
+<p class="indent_big_no_bold">while ( <b>!feof(</b> $file_handle <b>)</b> ) {</p>
+<p class="indent_big_no_bold">}</p>
+<p>This whole line, then, reads: &quot;While the end of the file has NOT been 
+  reached, loop round the file pointed to in $file_handle.&quot; As soon as the 
+  end of the file has been reached, the while loop will end.</p>
+<p>Inside the while loop, the first line is this:</p>
+<p class="indent_big_no_bold">$line_of_text = <b>fgets(</b> $file_handle <b>)</b>;</p>
+<p>We're using the fgets( ) function to get a line of text from our file. Again, 
+  we need the file handle:</p>
+<p class="indent_big_no_bold"><b>fgets(</b> $file_handle <b>)</b>;</p>
+<p>So we get a line of text from our file, and then place the line into a variable. 
+  We then print out the line of text:</p>
+<p class="TextIndent3">print $line_of_text . &quot;&lt;BR&gt;&quot;;</p>
+<p>As well as printing out the line of text, we're adding a HTML line break.</p>
+<p>The last line in the code is this:</p>
+<p class="indent_big_no_bold"><b>fclose(</b> $file_handle <b>)</b>;</p>
+<p>All this does is to close the open file. It tells PHP that the pointer to the 
+  file is no longer needed. You should always close files that you have opened 
+  with <b>fopen</b>().</p>
+<p>&nbsp;</p>
+<p>The code is a bit tricky, when you're meeting it for the first time. But this 
+  kind of file opening is useful when you need to read each line of text. With 
+  our file, for example, we could separate each half of the line. We might want 
+  to put the abbreviations into one list box and the meanings into another. </p>
+<p>Another point to bear in mind about fgets is that it can take (and often does) 
+  a second argument &#150; the size of the line to read:</p>
+<p class="indent_big_no_bold">fgets($file_handle, <b>line_size</b>);</p>
+<p>The line size needs to be in bytes. The default is 1024. But this line size 
+  is only optional in PHP version 4.2 and above. If your version is earlier than 
+  this, then you may get an error if you miss out the line size:</p>
+<p class="indent_big_no_bold">fgets($file_handle, <b>1024</b>);</p>
+<p>If you're really packing a lot of information into each line, then just increase 
+  the number for line size.</p>
+<p>&nbsp;</p>
+<p>In the next part, we'll see other options for fopen, rather than the &quot;r&quot; 
+  above.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php10p2.html">&lt;-- Back One Page</a> | <a href="php10p4.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

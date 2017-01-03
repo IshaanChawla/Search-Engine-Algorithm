@@ -1,0 +1,1094 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; Binary File I/O | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; Binary File I/O" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,621] -->
+<meta name="description"  content="In an earlier tutorial we talked about file I/O functions and the use of text files. In this C programming tutorial we are going to talk about the use of binary" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-binary-file-io" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; Binary File I/O Comments Feed" href="http://www.codingunit.com/c-tutorial-binary-file-io/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; The functions malloc and free' href='http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free' />
+<link rel='next' title='C Tutorial &#8211; Deleting and Renaming a File' href='http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=218' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-218">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">
+		C Tutorial &#8211; Binary File I/O</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In an earlier tutorial we talked about file I/O functions and the use of text files. In this C programming tutorial we are going to talk about the use of binary files.</p>
+<h2>Binary files</h2>
+<p>Binary files are very similar to arrays of structures, except the structures are in a disk-file rather than an array in memory. Binary files have two features that distinguish them from text files:<span id="more-218"></span></p>
+<ul>
+<li>You can instantly use any structure in the file.</li>
+<li>You can change the contents of a structure anywhere in the file.</li>
+</ul>
+<p>After you have opened the binary file, you can read and write a structure or seek a specific position in the file. A file position indicator points to record 0 when the file is opened.</p>
+<p>A read operation reads the structure where the file position indicator is pointing to. After reading the structure the pointer is moved to point at the next structure.</p>
+<p>A write operation will write to the currently pointed-to structure. After the write operation the file position indicator is moved to point at the next structure.</p>
+<p>The fseek function will move the file position indicator to the record that is requested.</p>
+<p>Remember that you keep track of things, because the file position indicator can not only point at the beginning of a structure, but can also point to any byte in the file.</p>
+<p>The fread and fwrite function takes four parameters:</p>
+<ul>
+<li>A memory address</li>
+<li>Number of bytes to read per block</li>
+<li>Number of blocks to read</li>
+<li>A file variable</li>
+</ul>
+<p>For example:</p>
+<div id="cl">
+<pre><code>	
+     fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);
+
+</code></pre>
+</div>
+<p>This fread statement says to read x bytes (size of rec) from the file ptr_myfile into memory address &amp;my_record. Only one block is requested. Changing the one into ten will read in ten blocks of x bytes at once.</p>
+<p>Let&#8217;s look at a write example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	/* Our structure */
+	struct rec
+	{
+		int x,y,z;
+	};
+
+	int main()
+	{
+		int counter;
+		FILE *ptr_myfile;
+		struct rec my_record;
+
+		ptr_myfile=fopen("test.bin","wb");
+		if (!ptr_myfile)
+		{
+			printf("Unable to open file!");
+			return 1;
+		}
+		for ( counter=1; counter &lt;= 10; counter++)
+		{
+			my_record.x= counter;
+			fwrite(&amp;my_record, sizeof(struct rec), 1, ptr_myfile);
+		}
+		fclose(ptr_myfile);
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>In this example we declare a structure rec with the members x,y and z of the type integer. In the main function we open (fopen) a file for writing (w). Then we check if the file is open, if not, an error message is displayed and we exit the program. In the &#8220;for loop&#8221; we fill the structure member <strong>x</strong> with a number. Then we write the record to the file. We do this ten times, thus creating ten records. After writing the ten records, we will close the file (don&#8217;t forget this).</p>
+<p>So now we have written to a file, let&#8217;s read from the file we have just created. Take a look at the example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	/* Our structure */
+	struct rec
+	{
+		int x,y,z;
+	};
+
+	int main()
+	{
+		int counter;
+		FILE *ptr_myfile;
+		struct rec my_record;
+
+		ptr_myfile=fopen("test.bin","rb");
+		if (!ptr_myfile)
+		{
+			printf("Unable to open file!");
+			return 1;
+		}
+		for ( counter=1; counter &lt;= 10; counter++)
+		{
+			fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);
+			printf("%d\n",my_record.x);
+		}
+		fclose(ptr_myfile);
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>The only two lines that are changed are the two lines in the &#8220;for loop&#8221;. With the fread we read-in the records (one by one). After we have read the record we print the member x (of that record).</p>
+<p>The only thing we need to explain is the fseek option. The function fseek must be declared like this:</p>
+<div id="cl">
+<pre><code>	
+     int fseek(FILE * stream, long int offset, int whence);
+
+</code></pre>
+</div>
+<p>The fseek function sets the file position indicator for the stream pointed to by the stream. The new position, measured in characters from the beginning of the file, is obtained by adding offset to the position specified by whence. Three macros are declared in stdio.h called: SEEK_SET, SEEK_CUR and SEEK_END.</p>
+<p>If the position declared by whence is SEEK_SET, then the position is the beginning of the file.</p>
+<p>The SEEK_END can be used if you want to go to the end of the file. (Using negative numbers it is possible to move from the end of the file.)</p>
+<p>If whence is SEEK_CUR then the position is set, x bytes, from the current position.</p>
+<p>Let&#8217;s take a look at an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	/* Our structure */
+	struct rec
+	{
+		int x,y,z;
+	};
+
+	int main()
+	{
+		int counter;
+		FILE *ptr_myfile;
+		struct rec my_record;
+
+		ptr_myfile=fopen("test.bin","rb");
+		if (!ptr_myfile)
+		{
+			printf("Unable to open file!");
+			return 1;
+		}
+		for ( counter=9; counter &gt;= 0; counter--)
+		{
+			fseek(ptr_myfile,sizeof(struct rec)*counter,SEEK_SET);
+			fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);
+			printf("%d\n",my_record.x);
+		}
+		fclose(ptr_myfile);
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>In this example we are using fseek to seek the last record in the file. This record we read with fread statement and with the printf statement we print member x of the structure my_record. As you can see the &#8220;for loop&#8221; also changed. The &#8220;for loop&#8221; will now countdown to zero. This counter is then used in the fseek statement to set the file pointer at the desired record. The result is that we read-in the records in the reverse order.</p>
+<p>A last note: if you set the file position indicator to a position in a file and you want the first position in a file then you can use the function rewind to the first position in the file. The function rewind can be used like this:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	/* Our structure */
+	struct rec
+	{
+		int x,y,z;
+	};
+
+	int main()
+	{
+		int counter;
+		FILE *ptr_myfile;
+		struct rec my_record;
+
+		ptr_myfile=fopen("test.bin","rb");
+		if (!ptr_myfile)
+		{
+			printf("Unable to open file!");
+			return 1;
+		}
+
+		fseek(ptr_myfile, sizeof(struct rec), SEEK_END);
+		rewind(ptr_myfile);
+
+		for ( counter=1; counter &lt;= 10; counter++)
+		{
+			fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);
+			printf("%d\n",my_record.x);
+		}
+		fclose(ptr_myfile);
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>With the fseek statement in this example we go to the end of the file. Then we rewind to first position in the file. Then read-in all records and print the value of member x. Without the rewind you will get garbage. (<strong>Try it!</strong>)</p>
+<p>That is all for this tutorial.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-binary-file-io/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; Binary File I/O http://www.codingunit.com/c-tutorial-binary-file-io" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 32 responses to &#8220;C Tutorial &#8211; Binary File I/O&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-849">
+
+            			<cite>pankaj</cite> on <small>February 22nd, 2010</small>:
+			
+			<p>this is outstanding succint tutorial for file handling . helps a lotttttt.<br />
+      thank you.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-897">
+
+            			<cite>betagtx260</cite> on <small>March 25th, 2010</small>:
+			
+			<p>Hi,  i have modified the write section  for can write just 1 byte, but it don&#8217;t work,</p>
+<p> 	/* Our structure */<br />
+	struct rec<br />
+	{<br />
+		int mydata;</p>
+<p>	};</p>
+<p>	int main()<br />
+	{</p>
+<p>		int counter;<br />
+		FILE *ptr_myfile;<br />
+		struct rec my_record;</p>
+<p>		ptr_myfile=fopen(&#8220;test.bin&#8221;,&#8221;w&#8221;);<br />
+		if (!ptr_myfile)<br />
+		{<br />
+			printf(&#8220;Unable to open file!&#8221;);<br />
+			return 1;<br />
+		}<br />
+	       //	for ( counter=1; counter &lt; 5; counter++)<br />
+	      // {<br />
+			my_record.mydata= counter;<br />
+		       //	fwrite(&amp;my_record, sizeof(struct rec), 1, ptr_myfile);<br />
+                       	fwrite(&amp;my_record, sizeof(struct rec), 1,ptr_myfile);<br />
+	     //  }<br />
+		fclose(ptr_myfile);<br />
+		return 0;<br />
+	}</p>
+<p>in my test.bin i read &quot;01 00 00 00&quot; in my hexadecimal editor<br />
+my question is how can don&#039;t write the triple 00 00 00 after i have put my 01 in file?<br />
+because in next while i will get 01 00 00 00 02 00 00 00</p>
+<p>Tanks for your help in advance, and sorry for my english im french !</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-898">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>March 25th, 2010</small>:
+			
+			<p>@betagtx260<br />
+If I understand your question correctly <strong>you want to see only 1byte in the binary file</strong>.<br />
+If this is the case you are using the wrong variable type (int in this case), because an unsigned int can hold all the values between 0 and UINT_MAX  inclusive. UINT_MAX must be at least 65535. The int types must contain at least <strong>16 bits</strong> to hold the required range of values. <strong>But it also can vary per compiler and the platform you are compiling for. </strong></p>
+<p>On compilers for 8 and 16 bit processors (including Intel x86 processors executing in 16 bit mode, such as under MS-DOS), an int is usually 16 bits and has exactly the same representation as a short. On compilers for 32 bit and larger processors (including Intel x86 processors executing in 32 bit mode, such as Win32 or Linux) an int is <strong>usually 32 bits</strong> long and has exactly the same representation as a long. A int holds 32 bits (thus you see 01 00 00 00 in your hex-editor).</p>
+<p>Try the following example to see the sizeof variable types for your target platform:<br />
+#include&lt;stdio.h&gt;</p>
+<p>int main()<br />
+{<br />
+	printf(&#8220;%d %d \n&#8221;, sizeof(int), sizeof(short int));<br />
+	printf(&#8220;%d %d \n&#8221;, sizeof(signed int), sizeof(unsigned int));<br />
+	printf(&#8220;%d %d \n&#8221;, sizeof(char), sizeof(unsigned char));<br />
+	return 0;<br />
+}</p>
+<p>The output will be something like this (on a linux intel machine):<br />
+4 2<br />
+4 4<br />
+1 1 </p>
+<p>So if you want to see only one byte in your hex editor, change the program to this:<br />
+#include&lt;stdio.h&gt;</p>
+<p>struct rec<br />
+{<br />
+	<strong>char mydata;</strong><br />
+};</p>
+<p>int main()<br />
+{<br />
+	int counter;<br />
+	FILE *ptr_myfile;<br />
+	struct rec my_record;</p>
+<p>	ptr_myfile=fopen(&#8220;test.bin&#8221;,&#8221;w&#8221;);<br />
+	if (!ptr_myfile)<br />
+	{<br />
+		printf(&#8220;Unable to open file!&#8221;);<br />
+		return 1;<br />
+	}</p>
+<p>	my_record.mydata=1;<br />
+	fwrite(&#038;my_record, sizeof(struct rec), 1, ptr_myfile);</p>
+<p>	fclose(ptr_myfile);<br />
+	return 0;<br />
+}</p>
+<p>If you open the file test.bin with the hex-editor you will only see 1byte (01 in this case) if you compile for intel platform (win32 and linux.)<br />
+Or if you want to use int, accept that 4 bytes are written in the binary file (but at least you know now why this is.)</p>
+<p>Hope that this answers your question!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-900">
+
+            			<cite>betagtx260</cite> on <small>March 25th, 2010</small>:
+			
+			<p>Thanks for your fast reply,<br />
+and i understand now,<br />
+Tanks again ?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-908">
+
+            			<cite>betagtx260</cite> on <small>April 2nd, 2010</small>:
+			
+			<p>Hi, after piratical and try to understanding write and read,<br />
+my write is perfect what i want, but i can not read my bin file, i need some help please,</p>
+<p>this is my write test file work 100%</p>
+<p>	int main()<br />
+	{<br />
+                int i;<br />
+		int counter;<br />
+		FILE *ptr_myfile;<br />
+		struct rec my_record;</p>
+<p>		ptr_myfile=fopen(&#8220;test.bin&#8221;,&#8221;wb&#8221;);<br />
+		if (!ptr_myfile)<br />
+		{<br />
+			printf(&#8220;Unable to open file!&#8221;);<br />
+			return 1;<br />
+		}</p>
+<p>	       	for ( counter=0; counter &lt; 10; counter++)<br />
+	       {</p>
+<p>			my_record.mydata= i;<br />
+                        fseek ( ptr_myfile , counter , SEEK_SET );<br />
+                        fwrite(&amp;my_record, sizeof(struct rec), 1, ptr_myfile);</p>
+<p>                   i++;</p>
+<p>	       }<br />
+		fclose(ptr_myfile);<br />
+		return 0;<br />
+	}</p>
+<p>it generate a .bin file , and in a hexadecimal editor you can read 01 02 03 04 05 06 07 08 etc&#8230;.</p>
+<p>but i can not read the test.bin file with fread, i will appreciate your help again<br />
+Thanks in advance</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-909">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>April 3rd, 2010</small>:
+			
+			<p>@betagtx260 &#8211;  Below you will find a binary write example and a binary read example. I have tested them and they work, so good luck!<br />
+//Write the test.bin file!!<br />
+#include&lt;stdio.h&gt;</p>
+<p>struct rec<br />
+{<br />
+	char mydata;<br />
+};</p>
+<p>int main()<br />
+{<br />
+	int i;<br />
+	int counter;<br />
+	FILE *ptr_myfile;<br />
+	struct rec my_record;</p>
+<p>	ptr_myfile=fopen(&#8220;test.bin&#8221;,&#8221;wb&#8221;);<br />
+	if (!ptr_myfile)<br />
+	{<br />
+		printf(&#8220;Unable to open file!&#8221;);<br />
+		return 1;<br />
+	}<br />
+	i = 0;</p>
+<p>	for ( counter=0; counter &lt; 10; counter++)<br />
+	{<br />
+		my_record.mydata= i;<br />
+		fseek ( ptr_myfile , counter , SEEK_SET );<br />
+		fwrite(&amp;my_record, sizeof(struct rec), 1, ptr_myfile);<br />
+		i++;<br />
+	}<br />
+	fclose(ptr_myfile);<br />
+	return 0;<br />
+}</p>
+<p>//Read the test.bin file!!<br />
+#include&lt;stdio.h&gt;</p>
+<p>struct rec<br />
+{<br />
+	char mydata;<br />
+};</p>
+<p>int main()<br />
+{<br />
+	int counter;<br />
+	FILE *ptr_myfile;<br />
+	struct rec my_record;</p>
+<p>	ptr_myfile=fopen(&#8220;test.bin&#8221;,&#8221;r&#8221;);<br />
+	if (!ptr_myfile)<br />
+	{<br />
+		printf(&#8220;Unable to open file!&#8221;);<br />
+		return 1;<br />
+	}<br />
+	for ( counter=1; counter &lt;= 10; counter++)<br />
+	{<br />
+		fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);<br />
+		printf(&#8220;%d\n&#8221;,my_record.mydata);<br />
+	}<br />
+	fclose(ptr_myfile);<br />
+	return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-910">
+
+            			<cite>betagtx260</cite> on <small>April 4th, 2010</small>:
+			
+			<p>Hi, Tanks for your help and support,<br />
+my last message with my binary writer test, is perfect for me, because i can write a hex value directly in file , 00 to FF anywhere i want in file, but i cant read it with fread after, i want practice this with a small file i have create because my true application i want manage .iso file,<br />
+and i have no success with fread with iso file.</p>
+<p>Tanks again</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1778">
+
+            			<cite>selewa</cite> on <small>July 29th, 2010</small>:
+			
+			<p>Is this the right declaration of a binary file<br />
+Binary files should have b in the mode<br />
+e.g. w+b or wb<br />
+Am I right?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1779">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>July 29th, 2010</small>:
+			
+			<p>@selewa :<br />
+You are right, if you only look at the syntax. But if you open test.bin with text editor, you will see all kinds of ascii values. This is because we write/read records (structs.)<br />
+So there will be now difference between the content of a file written with only &#8220;w&#8221; or &#8220;wb&#8221;. But to keep the syntax correct, we have changed the source code examples.<br />
+The modes you can use are as follows:<br />
+r  &#8211; open for reading<br />
+w  &#8211; open for writing (file need not exist)<br />
+a  &#8211; open for appending (file need not exist)<br />
+r+ &#8211; open for reading and writing, start at beginning<br />
+w+ &#8211; open for reading and writing (overwrite file)<br />
+a+ &#8211; open for reading and writing (append if file exists)</p>
+<p>To open a file in binary mode you must add the letter <strong>b</strong> to the end of the mode string; for example, &#8220;wb&#8221;.<br />
+For the read and write modes, you can add the b, either after the plus sign &#8211; &#8220;r+b&#8221; &#8211; or before &#8211; &#8220;rb+&#8221;.</p>
+<p>Good luck and thx for correcting us!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1781">
+
+            			<cite>Martin</cite> on <small>July 30th, 2010</small>:
+			
+			<p>Hi,</p>
+<p>Is there a possibility to deal with data packing of the compiler in the structure, because due to this structure members are not necessarily continuous in the memory. </p>
+<p>For example, the size of a structure with a uint_8 and uint_32 variable in there is usually 8 bytes instead of 5 due to compiler data packing.</p>
+<p>Now, if you want to read the 5 bytes from your binary file using:</p>
+<p>fread(&amp;my_record,sizeof(struct rec),1,ptr_myfile);</p>
+<p>you will read the wrong bytes in the fields (the uint32 variable will only have one byte).</p>
+<p>Is there any method to prevent this??</p>
+<p>Thanks!<br />
+Martin.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1796">
+
+            			<cite>John</cite> on <small>August 6th, 2010</small>:
+			
+			<p>I&#8217;ve seen people read 1 byte at a time, then if you need it to be one number just multiply it by it corresponding position&#8230;</p>
+<p>first number  n*10000<br />
++ second number n*1000<br />
++ third number  n*100<br />
++ forth number  n*10<br />
++ fifth number  n..</p>
+<p>I&#8217;m not a professional so please research for better ways.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1975">
+
+            			<cite>radix</cite> on <small>December 8th, 2010</small>:
+			
+			<p>In your last example you do the following&#8230;</p>
+<p>fseek(ptr_myfile, sizeof(struct rec), SEEK_END);<br />
+rewind(ptr_myfile);</p>
+<p>And mention that you get garbage without the rewind.  If you seek to the end of file and then offset beyond the end of the file, you will be reading garbage, you need a negative offset.  </p>
+<p>These 2 lines are pointless in your example.  Or am I mistaken?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1980">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>December 9th, 2010</small>:
+			
+			<p>@radix: the goal of that example is to <strong>show how to use of the rewind() function</strong>. That&#8217;s why the end of the file is searched (otherwise there is nothing to rewind from) and then rewind() is called to go to first position of the file. </p>
+<p>You will get garbage if rewind isn&#8217;t called because the for loop will try to read records beyond the end of the file, because there is no check performed to check if the end of the file has been reached. </p>
+<p>So again it&#8217;s just to show the use of the rewind() function: nothing more, nothing less.  The search for the end of the file is only done, so we that we can rewind.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3210">
+
+            			<cite>Pratap</cite> on <small>January 22nd, 2011</small>:
+			
+			<p>I want to dump some memory into a file, a complex structure which contains pointers to list etc, and again want to set the same memory from this file.</p>
+<p>Is it possible to do with fwrite &amp; fread functions</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3261">
+
+            			<cite>Sandeep Kumar</cite> on <small>February 26th, 2011</small>:
+			
+			<p>I want to store a character array data (89 bytes) to a binary file. Please send the fwrite function code for this. Is it possible to store current PC time to same binary file?</p>
+<p>Thanks,<br />
+Sandeep</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3398">
+
+            			<cite>mohammed</cite> on <small>May 13th, 2011</small>:
+			
+			<p>the first example in the web page only writes to variable x? how to write and read using variable y and z?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3401">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>May 14th, 2011</small>:
+			
+			<p>@mohammed &#8211; It&#8217;s very easy to use variables y and z in the first write and read examples. You just have to add some additional lines. The examples now only uses the variable x to keep the examples smaller. To use all three (x,y,z) variables add the following lines to the examples:</p>
+<p>Write for loop:<br />
+for ( counter=1; counter &lt;= 10; counter++) {<br />
+	my_record.x= counter;<br />
+	my_record.y= counter;<br />
+	my_record.z= counter;<br />
+	fwrite(&#038;my_record, sizeof(struct rec), 1, ptr_myfile);<br />
+}</p>
+<p>The read example:<br />
+for ( counter=1; counter <= 10; counter++) {<br />
+	fread(&#038;my_record,sizeof(struct rec),1,ptr_myfile);<br />
+	printf(&#8220;%d\n&#8221;,my_record.x);<br />
+	printf(&#8220;%d\n&#8221;,my_record.y);<br />
+	printf(&#8220;%d\n&#8221;,my_record.z);<br />
+}</p>
+<p>As you can see we only have to fill the other two variables (y and z) as we did with x variable. Then we can read them as we did x in the read example.</p>
+<p>Hope this helps!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3653">
+
+            			<cite>isaiah</cite> on <small>August 4th, 2011</small>:
+			
+			<p>tnx for some example of the program tnx a lot&#8230;.more power</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3664">
+
+            			<cite>Alan</cite> on <small>August 6th, 2011</small>:
+			
+			<p>This was an extremely helpful tutorial. Thank you so much.</p>
+<p>I understand that fseek() offsets the pointer by characters. Is there anyway I can offset the pointer by &#8216;n&#8217; number of lines? I&#8217;m trying to write/overwrite a string to a specific line in my text file. I tried</p>
+<p>fprintf(myfile+3, &#8220;www.codingunit.com&#8221;);</p>
+<p>but it does not offset my pointer to line 3 in my textfile. Please enlighten me with your wisdom, great one. <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>Thanks again!<br />
+Alan</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4205">
+
+            			<cite><a href='http://francescodifusco.wordpress.com/2011/11/16/c-tutorial-%e2%80%93-binary-file-io-codingunit-programming-tutorials/' rel='external nofollow' class='url'>C Tutorial – Binary File I/O | CodingUnit Programming Tutorials | FRANCESCO DI FUSCO</a></cite> on <small>November 16th, 2011</small>:
+			
+			<p>[&#8230;] C Tutorial – Binary File I/O | CodingUnit Programming Tutorials. Rate this:  Share this:TwitterFacebookStumbleUponPrintEmailLinkedInLike this:LikeBe the first to [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5348">
+
+            			<cite>kiran reddy</cite> on <small>September 28th, 2012</small>:
+			
+			<p>very nicely explained .. thnXX</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5563">
+
+            			<cite>Ram</cite> on <small>November 23rd, 2012</small>:
+			
+			<p>Very useful.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5674">
+
+            			<cite><a href='http://saytaimoor.webs.com' rel='external nofollow' class='url'>Taimoor Ali</a></cite> on <small>December 16th, 2012</small>:
+			
+			<p>Hey everybody!<br />
+Thanks a lot for the kind help. It really helped me to my aim what I was finding.<br />
+Thanks again&#8230; Have happy programming&#8230;!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6557">
+
+            			<cite>Mali</cite> on <small>March 1st, 2013</small>:
+			
+			<p>Thanks for writing this! exactly what I needed to know for my project</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6558">
+
+            			<cite>Gabriel Sylvain</cite> on <small>March 2nd, 2013</small>:
+			
+			<p>Amazing tutorial, very well explained. Thanks ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7084">
+
+            			<cite>kedar</cite> on <small>June 14th, 2013</small>:
+			
+			<p>it is awsome..it helps me a lot to understand binary files..Can you add another program of telling how to add and delete records at particular positions..?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7503">
+
+            			<cite>Chaitali</cite> on <small>July 23rd, 2013</small>:
+			
+			<p>Hello I am trying to read satellite CEOS format file which contacined all type of data like integer ascii,binary.<br />
+I know structure of binary file. I am reading file according to structure but not able to display data. Is it require after reading data structure-wise to conver binary to decimal format? or can I use &#8220;cout&#8221; to display binary data directly.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7670">
+
+            			<cite>Nadeem khan</cite> on <small>July 31st, 2013</small>:
+			
+			<p>please tell me how can can i change the binary  number into radix.<br />
+using string.<br />
+like:<br />
+binary number of 64 will be 1000000<br />
+    (binary)1000000 = 64 (radix)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7776">
+
+            			<cite><a href='http://www.codingunit.com/' rel='external nofollow' class='url'>Senthil</a></cite> on <small>August 6th, 2013</small>:
+			
+			<p>Awesome tutorials&#8230;&#8230;very helpful&#8230;&#8230;Thanks a lottttt for this&#8230;!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7870">
+
+            			<cite>deepak</cite> on <small>August 28th, 2013</small>:
+			
+			<p>I want to know how .bmp images are displayed using the C programming language&#8230;. &#8230;&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7887">
+
+            			<cite>xobyx</cite> on <small>September 1st, 2013</small>:
+			
+			<p>Amazing Tutorial ,thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9435">
+
+            			<cite>Papabear</cite> on <small>February 3rd, 2014</small>:
+			
+			<p>Simply wonderful tutorial.<br />
+Thank you!</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.596 seconds. -->
+</body>
+</html>
+

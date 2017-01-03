@@ -1,0 +1,500 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; Copying a File | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; Copying a File" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,620] -->
+<meta name="description"  content="In a previous tutorial we already talked about renaming and removing a file. In this C programming language tutorial we look at how to copy a file." />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; Copying a File Comments Feed" href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; Deleting and Renaming a File' href='http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file' />
+<link rel='next' title='C Tutorial &#8211; Command Line Parameter Parsing' href='http://www.codingunit.com/c-tutorial-command-line-parameter-parsing' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=223' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-223">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">
+		C Tutorial &#8211; Copying a File</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In a previous tutorial we already talked about <a title="Deleting and Renaming a File" href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file"><strong>renaming and removing a file.</strong></a> In this C programming language tutorial we look at how to copy a file.</p>
+<p>Let&#8217;s look at an example:<span id="more-223"></span></p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	int copy_file(char *old_filename, char  *new_filename)
+	{
+		FILE  *ptr_old, *ptr_new;
+		errno_t err = 0, err1 = 0;
+		int  a;
+
+		err = fopen_s(&amp;ptr_old, old_filename, "rb");
+		err1 = fopen_s(&amp;ptr_new, new_filename, "wb");
+
+		if(err != 0)
+			return  -1;
+
+		if(err1 != 0)
+		{
+			fclose(ptr_old);
+			return  -1;
+		}
+
+		while(1)
+		{
+			a  =  fgetc(ptr_old);
+
+			if(!feof(ptr_old))
+				fputc(a, ptr_new);
+			else
+				break;
+		}
+
+		fclose(ptr_new);
+		fclose(ptr_old);
+		return  0;
+	}
+
+	int  main(void)
+	{
+		char  filename_src[101], filename_dest[101];
+
+		printf("\nSource file: ");
+		gets_s(filename_src, 100);
+
+		printf("\nDestination filename: ");
+		gets_s(filename_dest, 100);
+
+		if(copy_file(filename_src, filename_dest) == 0)
+			printf("Copy Successful\n");
+		else
+			fprintf(stderr, "Error during copy!");
+	}
+
+</code></pre>
+</div>
+<p>First we take a look at main before we look at the function copy_file().</p>
+<h2>main()</h2>
+<p>In main() we first make two buffers, a source and destination buffer, that each can hold 100 characters plus &#8216;\0&#8242;. Using the gets_s function (a more secure gets) the program waits for input from the user. The user must input a source file and a destination file. In the &#8220;if statement&#8221; the function copy_file() is called. The function is either successful or will fail. A message is printed accordingly.</p>
+<h2>copy_file()</h2>
+<p>In main the function copy_file() is called with the source filename and the destination file. The two files are then opened. The first file is opened in read only binary mode. The second file is opened in write binary mode. (If the file doesn&#8217;t exist the file is created.) For opening the file fopen_s() is used which is a more secure fopen().</p>
+<p>After opening some error checking is done. If one of the two fopen_s() functions fails an -1 is returned.</p>
+<p>In the &#8220;while statement&#8221; the content of the source file is read one byte at the time.<br />
+This byte is written to the destination file. This will continue until the end of the file (EOF) is reached.<br />
+If the end of the file is reached we break out with a break command.</p>
+<p>Before the program ends both files are closed using fclose() function.</p>
+<h2>Conclusion</h2>
+<p>Make sure you close the files and always use secure functions when possible.</p>
+<p>That is all for this tutorial!</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-copying-a-file-in-c/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; Copying a File http://www.codingunit.com/c-tutorial-copying-a-file-in-c" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 2 responses to &#8220;C Tutorial &#8211; Copying a File&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-8753">
+
+            			<cite>adlai</cite> on <small>October 17th, 2013</small>:
+			
+			<p>can you please tell me, why there is an error on &#8220;errno_t&#8221;. is says unknown type name. thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9015">
+
+            			<cite>Dr P Bacon</cite> on <small>November 3rd, 2013</small>:
+			
+			<p>int copy(char *from, char *to) {<br />
+  FILE *ffrom = fopen(from, &#8220;r&#8221;);<br />
+  if (!ffrom) return 0;<br />
+  FILE *fto = fopen(to, &#8220;w&#8221;);<br />
+  if (!fto) return 0;<br />
+  int inch;<br />
+  while (inch = fgetc(ffrom)) {<br />
+    if (inch == EOF) break;<br />
+    if (fputc(inch, fto) == EOF) break;<br />
+  }<br />
+  fclose(fto);<br />
+  fclose(ffrom);<br />
+  return 1;<br />
+}</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.578 seconds. -->
+</body>
+</html>
+

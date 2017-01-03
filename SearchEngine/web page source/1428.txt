@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no"/>
+    <title>Advanced Search | MIT OpenCourseWare | Free Online Course Materials</title>
+    <meta name="WT.cg_n" content="Global" />
+	<meta name="WT.cg_s" content="index" />
+	<meta name="keywords" content="open educational resources, oer,opencourseware, MIT OCW, courseware, course ware, education, creative commons,Aeronautics and Astronautics,Anthropology,Architecture,Biological Engineering,Biology,Brain and Cognitive Sciences,Chemical Engineering,Chemistry,Civil and Environmental Engineering,Comparative Media Studies,Earth, Atmospheric, and Planetary Sciences,Economics,Electrical Engineering and Computer Science,Engineering Systems Division,Foreign Languages and Literatures,Health Sciences and Technology,History,Linguistics and Philosophy,Literature,Materials Science and Engineering,Mathematics,Mechanical Engineering,Media Arts and Sciences,Music and Theater Arts,Nuclear Science and Engineering,Physics,Political Science,Science, Technology, and Society,Sloan School of Management,Special Programs,Urban Studies and Planning,Women's and Gender Studies,Writing and Humanistic Studies" />
+	<link title="default" rel="stylesheet" type="text/css" href="/styles/grid.css" />
+	<link title="default" rel="stylesheet" type="text/css" href="/styles/menu.css" />
+	<link title="default" rel="stylesheet" type="text/css" href="/styles/base.css" />
+    <link title="default" rel="stylesheet" type="text/css" href="/styles/global.css" />
+	<link title="default" rel="stylesheet" type="text/css" href="/styles/courses_new.css" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link rel="canonical" href="http://ocw.mit.edu/search/AdvancedSearch.htm">
+	<script src="/scripts/jquery-1.7.2.js" type="text/javascript"></script>
+	<script src="/scripts/ocw.js" type="text/javascript" ></script>
+	<script src="/scripts/webtrends.load.js" type="text/javascript"></script>
+	<script src="/scripts/googleanalytics.js" type="text/javascript"></script> 
+    <script type="text/javascript">
+		setTimeout(function(){var a=document.createElement("script");
+		var b=document.getElementsByTagName("script")[0];
+		a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/3534.js?"+Math.floor(new Date().getTime()/3600000);
+		a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+        
+        //google ads script for footer logos
+			var googletag = googletag || {};
+			googletag.cmd = googletag.cmd || [];
+			(function() {
+			var gads = document.createElement('script');
+			gads.async = true;
+			gads.type = 'text/javascript';
+			var useSSL = 'https:' == document.location.protocol;
+			gads.src = (useSSL ? 'https:' : 'http:') +
+			'//www.googletagservices.com/tag/js/gpt.js';
+			var node = document.getElementsByTagName('script')[0];
+			node.parentNode.insertBefore(gads, node);
+			})();
+            
+            googletag.cmd.push(function() {
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_1', [145, 53], 'div-gpt-ad-1388181177156-0').addService(googletag.pubads());
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_2', [145, 53], 'div-gpt-ad-1388181177156-1').addService(googletag.pubads());
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_3', [145, 53], 'div-gpt-ad-1388181177156-2').addService(googletag.pubads());
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_4', [145, 53], 'div-gpt-ad-1388181177156-3').addService(googletag.pubads());
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_5', [145, 53], 'div-gpt-ad-1388181177156-4').addService(googletag.pubads());
+			googletag.defineSlot('/1064917/HOME_CORP_LOGO_6', [145, 53], 'div-gpt-ad-1388181177156-5').addService(googletag.pubads());
+			googletag.pubads().enableSingleRequest();		
+			googletag.enableServices();			
+			});       
+
+            //script for sending the pageview request to GA server
+			ga('send', 'pageview', location.pathname + location.search + location.hash);            	
+      </script> 
+	<script type="text/javascript">			
+		window.onload = function() {	      
+		document.getElementById('Form1').onsubmit = function() {
+  
+		//variable used to search for all of the words
+		var as_oq=""; 
+		if(document.getElementById('Text3').value!=""){as_oq=document.getElementById('Text3').value;} 
+		//variable used to search for all values
+		var as_q="";if(document.getElementById('Text1').value!=""){ as_q=document.getElementById('Text1').value;}
+		//variable used to search Without the words
+		if(document.getElementById('Text4').value!=""){document.getElementById('Text4').value=document.getElementById('Text4').value;}
+		//variable used to search for exact values
+		if(document.getElementById('Text2').value!=""){
+		document.getElementById('Text2').value = document.getElementById('Text2').value;}
+				
+		var sectionList = $( "#select1" ).val() || []; // creating array of values selected in selection box.
+		var filterList="";
+		var space=" ";
+		//set the filter variables based on the filter conditions selected by the user.
+		if($( "#select1" ).val()!=null){
+			sectionList	=$( "#select1" ).val();
+			var iCounter;
+			for (iCounter = 0; iCounter < sectionList.length; iCounter++) {		
+			//Exit the for loop if "Any Section" is one of the selected values.If Any Section is selected we do not need to filter out any pages.
+				if(sectionList[iCounter]=="Any")break;
+				if(filterList!=""){filterList= filterList + "|" + "WT%2Ecg_s:" + sectionList[iCounter];}
+				else{filterList="WT%2Ecg_s:" + sectionList[iCounter];}
+				} 
+			}	
+		//set the values of sectionlimit and requiredfields
+		document.getElementById('hidden17').value=filterList; // sectionlimit
+		document.getElementById('hidden13').value=filterList; // requiredfields
+		
+		//To Trim the search query provided within "" by the user and inserting OR case of search with any of these words. For example "global warming" is treated as "global OR warming".
+		var finalquery="";
+		if(document.getElementById('Text3').value!=""){
+			var result = as_oq.split(" ");
+			var x,i;
+			for (x=0; x<result.length; ){
+				if((x!=(result.length-1)) && (!(result[x]==""))){
+					if((result[x].startsWith("\""))&&(result[x].endsWith("\""))){ 
+					finalquery = finalquery + result[x].trim() + " " + "OR" + " ";
+					x++;
+					}
+					else{
+						if(result[x].startsWith("\"")){
+							for(i=x;i<result.length;i++){
+								if((result[i].endsWith("\""))){
+									if(i!=(result.length-1)){
+									finalquery = finalquery + result[i].trim() + " " + "OR" + " ";	
+									x=i+1;
+									break;
+									}
+									else{
+									finalquery = finalquery + result[i].trim() ;
+									x=i+1;
+									break;
+									}
+							}
+							else finalquery = finalquery + result[i].trim() + " " ;
+						}
+									
+						}
+						else	//its the without quotes case
+						{					
+							finalquery = finalquery + result[x].trim() + " " + "OR" + " ";						
+							x++;
+						}
+					}					
+				}		
+				else{
+				finalquery = finalquery + result[x].trim();
+				x++;			
+				}
+			}	
+		} //end of function transform
+		// If the user has selected a section in the section list then append parameter "q" to the URL
+		if($("#select1").val()!=null && filterList!=""){$('#Form1').append('<input type="hidden" id="hidden8" name="q"/>');}
+		/*Logic to pass finalquery variable in as_q variable and send to MIT GSA server.
+		If the user has sent search queries in both the variable as_q and as_oq then both the variables are inserted in the variable as_q and sent to the MIT GSA server.
+		If the user has sent search queries in as_oq variable then only finalquery is inserted in the variable as_q and sent to the MIT GSA server.
+		If the user has sent search queries in as_q variable then only as_q is inserted in the variable as_q and sent to the MIT GSA server.
+		*/
+		if((document.getElementById("Text3").value!="") &&(document.getElementById("Text1").value!="")){ as_q = (as_q + space + finalquery); }
+		
+		if(document.getElementById("Text1").value==""){ as_q = finalquery; }
+         $('#Form1').append('<input type="hidden" id="hidden10" name="as_q" value ="'+ as_q +'" />');		
+		}		
+	}
+	</script> 
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+<div id="top">
+    <div id="grid">
+        <!-- *begin header* -->
+        <div id="banner" role="banner" class="grid_6 alpha"><a href="/"><img src="/images/ocw_mast.png" alt="MIT OpenCourseWare, Massachusetts Institute of Technology" class="logo" /></a></div>
+		<form method="get" action="/subscribe/index.htm?utm_source=header">
+        <div id="subscribe" role="form toolbar" class="grid_6 omega">
+        	<div class="module">
+            <table class="social">
+            	<tbody>
+                	<tr>
+						<td class="socialbutton"><a href="/subscribe/index.htm?utm_source=header"><img alt="An icon depicting an envelope." src="/images/trans.gif" />Subscribe to the OCW Newsletter</a></td>
+						<td><a href="https://plus.google.com/104567381989352550847/posts"><img src="/images/icon_gp.png" alt="Click to visit our Google+ page." /></a><a href="https://www.pinterest.com/mitocw/pins/"><img src="/images/icon_pin.png" alt="Click to visit our Pinterest page." /></a><a href="http://facebook.com/mitocw"><img src="/images/icon_fb.png" alt="Click to visit our Facebook page." /></a><a href="http://twitter.com/mitocw"><img src="/images/icon_tw.png" alt="Click to visit our Twitter feed." /></a></td>
+					</tr>
+                </tbody>
+            </table>
+            </div>
+			<p class="helplinks"><a href="/help">Help</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/jsp/feedback.jsp?Referer=">Contact Us</a></p>
+        </div>
+        <div class="clear"></div>
+		</form>
+        <div id="mega" role="navigation" class="grid_8 alpha">        
+            <ul id="menu">
+                <li id="menu_home">
+                    <a href="/"><img src="/images/top-nav_home.png" class="home_icon" alt="Click for site home page." /></a><!-- Begin Home Item -->
+                </li><!-- End Home Item -->        
+                <li>
+                    <a href="#" class="drop">Courses</a><!-- Begin 5 columns Item -->
+                    <div class="dropdown_5columns-a mega-courses">                    
+                        <div class="col_1a">
+                            <div class="row_1a">
+                                <div class="quart">
+                                    <h2 class="nav">Find courses by:</h2>
+                                    <ul class="nav-bullet find_by">
+                                        <li><a href="/courses/find-by-topic/">Topic</a></li>
+                                        <li><a href="/courses/find-by-number/">MIT Course Number</a></li>
+                                        <li><a href="/courses/find-by-department/">Department</a></li>
+                                    </ul>
+                                </div>
+                                <div class="quart">
+                                    <h2 class="nav">Collections</h2>
+                                    <ul class="nav-bullet">
+										<li><a href="/courses/audio-video-courses/">Audio/Video Lectures</a></li>
+										<li><a href="/courses/online-textbooks/">Online Textbooks</a></li>
+										<li><a href="/courses/new-courses/">New Courses</a></li>
+										<li><a href="/courses/most-visited-courses/">Most Visited Courses</a></li>
+										<li><a href="/courses/ocw-scholar/">OCW Scholar Courses</a></li>
+										<li><a href="/courses/this-course-at-mit/">This Course at MIT</a></li>
+										<li><a href="/resources/">Supplemental Resources</a></li>
+									</ul>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                            <div class="row_1b">
+                                <h2 class="nav">Cross-Disciplinary Topic Lists</h2>
+                                <div class="quart">
+                                <ul class="nav-bullet">
+                                    <li><a href="/courses/energy-courses">Energy</a></li>
+                                    <li><a href="/courses/entrepreneurship">Entrepreneurship</a></li>
+                                    <li><a href="/courses/environment-courses">Environment</a></li>
+                                </ul>
+                                </div>    
+                                <div class="quart">
+                                <ul class="nav-bullet">
+									<li><a href="/courses/intro-programming">Introductory Programming</a></li>
+                                    <li><a href="/courses/life-sciences">Life Sciences</a></li>
+                                    <li><a href="/courses/transportation-courses">Transportation</a></li>
+                                </ul>
+                                </div>
+                                <div class="clear">&nbsp;</div>
+                            </div>
+                            <div class="clear">&nbsp;</div>
+                        </div>
+                        <div class="col_1b">
+                            <h2 class="nav">Translated Courses</h2>
+                            <ul class="nav-bullet">
+                                <li><a href="/courses/translated-courses/traditional-chinese">&#32321;&#39636;&#23383; / Traditional Chinese</a></li>
+                                <li><a href="/courses/translated-courses/spanish">Espa&#241;ol / Spanish</a></li>
+                                <li><a href="/courses/translated-courses/portuguese">Portugu&#234;s / Portuguese</a></li>
+                                <li><a href="/courses/translated-courses/persian">&#1601;&#1575;&#1585;&#1587;&#1740; / Persian</a></li>
+                                <li><a href="/courses/translated-courses/turkish">T&#252;rk&#231;e / Turkish</a></li>
+                                <li><a href="/courses/translated-courses/korean">(&#48708;&#46356;&#50724;)&#54620;&#44397; / Korean</a></li>
+								<li><a href="/courses/translated-courses">More...</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="" class="drop">About</a>
+                    <div class="dropdown_1column-a">
+                        <div class="col_1">
+                            <ul class="nav-bullet mega-div-bottom">
+                                <li><a href="/about/">About MIT OpenCourseWare</a></li>
+                            </ul>
+                            <ul class="nav-bullet mega-div-bottom">
+                                <li><a href="/about/site-statistics/">Site Stats</a></li>
+                                <li><a href="/about/ocw-stories/">OCW Stories</a></li>                                
+                            </ul>
+                            <ul class="nav-bullet mega-div-bottom">
+                                <li><a href="/about/media-coverage/">Media Coverage</a></li>
+                                <li><a href="/about/newsletter/">Newsletter</a></li>
+                                <li><a href="/about/media-coverage/press-releases/">Press Releases</a></li>
+                            </ul>
+                            <ul class="nav-bullet">
+                                <li><a href="/about/next-decade/">OCW's Next Decade</a></li>
+                            </ul>
+                        </div>
+                    </div>  
+                </li>    
+                <li>
+                    <a href="" class="drop">Donate</a>        
+                    <div class="dropdown_1column-a">
+                            <div class="col_1">
+                                <ul class="nav-bullet mega-div-bottom">
+                                    <li><a href="/donate/">Make a Donation</a></li>
+                                    <li><a href="/donate/why-donate/">Why Donate?</a></li>
+                                    <li><a href="/donate/ocw-course-champions-program/">Become a Course Champion</a></li>
+                                    <li><a href="/donate/our-supporters/">Our Supporters</a></li>
+                                    <li><a href="/donate/other-ways-to-contribute/">Other Ways to Contribute</a></li>
+									<li><a href="/donate/shop-ocw">Shop OCW</a></li>
+								</ul>
+								<ul class="nav-bullet">
+									<li><a href="/support/">Become a Corporate Sponsor</a></li>
+								</ul>
+                            </div>
+                    </div>            
+                </li>        
+                <li>
+                    <a href="" class="drop">Featured Sites</a>        
+                    <div class="dropdown_1column-a">
+                        <div class="col_1">
+                            <ul class="nav-bullet mega-div-bottom">
+                                <li><a href="/high-school/">Highlights for High School</a></li>
+								<li><a href="/educator/">OCW Educator</a></li>
+                            </ul>
+                            <ul class="nav-bullet mega-div-top">
+								<li><a href="http://ocw.mit.edu/ans7870/featured/mitx-courses-on-edx.htm">MITx Courses on edX</a></li>
+								<li><a href="http://teachingexcellence.mit.edu/">Teaching Excellence at MIT</a></li>
+                                <li><a href="http://www.oeconsortium.org/">Open Education Consortium</a></li>
+							</ul>							
+                        </div>
+                    </div>            
+                </li>
+            </ul>        
+        </div>
+        <div id="search" role="search" class="grid_4 omega">
+            <form method="get" action="http://search.mit.edu/search">
+                <input type="hidden" value="ocw" name="site" />  
+                <input type="hidden" value="mit" name="client" /> 			 
+                <input type="hidden" value="*" name="getfields" />  
+                <input type="hidden" value="xml_no_dtd" name="output" /> 			 
+                <input type="hidden" value="http://ocw.mit.edu/search/google-ocw.xsl" name="proxystylesheet" />
+				<input type="hidden" value="WT%2Ecg_s:Course Home|WT%2Ecg_s:Resource Home" name="requiredfields" />  
+				<input type="hidden" value="WT%2Ecg_s:Course Home|WT%2Ecg_s:Resource Home" name="sectionlimit" />
+                <input type="hidden" value="i" name="as_dt" /> 			 
+                <input type="hidden" value="utf-8" name="oe" />  
+                <input type="hidden" value="web" name="departmentName" />
+                <input type="hidden" value="0" name="filter" />
+				<input type="hidden" name="as_occt" />
+                <input type="hidden" name="courseName" />
+                <table class="search">
+                    <tbody>
+                        <tr>
+                            <td class="black"><input type="text" onblur="fillSearchBox()" onfocus="clearSearchBox()" maxlength="255" value="Search" name="q" class="greytext searchField" id="terms" /></td>
+                            <td class="black"><input type="image" src="/images/button_search.png" name="btnG" class="sub_button" /></td>
+                            <td class="text2"><a href="/search/AdvancedSearch.htm">Advanced<br />Search</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="clear"></div>
+        <!-- *end header* -->
+	</div>
+</div>
+<div id="center_global">
+    <div id="grid">
+		<div id="left">
+         	<div id="breadcrumb_global"><p><a href="/">Home</a> &raquo; Advanced Search</p></div>
+    			<div class="clear"></div>
+            <div id="global_title">
+            	<h1 class="title" itemprop="name" property="dct:title">Advanced Search</h1>
+            </div>
+           	<div class="global_wrapper">
+					
+					
+                
+                	<div id="global_inner">
+                    <form id="Form1" action="http://search.mit.edu/search" method="get" style="margin-top: 15px;">
+                      <div id="form_main_containter">
+                        <input id="hidden1" type="hidden" value="xml_no_dtd" name="output" />
+                        <input id="hidden2" type="hidden" value="mit" name="client" />
+                        <input id="hidden4" type="hidden" value="http://ocw.mit.edu/search/google-ocw.xsl" name="proxystylesheet" />
+                        <input id="hidden6" type="hidden" value="1" name="proxyreload" />
+                        <input id="hidden5" type="hidden" value="i" name="as_dt" />
+						<input id="hidden17" type="hidden" name="sectionlimit" />
+						<input id="hidden13" type="hidden" name="requiredfields" />
+                        <input id="hidden14" type="hidden" name="partialfields" />
+                        <input id="hidden7" type="hidden" value="ocw" name="site" />
+                        <input id="hidden9" type="hidden" value="utf-8" name="oe" />
+                        <input id="hidden15" type="hidden" value="*" name="getfields" />
+                        <input id="hidden16" type="hidden" value="0" name="filter" />
+						<input type="hidden" name="btnG" value="Search"/>
+						<input type="hidden" name="as_occt" />
+						<div class="form_section">
+                          <h2 class="subhead">Find results</h2>
+                          <p><label for="Text1" class="lbl_advn_srch">With all of the words</label>
+                          <input id="Text1" tabindex="1" class="as_form_fields" /></p>
+                          
+                          <p><label for="Text2" class="lbl_advn_srch">With the exact phrase</label>
+                          <input id="Text2" tabindex="2" name="as_epq" class="as_form_fields" /></p>
+                          
+                          <p><label for="Text3" class="lbl_advn_srch">With at least one of the words</label>
+                          <input id="Text3" tabindex="3" class="as_form_fields" /></p>
+                          
+                          <p><label for="Text4" class="lbl_advn_srch">Without the words</label>
+                          <input id="Text4" tabindex="4" name="as_eq" class="as_form_fields" /></p>
+                        </div>
+                        <div class="form_section">
+                          <h2 class="subhead">Limit</h2>
+                          <p><label for="select1" class="lbl_advn_srch">Search to the following HTML Pages (<em>*to select multiple items hold down the CTRL or Command key</em>)
+                          </label></p>
+                          <select size="7" multiple="multiple" class="as_form_fields" id="select1" tabindex="5">
+                            <option value="Any" selected="selected">any section</option>
+                            <option value="Course Home|WT%2Ecg_s:Resource Home">course home pages</option>
+                            <option value="Syllabus">syllabus</option>
+                            <option value="Calendar">calendar</option>
+                            <option value="Readings">readings</option>
+                            <option value="Lecture Notes">lecture notes</option>
+                            <option value="Video Lectures">video lectures</option>
+                            <option value="Videos">videos</option>
+                            <option value="Recitations">recitations</option>
+                            <option value="Labs">labs</option>
+                            <option value="Assignments">assignments</option>
+                            <option value="In-class Activities">in-class activities</option>
+                            <option value="Exams">exams</option>
+                            <option value="Projects">projects</option>
+                            <option value="Study Materials">study materials</option>
+                            <option value="Image Gallery">image gallery</option>
+                            <option value="Tools">tools</option>
+                            <option value="Animations">animations</option>
+                            <option value="Simulations">simulations</option>
+                            <option value="Related Resources">related resources</option>
+                          </select>
+                        </div>
+                        <div class="form_section">
+                          <h2 class="subhead">Results</h2>
+                          <p><label for="select2" class="lbl_advn_srch">Number of results on each page</label></p>
+                          <select id="select2" tabindex="6" name="num" class="as_form_fields">
+                            <option value="10" selected="selected">10 results</option>
+                            <option value="20">20 results</option>
+                            <option value="30">30 results</option>
+                            <option value="50">50 results</option>
+                            <option value="100">100 results</option>
+                          </select>
+                        </div>
+                        <div class="form_section">
+                          <h2 class="subhead">Sort by</h2>
+                          <p><label for="select3" class="lblamount lblDollar">With all of the words</label></p>
+                          <select id="select3" tabindex="7" name="sort" class="as_form_fields">
+                            <option value="" selected="selected">by relevance</option>
+                            <option value="date:D:S:d1">by date</option>
+                          </select>
+                          <p>&nbsp;</p>
+                          <input type="image" id="submit2" tabindex="8" src="/images/button_search2.png" name="btng" alt="Search" style="width: 132px; height: 35px; border: none;" />
+                        </div>
+                      </div>
+                    </form>
+
+             	</div>
+            </div>
+        </div>
+
+        <div id="right_global">
+        	<a href="https://giving.mit.edu/givenow/ocw/MakeGift.dyn"><img src="/images/button_donate-now.png" alt="Donate Now." class="donate" /></a><br />
+			<div class="white_side">
+            	<h4 class="dept_link">See Also:</h4>
+	            <ul class="news-dept">
+                	<li class="news-dept"><a href="/courses/audio-video-courses" class="bullet">Courses with <strong><span style="color: #b30838;">audio or video lectures</strong></span></a> </li></li>
+                    <li class="news-dept"><a href="/courses/mit-curriculum-guide" class="bullet">Information about <strong><span style="color: #b30838;">MIT's curriculum</strong></span></a></li>
+                </ul>
+
+			</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div id="bottom">
+    <div id="grid"><!-- *begin footer* -->
+        <div id="footer" role="navigation sitemap">
+            <div id="foot-c1" class="grid_2 alpha">
+                <h4 class="footer">Courses</h4>
+                <ul class="foot-bullet">
+					<li><a href="/courses/find-by-topic/">Find by Topic</a></li>
+					<li><a href="/courses/find-by-number/">Find by Course Number</a></li>
+					<li><a href="/courses/find-by-department/">Find by Department</a></li>
+					<li><a href="/courses/audio-video-courses/">Audio/Video Courses</a></li>
+					<li><a href="/courses/subtitled/">Courses with Subtitles</a></li>
+					<li><a href="/courses/online-textbooks/">Online Textbooks</a></li>
+					<li><a href="/courses/new-courses/">New Courses</a></li>
+					<li><a href="/courses/most-visited-courses/">Most Visited Courses</a></li>
+					<li><a href="/courses/ocw-scholar/">OCW Scholar Courses</a></li>
+					<li><a href="/courses/this-course-at-mit/">This Course at MIT</a></li>
+					<li><a href="/resources/">Supplemental Resources</a></li>
+					<li><a href="/courses/translated-courses/">Translated Courses</a></li>
+				</ul>
+            </div>
+            <div id="foot-c2" class="grid_2">
+                <h4 class="footer">About</h4>
+                <ul class="foot-bullet">
+                    <li><a href="/about/">About OpenCourseWare</a></li>
+                    <li><a href="/about/site-statistics/">Site Stats</a></li>
+                    <li><a href="/about/ocw-stories/">OCW Stories</a></li>                    
+                    <li><a href="/about/media-coverage/">Media Coverage</a></li>
+                    <li><a href="/about/newsletter/">Newsletter</a></li>
+                    <li><a href="/about/media-coverage/press-releases/">Press Releases</a></li>
+                    <li><a href="/about/next-decade/">OCW's Next Decade</a></li>
+                </ul>
+            </div>
+            <div id="foot-c3" class="grid_2">
+                <h4 class="footer">Donate</h4>
+                <ul class="foot-bullet">
+                    <li><a href="/donate">Make a Donation</a></li>
+                    <li><a href="/donate/why-donate/">Why Donate?</a></li>
+                    <li><a href="/donate/ocw-course-champions-program/">Become a Course Champion</a></li>
+                    <li><a href="/donate/our-supporters/">Our Supporters</a></li>
+                    <li><a href="/donate/other-ways-to-contribute/">Other Ways to Contribute</a></li>
+                    <li><a href="/donate/shop-ocw">Shop OCW</a></li>
+					<li><a href="/support/">Become a Corporate Sponsor</a></li>
+                </ul>
+            </div>
+            <div id="foot-c4" class="grid_2">
+                <h4 class="footer">Featured Sites</h4>
+                <ul class="foot-bullet">
+                    <li><a href="/high-school/">Highlights for High School</a></li>
+					<li><a href="/educator/">OCW Educator</a></li>
+                    <li><a href="http://ocw.mit.edu/ans7870/featured/mitx-courses-on-edx.htm">MITx Courses on edX</a></li>
+					<li><a href="http://teachingexcellence.mit.edu/">Teaching Excellence at MIT</a></li>
+                    <li><a href="http://www.oeconsortium.org/">Open Education Consortium</a></li>
+                </ul>
+                <h4 class="footer" style="margin-top: 14px;">Tools</h4>
+                <ul class="foot-bullet">
+                    <li><a href="/help/">Help &amp; FAQs</a></li>
+                    <li><a href="/jsp/feedback.jsp">Contact Us</a></li>
+                    <li><a href="/search/AdvancedSearch.htm">Advanced Search</a></li>
+                    <li><a href="/help/site-map/">Site Map</a></li>
+                    <li><a href="/terms/">Privacy &amp; Terms of Use</a></li>
+					<li><a href="/help/rss/">RSS Feeds</a></li>
+                </ul>
+            </div>
+            <div itemtype="http://schema.org/CollegeOrUniversity" itemscope="" itemprop="publisher" class="grid_4 omega" id="foot-c5">
+				<h4 class="footer">About <span itemprop="name">MIT OpenCourseWare</span></h4>
+				<p itemprop="description" class="accent">MIT OpenCourseWare makes the materials used in the teaching of almost all of MIT's subjects available on the Web, free of charge. With more than 2,200 courses available, OCW is delivering on the promise of open sharing of knowledge.</p>
+			</div>
+            <div class="grid_8 alpha" id="foot-copy">
+                <a href="http://web.mit.edu"><img style="width: 195; height: 44;" alt="Massachusetts Institute of Technology logo and name." src="/images/logo_mit.png" /></a>                 
+                <a href="http://www.oeconsortium.org/"><img style="width: 219px; height: 59px; vertical-align: top;" alt="Open Education Consortium logo." src="/images/logo_oec.png" /></a>                 
+                <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" itemprop="useRightsUrl" rel="license"><img style="width: 126px; height: 44px; margin-right: 0;" alt="Creative Commons logo with terms BY-NC-SA." src="/images/cc_by-nc-sa.png" /></a>
+                <p class="copyright">&copy; 2001&ndash;2015<br />Massachusetts Institute of Technology</p>
+                <p style="font-size: 0.9em; margin-bottom: 15px;">Your use of the MIT OpenCourseWare site and materials is subject to our <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" rel="license">Creative Commons License</a> and other <a href="/terms/" rel="cc:morePermissions">terms of use</a>.</p>
+            </div>
+             <div id="foot-support" class="grid_4 omega"> 
+                <h4 class="footer">Our Corporate Supporters</h4>
+                <!-- HOME_CORP_LOGO_1 -->
+                <div id="div-gpt-ad-1388181177156-0" class="sponsors_google_ads_even"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-0'); });
+                </script></div>
+                <!-- HOME_CORP_LOGO_2 -->
+                <div id="div-gpt-ad-1388181177156-1" class="sponsors_google_ads_odd"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-1'); });
+                </script></div>
+                <!-- HOME_CORP_LOGO_3 -->
+                <div id="div-gpt-ad-1388181177156-2" class="sponsors_google_ads_even"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-2'); });
+                </script></div>
+                <!-- HOME_CORP_LOGO_4 -->
+                <div id="div-gpt-ad-1388181177156-3" class="sponsors_google_ads_odd"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-3'); });
+                </script></div>
+                <!-- HOME_CORP_LOGO_5 -->
+                <div id="div-gpt-ad-1388181177156-4" class="sponsors_google_ads_even"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-4'); });
+                </script></div>
+                <!-- HOME_CORP_LOGO_6 -->
+                <div id="div-gpt-ad-1388181177156-5" class="sponsors_google_ads_odd"><script type='text/javascript'>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1388181177156-5'); });
+                </script></div>
+            </div>
+        </div>
+    </div>
+</div>
+<noscript><div><img alt="" border="0" name="DCSIMG" width="1" height="1" src="http://statse.webtrendslive.com/dcs8q9s2ag9xjywz8l6x34ik5_6b3t/njs.gif?dcsuri=/nojavascript&WT.js=No&WT.tv=8.0.0" /></div></noscript>
+</body>
+</html>
+

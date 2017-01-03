@@ -1,0 +1,2207 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Java concurrency (multi-threading) - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Java concurrency (multi-threading) This article describes how to do concurrent programming with Java. It covers the concepts of parallel programming, immutability, threads, the executor framework (thread pools), futures, callables and the fork-join framework.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d415743e1"></a>Java concurrency (multi-threading) - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 2.3</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008, 2009, 2010, 2011, 2012, 2013 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">02.08.2013</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Java concurrency (multi-threading)</b></p>
+                     <p>This article describes how to do concurrent programming
+                        with
+                        Java. It covers the concepts of parallel programming, immutability,
+                        threads, the
+                        executor framework (thread pools),
+                        futures, callables and
+                        the
+                        fork-join framework.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#concurrency">1. Concurrency</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#concurrency_overview">1.1. What is concurrency?</a></span></dt>
+                     <dt><span class="section"><a href="#concurrency_processthreads">1.2. Process vs. threads</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#gainandissues">2. Improvements and issues with concurrency</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#concurrency_amdahl">2.1. Limits of concurrency gains</a></span></dt>
+                     <dt><span class="section"><a href="#concurrency_problems">2.2. Concurrency issues</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#concurrencyjava">3. Concurrency in Java</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#concurrencyjava_overview">3.1. Processes and Threads</a></span></dt>
+                     <dt><span class="section"><a href="#concurrencyjava_synchronized">3.2. Locks and thread synchronization</a></span></dt>
+                     <dt><span class="section"><a href="#concurrency_volatile">3.3. Volatile</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#memorymodel">4. The Java memory model</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#memorymodel_overview">4.1. Overview</a></span></dt>
+                     <dt><span class="section"><a href="#memorymodel_atomic">4.2. Atomic operation</a></span></dt>
+                     <dt><span class="section"><a href="#memorymodel_synchronized">4.3. Memory updates in synchronized code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#immutability">5. Immutability and Defensive Copies</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#immutability_main">5.1. Immutability</a></span></dt>
+                     <dt><span class="section"><a href="#immutability_defensivecopy">5.2. Defensive Copies</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#threads">6. Threads in Java</a></span></dt>
+               <dt><span class="section"><a href="#threadpools">7. Threads pools with the Executor Framework</a></span></dt>
+               <dt><span class="section"><a href="#futures">8. Futures and Callables</a></span></dt>
+               <dt><span class="section"><a href="#nonblocking">9. Nonblocking algorithms</a></span></dt>
+               <dt><span class="section"><a href="#forkjoin">10. Fork-Join in Java 7</a></span></dt>
+               <dt><span class="section"><a href="#dealock">11. Deadlock</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">12. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">12.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">12.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">12.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">13. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">13.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#resources_concurrency">13.2. Concurrency Resources</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">13.3. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="concurrency"></a>1.&nbsp;Concurrency
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrency_overview"></a>1.1.&nbsp;What is concurrency?
+                        </h3>
+                     </div>
+                  </div>
+               </div><a class="indexterm" name="d415743e52"></a><p>Concurrency is the ability to run several programs or several
+                  parts of a
+                  program in parallel. If a time consuming task can be
+                  performed
+                  asynchronously or in parallel, this improve the
+                  throughput
+                  and the interactivity of the program.
+                  
+               </p>
+               <p> A modern computer has several CPU's or several
+                  cores within one
+                  CPU. The ability to leverage these multi-cores can
+                  be the key for a
+                  successful high-volume application.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrency_processthreads"></a>1.2.&nbsp;Process vs. threads
+                        </h3>
+                     </div>
+                  </div>
+               </div><a class="indexterm" name="d415743e62"></a><a class="indexterm" name="d415743e65"></a><p>
+                  A
+                  <em class="wordasword">process</em>
+                  runs independently and isolated of
+                  other processes. It
+                  cannot
+                  directly
+                  access
+                  shared data in other processes. The
+                  resources of
+                  the
+                  process, e.g.
+                  memory
+                  and CPU time, are
+                  allocated to it via the
+                  operating
+                  system.
+                  
+               </p>
+               <p>
+                  A
+                  <em class="wordasword">thread</em>
+                  is a
+                  so called lightweight process. It has its own
+                  call stack, but
+                  can
+                  access shared data of other threads in the same process. Every
+                  thread
+                  has its own
+                  memory cache. If a
+                  thread
+                  reads shared data it
+                  stores
+                  this
+                  data in
+                  its own memory cache.
+                  A thread
+                  can re-read the
+                  shared
+                  data.
+                  
+               </p>
+               <p> A Java application runs by default in one process. Within a
+                  Java application you work with several threads to
+                  achieve parallel
+                  processing or asynchronous behavior.
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="gainandissues"></a>2.&nbsp;Improvements and issues with concurrency
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> Within a Java application you work with several threads to
+               achieve parallel processing or asynchronous behavior.
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrency_amdahl"></a>2.1.&nbsp;Limits of concurrency gains
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Concurrency promises to perform certain task faster as these
+                  tasks can
+                  be divided into subtasks and these subtasks can be executed
+                  in parallel. Of course the runtime is limited by parts of the task
+                  which can be performed in parallel.
+                  
+               </p>
+               <p>
+                  The theoretical possible
+                  performance gain can be
+                  calculated by the following rule
+                  which is referred to as
+                  <em class="wordasword">Amdahl's Law</em>.
+                  
+               </p>
+               <p>If F is the
+                  percentage of the program
+                  which can not run in
+                  parallel
+                  and N is the
+                  number of processes, then
+                  the maximum performance
+                  gain is 1/
+                  (F+
+                  ((1-F)/n)).
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrency_problems"></a>2.2.&nbsp;Concurrency issues
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Threads have their own call stack, but can also access shared
+                  data. Therefore you have two basic problems, visibility and access
+                  problems.
+                  
+               </p>
+               <p> A visibility problem occurs if thread A reads shared data which
+                  is later changed by thread B and thread A is unaware of this
+                  change.
+                  
+               </p>
+               <p> An access problem can occur if several thread access and
+                  change
+                  the same shared data at the same time.
+                  
+               </p>
+               <p>
+                  Visibility and access problem can lead to
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>Liveness failure: The program does not react anymore
+                           due to
+                           problems in the concurrent access of data, e.g. deadlocks.
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>Safety failure: The program creates incorrect data.
+                           
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="concurrencyjava"></a>3.&nbsp;Concurrency in Java
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrencyjava_overview"></a>3.1.&nbsp;Processes and Threads
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  A Java program runs in its own process and by default in one
+                  thread.
+                  Java supports threads as part of the Java language via the
+                  <code class="code">Thread</code>
+                  code.
+                  The Java application can create new threads via this class.
+                  
+               </p>
+               <p>
+                  Java 1.5
+                  also
+                  provides improved support for concurrency with the in the
+                  <code class="code">java.util.concurrent</code>
+                  package.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrencyjava_synchronized"></a>3.2.&nbsp;Locks and thread synchronization
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Java provides
+                  <em class="wordasword">locks</em>
+                  to protect certain parts of the code to be executed by
+                  several
+                  threads at the same time. The simplest way of
+                  locking a certain method
+                  or Java class is to define the method or class with the
+                  <code class="code">synchronized</code>
+                  keyword.
+                  
+               </p>
+               <p>
+                  The
+                  <em class="wordasword">synchronized</em>
+                  keyword in Java ensures:
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>that only a single thread can execute a block of code at
+                           the
+                           same time
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>that each thread entering a synchronized block
+                           of code
+                           sees the
+                           effects of all previous modifications that were
+                           guarded by
+                           the same
+                           lock
+                           
+                        </p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+               <p>Synchronization is necessary for mutually
+                  exclusive access to
+                  blocks of and for reliable communication
+                  between threads.
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <p>
+                  You can use the
+                  <em class="wordasword">synchronized</em>
+                  keyword for the definition of a
+                  method. This would
+                  ensure that only one
+                  thread can enter this
+                  method at the same time. Another threads which
+                  is
+                  calling this method would wait until the first threads leaves this
+                  method.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">synchronized</span> <span class="hl-keyword">void</span> critial() {
+  <em class="hl-comment" style="color: #080">// some thread critical stuff</em>
+  <em class="hl-comment" style="color: #080">// here</em>
+} </pre><p>
+                  
+               </p>
+               <p>
+                  You can also use the
+                  <code class="code">synchronized</code>
+                  keyword to protect blocks of code within a method. This block is
+                  guarded by a key,
+                  which can be either a
+                  string
+                  or an object. This key is
+                  called the
+                  <em class="wordasword">lock</em>.
+                  
+                  All code
+                  which
+                  is protected by
+                  the same lock
+                  can only
+                  be executed
+                  by one
+                  thread at the same time
+                  
+               </p>
+               <p>
+                  For example the following datastructure will ensure that only
+                  one
+                  thread can access the inner block of the
+                  <code class="code">add()</code>
+                  and
+                  <code class="code">next()</code>
+                  methods.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.pagerank.crawler;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<div class="hl-tag" style="color: #080">/**
+ * Data structure for a web crawler. Keeps track of the visited sites and keeps
+ * a list of sites which needs still to be crawled.
+ * 
+ * @author Lars Vogel
+ * 
+ */</div>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> CrawledSites {
+  <span class="hl-keyword">private</span> List&lt;String&gt; crawledSites = <span class="hl-keyword">new</span> ArrayList&lt;String&gt;();
+  <span class="hl-keyword">private</span> List&lt;String&gt; linkedSites = <span class="hl-keyword">new</span> ArrayList&lt;String&gt;();
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> add(String site) {
+    <span class="hl-keyword">synchronized</span> (<span class="hl-keyword">this</span>) {
+      <span class="hl-keyword">if</span> (!crawledSites.contains(site)) {
+        linkedSites.add(site);
+      }
+    }
+  }
+
+  <div class="hl-tag" style="color: #080">/**
+   * Get next site to crawl. Can return null (if nothing to crawl)
+   */</div>
+  <span class="hl-keyword">public</span> String next() {
+    <span class="hl-keyword">if</span> (linkedSites.size() == <span class="hl-number">0</span>) {
+      <span class="hl-keyword">return</span> null;
+    }
+    <span class="hl-keyword">synchronized</span> (<span class="hl-keyword">this</span>) {
+      <em class="hl-comment" style="color: #080">// Need to check again if size has changed</em>
+      <span class="hl-keyword">if</span> (linkedSites.size() &gt; <span class="hl-number">0</span>) {
+        String s = linkedSites.get(<span class="hl-number">0</span>);
+        linkedSites.remove(<span class="hl-number">0</span>);
+        crawledSites.add(s);
+        <span class="hl-keyword">return</span> s;
+      }
+      <span class="hl-keyword">return</span> null;
+    }
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="concurrency_volatile"></a>3.3.&nbsp;Volatile
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  If a variable is declared with the
+                  <em class="wordasword">volatile</em>
+                  keyword then it is guaranteed that
+                  any
+                  thread that reads the field will
+                  see the most recently written
+                  value.
+                  The
+                  <em class="wordasword">volatile</em>
+                  keyword will not perform any mutual exclusive
+                  lock on the variable.
+                  
+               </p>
+               <p>
+                  As of Java 5 write access to a
+                  <em class="wordasword">volatile</em>
+                  variable will also
+                  update non-volatile variables which were modified
+                  by the same thread.
+                  This can also be used to update values within a
+                  reference variable,
+                  e.g. for a
+                  <em class="wordasword">volatile</em>
+                  variable person. In this case
+                  you must use a
+                  temporary variable person
+                  and use the setter to
+                  initialize the
+                  variable and then assign the
+                  temporary variable to the
+                  final
+                  variable. This will then make the
+                  address changes of this
+                  variable
+                  and the values visible to other
+                  threads.
+                  
+               </p>
+            </div>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="memorymodel"></a>4.&nbsp;The Java memory model
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memorymodel_overview"></a>4.1.&nbsp;Overview
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The
+                  <em class="wordasword">Java memory model</em>
+                  describes the communication between the
+                  memory of the threads and the
+                  main memory of the application.
+                  
+               </p>
+               <p>
+                  It
+                  defines the rules how changes in the memory done by threads
+                  are
+                  propagated to other threads.
+                  
+                  The
+                  <em class="wordasword">Java memory model</em>
+                  also defines the situations in
+                  which a thread
+                  re-fresh its own
+                  memory
+                  from the
+                  main memory.
+                  
+               </p>
+               <p>It also describes which operations are atomic and the ordering
+                  of the operations.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memorymodel_atomic"></a>4.2.&nbsp;Atomic operation
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> An atomic operation is an operation which is performed as a
+                  single unit of work without the possibility of interference from
+                  other operations.
+                  
+               </p>
+               <p>
+                  The Java language specification guarantees that reading or
+                  writing a
+                  variable is an atomic operation(unless the variable is of
+                  type
+                  <code class="code">long</code>
+                  or
+                  <code class="code">double</code>). Operations variables of type
+                  <code class="code">long</code>
+                  or
+                  <code class="code">double</code>
+                  are only atomic if they
+                  declared with the
+                  <code class="code">volatile</code>
+                  keyword. .
+                  
+               </p>
+               <p>
+                  Assume
+                  <code class="code">i</code>
+                  is defined as
+                  <code class="code">int</code>.
+                  The
+                  <code class="code">i++</code>
+                  (increment)
+                  operation it not an atomic operation in Java. This also
+                  applies for the other numeric types, e.g. long.
+                  etc).
+                  
+               </p>
+               <p>
+                  The
+                  <code class="code">i++</code>
+                  operation
+                  first reads the value which is
+                  currently stored
+                  in i (atomic
+                  operations) and then it adds one to it
+                  (atomic operation).
+                  But between
+                  the read and the write the value of i
+                  might have changed.
+                  
+               </p>
+               <p>
+                  Since Java 1.5 the java language provides atomic variables,
+                  e.g.
+                  AtomicInteger or AtomicLong which provide methods like
+                  <code class="code">getAndDecrement()</code>,
+                  <code class="code">getAndIncrement()</code>
+                  and
+                  <code class="code">getAndSet()</code>
+                  which are
+                  atomic.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memorymodel_synchronized"></a>4.3.&nbsp;Memory updates in synchronized code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>The Java memory model guarantees
+                  that each thread entering
+                  a
+                  synchronized
+                  block of code sees the effects of all previous
+                  modifications that were
+                  guarded by the same lock.
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="immutability"></a>5.&nbsp;Immutability and Defensive Copies
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="immutability_main"></a>5.1.&nbsp;Immutability
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>The simplest way to avoid problems with concurrency is to
+                  share
+                  only immutable data between threads. Immutable data is data
+                  which cannot changed.
+                  
+               </p>
+               <p>
+                  To make a class immutable make
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>all its fields final</p>
+                     </li>
+                     <li class="listitem">
+                        <p>the class declared as final</p>
+                     </li>
+                     <li class="listitem">
+                        <p>the this reference is not allowed to escape during
+                           construction
+                           
+                        </p>
+                     </li>
+                     <li class="listitem">
+                        <p>Any fields which refer to mutable data objects are</p>
+                        <div class="itemizedlist">
+                           <ul class="itemizedlist" type="circle">
+                              <li class="listitem">
+                                 <p>private</p>
+                              </li>
+                              <li class="listitem">
+                                 <p>have no setter method</p>
+                              </li>
+                              <li class="listitem">
+                                 <p>they are never directly returned of otherwise exposed to
+                                    a
+                                    caller
+                                    
+                                 </p>
+                              </li>
+                              <li class="listitem">
+                                 <p>if they are changed internally in the class this change is
+                                    not visible and has no effect outside of the class
+                                    
+                                 </p>
+                              </li>
+                           </ul>
+                        </div>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+               <p>An immutable class may have some mutable data which is uses to
+                  manages its state but from the outside this class nor any attribute
+                  of
+                  this class can get changed.
+                  
+               </p>
+               <p> For all mutable fields, e.g. Arrays, that are passed from the
+                  outside to the class during the construction phase, the class needs
+                  to
+                  make a defensive-copy of the elements to make sure that no other
+                  object from the outside still can change the data
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="immutability_defensivecopy"></a>5.2.&nbsp;Defensive Copies
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>You must protect your classes from calling code. Assume that
+                  calling code will do its best to
+                  change your data in a way you didn't
+                  expect it. While this is especially true in case of immutable data it
+                  is also true for non-immutable data which you still not expect that
+                  this data is changed outside your class.
+                  
+               </p>
+               <p> To protect your class against that you should copy data you
+                  receive and only return copies of data to calling code.
+                  
+               </p>
+               <p> The following example creates a copy of a list (ArrayList) and
+                  returns only the copy of the list. This way the client of this class
+                  cannot remove elements from the list.
+                  
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.defensivecopy;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.Collections;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyDataStructure {
+  List&lt;String&gt; list = <span class="hl-keyword">new</span> ArrayList&lt;String&gt;();
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> add(String s) {
+    list.add(s);
+  }
+
+  <div class="hl-tag" style="color: #080">/**
+   * Makes a defensive copy of the List and return it
+   * This way cannot modify the list itself 
+   * 
+   * @return List&lt;String&gt;
+   */</div>
+  <span class="hl-keyword">public</span> List&lt;String&gt; getList() {
+    <span class="hl-keyword">return</span> Collections.unmodifiableList(list);
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="threads"></a>6.&nbsp;Threads in Java
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               The base means for concurrency are is the
+               <code class="code">java.lang.Threads</code>
+               class. A
+               <code class="code">Thread</code>
+               executes an object of type
+               <code class="code">java.lang.Runnable</code>.
+               
+            </p>
+            <p>
+               <code class="code">Runnable</code>
+               is an interface with defines the
+               <code class="code">run()</code>
+               method. This
+               method
+               is called by the
+               <code class="code">Thread</code>
+               object and contains the work which
+               should
+               be done.
+               Therefore the
+               "Runnable" is the task to perform. The
+               Thread is the
+               worker who is doing
+               this task.
+               
+            </p>
+            <p>
+               The following demonstrates a task (Runnable) which counts the
+               sum
+               of a
+               given range of numbers. Create a new Java project called
+               <code class="code">de.vogella.concurrency.threads</code>
+               for the
+               example code of this
+               section.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.threads;
+
+<div class="hl-tag" style="color: #080">/**
+ * MyRunnable will count the sum of the number from 1 to the parameter
+ * countUntil and then write the result to the console.
+ * &lt;p&gt;
+ * MyRunnable is the task which will be performed
+ * 
+ * @author Lars Vogel
+ * 
+ */</div>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyRunnable <span class="hl-keyword">implements</span> Runnable {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> <span class="hl-keyword">long</span> countUntil;
+
+  MyRunnable(<span class="hl-keyword">long</span> countUntil) {
+    <span class="hl-keyword">this</span>.countUntil = countUntil;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> run() {
+    <span class="hl-keyword">long</span> sum = <span class="hl-number">0</span>;
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">long</span> i = <span class="hl-number">1</span>; i &lt; countUntil; i++) {
+      sum += i;
+    }
+    System.out.println(sum);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               The following example demonstrate the usage of the
+               <code class="code">Thread</code>
+               and the
+               <code class="code">Runnable</code>
+               class.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.threads;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Main {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <em class="hl-comment" style="color: #080">// We will store the threads so that we can check if they are done</em>
+    List&lt;Thread&gt; threads = <span class="hl-keyword">new</span> ArrayList&lt;Thread&gt;();
+    <em class="hl-comment" style="color: #080">// We will create 500 threads</em>
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">500</span>; i++) {
+      Runnable task = <span class="hl-keyword">new</span> MyRunnable(<span class="hl-number">10000000L</span> + i);
+      Thread worker = <span class="hl-keyword">new</span> Thread(task);
+      <em class="hl-comment" style="color: #080">// We can set the name of the thread</em>
+      worker.setName(String.valueOf(i));
+      <em class="hl-comment" style="color: #080">// Start the thread, never call method run() direct</em>
+      worker.start();
+      <em class="hl-comment" style="color: #080">// Remember the thread for later usage</em>
+      threads.add(worker);
+    }
+    <span class="hl-keyword">int</span> running = <span class="hl-number">0</span>;
+    <span class="hl-keyword">do</span> {
+      running = <span class="hl-number">0</span>;
+      <span class="hl-keyword">for</span> (Thread thread : threads) {
+        <span class="hl-keyword">if</span> (thread.isAlive()) {
+          running++;
+        }
+      }
+      System.out.println(<span class="hl-string" style="color:blue">"We have "</span> + running + <span class="hl-string" style="color:blue">" running threads. "</span>);
+    } <span class="hl-keyword">while</span> (running &gt; <span class="hl-number">0</span>);
+
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               Using the
+               <code class="code">Thread</code>
+               class
+               directly has the following disadvantages.
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>Creating a new thread causes some performance overhead
+                        
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>Too many threads can lead to reduced performance, as the
+                        CPU
+                        needs to switch between these threads.
+                        
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>You cannot easily control the number of threads, therefore
+                        you
+                        may run into out of memory errors due to too many threads.
+                        
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+            <p>
+               The
+               <code class="code">java.util.concurrent</code>
+               package offers improved support for
+               concurrency compared to the direct
+               usage of
+               <code class="code">Threads</code>. This package is described in the next section. 
+               
+            </p>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="threadpools"></a>7.&nbsp;Threads pools with the Executor Framework
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3>
+               You find this examples in the source section in Java project called
+               <em class="wordasword">de.vogella.concurrency.threadpools</em>.
+               
+            </div>
+            <p>
+               
+            </p>
+            <p> Thread pools manage a pool of worker threads. The thread pools
+               contains a work queue which holds tasks waiting to get executed.
+               
+            </p>
+            <p>
+               A thread pool can be described as a collection of
+               <code class="code">Runnable</code>
+               objects
+               
+               (work queue) and a connections of running threads. These
+               threads are
+               constantly running and are checking the work query for new
+               work. If
+               there is new work to be done they execute this Runnable. The
+               Thread
+               class itself provides a method, e.g. execute(Runnable r) to add
+               a new
+               <code class="code">Runnable</code>
+               object to the work queue.
+               
+            </p>
+            <p> The Executor framework provides example implementation of the
+               java.util.concurrent.Executor interface, e.g.
+               Executors.newFixedThreadPool(int n) which will create n worker
+               threads. The ExecutorService adds life cycle methods to the Executor,
+               which allows to shutdown the Executor and to wait for termination.
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3>
+               If you want to use one thread pool with one thread which
+               executes
+               several runnables you can use
+               the
+               <code class="code">Executors.newSingleThreadExecutor()</code>
+               method.
+               
+            </div>
+            <p>
+               
+            </p>
+            <p> Create again the Runnable.</p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.threadpools;
+
+<div class="hl-tag" style="color: #080">/**
+ * MyRunnable will count the sum of the number from 1 to the parameter
+ * countUntil and then write the result to the console.
+ * &lt;p&gt;
+ * MyRunnable is the task which will be performed
+ * 
+ * @author Lars Vogel
+ * 
+ */</div>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyRunnable <span class="hl-keyword">implements</span> Runnable {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> <span class="hl-keyword">long</span> countUntil;
+
+  MyRunnable(<span class="hl-keyword">long</span> countUntil) {
+    <span class="hl-keyword">this</span>.countUntil = countUntil;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> run() {
+    <span class="hl-keyword">long</span> sum = <span class="hl-number">0</span>;
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">long</span> i = <span class="hl-number">1</span>; i &lt; countUntil; i++) {
+      sum += i;
+    }
+    System.out.println(sum);
+  }
+} </pre><p>
+               
+            </p>
+            <p>Now you run your runnables with the executor framework.</p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.threadpools;
+
+<span class="hl-keyword">import</span> java.util.concurrent.ExecutorService;
+<span class="hl-keyword">import</span> java.util.concurrent.Executors;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Main {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> <span class="hl-keyword">int</span> NTHREDS = <span class="hl-number">10</span>;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">500</span>; i++) {
+      Runnable worker = <span class="hl-keyword">new</span> MyRunnable(<span class="hl-number">10000000L</span> + i);
+      executor.execute(worker);
+    }
+    <em class="hl-comment" style="color: #080">// This will make the executor accept no new threads</em>
+    <em class="hl-comment" style="color: #080">// and finish all existing threads in the queue</em>
+    executor.shutdown();
+    <em class="hl-comment" style="color: #080">// Wait until all threads are finish</em>
+    executor.awaitTermination();
+    System.out.println(<span class="hl-string" style="color:blue">"Finished all threads"</span>);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               In case the threads should return some value (result-bearing
+               threads)
+               then you can use the
+               <code class="code">java.util.concurrent.Callable</code>
+               class.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="futures"></a>8.&nbsp;Futures and Callables
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               The code examples for this section are created in a Java project
+               called
+               <em class="wordasword">de.vogella.concurrency.callables</em>.
+               
+            </p>
+            <p>
+               The executor framework presented in the last chapter works with
+               <code class="code">Runnables</code>. Runnable do not return result.
+               
+            </p>
+            <p>
+               In case you expect your threads to return a computed result you
+               can use
+               <code class="code">java.util.concurrent.Callable</code>. The
+               <code class="code">Callable</code>
+               object
+               allows to return
+               values after completion.
+               
+            </p>
+            <p>
+               The
+               <code class="code">Callable</code>
+               object uses generics to define the type of object which
+               is
+               returned.
+               
+            </p>
+            <p>
+               If you submit a
+               <code class="code">Callable</code>
+               object
+               to an
+               <code class="code">Executor</code>
+               the framework returns an object of type
+               <code class="code">java.util.concurrent.Future</code>.
+               This
+               <code class="code">Future</code>
+               object can be
+               used to check the
+               status of a
+               <code class="code">Callable</code>
+               and to
+               retrieve the
+               result from
+               the
+               <code class="code">Callable</code>.
+               
+            </p>
+            <p>
+               On the
+               <code class="code">Executor</code>
+               you can use the method submit to submit a
+               <code class="code">Callable</code>
+               and to get a future.
+               To retrieve the result of the future use
+               the
+               <code class="code">get()</code>
+               method.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.callables;
+
+<span class="hl-keyword">import</span> java.util.concurrent.Callable;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyCallable <span class="hl-keyword">implements</span> Callable&lt;Long&gt; {
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> Long call() <span class="hl-keyword">throws</span> Exception {
+    <span class="hl-keyword">long</span> sum = <span class="hl-number">0</span>;
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">long</span> i = <span class="hl-number">0</span>; i &lt;= <span class="hl-number">100</span>; i++) {
+      sum += i;
+    }
+    <span class="hl-keyword">return</span> sum;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.callables;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+<span class="hl-keyword">import</span> java.util.concurrent.Callable;
+<span class="hl-keyword">import</span> java.util.concurrent.ExecutionException;
+<span class="hl-keyword">import</span> java.util.concurrent.ExecutorService;
+<span class="hl-keyword">import</span> java.util.concurrent.Executors;
+<span class="hl-keyword">import</span> java.util.concurrent.Future;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> CallableFutures {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> <span class="hl-keyword">int</span> NTHREDS = <span class="hl-number">10</span>;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+
+    ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
+    List&lt;Future&lt;Long&gt;&gt; list = <span class="hl-keyword">new</span> ArrayList&lt;Future&lt;Long&gt;&gt;();
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">20000</span>; i++) {
+      Callable&lt;Long&gt; worker = <span class="hl-keyword">new</span> MyCallable();
+      Future&lt;Long&gt; submit = executor.submit(worker);
+      list.add(submit);
+    }
+    <span class="hl-keyword">long</span> sum = <span class="hl-number">0</span>;
+    System.out.println(list.size());
+    <em class="hl-comment" style="color: #080">// now retrieve the result</em>
+    <span class="hl-keyword">for</span> (Future&lt;Long&gt; future : list) {
+      <span class="hl-keyword">try</span> {
+        sum += future.get();
+      } <span class="hl-keyword">catch</span> (InterruptedException e) {
+        e.printStackTrace();
+      } <span class="hl-keyword">catch</span> (ExecutionException e) {
+        e.printStackTrace();
+      }
+    }
+    System.out.println(sum);
+    executor.shutdown();
+  }
+} </pre><p>
+               
+            </p>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="nonblocking"></a>9.&nbsp;Nonblocking algorithms
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Java 5.0 provides supports for additional atomic operations. This
+               allows to
+               develop algorithm which are non-blocking algorithm, e.g.
+               which do not require synchronization, but are based on low-level
+               atomic hardware primitives such as compare-and-swap (CAS). A
+               compare-and-swap operation check if the variable has a certain value
+               and if it has this value it will perform this operation.
+               
+            </p>
+            <p> Non-blocking algorithm are usually much faster then blocking
+               algorithms as the synchronization of threads appears on a much finer
+               level (hardware).
+               
+            </p>
+            <p>
+               For example this created a non-blocking counter which always
+               increases. This example is contained in the project called
+               <em class="wordasword">de.vogella.concurrency.nonblocking.counter</em>.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.nonblocking.counter;
+
+<span class="hl-keyword">import</span> java.util.concurrent.atomic.AtomicInteger;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Counter {
+  <span class="hl-keyword">private</span> AtomicInteger value = <span class="hl-keyword">new</span> AtomicInteger(); 
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> getValue(){
+    <span class="hl-keyword">return</span> value.get();
+  }
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> increment(){
+    <span class="hl-keyword">return</span> value.incrementAndGet();
+  }
+  
+  <em class="hl-comment" style="color: #080">// Alternative implementation as increment but just make the </em>
+  <em class="hl-comment" style="color: #080">// implementation explicit</em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> incrementLongVersion(){
+    <span class="hl-keyword">int</span> oldValue = value.get();
+    <span class="hl-keyword">while</span> (!value.compareAndSet(oldValue, oldValue+<span class="hl-number">1</span>)){
+       oldValue = value.get();
+    }
+    <span class="hl-keyword">return</span> oldValue+<span class="hl-number">1</span>;
+  }
+  
+} </pre><p>
+               
+            </p>
+            <p> And a test.</p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.concurrency.nonblocking.counter;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.HashSet;
+<span class="hl-keyword">import</span> java.util.List;
+<span class="hl-keyword">import</span> java.util.Set;
+<span class="hl-keyword">import</span> java.util.concurrent.Callable;
+<span class="hl-keyword">import</span> java.util.concurrent.ExecutionException;
+<span class="hl-keyword">import</span> java.util.concurrent.ExecutorService;
+<span class="hl-keyword">import</span> java.util.concurrent.Executors;
+<span class="hl-keyword">import</span> java.util.concurrent.Future;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Test {
+    <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> <span class="hl-keyword">int</span> NTHREDS = <span class="hl-number">10</span>;
+
+    <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+      <span class="hl-keyword">final</span> Counter counter = <span class="hl-keyword">new</span> Counter();
+      List&lt;Future&lt;Integer&gt;&gt; list = <span class="hl-keyword">new</span> ArrayList&lt;Future&lt;Integer&gt;&gt;();
+
+      ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
+      <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">500</span>; i++) {
+        Callable&lt;Integer&gt; worker = <span class="hl-keyword">new</span>  Callable&lt;Integer&gt;() {
+          <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+          <span class="hl-keyword">public</span> Integer call() <span class="hl-keyword">throws</span> Exception {
+            <span class="hl-keyword">int</span> number = counter.increment();
+            System.out.println(number);
+            <span class="hl-keyword">return</span> number ;
+          }
+        };
+        Future&lt;Integer&gt; submit= executor.submit(worker);
+        list.add(submit);
+
+      }
+      
+      
+      <em class="hl-comment" style="color: #080">// This will make the executor accept no new threads</em>
+      <em class="hl-comment" style="color: #080">// and finish all existing threads in the queue</em>
+      executor.shutdown();
+      <em class="hl-comment" style="color: #080">// Wait until all threads are finish</em>
+      <span class="hl-keyword">while</span> (!executor.isTerminated()) {
+      }
+      Set&lt;Integer&gt; set = <span class="hl-keyword">new</span> HashSet&lt;Integer&gt;();
+      <span class="hl-keyword">for</span> (Future&lt;Integer&gt; future : list) {
+        <span class="hl-keyword">try</span> {
+          set.add(future.get());
+        } <span class="hl-keyword">catch</span> (InterruptedException e) {
+          e.printStackTrace();
+        } <span class="hl-keyword">catch</span> (ExecutionException e) {
+          e.printStackTrace();
+        }
+      }
+      <span class="hl-keyword">if</span> (list.size()!=set.size()){
+        <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(<span class="hl-string" style="color:blue">"Double-entries!!!"</span>); 
+      }
+
+    }
+
+
+} </pre><p>
+               
+            </p>
+            <p>
+               The interesting part is how the
+               <code class="code">incrementAndGet()</code>
+               method
+               is implemented. It
+               uses a CAS operation.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">public</span> <span class="hl-keyword">final</span> <span class="hl-keyword">int</span> incrementAndGet() {
+        <span class="hl-keyword">for</span> (;;) {
+            <span class="hl-keyword">int</span> current = get();
+            <span class="hl-keyword">int</span> next = current + <span class="hl-number">1</span>;
+            <span class="hl-keyword">if</span> (compareAndSet(current, next))
+                <span class="hl-keyword">return</span> next;
+        }
+    } </pre><p>
+               
+            </p>
+            <p>
+               The JDK itself makes more and more use of non-blocking algorithms
+               to
+               increase performance for every developer. Developing correct
+               non-blocking algorithm is not a trivial task.
+               
+            </p>
+            <p>
+               For
+               more information on
+               non-blocking algorithm, e.g. examples for a
+               non-blocking Stack and
+               non-block LinkedList, please see
+               <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp04186/index.html" target="_top">
+                  http://www.ibm.com/developerworks/java/library/j-jtp04186/index.html</a>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="forkjoin"></a>10.&nbsp;Fork-Join in Java 7
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> Java 7 introduce a new parallel mechanism for compute intensive
+               tasks, the fork-join framework. The fork-join framework allows you to
+               distribute a certain task on several workers and then wait for the
+               result.
+               
+            </p>
+            <p>
+               E    For Java 6.0 you can download the package (jsr166y) from
+               <a class="ulink" href="http://gee.cs.oswego.edu/dl/concurrency-interest/index.html" target="_top">Download site</a>
+               
+            </p>
+            <p>
+               For testing create the Java project
+               "de.vogella.performance.forkjoin".
+               If you are not using Java 7 you
+               also need to
+               <code class="filename">jsr166y.jar</code>
+               to the classpath.
+               
+            </p>
+            <p>
+               Create first a
+               <code class="code">algorithm</code>
+               package and then the following class.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> algorithm;
+
+<span class="hl-keyword">import</span> java.util.Random;
+
+<div class="hl-tag" style="color: #080">/**
+ * 
+ * This class defines a long list of integers which defines the problem we will
+ * later try to solve
+ * 
+ */</div>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Problem {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> <span class="hl-keyword">int</span>[] list = <span class="hl-keyword">new</span> <span class="hl-keyword">int</span>[<span class="hl-number">2000000</span>];
+
+  <span class="hl-keyword">public</span> Problem() {
+    Random generator = <span class="hl-keyword">new</span> Random(<span class="hl-number">19580427</span>);
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; list.length; i++) {
+      list[i] = generator.nextInt(<span class="hl-number">500000</span>);
+    }
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span>[] getList() {
+    <span class="hl-keyword">return</span> list;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               Define now the
+               <code class="code">Solver</code>
+               class as shown in the following example coding.
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3> The API defines other top classes, e.g. RecursiveAction,
+               AsyncAction. Check the Javadoc for details.
+               
+            </div>
+            <p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> algorithm;
+
+<span class="hl-keyword">import</span> java.util.Arrays;
+
+<span class="hl-keyword">import</span> jsr166y.forkjoin.RecursiveAction;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Solver <span class="hl-keyword">extends</span> RecursiveAction {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">int</span>[] list;
+  <span class="hl-keyword">public</span> <span class="hl-keyword">long</span> result;
+
+  <span class="hl-keyword">public</span> Solver(<span class="hl-keyword">int</span>[] array) {
+    <span class="hl-keyword">this</span>.list = array;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">protected</span> <span class="hl-keyword">void</span> compute() {
+    <span class="hl-keyword">if</span> (list.length == <span class="hl-number">1</span>) {
+      result = list[<span class="hl-number">0</span>];
+    } <span class="hl-keyword">else</span> {
+      <span class="hl-keyword">int</span> midpoint = list.length / <span class="hl-number">2</span>;
+      <span class="hl-keyword">int</span>[] l1 = Arrays.copyOfRange(list, <span class="hl-number">0</span>, midpoint);
+      <span class="hl-keyword">int</span>[] l2 = Arrays.copyOfRange(list, midpoint, list.length);
+      Solver s1 = <span class="hl-keyword">new</span> Solver(l1);
+      Solver s2 = <span class="hl-keyword">new</span> Solver(l2);
+      forkJoin(s1, s2);
+      result = s1.result + s2.result;
+    }
+  }
+} </pre><p>
+               
+            </p>
+            <p>Now define a small test class for testing it efficiency.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> testing;
+
+<span class="hl-keyword">import</span> jsr166y.forkjoin.ForkJoinExecutor;
+<span class="hl-keyword">import</span> jsr166y.forkjoin.ForkJoinPool;
+<span class="hl-keyword">import</span> algorithm.Problem;
+<span class="hl-keyword">import</span> algorithm.Solver;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Test {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    Problem test = <span class="hl-keyword">new</span> Problem();
+    <em class="hl-comment" style="color: #080">// check the number of available processors</em>
+    <span class="hl-keyword">int</span> nThreads = Runtime.getRuntime().availableProcessors();
+    System.out.println(nThreads);
+    Solver mfj = <span class="hl-keyword">new</span> Solver(test.getList());
+    ForkJoinExecutor pool = <span class="hl-keyword">new</span> ForkJoinPool(nThreads);
+    pool.invoke(mfj);
+    <span class="hl-keyword">long</span> result = mfj.getResult();
+    System.out.println(<span class="hl-string" style="color:blue">"Done. Result: "</span> + result);
+    <span class="hl-keyword">long</span> sum = <span class="hl-number">0</span>;
+    <em class="hl-comment" style="color: #080">// check if the result was ok</em>
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; test.getList().length; i++) {
+      sum += test.getList()[i];
+    }
+    System.out.println(<span class="hl-string" style="color:blue">"Done. Result: "</span> + sum);
+  }
+} </pre><p>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="dealock"></a>11.&nbsp;Deadlock
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               A concurrent application has the risk of a
+               <em class="wordasword">deadlock</em>. A set of processes are deadlocked if all processes are waiting for
+               an
+               event which another process in the same set has to cause.
+               
+            </p>
+            <p> For example if thread A waits for a lock on object Z which
+               thread B holds and thread B wait for a look on object Y which is hold
+               be process A then these two processes are looked and cannot continue
+               in their processing.
+               
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>12.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>12.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>12.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>12.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>13.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>13.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/index.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_concurrency"></a>13.2.&nbsp;Concurrency Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://java.sun.com/docs/books/tutorial/essential/concurrency/index.html" target="_top">
+                     http://java.sun.com/docs/books/tutorial/essential/concurrency/index.html</a>
+                  Introduction to Concurrency
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.briangoetz.com/pubs.html" target="_top">
+                     http://www.briangoetz.com/pubs.html</a>
+                  Article series from Brian Goetz including lots about concurrency
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/library/j-jtp0730.html" target="_top">
+                     http://www.ibm.com/developerworks/library/j-jtp0730.html</a>
+                  Thread pools and work queues by Brian Goetz
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp04186/index.html" target="_top">
+                     http://www.ibm.com/developerworks/java/library/j-jtp04186/index.html</a>
+                  Introduction to nonblocking algorithms by Brian Goetz
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp11137.html" target="_top">
+                     http://www.ibm.com/developerworks/java/library/j-jtp11137.html</a>
+                  Java theory and practice: Stick a fork in it, Part 1 by Brian Goetz
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp03048.html" target="_top">
+                     http://www.ibm.com/developerworks/java/library/j-jtp03048.html</a>
+                  Java theory and practice: Stick a fork in it, Part 2 by Brian Goetz
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>13.3.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <table border="0">
+                     <colgroup>
+                        <col width="50%" align="left">
+                        <col width="50%" align="left">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/training/" target="_top">TRAINING</a></th>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/consulting/" target="_top">SERVICE &amp; SUPPORT</a></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              The vogella company provides comprehensive <a class="ulink" href="http://www.vogella.com/training/" target="_top">training and education services</a> 
+                              from experts in the areas of Eclipse RCP, Android, Git, Java, Gradle and Spring.
+                              We offer both public and inhouse training. Whichever course you decide to take, you are guaranteed to experience 
+                              what many before you refer to as 
+                              <a class="ulink" href="http://www.vogella.com/training/" target="_top">&#8220;The best IT class I have ever attended&#8221;</a>.
+                              
+                           </td>
+                           <td align="left">
+                              The vogella company offers <a class="ulink" href="http://www.vogella.com/consulting/" target="_top">expert consulting</a> services, development support and coaching. Our customers range from
+                              Fortune 100 corporations to individual developers.  
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div><img src="http://vg04.met.vgwort.de/na/7e267be5be5a4142aa4e99341d9dc3d3" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/JavaConcurrency/article.html');
+//]]></script></body>
+</html>
+

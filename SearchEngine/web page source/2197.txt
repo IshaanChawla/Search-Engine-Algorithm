@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Java 8 Lambdas and Streams: Public Training Course</title>
+<meta name="description" content="Live training course new features in Java 8: lambda expressions, streams, default methods, and more. From popular author and developer Marty Hall. Co-sponsored by Johns Hopkins University." />
+<script src="../../scripts/sniffer.js" type="text/javascript"></script>
+<script src="../../scripts/menus.js" type="text/javascript"></script>
+<script src="../../scripts/toc.js" type="text/javascript"></script>
+<link href="../../styles/screen.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../styles/print.css" rel="stylesheet" type="text/css" media="print" />
+<script type="text/javascript">
+<!--
+chooseCss();
+//-->
+</script>
+<style type="text/css">
+  .norway { font-size: xx-small;
+	          color: #330066 }
+</style>
+<script src="../../scripts/jquery/js/jquery.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/jquery-ui.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/setup.js" type="text/javascript"></script>
+<link href="../../scripts/jquery/css/current-theme/current-theme.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+
+<body>
+<!-- Begin Banner Table -->
+<a name="top"></a>
+<table id="banner_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="logo"><a href="http://www.coreservlets.com/"><img src="../../images/banner.jpg" alt="logo" width="601" height="86" border="0" /></a><img src="../../images/Gosling.jpg" alt="Hall and Gosling" /></td>
+  <td id="martyPic"><img src="../../images/marty-hall.jpg" alt="Marty Hall" width="96" height="86" /></td>
+  <td id="banner_bg">&nbsp;</td>
+  </tr>
+</table>
+<!-- End Banner Table -->
+
+<!-- Begin SubNav Table -->
+<table id="subnav_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="subnav"><a href="http://www.coreservlets.com/">home</a> <a href="mailto:hall@coreservlets.com">contact</a> <a href="http://www.coreservlets.com/sitemap.html">sitemap</a> </td>
+  </tr>
+</table>
+<!-- End SubNav Table -->
+
+<!-- Begin Nav Bar Table with Google search -->
+<form method="get" action="http://www.google.com/search">
+<table id="navbar_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr id="navbar">
+  <td id="nav_training" nowrap="nowrap"><a href="http://courses.coreservlets.com/" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">Training</a></td>
+  <td id="nav_tutorials" nowrap="nowrap"><a href="http://courses.coreservlets.com/Course-Materials/" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">Tutorials</a></td>
+  <td id="nav_books" nowrap="nowrap"><a href="http://books.coreservlets.com/" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">Books</a></td>
+  <td id="nav_consulting" nowrap="nowrap"><a href="http://consulting.coreservlets.com/">Consulting&nbsp;&amp;&nbsp;Outsourcing</a></td>
+  <td id="nav_resources" nowrap="nowrap"><a href="http://resources.coreservlets.com/" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">Programming Resources</a></td>
+  <td id="nav_jobs" nowrap="nowrap"><a href="http://jobs.coreservlets.com/">Jobs</a></td>
+  <td colspan="2"></td>
+  <td id="search_cell" colspan="2" nowrap="nowrap">
+<!-- SiteSearch Google -->
+<input type="hidden" name="ie" value="iso-8859-1" />
+<input type="hidden" name="oe" value="iso-8859-1" />
+<input id="search" type="text" name="q" maxlength="255" value="" /><input id="search_button" type="submit" name="btnG" value="search" />
+<input type="hidden" name="sitesearch" value="coreservlets.com" />
+<!-- SiteSearch Google -->
+  </td>
+  </tr>
+  <tr>
+  <td colspan="9">&nbsp;</td>
+  </tr>
+</table>
+</form>
+<!-- End Nav Bar Table with Google search -->
+
+<!-- Begin Drop-down Menus -->
+<div id="submenu">
+<div id="submenu_training" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">
+<a href="http://www.courses.coreservlets.com/about-instructor.html">About the Instructor</a>
+<a href="http://www.courses.coreservlets.com/student-reviews.html">Training Course Reviews</a>
+<a href="http://courses.coreservlets.com/jsf-training.html">JSF 2 Training<br/>&amp; PrimeFaces Training</a>
+<a href="http://courses.coreservlets.com/java-training.html">Java Training<br/>(Java 7 &amp; 8 Programming)</a>
+<a href="http://courses.coreservlets.com/android-training.html">Android Training</a>
+<a href="http://courses.coreservlets.com/ajax-training.html">Ajax Training<br/>(w/ jQuery, HTML5, etc.)</a>
+<a href="http://courses.coreservlets.com/hadoop-training.html">Hadoop Training</a>
+<a href="http://courses.coreservlets.com/web-services-training.html">Web Services Training<br/>(RESTful &amp; SOAP-Based)</a>
+<a href="http://courses.coreservlets.com/spring-training.html">Spring Training</a>
+<a href="http://courses.coreservlets.com/hibernate-training.html">Hibernate &amp; JPA Training</a>
+<a href="http://courses.coreservlets.com/gwt-training.html">GWT Training</a>
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html">Servlet &amp; JSP Training</a>
+<a href="http://courses.coreservlets.com/scwcd-training.html">SCWCD Training</a>
+<a href="http://courses.coreservlets.com/">Customized On-Site Training</a> 
+<a href="http://courses.coreservlets.com/public-courses/">Public Course Schedule</a>
+</div>
+<div id="submenu_tutorials" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+Tomcat &amp; Eclipse Tutorial</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+JSF (JavaServer Faces)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+&nbsp;&nbsp;&nbsp;JSF 2 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+&nbsp;&nbsp;&nbsp;PrimeFaces Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+&nbsp;&nbsp;&nbsp;JSF 1 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+Java 7 and Java 8 Programming Tutorial</a>
+<a href="http://www.coreservlets.com/android-tutorial/">
+Android Programming Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+Ajax Tutorial (&amp; GWT)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+&nbsp;&nbsp;&nbsp;Basics &amp; JavaScript</a>
+<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+&nbsp;&nbsp;&nbsp;Prototype Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+&nbsp;&nbsp;&nbsp;Scriptaculous Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+&nbsp;&nbsp;&nbsp;jQuery Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+&nbsp;&nbsp;&nbsp;Dojo Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+&nbsp;&nbsp;&nbsp;GWT Tutorial</a>
+<a href="http://www.coreservlets.com/html5-tutorial/">
+HTML5 Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+Spring Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+JPA &amp; Hibernate Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+Intermediate Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+Advanced Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+EJB3 &amp; Web Services</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+SCWCD Tutorial</a>
+<a href="http://www.courses.coreservlets.com/Course-Materials/struts.html">
+Jakarta Struts Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+Tutorials in Chinese</a>
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+Tutorials in Japanese</a>	
+</div>
+<div id="submenu_books" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">
+<a href="http://volume1.coreservlets.com/">Core Servlets &amp; JSP Vol I</a>
+<a href="http://volume2.coreservlets.com/">Core Servlets &amp; JSP Vol II</a>
+<a href="http://www.moreservlets.com/">More Servlets &amp; JSP</a>
+<a href="http://pdf.coreservlets.com/">Core Servlets &amp; JSP E-Book</a>
+<a href="http://pdf.moreservlets.com/">More Servlets &amp; JSP E-Book</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Recommended Java EE Books</a>
+<a href="http://www.corewebprogramming.com/">Core Web Programming</a>
+<a href="http://www.coreservlets.com/first-edition.html">Core Servlets &amp; JSP 1st Ed.</a>
+</div>
+<div id="submenu_resources" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">
+<a href="http://resources.coreservlets.com/quick-summary.html">Quick Ref to APIs &amp; Docs</a>
+<a href="http://resources.coreservlets.com/jsp-docs.html">Specifications &amp; Documentation</a>
+<a href="http://resources.coreservlets.com/jsp-servers.html">Servers</a>
+<a href="http://resources.coreservlets.com/jsp-ides.html">IDEs</a>
+<a href="http://resources.coreservlets.com/j2ee-jobs.html">Java-Related Jobs</a>
+<a href="http://resources.coreservlets.com/jsf.html">JSF (JavaServer Faces)</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Books</a>
+<a href="http://resources.coreservlets.com/jsp-hosting.html">Web Hosting Providers</a>
+<a href="http://www.apl.jhu.edu/~hall/java/">Java Programming</a>
+<a href="http://coreservlets.tradepub.com/">Free trade magazines &amp; whitepapers</a>
+</div>
+</div>
+<!-- End Drop-down Menus -->
+
+<div id="main_table">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0">  
+<tr>
+<!-- Begin Left Sidebar -->
+<td id="sidebar_left" nowrap="nowrap"><!-- #BeginLibraryItem "/Library/TrainingSideLinks.lbi" -->      
+<div id="sidebar_left_heading"><a href="http://courses.coreservlets.com/">training courses</a></div>
+<div class="list">
+
+<a href="http://courses.coreservlets.com/about-instructor.html"><span class="smallCaps">A</span>BOUT THE <span class="smallCaps">I</span>NSTRUCTOR</a><br/>
+  
+<a href="http://courses.coreservlets.com/student-reviews.html"><span class="smallCaps">C</span>OURSE <span class="smallCaps">R</span>EVIEWS</a><br/>
+  
+<a href="http://courses.coreservlets.com/jsf-training.html">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span> &amp;
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+<a href="http://courses.coreservlets.com/java-training.html"><span class="smallCaps">J</span>AVA 7 &amp; <span class="smallCaps">J</span>AVA 8 <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/android-training.html"><span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/ajax-training.html">
+<span class="smallCaps">A</span>JAX (w/ J<span class="smallCaps">Q</span>UERY, <span class="smallCaps">HTML</span>5, 
+<span class="smallCaps">E</span>TC.)</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">R</span>ESTful
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES</a><br/>
+
+<a href="http://courses.coreservlets.com/gwt-training.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://courses.coreservlets.com/spring-training.html"><span class="smallCaps">S</span>PRING 
+<span class="smallCaps">F</span>RAMEWORK</a><br/>
+
+<a href="http://courses.coreservlets.com/hibernate-training.html"><span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html"><span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/scwcd-training.html"><span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/"><span class="smallCaps">C</span>USTOMIZED <span class="smallCaps">O</span>N-SITE</a><br/>
+  
+<a href="http://courses.coreservlets.com/public-courses/"><span class="smallCaps">P</span>UBLIC <span class="smallCaps">T</span>RAINING <span class="smallCaps">S</span>CHEDULE</a><br/><br/>
+</div><!-- #EndLibraryItem --><!-- #BeginLibraryItem "/Library/TutorialsSideLinks.lbi" -->    <div class="sidebar_left_heading2"><a href="http://courses.coreservlets.com/Course-Materials/">free tutorials</a></div>
+<div class="list"> 
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">6</span></a><br/>
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/tomcat-7-with-eclipse.html">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">7</span></a><br/>
+
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>ERVER <span class="smallCaps">F</span>ACES <span class="smallCaps">(JSF)</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">1</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">G</span>ENERAL <span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/java-8-tutorial/">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">8</span> <span class="smallCaps">L</span>AMBDAS &amp; <span class="smallCaps">S</span>TREAMS</a><br/>
+
+<a href="http://www.coreservlets.com/android-tutorial/">
+<span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://www.coreservlets.com/hadoop-tutorial/">
+<span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+<span class="smallCaps">A</span>JAX &amp; <span class="smallCaps">GWT</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>CRIPT &amp;
+<span class="smallCaps">A</span>JAX <span class="smallCaps">B</span>ASICS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+<span class="smallCaps">P</span>ROTOTYPE</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+<span class="smallCaps">S</span>CRIPTACULOUS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+J<span class="smallCaps">Q</span>UERY</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+<span class="smallCaps">D</span>OJO</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://www.coreservlets.com/html5-tutorial/">
+<span class="smallCaps">HTML 5</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+<span class="smallCaps">I</span>NTERMEDIATE <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+<span class="smallCaps">A</span>DVANCED <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+<span class="smallCaps">S</span>PRING</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+<span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/struts.html">
+<span class="smallCaps">J</span>AKARTA <span class="smallCaps">S</span>TRUTS</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">EJB</span>3</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES WITH <span class="smallCaps">A</span>XIS2</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+<span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">C</span>HINESE</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">J</span>APANESE</a><br/><br/>	
+
+</div><!-- #EndLibraryItem --><br /><p>&nbsp;</p>
+  </td>
+<!-- End Left Sidebar -->
+
+<!-- Begin Main Content -->
+<td  id="content" colspan="7"><div itemscope itemtype="http://data-vocabulary.org/Event"> <!-- Event Microdata -->
+  <meta itemprop="url" content="http://courses.coreservlets.com/public-courses/java8/"/>
+<h1 class="highlight_heading" itemprop="summary">Java 8: Lambdas and Streams</h1>
+<h2 class="subtitle"><font color="blue">January 22-23 2015, JHU Dorsey Center, Elkridge MD<br/>
+  Co-Sponsored by Johns Hopkins <i>Engineering for Professionals</i><br/>
+</font><img src="../../images/jhu_ep_logo_blue.jpg" alt="JHU/EP Logo"/></h2>
+<br clear="all"/>
+
+<!--
+<h2 class="subtitle">This page is about the <i>public</i> Java 8 course to be held in Maryland.
+For customized classes on the new Java 8 features or general Java 8 programming
+taught onsite at <i>your</i> location, please see
+<a href="http://courses.coreservlets.com/java-training.html">the Java training page</a>.</h2>
+<br/>  -->
+
+<!-- #BeginLibraryItem "/Library/ClassOver.lbi" -->
+<table align="center" bgcolor="red"><tr><th>
+<font color="yellow">
+This class is now over. Next public version is tentatively set for summer or fall 2015 
+at the same Johns Hopkins location in Maryland.
+In the meantime, please contact <a href="mailto:hall@coreservlets.com">hall@coreservlets.com</a> 
+for information on a customized onsite version at <i>your</i> location. Lower price, more convenient for your developers,
+and customizable content. For clients in the Baltimore/Washington area, late afternoon, evening, or weekend sessions
+can be arranged.
+</font></th></tr></table>
+<br/><!-- #EndLibraryItem -->
+
+<!-- #BeginLibraryItem "/Library/Quotes.lbi" -->
+<div class="pull_quote" style="width: 230px; margin-right: 10px; margin-bottom: 10px;">
+<p>&ldquo;Wonderful. In 20 years,
+this is the best organized, most pragmatic and
+enjoyable course I've taken.&rdquo;</p>
+<p>&ldquo;The best instructor-led 
+course I have attended, by far.&rdquo;</p>
+<p>&ldquo;Best short course ever!&rdquo;</p>
+<p>&ldquo;Compared to the other short courses I have taken, this one completely redefined my scale from 1-10.&rdquo;</p>
+<p>&ldquo;In my 35+ years of taking technical courses,
+Marty's classes consistently come out ranking #1 on my list. Highly relevant
+material is delivered with enthusiasm, humor, and a high degree of class 
+interaction that is unmatched anywhere.&rdquo;</p>
+<p><a href="http://courses.coreservlets.com/student-reviews.html">more student reviews</a></p>
+</div><!-- #EndLibraryItem --><p> 
+  Java 8 is <i>by far</i> the most significant upgrade to the Java programming language since at least 2004, 
+  when Java 5
+  introduced generics to the language. This course gives a practical, hands-on introduction to the most important
+  features of Java 8: lambda expressions and streams. Along the way, we will look at some new features that support
+  lambdas and streams: default (defender) methods, the Optional class, StringJoiner, and a few others.
+  But, lambdas and streams are more than just new libraries: they are fundamental changes to the Java 8
+  programming model and to the entire style of Java development.
+</p>
+<p>
+  This page describes the public (open enrollment) training course on Java 8 to be held January 22-23 at<!-- #BeginLibraryItem "/Library/JHU-Dorsey-Microformats2.lbi" --><span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
+  <a href="../jhu-dorsey-travel-info.html" itemprop="url"><span itemprop="name">the Johns Hopkins Dorsey Center</span></a> </span><!-- #EndLibraryItem -->in Elkridge, MD (co-sponsored by the Johns Hopkins University <i>Engineering for Professionals</i> program).
+  The entire course is <i>personally</i> developed and taught by leading Java developer, speaker, and author 
+  <a href="../../about-instructor.html">Marty Hall</a>. 
+  No contract instructor regurgitating someone else's materials! Marty has taught Java technology courses onsite for 
+  <a href="../../about-instructor.html#clients">dozens of organizations</a> in the US, Canada, Mexico, Australia, 
+  Japan, Norway, Puerto Rico, India, Cambodia, and the Philippines, all to <a href="../../student-reviews.html">rave reviews</a>. Although Java 8 is new, Marty has already presented on Java 8 lambdas and streams to Google HQ in Mountain View, the Google NY office, the Federal Reserve Bank of Richmond, the Northern Virginia Java User's Group,  at the Great Indian Developer Summit in Bangalore India, to Informatica in Hyderabad India, to Jackson in Lansing, Michigan, at a public course co-sponsored by Johns Hopkins 
+  <i>Engineering for Professionals</i>, and for several DoD contracting companies in Maryland.</p><!-- #BeginLibraryItem "/Library/CustomCoursePlug.lbi" -->
+<p> 
+If you are looking for customized training courses on Java 7 or 8, JSF 2, PrimeFaces, Android, Ajax, jQuery, Hadoop (and Hadoop cerfication), GWT,
+Spring, Hibernate, Servlets, JSP, HTML5, or RESTful Web Services taught on-site at <i>your</i> company, please see <a href="../../index.html">this page</a>.
+</p><!-- #EndLibraryItem --><p> 
+  <b>Register Early!</b> 
+  Five of Marty's  previous public short courses were full,  
+  so reserve your spot today. 
+  <a href="course-registration-form.html">Registrations</a> are taken in the order they are received.
+</p>
+ 
+<br clear="all"/>
+<div class="accordion-div">
+
+<h1 class="book_part"><a name="Overview"><b>Course Overview</b></a></h1>
+<div> <!-- Accordion content -->
+<p>
+  The final version of Java 8 was released in March 2014, and it is by <i>far</i> the most significant upgrade to the Java programming language since at least 2004, probably since Java's inception. In general, Java 8's high-level goals were to make more flexible code, to better use multiple cores, and to more easily deal with large data sets. In specific, there are four main reasons that it is important to know Java 8:
+</p>
+<ol>
+  <li><b>More flexible and reusable code (thanks to lambdas).</b> Lambda expressions in Java 8 are a way of 
+    representing "functions", and their judicious use can make your code significantly more adapatable and 
+    reusable.</li>
+  <li><b>Convenience (thanks to high-level Stream methods).</b> Streams are wrappers around collections (or 
+    other data sources) that use lambda expressions pervasively. They support many convenient and high-performance 
+    operations that use lambdas, including "map", "reduce", "filter", and "forEach". These methods make many types 
+    of code much simpler to write, as compared to the comparatively clunky and low-level Collection methods.</li>
+  <li><b>Faster and more memory efficient code (thanks to lazy evaluation and automatic parallelization).</b> 
+    Streams support lazy evaluation, so if you map firstName over Employees, filter ones that start with "P", 
+    then choose the first, it really only maps and filters until the first match. Streams can also be parallel, 
+    so that the operations are automatically done in parallel, without any explicit multithreading code.</li>
+  <li><b>Adapt to the times.</b> Others will be using lambdas and streams, since they are standard parts of Java SE 
+    as of 3/2014. So, you have to learn the Java 8 features simply to be able to use and modify others’ code. 
+    Besides, once you get a taste of their power, you will want to use the new features frequently.</li>
+</ol>
+<p>
+  Java 8 is a <i>very</i> popular topic now, and in the last year Marty has done Java 8 courses and talks for Google headquarters in Mountain View California, for the Google office in New York City, for the Federal Reserve Bank of Richmond, for Jackson Insurance in Michigan, for the State of Michigan Attorney General's Office, for Informatica in Hyderabad India, for the Great Indian Developer Summit in Bangalore India, for the Northern Virginia Java User's Group, for a course in Maryland sponsored by Johns Hopkins Engineering for Professionals, for JHU/EP Computer Science faculty, for G2 in Maryland, for IntelliGenesis in Maryland, and for ProObject in Maryland.
+</p>
+<p>
+  Now, lambdas don't exactly turn Java into Lisp, and streams don't exactly turn Java SE into Hadoop. Nevertheless, they provide significant new capabilities to Java, and taken together, lambdas and streams result in by far the biggest change in Java programming style since at least 2004, when generics and annotations were added to the language. This course will summarize the syntax and usage of Java 8 lambda expressions, introduce streams, and give examples of the types of applications to which they are well suited. 
+  Each section is followed by a series of hands-on exercises that use Java 8 to reinforce the concepts.
+</p>
+<p>
+  Marty normally runs 
+  <a href="../../index.html">on-site training courses</a> at customer locations. 
+  This is easier administratively, is better for clients since the topics and schedule can be customized, and is 
+  more cost effective for students since no travel is required. However, due to demand from those who do not have enough students for an on-site course, Marty will be running a public (open enrollment) Java training course at the Johns Hopkins Dorsey Center in Elkridge MD. 
+</p>
+<p>
+  The course is developed and taught by
+  <a href="../../about-instructor.html">Marty Hall</a>, an experienced developer,
+  award-winning instructor, popular conference speaker (5 times at JavaOne), and
+  author of several bestselling <a href="http://books.coreservlets.com">Java books</a>.
+</p>
+
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Instructor"><b>About the Instructor</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/MartyMiniBio.lbi" -->
+<p> 
+<img src="http://courses.coreservlets.com/images/marty-hall-gids-smaller.jpg" align="right" hspace="5" alt="Marty Hall"/>
+Marty Hall is president of coreservlets.com, a training and consulting company focusing on server-side Java technology, Android development, and Rich Internet Apps with Ajax. In addition to long Java development and consulting experience, Marty has an extensive background in teaching and training, 
+  having given training courses on Java 7, Java 8, JSF 2, PrimeFaces, Android, Ajax/jQuery, and other Java EE topics in Japan, Canada, Australia, the Philippines, Mexico, Puerto Rico, India, Cambodia, Norway,
+  and dozens of US venues. He has taught onsite at Google (both the Mountain View and NY offices), the NSA, the CIA,
+  General Dynamics, Northrup Grumman, General Motors, VeriSign, Symantec, the Federal Reserve Bank, Comcast,
+  Hewlett Packard, Fannie Mae, Learjet, the US Navy, the Australian Treasury Department, Telenor Norway,
+  and dozens of other organizations around the world. (A more extensive list
+  can be found <a href="http://courses.coreservlets.com/about-instructor.html">on Marty's bio page</a>.) </p>
+<div class="content_imgL">
+  <img src="http://courses.coreservlets.com/images/JavaUniversity-Duke-150x111.gif"
+     width="150" height="111" alt="JavaU @ JavaOne"/>
+</div>
+<p>
+A popular and entertaining speaker, Marty has also spoken at conferences and user groups around the world,
+including Comdex, the Web 2.0 Expo, and five times at JavaOne. 
+Marty is also adjunct faculty in the Johns Hopkins University 
+part-time graduate program in Computer Science, where he directs the Java and Web-related concentration areas.
+</p>
+<p>
+Marty Hall is also the lead author of six popular Java EE books, including <i>Core Servlets and JSP</i>,
+and is the co-author of the upcoming JSF 2.2 edition of <i>Core JSF</i>.
+</p>
+<ul>
+<li><i>Core Servlets and JSP</i> is the all-time worldwide bestselling servlet/JSP book, published in Bulgarian, 
+Chinese Simplified Script (Mainland China), Chinese Traditional Script (Taiwan), Czech, Greek, English, French, German, Hebrew, Japanese, Korean, Macedonian, Polish, Portuguese, Russian, and Spanish.</li>
+<li><i>Core JSF</i> is widely recognized as the leading text on Web App development with JavaServer Faces.</li>
+<li>In addition be being best sellers in industry, Marty's books have been widely used in academia (including Stanford, MIT, Princeton, U.C. Berkeley, UCLA, Johns Hopkins, and dozens of others).</li>
+</ul>
+ 
+<h3>For more details, please see 
+<a href="http://courses.coreservlets.com/about-instructor.html">the Marty Hall bio</a>.</h3><!-- #EndLibraryItem --> </div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Prerequisites"><b>Prerequisites</b></a></h1>
+<div> <!-- Accordion content -->
+<p>
+  This course assumes that you have moderate to strong previous Java experience. It covers <i>only</i> the new features of the language that are added in Java 8.
+</p>
+<p>
+  If you want a thorough introduction to Java programming that also includes an introduction to Java 8, 
+  don't take this course: take 
+  <a href="../java/index.html">the five-day Java programming course</a> instead.
+</p>
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Venue"><b>Venue</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/CourseVenueSection.lbi" -->
+<p>
+<img src="../../images/jhu_epp_logo_red.gif" alt="JHU/EP Logo" align="right"/>
+The course will be held at
+<a href="../jhu-dorsey-travel-info.html">the Johns Hopkins Dorsey Center</a> in 
+Elkridge, Maryland. This is a modern, comfortable venue with separate computers for each student, fast internet connections, 
+and with coffee, snacks, and meals included. Class meets from 8:30 am to 4:30 pm daily. For students who
+prefer to bring their own laptops, fast wifi is available, and you can 
+<a href="mailto:hall@coreservlets.com">email the instructor</a> for information
+on installing the class software in advance.
+</p>
+<p>
+For Maryland residents, the location is centrally located 5 minutes from BWI airport and has plenty of free parking.
+For out-of-town students, there are many hotels within 1 mile. 
+</p><!-- #EndLibraryItem --> </div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Registration"><b>Registration</b></a></h1>
+<div> <!-- Accordion content -->
+<p>
+  The two-day course costs $1295 per student and includes an extensive course notebook, exercises, exercise solutions,
+  and all necessary software. <b>Free</b> breakfast, snacks, and lunch. Compare this price to courses from  
+  Learning Tree, GlobalKnowledge, and Oracle University that cost $3500-$4200 for five-day courses
+  and $2800-$3000 for <i>four</i>-day courses and that do not include textbooks or meals. Besides, those courses almost always use an unknown instructor who did not develop the course materials and often lacks significant real-world development experience.
+</p>
+<p>
+  To register, fill out and send in the 
+  <a href="javascript:window.location.href='course-registration-form.html'">course registration form</a>.
+  Space is limited: five previous offerings of coreservlets.com courses were full.
+  <b>Bonus:</b> Register at least two weeks in advance and get a $100 gift certificate from amazon.com.
+</p>
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="MoreInfo"><b>Questions and More Info</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/CoursesMoreInfoSection.lbi" -->
+<table><tr><td>
+<br/>
+<ul>
+  <li>Want details on the topics? See the detailed curriculum below.</li>
+  <li>Have questions on the topics even after reading that? 
+      Email the instructor at <a href="mailto:hall@coreservlets.com">
+	    hall@coreservlets.com</a>.</li>
+  <li>Want information on the instructor? See <a href="../../about-instructor.html">
+      this brief bio</a>.</li>
+  <li>Want to register? See <a href="javascript:window.location.href='course-registration-form.html'"> 
+      the course registration form</a>.</li>
+  <li>Registration questions? Email the registrar at 
+      <a href="mailto:registrar@coreservlets.com">registrar@coreservlets.com</a> 
+	    or phone (410) 429-5535.</li>
+</ul>
+</td><td width="10"></td><td>
+<br/>
+<ul>
+  <li><b>Guinea pigs? No!</b> Marty's courses are well-tested, having been taught
+      in 8 countries and dozens of US venues. We
+      don't use your developers as guinea pigs for new materials.</li>
+  <li><b>Regurgitation? No!</b> Marty developed all his own materials. No
+      contract instructor regurgitating memorized PowerPoint slides.</li>
+  <li><b>Green? No!</b> Marty is an experienced developer, and
+      is the author of 6 popular Java EE texts from Prentice Hall. The course
+      gives best practices and real-world strategies. No newbie
+      instructor dodging tough questions.</li>
+</ul>
+</td></tr></table><!-- #EndLibraryItem --></div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Syllabus"><b>Syllabus</b></a></h1>
+<div> <!-- Accordion content -->
+<p><b>Reminder:</b>
+  This is not a thorough introduction to Java; it covers only the new features of Java 8.
+  If you want a thorough introduction to Java programming that also includes Java 8, 
+  don't take this course: take 
+  <a href="../java/index.html">the five-day Java programming course</a> instead.</p>
+
+<ul>
+  <li>Motivation for lambdas</li>
+  <li>Interpretation of lambdas</li>
+  <li>Most basic form of lambdas</li>
+  <li>Changes to interfaces in Java 8</li>
+  <li>Type inferencing</li>
+  <li>Expression for lambda body</li>
+  <li>Omitting parens</li>
+  <li>Effectively final variables</li>
+  <li>@FunctionalInterface</li>
+  <li>Method references</li>
+  <li>The java.util.function package</li>
+  <li>Higher-order functions: methods (or lambdas) that return lambdas</li>
+  <li>Stream basics</li>
+  <li>Creating streams and outputting streams into standard data structures</li>
+  <li>Key stream methods (filter, map, reduce, forEach, etc.)</li>
+  <li>The new Optional class</li>
+  <li>Cool stream properties: lazy evaluation, parallel streams, and infinite streams</li>
+</ul>
+
+</div> 
+<!-- Accordion content -->
+
+</div>  <!-- Overall accordion-div -->
+</div>  <!-- Event Microdata -->
+
+
+</td>
+<!-- End Main Content -->
+
+<!-- Begin Right Sidebar -->
+<td id="sidebar_right" nowrap="nowrap">
+<div style="border-right: #533859 1px solid; border-left: #533859 1px solid; border-bottom: #533859 2px solid;">
+<div id="announcements"><font color="yellow">2014 AND<br/>2015 Courses</font></div>
+
+<p id="announcements_intro">
+Too few developers for<br/>
+onsite courses? Try<br/>
+our public courses in MD,<br/>
+co-sponsored by Johns<br/>
+Hopkins "Engineering<br/>
+for Professionals"<br/>
+<font color="red">&nbsp;&nbsp;(Updated Schedule)</font>
+</p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/jsf2/">
+JSF2: Modern Web <br/>Apps in Java</a><br/>
+(with PrimeFaces)</p>
+<p class="course_info"><font color="blue">November 10-14 2014</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/hadoop/">
+Hadoop: Big-Data<br/>Apps in the Cloud</a></p>
+<p class="course_info"><font color="blue">February 23-27 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java8/">
+Java 8 Mini-Course:<br/>
+Lambdas &amp; Streams</a></p>
+<p class="course_info"><font color="blue">January 22-23 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java/">
+Java Programming:<br/>A Crash Course</a></p>
+<p class="course_info"><font color="blue">January 26-30 2015</font></p>
+
+<p class="course_title"><a href="http://courses.coreservlets.com/">
+Customized<br/>
+On-Site Training</a>
+</p>
+<p class="course_info"><font color="blue">Courses at<br/> <i>YOUR</i> Location</font><br/>
+&nbsp;&#8226; Customized content<br/>
+&nbsp;&#8226; Flexible dates<br/>
+&nbsp;&#8226; Any country</p>
+</div><p>&nbsp;</p>
+</td>
+<!-- End Right Sidebar -->
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td id="copyright" colspan="7">
+&copy; 2015 coreservlets.com 
+| Design by <a href="http://www.tbiq.com/designedby.html" target="_blank">TBIQ</a> 
+| Java hosting from <a href="http://www.kattare.com/hosting-pricing-chart.kvws?ref=martyhall" target="_blank">Kattare</a></td>
+<td>&nbsp;</td>
+</tr>  
+</table>
+</div>
+</body></html>
+

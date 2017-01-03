@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <title>PHP: Security - Manual </title>
+
+ <link rel="shortcut icon" href="http://php.net/favicon.ico">
+ <link rel="search" type="application/opensearchdescription+xml" href="http://php.net/phpnetimprovedsearch.src" title="Add PHP.net search">
+ <link rel="alternate" type="application/atom+xml" href="http://php.net/releases/feed.php" title="PHP Release feed">
+ <link rel="alternate" type="application/atom+xml" href="http://php.net/feed.atom" title="PHP: Hypertext Preprocessor">
+
+ <link rel="canonical" href="http://php.net/manual/en/security.php">
+ <link rel="shorturl" href="http://php.net/manual/en/security.php">
+ <link rel="alternate" href="http://php.net/manual/en/security.php" hreflang="x-default">
+
+ <link rel="contents" href="http://php.net/manual/en/index.php">
+ <link rel="index" href="http://php.net/manual/en/index.php">
+ <link rel="prev" href="http://php.net/manual/en/wrappers.expect.php">
+ <link rel="next" href="http://php.net/manual/en/security.intro.php">
+
+ <link rel="alternate" href="http://php.net/manual/en/security.php" hreflang="en">
+ <link rel="alternate" href="http://php.net/manual/pt_BR/security.php" hreflang="pt_BR">
+ <link rel="alternate" href="http://php.net/manual/zh/security.php" hreflang="zh">
+ <link rel="alternate" href="http://php.net/manual/fr/security.php" hreflang="fr">
+ <link rel="alternate" href="http://php.net/manual/de/security.php" hreflang="de">
+ <link rel="alternate" href="http://php.net/manual/ja/security.php" hreflang="ja">
+ <link rel="alternate" href="http://php.net/manual/kr/security.php" hreflang="kr">
+ <link rel="alternate" href="http://php.net/manual/ro/security.php" hreflang="ro">
+ <link rel="alternate" href="http://php.net/manual/ru/security.php" hreflang="ru">
+ <link rel="alternate" href="http://php.net/manual/es/security.php" hreflang="es">
+ <link rel="alternate" href="http://php.net/manual/tr/security.php" hreflang="tr">
+
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1421837618&amp;f=/fonts/Fira/fira.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1421837618&amp;f=/fonts/Font-Awesome/css/fontello.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1429291204&amp;f=/styles/theme-base.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1429259403&amp;f=/styles/theme-medium.css" media="screen">
+
+ <!--[if lte IE 7]>
+ <link rel="stylesheet" type="text/css" href="http://php.net/styles/workarounds.ie7.css" media="screen">
+ <![endif]-->
+
+ <!--[if lte IE 8]>
+ <script type="text/javascript">
+  window.brokenIE = true;
+ </script>
+ <![endif]-->
+
+ <!--[if lte IE 9]>
+ <link rel="stylesheet" type="text/css" href="http://php.net/styles/workarounds.ie9.css" media="screen">
+ <![endif]-->
+
+ <!--[if IE]>
+ <script type="text/javascript" src="http://php.net/js/ext/html5.js"></script>
+ <![endif]-->
+
+ <base href="http://php.net/manual/en/security.php">
+
+</head>
+<body class="docs ">
+
+<nav id="head-nav" class="navbar navbar-fixed-top">
+  <div class="navbar-inner clearfix">
+    <a href="/" class="brand"><img src="/images/logo.php" width="48" height="24" alt="php"></a>
+    <div id="mainmenu-toggle-overlay"></div>
+    <input type="checkbox" id="mainmenu-toggle">
+    <ul class="nav">
+      <li class=""><a href="/downloads">Downloads</a></li>
+      <li class="active"><a href="/docs.php">Documentation</a></li>
+      <li class=""><a href="/get-involved" >Get Involved</a></li>
+      <li class=""><a href="/support">Help</a></li>
+    </ul>
+    <form class="navbar-search" id="topsearch" action="/search.php">
+      <input type="hidden" name="show" value="quickref">
+      <input type="search" name="pattern" class="search-query" placeholder="Search" accesskey="s">
+    </form>
+  </div>
+  <div id="flash-message"></div>
+</nav>
+<div class="headsup"><a href='/index.php#id2015-05-14-3'>PHP 5.6.9 is available</a></div>
+<nav id="trick"><div><dl>
+<dt><a href='/manual/en/getting-started.php'>Getting Started</a></dt>
+	<dd><a href='/manual/en/introduction.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/tutorial.php'>A simple tutorial</a></dd>
+<dt><a href='/manual/en/langref.php'>Language Reference</a></dt>
+	<dd><a href='/manual/en/language.basic-syntax.php'>Basic syntax</a></dd>
+	<dd><a href='/manual/en/language.types.php'>Types</a></dd>
+	<dd><a href='/manual/en/language.variables.php'>Variables</a></dd>
+	<dd><a href='/manual/en/language.constants.php'>Constants</a></dd>
+	<dd><a href='/manual/en/language.expressions.php'>Expressions</a></dd>
+	<dd><a href='/manual/en/language.operators.php'>Operators</a></dd>
+	<dd><a href='/manual/en/language.control-structures.php'>Control Structures</a></dd>
+	<dd><a href='/manual/en/language.functions.php'>Functions</a></dd>
+	<dd><a href='/manual/en/language.oop5.php'>Classes and Objects</a></dd>
+	<dd><a href='/manual/en/language.namespaces.php'>Namespaces</a></dd>
+	<dd><a href='/manual/en/language.exceptions.php'>Exceptions</a></dd>
+	<dd><a href='/manual/en/language.generators.php'>Generators</a></dd>
+	<dd><a href='/manual/en/language.references.php'>References Explained</a></dd>
+	<dd><a href='/manual/en/reserved.variables.php'>Predefined Variables</a></dd>
+	<dd><a href='/manual/en/reserved.exceptions.php'>Predefined Exceptions</a></dd>
+	<dd><a href='/manual/en/reserved.interfaces.php'>Predefined Interfaces and Classes</a></dd>
+	<dd><a href='/manual/en/context.php'>Context options and parameters</a></dd>
+	<dd><a href='/manual/en/wrappers.php'>Supported Protocols and Wrappers</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/security.php'>Security</a></dt>
+	<dd><a href='/manual/en/security.intro.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/security.general.php'>General considerations</a></dd>
+	<dd><a href='/manual/en/security.cgi-bin.php'>Installed as CGI binary</a></dd>
+	<dd><a href='/manual/en/security.apache.php'>Installed as an Apache module</a></dd>
+	<dd><a href='/manual/en/security.filesystem.php'>Filesystem Security</a></dd>
+	<dd><a href='/manual/en/security.database.php'>Database Security</a></dd>
+	<dd><a href='/manual/en/security.errors.php'>Error Reporting</a></dd>
+	<dd><a href='/manual/en/security.globals.php'>Using Register Globals</a></dd>
+	<dd><a href='/manual/en/security.variables.php'>User Submitted Data</a></dd>
+	<dd><a href='/manual/en/security.magicquotes.php'>Magic Quotes</a></dd>
+	<dd><a href='/manual/en/security.hiding.php'>Hiding PHP</a></dd>
+	<dd><a href='/manual/en/security.current.php'>Keeping Current</a></dd>
+<dt><a href='/manual/en/features.php'>Features</a></dt>
+	<dd><a href='/manual/en/features.http-auth.php'>HTTP authentication with PHP</a></dd>
+	<dd><a href='/manual/en/features.cookies.php'>Cookies</a></dd>
+	<dd><a href='/manual/en/features.sessions.php'>Sessions</a></dd>
+	<dd><a href='/manual/en/features.xforms.php'>Dealing with XForms</a></dd>
+	<dd><a href='/manual/en/features.file-upload.php'>Handling file uploads</a></dd>
+	<dd><a href='/manual/en/features.remote-files.php'>Using remote files</a></dd>
+	<dd><a href='/manual/en/features.connection-handling.php'>Connection handling</a></dd>
+	<dd><a href='/manual/en/features.persistent-connections.php'>Persistent Database Connections</a></dd>
+	<dd><a href='/manual/en/features.safe-mode.php'>Safe Mode</a></dd>
+	<dd><a href='/manual/en/features.commandline.php'>Command line usage</a></dd>
+	<dd><a href='/manual/en/features.gc.php'>Garbage Collection</a></dd>
+	<dd><a href='/manual/en/features.dtrace.php'>DTrace Dynamic Tracing</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/funcref.php'>Function Reference</a></dt>
+	<dd><a href='/manual/en/refs.basic.php.php'>Affecting PHP's Behaviour</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.audio.php'>Audio Formats Manipulation</a></dd>
+	<dd><a href='/manual/en/refs.remote.auth.php'>Authentication Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.cmdline.php'>Command Line Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.compression.php'>Compression and Archive Extensions</a></dd>
+	<dd><a href='/manual/en/refs.creditcard.php'>Credit Card Processing</a></dd>
+	<dd><a href='/manual/en/refs.crypto.php'>Cryptography Extensions</a></dd>
+	<dd><a href='/manual/en/refs.database.php'>Database Extensions</a></dd>
+	<dd><a href='/manual/en/refs.calendar.php'>Date and Time Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.file.php'>File System Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.international.php'>Human Language and Character Encoding Support</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.image.php'>Image Processing and Generation</a></dd>
+	<dd><a href='/manual/en/refs.remote.mail.php'>Mail Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.math.php'>Mathematical Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.nontext.php'>Non-Text MIME Output</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.process.php'>Process Control Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.other.php'>Other Basic Extensions</a></dd>
+	<dd><a href='/manual/en/refs.remote.other.php'>Other Services</a></dd>
+	<dd><a href='/manual/en/refs.search.php'>Search Engine Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.server.php'>Server Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.session.php'>Session Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.text.php'>Text Processing</a></dd>
+	<dd><a href='/manual/en/refs.basic.vartype.php'>Variable and Type Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.webservice.php'>Web Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.windows.php'>Windows Only Extensions</a></dd>
+	<dd><a href='/manual/en/refs.xml.php'>XML Manipulation</a></dd>
+</dl>
+<dl>
+<dt>Keyboard Shortcuts</dt><dt>?</dt>
+<dd>This help</dd>
+<dt>j</dt>
+<dd>Next menu item</dd>
+<dt>k</dt>
+<dd>Previous menu item</dd>
+<dt>g p</dt>
+<dd>Previous man page</dd>
+<dt>g n</dt>
+<dd>Next man page</dd>
+<dt>G</dt>
+<dd>Scroll to bottom</dd>
+<dt>g g</dt>
+<dd>Scroll to top</dd>
+<dt>g h</dt>
+<dd>Goto homepage</dd>
+<dt>g s</dt>
+<dd>Goto search<br>(current page)</dd>
+<dt>/</dt>
+<dd>Focus search box</dd>
+</dl></div></nav>
+<div id="goto">
+    <div class="search">
+         <div class="text"></div>
+         <div class="results"><ul></ul></div>
+   </div>
+</div>
+
+  <div id="breadcrumbs" class="clearfix">
+    <div id="breadcrumbs-inner">
+          <div class="next">
+        <a href="security.intro.php">
+          Introduction &raquo;
+        </a>
+      </div>
+              <div class="prev">
+        <a href="wrappers.expect.php">
+          &laquo; expect://        </a>
+      </div>
+          <ul>
+            <li><a href='index.php'>PHP Manual</a></li>      </ul>
+    </div>
+  </div>
+
+
+
+
+<div id="layout" class="clearfix">
+  <section id="layout-content">
+  <div class="page-tools">
+    <div class="change-language">
+      <form action="/manual/change.php" method="get" id="changelang" name="changelang">
+        <fieldset>
+          <label for="changelang-langs">Change language:</label>
+          <select onchange="document.changelang.submit()" name="page" id="changelang-langs">
+            <option value='en/security.php' selected="selected">English</option>
+            <option value='pt_BR/security.php'>Brazilian Portuguese</option>
+            <option value='zh/security.php'>Chinese (Simplified)</option>
+            <option value='fr/security.php'>French</option>
+            <option value='de/security.php'>German</option>
+            <option value='ja/security.php'>Japanese</option>
+            <option value='kr/security.php'>Korean</option>
+            <option value='ro/security.php'>Romanian</option>
+            <option value='ru/security.php'>Russian</option>
+            <option value='es/security.php'>Spanish</option>
+            <option value='tr/security.php'>Turkish</option>
+            <option value="help-translate.php">Other</option>
+          </select>
+        </fieldset>
+      </form>
+    </div>
+    <div class="edit-bug">
+      <a href="https://edit.php.net/?project=PHP&amp;perm=en/security.php">Edit</a>
+      <a href="https://bugs.php.net/report.php?bug_type=Documentation+problem&amp;manpage=security">Report a Bug</a>
+    </div>
+  </div><div id="security" class="book">
+  <h1 class="title">Security</h1>
+  
+
+
+ 
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+
+  
+
+
+
+
+ <ul class="chunklist chunklist_book"><li><a href="security.intro.php">Introduction</a></li><li><a href="security.general.php">General considerations</a></li><li><a href="security.cgi-bin.php">Installed as CGI binary</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="security.cgi-bin.attacks.php">Possible attacks</a></li><li><a href="security.cgi-bin.default.php">Case 1: only public files served</a></li><li><a href="security.cgi-bin.force-redirect.php">Case 2: using cgi.force_redirect</a></li><li><a href="security.cgi-bin.doc-root.php">Case 3: setting doc_root or user_dir</a></li><li><a href="security.cgi-bin.shell.php">Case 4: PHP parser outside of web tree</a></li></ul></li><li><a href="security.apache.php">Installed as an Apache module</a></li><li><a href="security.filesystem.php">Filesystem Security</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="security.filesystem.nullbytes.php">Null bytes related issues</a></li></ul></li><li><a href="security.database.php">Database Security</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="security.database.design.php">Designing Databases</a></li><li><a href="security.database.connection.php">Connecting to Database</a></li><li><a href="security.database.storage.php">Encrypted Storage Model</a></li><li><a href="security.database.sql-injection.php">SQL Injection</a></li></ul></li><li><a href="security.errors.php">Error Reporting</a></li><li><a href="security.globals.php">Using Register Globals</a></li><li><a href="security.variables.php">User Submitted Data</a></li><li><a href="security.magicquotes.php">Magic Quotes</a><ul class="chunklist chunklist_book chunklist_children"><li><a href="security.magicquotes.what.php">What are Magic Quotes</a></li><li><a href="security.magicquotes.why.php">Why did we use Magic Quotes</a></li><li><a href="security.magicquotes.whynot.php">Why not to use Magic Quotes</a></li><li><a href="security.magicquotes.disabling.php">Disabling Magic Quotes</a></li></ul></li><li><a href="security.hiding.php">Hiding PHP</a></li><li><a href="security.current.php">Keeping Current</a></li></ul></div>
+<section id="usernotes">
+ <div class="head">
+  <span class="action"><a href="/manual/add-note.php?sect=security&amp;redirect=http://php.net/manual/en/security.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></span>
+  <h3 class="title">User Contributed Notes <span class="count">11 notes</span></h3>
+ </div><div id="allnotes">
+  <div class="note" id="72806">  <div class="votes">
+    <div id="Vu72806">
+    <a href="/manual/vote-note.php?id=72806&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd72806">
+    <a href="/manual/vote-note.php?id=72806&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V72806" title="65% like this...">
+    12
+    </div>
+  </div>
+  <a href="#72806" class="name">
+  <strong class="user"><em>dangan at blackjaguargaming dot net</em></strong></a><a class="genanchor" href="#72806"> &para;</a><div class="date" title="2007-02-01 06:41"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom72806">
+<div class="phpcode"><code><span class="html">
+I'd recommend a 404 over a 403 considering a 403 proves there is something worth hacking into.<br /><br />index.php:<br /><span class="default">&lt;?php<br />define</span><span class="keyword">(</span><span class="string">'isdoc'</span><span class="keyword">,</span><span class="default">1</span><span class="keyword">);<br />include(</span><span class="string">'includes/include.sqlfunctions.php'</span><span class="keyword">);<br /></span><span class="comment">// Rest of code for index.php<br /></span><span class="default">?&gt;<br /></span><br />include.sqlfunctions.php (or other include file):<br /><span class="default">&lt;?php<br /></span><span class="keyword">if(</span><span class="default">isdoc </span><span class="keyword">!== </span><span class="default">1</span><span class="keyword">) </span><span class="comment">// Not identical to 1<br /></span><span class="keyword">{<br />&nbsp; &nbsp; </span><span class="default">header</span><span class="keyword">(</span><span class="string">'HTTP/1.1 404 Not Found'</span><span class="keyword">);<br />&nbsp; &nbsp; echo </span><span class="string">"&lt;!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\"&gt;\n&lt;html&gt;&lt;head&gt;\n&lt;title&gt;404 Not Found&lt;/title&gt;\n&lt;/head&gt;"</span><span class="keyword">;<br />&nbsp; &nbsp; echo </span><span class="string">"&lt;body&gt;\n&lt;h1&gt;Not Found&lt;/h1&gt;\n&lt;p&gt;The requested URL "</span><span class="keyword">.</span><span class="default">$_SERVER</span><span class="keyword">[</span><span class="string">'REQUEST_URI'</span><span class="keyword">].</span><span class="string">" was not found on this server.&lt;/p&gt;\n"</span><span class="keyword">;<br />&nbsp; &nbsp; echo </span><span class="string">"&lt;hr&gt;\n"</span><span class="keyword">.</span><span class="default">$_SERVER</span><span class="keyword">[</span><span class="string">'SERVER_SIGNATURE'</span><span class="keyword">].</span><span class="string">"\n&lt;/body&gt;&lt;/html&gt;\n"</span><span class="keyword">;<br />&nbsp; &nbsp; </span><span class="comment">// Echo output similar to Apache's default 404 (if thats what you're using)<br />&nbsp; &nbsp; </span><span class="keyword">exit;<br />}<br /></span><span class="comment">// Rest of code for this include<br /></span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="29812">  <div class="votes">
+    <div id="Vu29812">
+    <a href="/manual/vote-note.php?id=29812&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd29812">
+    <a href="/manual/vote-note.php?id=29812&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V29812" title="60% like this...">
+    6
+    </div>
+  </div>
+  <a href="#29812" class="name"><strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#29812"> &para;</a><div class="date" title="2003-02-25 04:00"><strong>12 years ago</strong></div>
+  <div class="text" id="Hcom29812">
+<div class="phpcode"><code><span class="html">
+For real security you should consider providing chrooted jail's for your users.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="33627">  <div class="votes">
+    <div id="Vu33627">
+    <a href="/manual/vote-note.php?id=33627&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd33627">
+    <a href="/manual/vote-note.php?id=33627&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V33627" title="58% like this...">
+    3
+    </div>
+  </div>
+  <a href="#33627" class="name">
+  <strong class="user"><em>ocrow at simplexity dot net</em></strong></a><a class="genanchor" href="#33627"> &para;</a><div class="date" title="2003-07-02 05:16"><strong>11 years ago</strong></div>
+  <div class="text" id="Hcom33627">
+<div class="phpcode"><code><span class="html">
+If your PHP pages include() or require() files that live within the web server document root, for example library files in the same directory as the PHP pages, you must account for the possibility that attackers may call those library files directly.&nbsp; <br /><br />Any program level code in the library files (ie code not part of function definitions) will be directly executable by the caller outside of the scope of the intended calling sequence.&nbsp; An attacker may be able to leverage this ability to cause unintended effects.<br /><br />The most robust way to guard against this possibility is to prevent your webserver from calling the library scripts directly, either by moving them out of the document root, or by putting them in a folder configured to refuse web server access. With Apache for example, create a .htaccess file in the library script folder with these directives:<br /><br />Order Allow,Deny<br />Deny from any</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="31678">  <div class="votes">
+    <div id="Vu31678">
+    <a href="/manual/vote-note.php?id=31678&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd31678">
+    <a href="/manual/vote-note.php?id=31678&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V31678" title="56% like this...">
+    2
+    </div>
+  </div>
+  <a href="#31678" class="name">
+  <strong class="user"><em>ManifoldNick at columbus dot rr dot com</em></strong></a><a class="genanchor" href="#31678"> &para;</a><div class="date" title="2003-04-29 10:30"><strong>12 years ago</strong></div>
+  <div class="text" id="Hcom31678">
+<div class="phpcode"><code><span class="html">
+Remember that security risks often don't involve months of prep work or backdoors or whatever else you saw on Swordfish ;) In fact one of the bigges newbie mistakes is not removing "&lt;" from user input (especially when using message boards) so in theory a user could secerely mess up a page or even have your server run php scripts which would allow them to wreak havoc on your site.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="64840">  <div class="votes">
+    <div id="Vu64840">
+    <a href="/manual/vote-note.php?id=64840&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd64840">
+    <a href="/manual/vote-note.php?id=64840&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V64840" title="52% like this...">
+    1
+    </div>
+  </div>
+  <a href="#64840" class="name">
+  <strong class="user"><em>djjokla AT gmail dot com</em></strong></a><a class="genanchor" href="#64840"> &para;</a><div class="date" title="2006-04-21 08:22"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom64840">
+<div class="phpcode"><code><span class="html">
+If a single file has to be included than I use the following<br /><br />index.php ( where the file is gonna be included )<br />___________<br /><span class="default">&lt;?php<br />&nbsp; &nbsp; define</span><span class="keyword">(</span><span class="string">'thefooter'</span><span class="keyword">, </span><span class="default">TRUE</span><span class="keyword">);<br />&nbsp; &nbsp; include(</span><span class="string">'folder/footer.inc.php'</span><span class="keyword">);<br /></span><span class="default">?&gt;<br /></span><br />and the footer file (for example) looks this way then<br /><br />footer.inc.php ( the file to be inluded )<br />___________<br /><span class="default">&lt;?php<br />&nbsp; &nbsp; defined</span><span class="keyword">(</span><span class="string">'thefooter'</span><span class="keyword">) or die(</span><span class="string">'Not with me my friend'</span><span class="keyword">);<br />&nbsp; &nbsp; echo(</span><span class="string">'Copyright to me in the year 2000'</span><span class="keyword">);<br /></span><span class="default">?&gt;<br /></span><br />So when someone tries to access the footer.php file directly he/she/it will get the "Not with me my friend" messages written on the screen. An alternative option is to redirect the person who wants to access the file directly to a different location, so instead of the above code you would have to write the following in the footer.inc.php file.<br /><br /><span class="default">&lt;?php<br />&nbsp; &nbsp; defined</span><span class="keyword">(</span><span class="string">'thefooter'</span><span class="keyword">) or </span><span class="default">header</span><span class="keyword">(</span><span class="string">'Location: <a href="http://www.location.com" rel="nofollow" target="_blank">http://www.location.com</a>'</span><span class="keyword">);<br />&nbsp; &nbsp; echo(</span><span class="string">'Copyright to me in the year 2000'</span><span class="keyword">);<br /></span><span class="default">?&gt;<br /></span><br />In normal case a redirection to an external site would be annoying to the visitor, but since this visitor is more interested in hacking the site than in reading the content, I think it's only fair to create such an redirection. We dont' realy want someome like this on our sites.<br /><br />For the file protection I use .htaccess in which I say to protect the file itself and every .inc file<br /><br />&lt;Files ~ "^.*\.([Hh][Tt]|[Ii][Nn][Cc])"&gt;<br />Order allow,deny<br />Deny from all<br />Satisfy All<br />&lt;/Files&gt;<br /><br />The .htaccess file should result an Error 403 if someone tries to access the files directly. If for some reason this shouldn't work, then the "Not with me my friend" text apears or a redirection (depending what is used)<br /><br />In my eyes this looks o.k. and safe.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="45336">  <div class="votes">
+    <div id="Vu45336">
+    <a href="/manual/vote-note.php?id=45336&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd45336">
+    <a href="/manual/vote-note.php?id=45336&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V45336" title="52% like this...">
+    1
+    </div>
+  </div>
+  <a href="#45336" class="name">
+  <strong class="user"><em>nick dot hristov at gmail dot com</em></strong></a><a class="genanchor" href="#45336"> &para;</a><div class="date" title="2004-09-02 08:21"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom45336">
+<div class="phpcode"><code><span class="html">
+A correction to previous post by Dave Mink.<br /><br />&lt;Files ~ "\.inc$"&gt;<br />&nbsp;&nbsp; Order allow,deny<br />&nbsp;&nbsp; Deny from all<br />&nbsp;&nbsp; Satisfy All<br />&lt;/Files&gt;<br /><br />Will not stop something like<br /><a href="http://www.yourserver.com/includefile.inc?pointlessvar=blahblah" rel="nofollow" target="_blank">http://www.yourserver.com/includefile.inc?pointlessvar=blahblah</a><br /><br />Here is something more sophisticated for this task:<br /><br />&lt;Location ~ "/[^ ](?=\.inc(\?[^ ]*)?)/"&gt;<br />&nbsp; &nbsp; Options None<br />&nbsp; &nbsp; Order Allow, Deny<br />&nbsp; &nbsp; Deny from All<br />&nbsp; &nbsp; AllowOverride None<br />&nbsp; &nbsp; Satisfy All<br />&lt;/Location&gt;<br /><br />Also, consider placing in your httpd.conf<br /><br />&lt;Location ~ "/[^ ](?=\.phps(\?[^ ]*)?)/"&gt;<br />&nbsp; &nbsp; Options None<br />&nbsp; &nbsp; Order Allow, Deny<br />&nbsp; &nbsp; Deny from All<br />&nbsp; &nbsp; AllowOverride None<br />&nbsp; &nbsp; Satisfy All<br />&lt;/Location&gt;</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="70740">  <div class="votes">
+    <div id="Vu70740">
+    <a href="/manual/vote-note.php?id=70740&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd70740">
+    <a href="/manual/vote-note.php?id=70740&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V70740" title="50% like this...">
+    0
+    </div>
+  </div>
+  <a href="#70740" class="name">
+  <strong class="user"><em>k</em></strong></a><a class="genanchor" href="#70740"> &para;</a><div class="date" title="2006-10-25 04:06"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom70740">
+<div class="phpcode"><code><span class="html">
+How about not putting the php code in the web-root at all...?<br /><br />You can create a public directory with the css, html, etc and index.php there. Then use the include_path setting to point to the actual php code, eg...<br /><br />webstuff<br />&nbsp; phpcode<br />&nbsp; public<br />&nbsp; &nbsp; images<br />&nbsp; &nbsp; css<br />&nbsp; &nbsp; index.php<br /><br />then set the include path to "../phpcode" and, as php is executed from the directory of the script, all should be well.<br /><br />I'd also call the main index "main.page", or something else, instead of "index.php" and change the web server default index page. That way you cant get hit by things trawlling the web for index pages.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="57851">  <div class="votes">
+    <div id="Vu57851">
+    <a href="/manual/vote-note.php?id=57851&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd57851">
+    <a href="/manual/vote-note.php?id=57851&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V57851" title="48% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#57851" class="name">
+  <strong class="user"><em>Thomas &quot;Balu&quot; Walter</em></strong></a><a class="genanchor" href="#57851"> &para;</a><div class="date" title="2005-10-16 01:24"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom57851">
+<div class="phpcode"><code><span class="html">
+Since many users can not modify apache configurations or use htaccess files, the best way to avoid unwanted access to include files would be a line at the beginning of the include-file:<br /><br /><span class="default">&lt;?php </span><span class="keyword">if (!</span><span class="default">defined</span><span class="keyword">(</span><span class="string">'APPLICATION'</span><span class="keyword">)) exit; </span><span class="default">?&gt;<br /></span><br />And in all files that are allowed to be called externally:<br /><br /><span class="default">&lt;?php define</span><span class="keyword">(</span><span class="string">'APPLICATION'</span><span class="keyword">, </span><span class="default">true</span><span class="keyword">); </span><span class="default">?&gt;<br /></span><br />&nbsp; &nbsp;&nbsp; Balu</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="69775">  <div class="votes">
+    <div id="Vu69775">
+    <a href="/manual/vote-note.php?id=69775&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd69775">
+    <a href="/manual/vote-note.php?id=69775&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V69775" title="45% like this...">
+    -2
+    </div>
+  </div>
+  <a href="#69775" class="name">
+  <strong class="user"><em>steffen at morkland dot com</em></strong></a><a class="genanchor" href="#69775"> &para;</a><div class="date" title="2006-09-20 06:38"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom69775">
+<div class="phpcode"><code><span class="html">
+In Reply to djjokla and others<br /><br />Consider placing all incude files as mentioned before in a seperate folder containing a .htaccess containing a Order Deny,Allow<br /><br />the create a index file, which is intended to handle ALL request made to you php application, then call it with index.php?view=index<br /><br />the index file could look a bit like this:<br /><br /><span class="default">&lt;?php<br /></span><span class="keyword">switch(</span><span class="default">$_GET</span><span class="keyword">[</span><span class="string">'view'</span><span class="keyword">]){<br />&nbsp; &nbsp; case </span><span class="string">'index'</span><span class="keyword">:<br />&nbsp; &nbsp; &nbsp; &nbsp; include(</span><span class="string">'libs/index.php'</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; break;<br />&nbsp; &nbsp; default:<br />&nbsp; &nbsp; &nbsp; &nbsp; include(</span><span class="string">'libs/404.php'</span><span class="keyword">);<br />&nbsp; &nbsp; &nbsp; &nbsp; break;<br />}<br /></span><span class="default">?&gt;<br /></span><br />this could be an array or something even more creative. it actually does'nt matter how you do it... running all pages through one central script has one big advantage.... CONTROL.<br />at any givin time, you can easily implement access control to functions without forgetting crucial files.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="33483">  <div class="votes">
+    <div id="Vu33483">
+    <a href="/manual/vote-note.php?id=33483&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd33483">
+    <a href="/manual/vote-note.php?id=33483&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V33483" title="35% like this...">
+    -4
+    </div>
+  </div>
+  <a href="#33483" class="name">
+  <strong class="user"><em>annonymous at domain dot com</em></strong></a><a class="genanchor" href="#33483"> &para;</a><div class="date" title="2003-06-27 06:08"><strong>11 years ago</strong></div>
+  <div class="text" id="Hcom33483">
+<div class="phpcode"><code><span class="html">
+best bet is to build php as cgi, run under suexec, with chroot jailed users. Not the best, but fairly unobtrusive, provides several levels of checkpoints, and has only the detriment of being, well, kinda slow. 8)</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="76363">  <div class="votes">
+    <div id="Vu76363">
+    <a href="/manual/vote-note.php?id=76363&amp;page=security&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd76363">
+    <a href="/manual/vote-note.php?id=76363&amp;page=security&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V76363" title="33% like this...">
+    -7
+    </div>
+  </div>
+  <a href="#76363" class="name">
+  <strong class="user"><em>moehbass at gmail dot com</em></strong></a><a class="genanchor" href="#76363"> &para;</a><div class="date" title="2007-07-11 10:34"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom76363">
+<div class="phpcode"><code><span class="html">
+First, q much simpler solution to preventing people from viewing code inside of an includable file would be to give include file an extension that ends with php (e.g. myFile.inc.php).<br /><br />Secondly, and more importantly, why on earth would you want to put program-level code in an include file? By that I mean something life this:<br /><br />myFile.inc.php<br />--------------------------------<br />...<br />if ($var = 'whatever')<br />&nbsp; &nbsp; // connect to the database<br />else<br />&nbsp; &nbsp; // do something else.<br />--------------------------------<br /><br />An include file should not contain logic! Rather, it is an encapsulated unit of code that should not do anything on its own unless asked to. To implement this ideology, consider including function definitions only in your include files, then once you include them in the script, call such functions from within your program (i.e. the script that included the inc file). If you don't know the names of the functions ab initio, use call_user_func() or call_user_func_array() and pass it the name of the function that's dependent on context.<br /><br />If you MUST put program-level logic in your include files, consider simply putting it in the program!<br /><br />Why should you consider this? How about variable name clashes for a starter! You can think of more, I am shure!<br /><br />Hope that helped</span>
+</code></div>
+  </div>
+ </div></div>
+
+ <div class="foot"><a href="/manual/add-note.php?sect=security&amp;redirect=http://php.net/manual/en/security.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></div>
+</section>    </section><!-- layout-content -->
+        <aside class='layout-menu'>
+    
+        <ul class='parent-menu-list'>
+                                    <li>
+                <a href="index.php">PHP Manual</a>
+    
+                                    <ul class='child-menu-list'>
+    
+                          
+                        <li class="">
+                            <a href="copyright.php" title="Copyright">Copyright</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="manual.php" title="PHP Manual">PHP Manual</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="getting-started.php" title="Getting Started">Getting Started</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="install.php" title="Installation and Configuration">Installation and Configuration</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="langref.php" title="Language Reference">Language Reference</a>
+                        </li>
+                          
+                        <li class="current">
+                            <a href="security.php" title="Security">Security</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.php" title="Features">Features</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="funcref.php" title="Function Reference">Function Reference</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="internals2.php" title="PHP at the Core: A Hacker's Guide">PHP at the Core: A Hacker's Guide</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="faq.php" title="FAQ">FAQ</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="appendices.php" title="Appendices">Appendices</a>
+                        </li>
+                            
+                    </ul>
+                    
+            </li>
+                        
+                    </ul>
+    </aside>
+
+
+  </div><!-- layout -->
+         
+  <footer>
+    <div class="container footer-content">
+      <div class="row-fluid">
+      <ul class="footmenu">
+        <li><a href="/copyright.php">Copyright &copy; 2001-2015 The PHP Group</a></li>
+        <li><a href="/my.php">My PHP.net</a></li>
+        <li><a href="/contact.php">Contact</a></li>
+        <li><a href="/sites.php">Other PHP.net sites</a></li>
+        <li><a href="/mirrors.php">Mirror sites</a></li>
+        <li><a href="/privacy.php">Privacy policy</a></li>
+      </ul>
+      </div>
+    </div>
+  </footer>
+
+    
+ <!-- External and third party libraries. -->
+ <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/modernizr.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/hogan-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/typeahead.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/mousetrap.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/search.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1430413803&amp;f=/js/common.js"></script>
+
+<a id="toTop" href="javascript:;"><span id="toTopHover"></span><img width="40" height="40" alt="To Top" src="/images/to-top@2x.png"></a>
+
+</body>
+</html>
+
+

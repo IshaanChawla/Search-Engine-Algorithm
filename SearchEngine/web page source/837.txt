@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>syntax - Why does C++ not have a &quot;pure&quot; Keyword for virtual functions? - Programmers Stack Exchange</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/programmers/img/favicon.ico?v=28d2686ad0b9">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/programmers/img/apple-touch-icon.png?v=4ce8e2685a35">
+    <link rel="search" type="application/opensearchdescription+xml" title="Programmers Stack Exchange" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@StackProgrammer" />
+    <meta name="twitter:domain" content="programmers.stackexchange.com"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/programmers/img/apple-touch-icon@2.png?v=8a6d048f3c78&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Why does C++ not have a &quot;pure&quot; Keyword for virtual functions?" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="I have always wondered why we code   
+
+virtual void MyFunction() = 0; 
+
+
+and not   
+
+pure virtual void MyFunction();
+
+
+Can anyone cite a reference for the basis of this decision?
+" />
+    <meta property="og:url" content="http://programmers.stackexchange.com/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions"/>
+    <link rel="canonical" href="http://programmers.stackexchange.com/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=ba7715597402"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/programmers/all.css?v=120838f956ad">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;Why does C++ not have a &quot;pure&quot; Keyword for virtual functions?&#39;" href="/feeds/question/284412">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://programmers.stackexchange.com/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://programmers.stackexchange.com/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://programmers.stackexchange.com/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:3,shownCommentCount:3,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:284412});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('131', '284412');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.ready(function () {
+            StackExchange.realtime.init('wss://qa.sockets.stackexchange.com,ws://qa.sockets.stackexchange.com');
+            StackExchange.realtime.subscribeToReputationNotifications('131');
+                StackExchange.realtime.subscribeToTopBarNotifications('131');
+        });
+    </script>
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1432151032,"networkMetaHostname":"meta.stackexchange.com","routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":false,"domain":"stacksnippets.net"},"site":{"name":"Programmers Stack Exchange","description":"Q&A for professional programmers interested in conceptual questions about software development","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdsB7sSAAAAAAzjgEF_Hd8vXv-C42sa_KyofaGR","recaptchaAudioLang":"en","enableNewTagCreationWarning":false,"insertSpaceAfterNameTabCompletion":false,"enableSocialMediaInSharePopup":true},"user":{"fkey":"6eba91dd75952fc09028a553c6ffd71c","isAnonymous":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"567198e2272a","js/moderator.en.js":"fc7ac8a4ab67","js/full-anon.en.js":"7a74a601b05b","js/full.en.js":"ecd5383237ff","js/wmd.en.js":"539d33051ace","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"5faaefde3284","js/help.en.js":"1f82ef88ce5b","js/tageditor.en.js":"9c54855bf167","js/tageditornew.en.js":"51c70ea25031","js/inline-tag-editing.en.js":"de80429b1816","js/revisions.en.js":"e12fec389eab","js/review.en.js":"d8130056b47f","js/tagsuggestions.en.js":"b278f9a0b23b","js/post-validation.en.js":"0601c2b1380b","js/explore-qlist.en.js":"b5ce0a2a9966","js/events.en.js":"80f349f8b9fd","js/keyboard-shortcuts.en.js":"1a19511f380b","js/external-editor.en.js":"e058d904366f"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+    
+    
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//programmers.stackexchange.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackexchange.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+                    <a href="http://programmers.blogoverflow.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:7 })"
+>blog</a>
+            </div>
+
+
+
+
+    <a href="//programmers.stackexchange.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="131"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-programmers" title="Programmers"></div>
+        Programmers
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.programmers.stackexchange.com"
+       class="site-link js-gps-track"
+       data-id="133"
+       data-gps-track="
+            site.switch({ target_site:133, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-programmersmeta" title="Programmers Meta"></div>
+        Programmers Meta
+    </a>
+
+                </li>
+                    </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://programmers.stackexchange.com/users/signup?returnurl=http%3a%2f%2fprogrammers.stackexchange.com%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://programmers.stackexchange.com/users/login?returnurl=http%3a%2f%2fprogrammers.stackexchange.com%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 144 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                <a href="https://programmers.stackexchange.com/users/signup?returnurl=http%3a%2f%2fprogrammers.stackexchange.com%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions" class="login-link">sign up</a>
+                                <a href="https://programmers.stackexchange.com/users/login?returnurl=http%3a%2f%2fprogrammers.stackexchange.com%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.programmers.stackexchange.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="search" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/">
+                    Programmers
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/programmers/img/apple-touch-icon.png?v=4ce8e2685a35">
+			<!--googleoff: all-->
+
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+            <a href="/tour" id="tell-me-more" class="button">Take the 2-minute tour</a>
+            <span id="close"><a title="click to dismiss">&times;</a></span>
+        </span>
+        <div id="blurb">
+            Programmers Stack Exchange is a question and answer site for professional programmers interested in conceptual questions about software development. It&#39;s 100% free, no registration required.
+        </div>        
+    </div>
+    <script>
+        $('#tell-me-more').click(function () {
+            var clickSource = $("body").attr("class") + '-mini';
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("question-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+            }
+
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("aboutpage.click", { aboutclick_location: clickSource } , true);
+            });
+        });
+        $('#herobox-mini #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "close" }, true);
+            });
+            $.cookie("hero", "none", { path: "/", expires: 365 });
+            var $hero = $("#herobox-mini");
+            $hero.slideUp('fast', function () { $hero.remove(); });
+            return false;
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions" class="question-hyperlink">Why does C++ not have a &ldquo;pure&rdquo; Keyword for virtual functions?</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="284412"  id="question">
+
+    <script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,0,"adzerk1935670336",4).enableDynamicSiteSelection().setZone(29) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1935670336">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="284412">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">12</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+        <div class="favoritecount"><b>2</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>I have always wondered why we code   </p>
+
+<pre><code>virtual void MyFunction() = 0; 
+</code></pre>
+
+<p>and not   </p>
+
+<pre><code>pure virtual void MyFunction();
+</code></pre>
+
+<p>Can anyone cite a reference for the basis of this decision?</p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/c%2b%2b" class="post-tag" title="show questions tagged &#39;c++&#39;" rel="tag">c++</a> <a href="/questions/tagged/syntax" class="post-tag" title="show questions tagged &#39;syntax&#39;" rel="tag">syntax</a> <a href="/questions/tagged/keywords" class="post-tag" title="show questions tagged &#39;keywords&#39;" rel="tag">keywords</a> <a href="/questions/tagged/pure-virtual-functions" class="post-tag" title="show questions tagged &#39;pure-virtual-functions&#39;" rel="tag">pure-virtual-functions</a> <a href="/questions/tagged/virtual-functions" class="post-tag" title="show questions tagged &#39;virtual-functions&#39;" rel="tag">virtual-functions</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/284412" title="short permalink to this question" class="short-link" id="link-post-284412">share</a><span class="lsep">|</span><a href="/posts/284412/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/284412/revisions" title="show all edits to this post">edited <span title="2015-05-20 15:22:17Z" class="relativetime">4 hours ago</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/1204/robert-harvey"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/1233ec65168f4aae4d939ae8fe6cde1e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/1204/robert-harvey">Robert Harvey</a><br>
+        <span class="reputation-score" title="reputation score 98365" dir="ltr">98.4k</span><span title="24 gold badges"><span class="badge1"></span><span class="badgecount">24</span></span><span title="218 silver badges"><span class="badge2"></span><span class="badgecount">218</span></span><span title="381 bronze badges"><span class="badge3"></span><span class="badgecount">381</span></span>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info user-hover">
+    <div class="user-action-time">
+        asked <span title="2015-05-20 08:53:06Z" class="relativetime">10 hours ago</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/979/mawg"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/de26f9c446ae47545220ff9eff3e3ef7?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/979/mawg">Mawg</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,150</span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="21 bronze badges"><span class="badge3"></span><span class="badgecount">21</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-284412" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-585408" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">No opinions? Ok then. Because that&#39;s how the C++ language is defined.</span>
+                &ndash;&nbsp;
+                    <a href="/users/123788/gnasher729"
+                       title="1536 reputation"
+                       class="comment-user">gnasher729</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 15:20:04Z" class="relativetime-clean">4 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585444" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">seems like you got a definite answer, why not accept his answer?</span>
+                &ndash;&nbsp;
+                    <a href="/users/4910/cyberspock"
+                       title="988 reputation"
+                       class="comment-user">CyberSpock</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 16:46:47Z" class="relativetime-clean">2 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585508" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Note that a &quot;pure&quot; function often means something unrelated.</span>
+                &ndash;&nbsp;
+                    <a href="/users/115557/immibis"
+                       title="231 reputation"
+                       class="comment-user">immibis</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 19:36:25Z" class="relativetime-clean">7 mins ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-284412" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								1 Answer
+                                <span style="display:none;" itemprop="answerCount">1</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+        <a href="/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+        <a class="youarehere" href="/questions/284412/why-does-c-not-have-a-pure-keyword-for-virtual-functions?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="284414"></a>
+<div id="answer-284414" class="answer" data-answerid="284414"  itemscope itemtype="http://schema.org/Answer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="284414">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">36</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>From <a href="http://www.stroustrup.com/dne.html">The Design and Evolution of C++</a> - Bjarne Stroustrup - Addison-Wesley (ISBN 0-201-54330-3) - chapter 13.2.3:</p>
+
+<blockquote>
+  <p>The curious <code>= 0</code> syntax was chosen over the obvious alternative of introducing a new keyword <code>pure</code> or <code>abstract</code> because at the time I saw no chance of getting a new keyword accepted. Had I suggested <code>pure</code>, Release 2.0 would have shipped without abstract classes. Given a choice between a nicer syntax and abstract classes, I chose abstract classes. Rather than risking delay and incurring the certain fights over <code>pure</code>, I used the tradition C and C++ convention of using 0 to represent <em>not there</em>.</p>
+</blockquote>
+
+<p>Anyway looking at the C++ standard (§ 9.2 - Class members) <code>= 0</code> is called <em>pure-specifier</em>.</p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/284414" title="short permalink to this answer" class="short-link" id="link-post-284414">share</a><span class="lsep">|</span><a href="/posts/284414/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/284414/revisions" title="show all edits to this post">edited <span title="2015-05-20 09:11:08Z" class="relativetime">10 hours ago</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2015-05-20 08:58:00Z" class="relativetime">10 hours ago</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/149904/manlio"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/d8ea8f12cc0983b9b878120f7d052e42?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/149904/manlio">manlio</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,631</span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="17 bronze badges"><span class="badge3"></span><span class="badgecount">17</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-284414" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="2"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-585301" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">8</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">that&#39;s cool. Reminds me of why PHP has so many different ugly function names: because the first interpreter used strlen as hash function and distribution should be good (<a href="http://www.i-programmer.info/news/98-languages/6758-the-reason-for-the-weird-php-function-names.html" rel="nofollow">i-programmer.info/news/98-languages/&hellip;</a>)</span>
+                &ndash;&nbsp;
+                    <a href="/users/167735/aitch"
+                       title="342 reputation"
+                       class="comment-user">Aitch</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 09:21:32Z" class="relativetime-clean">10 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585384" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="warm">6</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">The introduction of context-sensitive keywords in C++11 has reduces the damage that adding keywords causes.  It should be possible to make <code>pure</code> a contextual keyword you put at the end of a function definition, so <code>virtual void MyFunction() pure</code> instead of <code>= 0</code>, to go along with <code>final</code> and <code>override</code>.</span>
+                &ndash;&nbsp;
+                    <a href="/users/134294/yakk"
+                       title="298 reputation"
+                       class="comment-user">Yakk</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 13:56:18Z" class="relativetime-clean">5 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585416" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">4</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">As an aside, nearly everywhere a &quot;pure function&quot; is understood to be a function whose output only depends on its input, and which has no side-effects.</span>
+                &ndash;&nbsp;
+                    <a href="/users/155513/deduplicator"
+                       title="293 reputation"
+                       class="comment-user">Deduplicator</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 15:33:50Z" class="relativetime-clean">4 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585419" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Pretty much any question of &quot;why does C++ do X?&quot; can be answered by that book.  It should be required reading for any serious C++ programmer.</span>
+                &ndash;&nbsp;
+                    <a href="/users/53141/steven-burnap"
+                       title="8784 reputation"
+                       class="comment-user">Steven Burnap</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 15:39:13Z" class="relativetime-clean">4 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-585497" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Where are these called pure, anyway? Both C# and Java use &quot;abstract&quot; as the keyword here.</span>
+                &ndash;&nbsp;
+                    <a href="/users/27343/random832"
+                       title="137 reputation"
+                       class="comment-user">Random832</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 19:05:07Z" class="relativetime-clean">38 mins ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-284414" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>2</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+									<a name='new-answer'></a>
+						<form id="post-form" action="/questions/284412/answer/submit" method="post"  class="post-form">
+						    <input type="hidden" id="post-id" value="284412" />
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" />
+                            <input type="hidden" name="referrer" value=""/>
+							<h2 class="space">Your Answer</h2>
+
+
+
+        
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+            // Have to fire editor after snippets, if snippets enabled
+            if (StackExchange.options.snippets.enabled) {
+                StackExchange.using("snippets", function() {
+                    createEditor();
+                });
+            }
+            else {
+                createEditor();
+            }
+        });
+
+        function createEditor() {
+            prepareEditor({
+                heartbeatType: 'answer',
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                ,immediatelyShowMarkdownHelp:true
+                });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="6eba91dd75952fc09028a553c6ffd71c">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="/users/login?returnurl=%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Stack Exchange</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid" />
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false" />
+                    <input type="hidden" name="use-google" class="use-google" value="false" />
+                    <input type="button" class="submit-openid" value="Submit" style="display:none" />
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', '%2fquestions%2f284412%2fwhy-does-c-not-have-a-pure-keyword-for-virtual-functions%23new-answer');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="#" class="discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href='http://stackexchange.com/legal/privacy-policy' target='_blank'>privacy policy</a> and <a href='http://stackexchange.com/legal/terms-of-service' target='_blank'>terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1" />								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?							Browse other questions tagged <a href="/questions/tagged/c%2b%2b" class="post-tag" title="show questions tagged &#39;c++&#39;" rel="tag">c++</a> <a href="/questions/tagged/syntax" class="post-tag" title="show questions tagged &#39;syntax&#39;" rel="tag">syntax</a> <a href="/questions/tagged/keywords" class="post-tag" title="show questions tagged &#39;keywords&#39;" rel="tag">keywords</a> <a href="/questions/tagged/pure-virtual-functions" class="post-tag" title="show questions tagged &#39;pure-virtual-functions&#39;" rel="tag">pure-virtual-functions</a> <a href="/questions/tagged/virtual-functions" class="post-tag" title="show questions tagged &#39;virtual-functions&#39;" rel="tag">virtual-functions</a>  or <a href="/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2015-05-20 08:53:06Z"><b>today</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>1100 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2015-05-20 15:22:17Z">today</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+						
+			<script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,0,"adzerk2007176807",17).enableDynamicSiteSelection().setZone(56016) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk2007176807">
+            </div>
+			  
+    
+            
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/47678" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">93
+    </div>
+</a><a href="/questions/47678/why-did-memory-managed-languages-like-java-javascript-and-c-retain-the-new" class="question-hyperlink">Why did memory-managed languages like Java, Javascript, and C# retain the `new` keyword?</a>
+</div>
+<div class="spacer">
+<a href="/q/191637" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">12
+    </div>
+</a><a href="/questions/191637/in-c-why-and-how-are-virtual-functions-slower" class="question-hyperlink">In C++ why and how are virtual functions slower?</a>
+</div>
+<div class="spacer">
+<a href="/q/197281" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">8
+    </div>
+</a><a href="/questions/197281/why-the-ugly-keywords-in-c11" class="question-hyperlink">Why the ugly keywords in C11?</a>
+</div>
+<div class="spacer">
+<a href="/q/206663" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">4
+    </div>
+</a><a href="/questions/206663/c-class-with-only-pure-virtual-functions-whats-that-called" class="question-hyperlink">C++ class with only pure virtual functions: what&#39;s that called?</a>
+</div>
+<div class="spacer">
+<a href="/q/222739" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">5
+    </div>
+</a><a href="/questions/222739/why-does-drracket-ide-considers-some-identifiers-as-symbols-and-some-as-keywo" class="question-hyperlink">Why does DrRacket IDE considers some identifiers as &ldquo;symbols&rdquo; and some as &ldquo;keywords&rdquo;? What is the difference?</a>
+</div>
+<div class="spacer">
+<a href="/q/254784" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">2
+    </div>
+</a><a href="/questions/254784/best-practice-for-unused-inherited-virtual-functions-implementing-superclass-me" class="question-hyperlink">Best practice for unused inherited virtual functions (implementing superclass methods)</a>
+</div>
+<div class="spacer">
+<a href="/q/257325" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">35
+    </div>
+</a><a href="/questions/257325/why-do-most-programming-languages-have-special-keyword-or-syntax-for-declaring-f" class="question-hyperlink">Why do most programming languages have special keyword or syntax for declaring functions?</a>
+</div>
+<div class="spacer">
+<a href="/q/267112" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">1
+    </div>
+</a><a href="/questions/267112/why-new-keyword-is-not-contextual-keyword" class="question-hyperlink">why &ldquo;new&rdquo; keyword is not contextual keyword?</a>
+</div>
+<div class="spacer">
+<a href="/q/272712" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">7
+    </div>
+</a><a href="/questions/272712/why-is-the-out-keyword-used-in-two-seemingly-disparate-contexts" class="question-hyperlink">Why is the &#39;out&#39; keyword used in two seemingly disparate contexts?</a>
+</div>
+<div class="spacer">
+<a href="/q/283805" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">1
+    </div>
+</a><a href="/questions/283805/a-little-confused-with-virtual-functions" class="question-hyperlink">A little confused with virtual functions</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/15216/a-surprising-circle-packing" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    A Surprising Circle Packing
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-craftcms" title="Craft CMS Stack Exchange"></div><a href="http://craftcms.stackexchange.com/questions/9827/add-batch-filter-as-variable" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:563 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Add batch filter as variable
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-wordpress" title="WordPress Development Stack Exchange"></div><a href="http://wordpress.stackexchange.com/questions/188881/proper-usage-of-wp-is-mobile" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:110 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Proper usage of wp_is_mobile()?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/83922/i-want-to-construct-a-function-than-the-output-is-sequence" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    I want to construct a function than the output is &quot;Sequence&quot;
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/90274/meaning-of-uniform-color-in-star-trek-voyager" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Meaning of uniform color in Star Trek Voyager
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/30352206/what-if-i-delete-an-array-once-in-c-but-allocate-it-multiple-times" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What if I delete an array once in C++, but allocate it multiple times?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/45688/why-is-it-required-for-test-administrators-and-proctors-to-constantly-walk-aroun" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why is it required for Test Administrators and Proctors to constantly walk around the room during testing?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-academia" title="Academia Stack Exchange"></div><a href="http://academia.stackexchange.com/questions/45706/phd-student-publish-paper-with-wife" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:415 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    PhD Student : Publish Paper with Wife?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/57250/english-word-for-a-room-in-a-company-office-that-handles-letters" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    English word for a room in a company office that handles letters
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-programmers" title="Programmers Stack Exchange"></div><a href="http://programmers.stackexchange.com/questions/284306/where-should-my-team-start-with-becoming-modern" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:131 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Where should my team start with becoming &quot;modern&quot;?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/46915/do-companies-see-having-employees-who-live-close-to-the-office-as-an-advantage" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do companies see having employees who live close to the office as an advantage?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/30345734/is-this-parenthesis-free-c-preprocessor-definition-safe" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is this parenthesis-free C preprocessor definition safe?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/15240/murder-of-a-cryptologist" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Murder of a Cryptologist
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gis" title="Geographic Information Systems Stack Exchange"></div><a href="http://gis.stackexchange.com/questions/147989/removing-first-and-third-zeros-of-a-fieldname-in-label-expression" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:79 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Removing first and third zeros of a fieldname in label expression
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/15241/two-lists-of-favorite-words" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Two lists of favorite words
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-german" title="German Language Stack Exchange"></div><a href="http://german.stackexchange.com/questions/23380/habitual-past-vs-simple-past" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:253 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Habitual past vs simple past
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-space" title="Space Exploration Stack Exchange"></div><a href="http://space.stackexchange.com/questions/9163/on-which-flights-could-spacex-test-crew-dragon-powered-landing-with-complete-fli" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:508 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    On which flights could SpaceX test Crew Dragon powered landing with complete flight profile?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/30345067/why-stack-overflow-on-some-machines-but-segmentation-fault-on-another" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why stack overflow on some machines, but segmentation fault on another?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="http://travel.stackexchange.com/questions/47931/can-a-visitor-who-is-of-age-in-their-country-drink-underage-in-the-united-stat" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can a visitor who is &quot;of age&quot; in their country drink underage in the United States of America?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-chemistry" title="Chemistry Stack Exchange"></div><a href="http://chemistry.stackexchange.com/questions/31751/acid-catalysed-hydration-of-allene" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:431 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Acid catalysed hydration of allene
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-gaming" title="Arqade"></div><a href="http://gaming.stackexchange.com/questions/220095/do-i-need-to-upgrade-damage-armor-on-my-old-gear-before-i-can-ascend-it" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:41 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do I need to upgrade damage/armor on my old gear before I can Ascend it?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/57239/so-happy-i-am-today-is-it-grammatical" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    &quot;So happy I am today&quot; - is it grammatical?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ux" title="User Experience Stack Exchange"></div><a href="http://ux.stackexchange.com/questions/78936/does-it-make-sense-to-authenticate-a-user-when-he-she-provides-existing-valid-cr" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:102 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Does it make sense to authenticate a user when he/she provides existing valid credentials while registering?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ux" title="User Experience Stack Exchange"></div><a href="http://ux.stackexchange.com/questions/78975/why-should-text-be-non-selectable" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:102 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why should text be non-selectable?
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/284412" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/284412/ivc/39ec');});
+</script>
+<noscript>
+    <div><img src="/posts/284412/ivc/39ec" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-cpp</div></div>
+
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://programmers.blogoverflow.com?blb=1">blog</a>
+                        <a href="http://chat.stackexchange.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.programmers.stackexchange.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems.">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="Information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (14)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (10)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo &#169; 2015 stack exchange inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2015.5.20.2600
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Programmers Stack Exchange works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('c%2b%2b,syntax,keywords,pure-virtual-functions,virtual-functions,x-community,x-host-programmers.stackexchange.com');; ados_load(); });         
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-24', '.stackexchange.com');
+        
+        
+        ga('set', 'dimension2', '|c++|syntax|keywords|pure-virtual-functions|virtual-functions|');         
+        ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>            
+    </body>
+</html>
+

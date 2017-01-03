@@ -1,0 +1,912 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Excel and Java - Read and Write Excel with Java - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Abstract This article demonstrate how to create and how to read Excel files with the Java Excel API.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d419827e1"></a>Excel and Java - Read and Write Excel with Java - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 1.3</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008, 2009, 2010, 2011, 2012 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">12.11.2012</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Abstract</b></p>
+                     <p> This article demonstrate how to create and how to read Excel
+                        files with the Java Excel API.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#installation">1. Installation</a></span></dt>
+               <dt><span class="section"><a href="#createexcel">2. Create an Excel Spreadsheet</a></span></dt>
+               <dt><span class="section"><a href="#createexcel">3. Read an existing Excel Spreadsheet</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">4. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">4.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">4.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">4.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">5. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">5.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#resources_eclipse">5.2. Java Excel Resources</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">5.3. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="installation"></a>1.&nbsp;Installation
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Download the Java Excel library from the webpage
+               <a class="ulink" href="http://jexcelapi.sourceforge.net/" target="_top">
+                  http://jexcelapi.sourceforge.net/</a>
+               
+            </p>
+            <p>
+               To use this library in your Java program add the lib jxl.jar to
+               your classpath in your project. See
+               <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html#classpath" target="_top">
+                  Changing classpath in Eclipse</a>.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="createexcel"></a>2.&nbsp;Create an Excel Spreadsheet
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Create a new Java project called
+               <em class="wordasword">de.vogella.java.excel</em>.
+               Create the
+               <code class="code">de.vogella.java.excel.writer</code> package
+               and the following
+               class.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> writer;
+
+<span class="hl-keyword">import</span> java.io.File;
+<span class="hl-keyword">import</span> java.io.IOException;
+<span class="hl-keyword">import</span> java.util.Locale;
+
+<span class="hl-keyword">import</span> jxl.CellView;
+<span class="hl-keyword">import</span> jxl.Workbook;
+<span class="hl-keyword">import</span> jxl.WorkbookSettings;
+<span class="hl-keyword">import</span> jxl.format.UnderlineStyle;
+<span class="hl-keyword">import</span> jxl.write.Formula;
+<span class="hl-keyword">import</span> jxl.write.Label;
+<span class="hl-keyword">import</span> jxl.write.Number;
+<span class="hl-keyword">import</span> jxl.write.WritableCellFormat;
+<span class="hl-keyword">import</span> jxl.write.WritableFont;
+<span class="hl-keyword">import</span> jxl.write.WritableSheet;
+<span class="hl-keyword">import</span> jxl.write.WritableWorkbook;
+<span class="hl-keyword">import</span> jxl.write.WriteException;
+<span class="hl-keyword">import</span> jxl.write.biff.RowsExceededException;
+
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> WriteExcel {
+
+  <span class="hl-keyword">private</span> WritableCellFormat timesBoldUnderline;
+  <span class="hl-keyword">private</span> WritableCellFormat times;
+  <span class="hl-keyword">private</span> String inputFile;
+  
+<span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setOutputFile(String inputFile) {
+  <span class="hl-keyword">this</span>.inputFile = inputFile;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> write() <span class="hl-keyword">throws</span> IOException, WriteException {
+    File file = <span class="hl-keyword">new</span> File(inputFile);
+    WorkbookSettings wbSettings = <span class="hl-keyword">new</span> WorkbookSettings();
+
+    wbSettings.setLocale(<span class="hl-keyword">new</span> Locale(<span class="hl-string" style="color:blue">"en"</span>, <span class="hl-string" style="color:blue">"EN"</span>));
+
+    WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
+    workbook.createSheet(<span class="hl-string" style="color:blue">"Report"</span>, <span class="hl-number">0</span>);
+    WritableSheet excelSheet = workbook.getSheet(<span class="hl-number">0</span>);
+    createLabel(excelSheet);
+    createContent(excelSheet);
+
+    workbook.write();
+    workbook.close();
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> createLabel(WritableSheet sheet)
+      <span class="hl-keyword">throws</span> WriteException {
+    <em class="hl-comment" style="color: #080">// Lets create a times font</em>
+    WritableFont times10pt = <span class="hl-keyword">new</span> WritableFont(WritableFont.TIMES, <span class="hl-number">10</span>);
+    <em class="hl-comment" style="color: #080">// Define the cell format</em>
+    times = <span class="hl-keyword">new</span> WritableCellFormat(times10pt);
+    <em class="hl-comment" style="color: #080">// Lets automatically wrap the cells</em>
+    times.setWrap(true);
+
+    <em class="hl-comment" style="color: #080">// create create a bold font with unterlines</em>
+    WritableFont times10ptBoldUnderline = <span class="hl-keyword">new</span> WritableFont(WritableFont.TIMES, <span class="hl-number">10</span>, WritableFont.BOLD, false,
+        UnderlineStyle.SINGLE);
+    timesBoldUnderline = <span class="hl-keyword">new</span> WritableCellFormat(times10ptBoldUnderline);
+    <em class="hl-comment" style="color: #080">// Lets automatically wrap the cells</em>
+    timesBoldUnderline.setWrap(true);
+
+    CellView cv = <span class="hl-keyword">new</span> CellView();
+    cv.setFormat(times);
+    cv.setFormat(timesBoldUnderline);
+    cv.setAutosize(true);
+
+    <em class="hl-comment" style="color: #080">// Write a few headers</em>
+    addCaption(sheet, <span class="hl-number">0</span>, <span class="hl-number">0</span>, <span class="hl-string" style="color:blue">"Header 1"</span>);
+    addCaption(sheet, <span class="hl-number">1</span>, <span class="hl-number">0</span>, <span class="hl-string" style="color:blue">"This is another header"</span>);
+    
+
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> createContent(WritableSheet sheet) <span class="hl-keyword">throws</span> WriteException,
+      RowsExceededException {
+    <em class="hl-comment" style="color: #080">// Write a few number</em>
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">1</span>; i &lt; <span class="hl-number">10</span>; i++) {
+      <em class="hl-comment" style="color: #080">// First column</em>
+      addNumber(sheet, <span class="hl-number">0</span>, i, i + <span class="hl-number">10</span>);
+      <em class="hl-comment" style="color: #080">// Second column</em>
+      addNumber(sheet, <span class="hl-number">1</span>, i, i * i);
+    }
+    <em class="hl-comment" style="color: #080">// Lets calculate the sum of it</em>
+    StringBuffer buf = <span class="hl-keyword">new</span> StringBuffer();
+    buf.append(<span class="hl-string" style="color:blue">"SUM(A2:A10)"</span>);
+    Formula f = <span class="hl-keyword">new</span> Formula(<span class="hl-number">0</span>, <span class="hl-number">10</span>, buf.toString());
+    sheet.addCell(f);
+    buf = <span class="hl-keyword">new</span> StringBuffer();
+    buf.append(<span class="hl-string" style="color:blue">"SUM(B2:B10)"</span>);
+    f = <span class="hl-keyword">new</span> Formula(<span class="hl-number">1</span>, <span class="hl-number">10</span>, buf.toString());
+    sheet.addCell(f);
+
+    <em class="hl-comment" style="color: #080">// now a bit of text</em>
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">12</span>; i &lt; <span class="hl-number">20</span>; i++) {
+      <em class="hl-comment" style="color: #080">// First column</em>
+      addLabel(sheet, <span class="hl-number">0</span>, i, <span class="hl-string" style="color:blue">"Boring text "</span> + i);
+      <em class="hl-comment" style="color: #080">// Second column</em>
+      addLabel(sheet, <span class="hl-number">1</span>, i, <span class="hl-string" style="color:blue">"Another text"</span>);
+    }
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> addCaption(WritableSheet sheet, <span class="hl-keyword">int</span> column, <span class="hl-keyword">int</span> row, String s)
+      <span class="hl-keyword">throws</span> RowsExceededException, WriteException {
+    Label label;
+    label = <span class="hl-keyword">new</span> Label(column, row, s, timesBoldUnderline);
+    sheet.addCell(label);
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> addNumber(WritableSheet sheet, <span class="hl-keyword">int</span> column, <span class="hl-keyword">int</span> row,
+      Integer integer) <span class="hl-keyword">throws</span> WriteException, RowsExceededException {
+    Number number;
+    number = <span class="hl-keyword">new</span> Number(column, row, integer, times);
+    sheet.addCell(number);
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> addLabel(WritableSheet sheet, <span class="hl-keyword">int</span> column, <span class="hl-keyword">int</span> row, String s)
+      <span class="hl-keyword">throws</span> WriteException, RowsExceededException {
+    Label label;
+    label = <span class="hl-keyword">new</span> Label(column, row, s, times);
+    sheet.addCell(label);
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) <span class="hl-keyword">throws</span> WriteException, IOException {
+    WriteExcel test = <span class="hl-keyword">new</span> WriteExcel();
+    test.setOutputFile(<span class="hl-string" style="color:blue">"c:/temp/lars.xls"</span>);
+    test.write();
+    System.out
+        .println(<span class="hl-string" style="color:blue">"Please check the result file under c:/temp/lars.xls "</span>);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               I assume that the code is pretty much self-explaining. I tried
+               to add lots of comments to make it easier to understand.For more
+               complex examples have a look at the excellent documentation of
+               the Java
+               Excel API which is also part of the distribution.
+               
+            </p>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="createexcel"></a>3.&nbsp;Read an existing Excel Spreadsheet
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>Reuse the project "de.vogella.java.excel".
+               Create a package
+               "de.vogella.java.excelreader" and the following class
+               "ReadExcel".
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> reader;
+
+<span class="hl-keyword">import</span> java.io.File;
+<span class="hl-keyword">import</span> java.io.IOException;
+
+<span class="hl-keyword">import</span> jxl.Cell;
+<span class="hl-keyword">import</span> jxl.CellType;
+<span class="hl-keyword">import</span> jxl.Sheet;
+<span class="hl-keyword">import</span> jxl.Workbook;
+<span class="hl-keyword">import</span> jxl.read.biff.BiffException;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ReadExcel {
+
+  <span class="hl-keyword">private</span> String inputFile;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setInputFile(String inputFile) {
+    <span class="hl-keyword">this</span>.inputFile = inputFile;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> read() <span class="hl-keyword">throws</span> IOException  {
+    File inputWorkbook = <span class="hl-keyword">new</span> File(inputFile);
+    Workbook w;
+    <span class="hl-keyword">try</span> {
+      w = Workbook.getWorkbook(inputWorkbook);
+      <em class="hl-comment" style="color: #080">// Get the first sheet</em>
+      Sheet sheet = w.getSheet(<span class="hl-number">0</span>);
+      <em class="hl-comment" style="color: #080">// Loop over first 10 column and lines</em>
+
+      <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> j = <span class="hl-number">0</span>; j &lt; sheet.getColumns(); j++) {
+        <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; sheet.getRows(); i++) {
+          Cell cell = sheet.getCell(j, i);
+          CellType type = cell.getType();
+          <span class="hl-keyword">if</span> (type == CellType.LABEL) {
+            System.out.println(<span class="hl-string" style="color:blue">"I got a label "</span>
+                + cell.getContents());
+          }
+
+          <span class="hl-keyword">if</span> (type == CellType.NUMBER) {
+            System.out.println(<span class="hl-string" style="color:blue">"I got a number "</span>
+                + cell.getContents());
+          }
+
+        }
+      }
+    } <span class="hl-keyword">catch</span> (BiffException e) {
+      e.printStackTrace();
+    }
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) <span class="hl-keyword">throws</span> IOException {
+    ReadExcel test = <span class="hl-keyword">new</span> ReadExcel();
+    test.setInputFile(<span class="hl-string" style="color:blue">"c:/temp/lars.xls"</span>);
+    test.read();
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>Create an excel spreadsheet and save it somewhere,
+               e.g.
+               "c:/temp/lars.xls".
+               
+            </p>
+            <p>
+               I assume that the code is pretty much self-explaining. I tried
+               to add lots of comments to make it easier to understand.For more
+               complex examples have a look at the excellent documentation of
+               the Java
+               Excel API which is also part of the distribution.
+               
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>4.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>4.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>4.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>4.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>5.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>5.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/index.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_eclipse"></a>5.2.&nbsp;Java Excel Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://jexcelapi.sourceforge.net/" target="_top">
+                     http://jexcelapi.sourceforge.net/</a>
+                  Java Excel API - Homepage
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>5.3.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <table border="0">
+                     <colgroup>
+                        <col width="50%" align="left">
+                        <col width="50%" align="left">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/training/" target="_top">TRAINING</a></th>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/consulting/" target="_top">SERVICE &amp; SUPPORT</a></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              The vogella company provides comprehensive <a class="ulink" href="http://www.vogella.com/training/" target="_top">training and education services</a> 
+                              from experts in the areas of Eclipse RCP, Android, Git, Java, Gradle and Spring.
+                              We offer both public and inhouse training. Whichever course you decide to take, you are guaranteed to experience 
+                              what many before you refer to as 
+                              <a class="ulink" href="http://www.vogella.com/training/" target="_top">&#8220;The best IT class I have ever attended&#8221;</a>.
+                              
+                           </td>
+                           <td align="left">
+                              The vogella company offers <a class="ulink" href="http://www.vogella.com/consulting/" target="_top">expert consulting</a> services, development support and coaching. Our customers range from
+                              Fortune 100 corporations to individual developers.  
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div><img src="http://vg04.met.vgwort.de/na/4903fbb406cf48ac8f8cf6c1da88a266" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/JavaExcel/article.html');
+//]]></script></body>
+</html>
+

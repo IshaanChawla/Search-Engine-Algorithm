@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" xmlns:re="http://purl.org/atompub/rank/1.0">
+    <title type="text">Converting Element to String - Stack Overflow</title>
+    <link rel="self" href="http://stackoverflow.com/feeds/question/6830870" type="application/atom+xml" />
+    <link rel="alternate" href="http://stackoverflow.com/q/6830870" type="text/html" />
+    <subtitle>most recent 30 from stackoverflow.com</subtitle>
+    <updated>2015-05-20T19:44:10Z</updated>
+    <id>http://stackoverflow.com/feeds/question/6830870</id>
+    <creativeCommons:license>http://www.creativecommons.org/licenses/by-sa/3.0/rdf</creativeCommons:license> 
+    <entry>
+        <id>http://stackoverflow.com/q/6830870</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Converting Element to String</title>
+            <category scheme="http://stackoverflow.com/tags" term="java" />
+            <category scheme="http://stackoverflow.com/tags" term="xml" />
+            <category scheme="http://stackoverflow.com/tags" term="string" />
+        <author>
+            <name>Sad</name>
+            <uri>http://stackoverflow.com/users/792928</uri>
+        </author>
+        <link rel="alternate" href="http://stackoverflow.com/questions/6830870/converting-element-to-string" />
+        <published>2011-07-26T13:38:48Z</published>
+        <updated>2015-02-10T22:44:55Z</updated>
+        <summary type="html">
+            
+
+            &lt;p&gt;Possibly a quite simple question. I have a Element from a XML request and I have done:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Element number;
+
+number = serviceDetail.getChild(&quot;Number&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I now want to convert the Element number into a String and then be able to use the substring function on it. What is the most effective way to transform a element into a string? toString() failed and the string prints like &lt;code&gt;@a06816&lt;/code&gt; and trying to transform it seemed to throw alot of errors.&lt;/p&gt;
+
+&lt;p&gt;Any help will be appreciated&lt;/p&gt;
+
+&lt;p&gt;Edit: Sorry I wasn&#39;t 100% clear. The contents of the number element will be the value that is inside the &#39;Number&#39; element in the XML request which will be a string.&lt;/p&gt;
+
+&lt;p&gt;SOLVED: Instead of the above code I used:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;String number;
+number = serviceDetail.getChildText(&quot;Number&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Oops sorry for the hassle guys!&lt;/p&gt;
+
+        </summary>
+    </entry>
+
+    <entry>
+        <id>http://stackoverflow.com/questions/6830870/-/6831016#6831016</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Answer by Nick for Converting Element to String</title>
+        <author>
+            <name>Nick</name>
+            <uri>http://stackoverflow.com/users/556613</uri>
+        </author>    
+        <link rel="alternate" href="http://stackoverflow.com/questions/6830870/converting-element-to-string/6831016#6831016" />
+        <published>2011-07-26T13:49:11Z</published>   
+        <updated>2011-07-26T13:49:11Z</updated>
+        <summary type="html">&lt;p&gt;I believe what you are trying to do requires you to marshall the element to your desired destination.  If you use JAXB, you can do it like this: (taken from &lt;a href=&quot;http://ws.apache.org/jaxme/manual/ch02s02.html&quot; rel=&quot;nofollow&quot;&gt;http://ws.apache.org/jaxme/manual/ch02s02.html&lt;/a&gt;)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;public String asString(JAXBContext pContext, Object pObject) throws JAXBException {
+
+    java.io.StringWriter sw = new StringWriter();
+
+    Marshaller marshaller = pContext.createMarshaller();
+    marshaller.setProperty(Marshaller.JAXB_ENCODING, &quot;UTF-8&quot;);
+    marshaller.marshal(pObject, sw);
+
+    return sw.toString();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I -believe- pObject can be an org.w3c.dom.Element (assuming thats the Element class you are using.)&lt;/p&gt;
+
+&lt;p&gt;Hope that helps,
+Nick&lt;/p&gt;
+</summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/questions/6830870/-/6831098#6831098</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Answer by Nathan Hughes for Converting Element to String</title>
+        <author>
+            <name>Nathan Hughes</name>
+            <uri>http://stackoverflow.com/users/217324</uri>
+        </author>    
+        <link rel="alternate" href="http://stackoverflow.com/questions/6830870/converting-element-to-string/6831098#6831098" />
+        <published>2011-07-26T13:54:38Z</published>   
+        <updated>2011-07-26T13:59:56Z</updated>
+        <summary type="html">&lt;p&gt;You don&#39;t say what &lt;code&gt;Element&lt;/code&gt; is, and there are multiple XML APIs with an Element class. But I&#39;d guess the Element has a text node and you can get the element text from there. If you are talking about &lt;code&gt;org.w3c.dom.Element&lt;/code&gt; then you could get the text for that element from&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt; element.getFirstChild().getNodeValue()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(assuming your number element has only one node).&lt;/p&gt;
+</summary>
+    </entry>
+    <entry>
+        <id>http://stackoverflow.com/questions/6830870/-/6856603#6856603</id>
+        <re:rank scheme="http://stackoverflow.com">0</re:rank>
+        <title type="text">Answer by Sad for Converting Element to String</title>
+        <author>
+            <name>Sad</name>
+            <uri>http://stackoverflow.com/users/792928</uri>
+        </author>    
+        <link rel="alternate" href="http://stackoverflow.com/questions/6830870/converting-element-to-string/6856603#6856603" />
+        <published>2011-07-28T09:13:33Z</published>   
+        <updated>2011-07-28T09:13:33Z</updated>
+        <summary type="html">&lt;p&gt;Instead of the above code I used:&lt;/p&gt;
+
+&lt;p&gt;String number;
+number = serviceDetail.getChildText(&quot;Number&quot;);&lt;/p&gt;
+
+&lt;p&gt;Oops sorry for the hassle guys!&lt;/p&gt;
+</summary>
+    </entry></feed>
+

@@ -1,0 +1,1542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>7.10 &#8212; Recursion &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 7.10 &#8212; Recursion Comments Feed" href="http://www.learncpp.com/cpp-tutorial/710-recursion/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"50.144.0.132","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/710-recursion\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='7.9 &#8212; The stack and the heap' href='http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/' />
+<link rel='next' title='4.3a &#8212; Namespaces' href='http://www.learncpp.com/cpp-tutorial/4-3a-namespaces/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/710-recursion/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=121' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="7.10 -- Recursion" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/710-recursion/" />
+<meta property="og:description" content="A recursive function in C++ is a function that calls itself. Here is an example of a poorly-written recursive function: [crayon-555d78d866c1c587620611/] When CountDown(10) is called, the number 10 ..." />
+<meta property="article:published_time" content="2007-08-14T05:30:20+00:00" />
+<meta property="article:modified_time" content="2015-03-27T23:03:24+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/Section7/Fibonacci.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/Section7/Fibonacci.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-121 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-121 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-121">
+						<div class="post-headline">		<h1>7.10 &#8212; Recursion</h1>
+		</div>		<div class="post-byline">By Alex, on August 13th, 2007</div>		<div class="post-bodycopy clearfix"><p>A <strong>recursive function</strong> in C++ is a function that calls itself.  Here is an example of a poorly-written recursive function:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d866c1c587620611" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-2">2</div><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-4">4</div><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-6">6</div><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-8">8</div><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-10">10</div><div class="crayon-num" data-line="crayon-555d78d866c1c587620611-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c1c587620611-12">12</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d866c1c587620611-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d866c1c587620611-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c1c587620611-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-6"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d78d866c1c587620611-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-8"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">void</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d866c1c587620611-9"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-cn">10</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c1c587620611-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c1c587620611-12"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0016 seconds] -->
+<p></p>
+<p>When CountDown(10) is called, the number 10 is printed, and CountDown(9) is called.  CountDown(9) prints 9 and calls CountDown(8).  CountDown(8) prints 8 and calls CountDown(7).  The sequence of CountDown(n) calling CountDown(n-1) is continually repeated, effectively forming the recursive equivalent of an infinite loop.</p>
+<p>In the lesson on <a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/">the stack and the heap</a>, you learned that every function call causes data to be placed on the call stack.  Because the CountDown() function never returns (it just calls CountDown() again), this information is never being popped off the stack!  Consequently, at some point, the computer will run out of stack memory, stack overflow will result, and the program will crash or terminate.  On the authors machine, this program counted down to -11732 before terminating!</p>
+<p>This program illustrates the most important point about recursive functions: you must include a termination condition, or they will run &#8220;forever&#8221; (or until the call stack runs out of memory).</p>
+<p>Stopping a recursive function generally involves using an if statement.  Here is our function redesigned with a termination condition:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d866c2e224025109" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-2">2</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-4">4</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-6">6</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-8">8</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-10">10</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-12">12</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c2e224025109-14">14</div><div class="crayon-num" data-line="crayon-555d78d866c2e224025109-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d866c2e224025109-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// termination condition</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-9"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-10">&nbsp;</div><div class="crayon-line" id="crayon-555d78d866c2e224025109-11"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">void</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-12"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">CountDown</span><span class="crayon-sy">(</span><span class="crayon-cn">10</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c2e224025109-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c2e224025109-15"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0018 seconds] -->
+<p></p>
+<p>Now when we run our program, CountDown() will count down to 0 and then stop!</p>
+<p>Let&#8217;s take a look at another recursive function that is slightly more useful:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d866c35542817514" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d866c35542817514-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c35542817514-2">2</div><div class="crayon-num" data-line="crayon-555d78d866c35542817514-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c35542817514-4">4</div><div class="crayon-num" data-line="crayon-555d78d866c35542817514-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c35542817514-6">6</div><div class="crayon-num" data-line="crayon-555d78d866c35542817514-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c35542817514-8">8</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d866c35542817514-1"><span class="crayon-c">// return the sum of 1 to nValue</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c35542817514-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">SumTo</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d866c35542817514-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c35542817514-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d866c35542817514-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c35542817514-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d78d866c35542817514-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">SumTo</span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c35542817514-8"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+<p>Recursive programs can often be hard to figure out just by looking at them.  It&#8217;s often instructive to see what happens when we call a recursive function with a particular value.  So let&#8217;s see what happens when we call this function with nValue = 5.</p>
+<p>SumTo(5) called, 5 <= 1 is false, so we return SumTo(4) + 5.<br />
+SumTo(4) called, 4 <= 1 is false, so we return SumTo(3) + 4.<br />
+SumTo(3) called, 3 <= 1 is false, so we return SumTo(2) + 3.<br />
+SumTo(2) called, 2 <= 1 is false, so we return SumTo(1) + 2.<br />
+SumTo(1) called, 1 <= 1 is true, so we return 1.  This is the termination condition.</p>
+<p>Now we unwind the call stack (popping each function off the call stack as it returns):<br />
+SumTo(1) returns 1.<br />
+SumTo(2) returns SumTo(1) + 2, which is 1 + 2 = 3.<br />
+SumTo(3) returns SumTo(2) + 3, which is 3 + 3 = 6.<br />
+SumTo(4) returns SumTo(3) + 4, which is 6 + 4 = 10.<br />
+SumTo(5) returns SumTo(4) + 5, which is 10 + 5 = 15.</p>
+<p>Consequently, SumTo(5) returns 15.</p>
+<p>One question that is often asked about recursive functions is, "Why use a recursive function if you can do many of the same tasks iteratively (using a <em>for loop</em> or <em>while loop</em>)?&#8221;.  It turns out that you can always solve a recursive problem iteratively -- however, for non-trivial problems, the recursive version is often much simpler to write (and read).</p>
+<p><strong>Fibonacci numbers</strong></p>
+<p>One of the most famous mathematical recursive algorithms is the Fibonacci sequence, as Fibonacci sequences appear in many places in nature, such as branching of trees, the spiral of shells, the fruitlets of a pineapple, an uncurling fern frond, and the arrangement of a pine cone.</p>
+<p>Here is a picture of a Fibonacci spiral:<br />
+<img src="http://www.learncpp.com/images/CppTutorial/Section7/Fibonacci.png"></p>
+<p>Each of the Fibonacci numbers is the length of the side of the square that the number appears in.</p>
+<p>Fibonacci numbers are defined mathematically as:</p>
+<table>
+<tr>
+<td>F(n) = </td>
+<td>0 if n = 0<br />1 if n = 1<br />f(n-1) + f(n-2) if n > 1</td>
+</tr>
+</table>
+<p>Consequently, it&#8217;s rather simple to write a recursive function to calculate the nth Fibonacci number:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d866c3e234995093" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-2">2</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-4">4</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-6">6</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-8">8</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-10">10</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-12">12</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-14">14</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-16">16</div><div class="crayon-num" data-line="crayon-555d78d866c3e234995093-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d866c3e234995093-18">18</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d866c3e234995093-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Fibonacci</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nNumber</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">Fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-e">Fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-o">-</span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-8"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-10"><span class="crayon-c">// And a main program to display the first 13 Fibonacci numbers</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-11"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">void</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-12"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">13</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">++</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d866c3e234995093-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">Fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">iii</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-16">&nbsp;</div><div class="crayon-line" id="crayon-555d78d866c3e234995093-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d866c3e234995093-18"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0030 seconds] -->
+<p></p>
+<p>Running the program produces the following result:</p>
+<pre>
+0 1 1 2 3 5 8 13 21 34 55 89 144
+</pre>
+<p>Which you will note are exactly the numbers that appear in the Fibonacci spiral diagram.</p>
+<p>While it&#8217;s possible to write the Fibonacci function iteratively, it&#8217;s much more difficult!</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/712-handling-errors-assert-cerr-exit-and-exceptions/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 7.12 -- Handling errors (assert, cerr, exit, and exceptions)</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter7" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 7.9 -- The stack and the heap</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/710-recursion/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-121" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/710-recursion/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-121" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/710-recursion/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-121" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/710-recursion/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-121" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/710-recursion/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/710-recursion/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">41 comments to 7.10 &#8212; Recursion</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-464">
+		<div id="div-comment-464" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7e53a7cce631b8ba95b1e9bccd6ccd0d?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e53a7cce631b8ba95b1e9bccd6ccd0d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Karma</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-464">
+		August 18, 2007 at 5:14 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=464#respond' onclick='return addComment.moveForm( "comment-464", "464", "respond", "121" )' aria-label='Reply to Karma'> &middot; Reply</a></span>		 
+		</div>
+		<p>hi nice post, i enjoyed it</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-846">
+		<div id="div-comment-846" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/dedfa6843fc63212083fd5acf12548fa?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dedfa6843fc63212083fd5acf12548fa?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Souvik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-846">
+		September 3, 2007 at 10:19 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=846#respond' onclick='return addComment.moveForm( "comment-846", "846", "respond", "121" )' aria-label='Reply to Souvik'> &middot; Reply</a></span>		 
+		</div>
+		<p>its NOT diff 2 ryt a fibo sequence iteratively ? !!!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-5860">
+		<div id="div-comment-5860" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Abhishek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-5860">
+		January 11, 2008 at 6:35 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=5860#respond' onclick='return addComment.moveForm( "comment-5860", "5860", "respond", "121" )' aria-label='Reply to Abhishek'> &middot; Reply</a></span>		 
+		</div>
+		<p>mind-blowing!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-5861">
+		<div id="div-comment-5861" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Abhishek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-5861">
+		January 11, 2008 at 6:38 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=5861#respond' onclick='return addComment.moveForm( "comment-5861", "5861", "respond", "121" )' aria-label='Reply to Abhishek'> &middot; Reply</a></span>		 
+		</div>
+		<p>When I tried to add comment something called wp-comments-post.php got downloaded.Any problem?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-5865">
+		<div id="div-comment-5865" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-5865">
+		January 11, 2008 at 8:13 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=5865#respond' onclick='return addComment.moveForm( "comment-5865", "5865", "respond", "121" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I get that too occasionally.  I&#8217;m not sure why.  It seems to happen after doing something that causes a page reload (eg. making a post or a comment).  However, instead of reloading and redisplaying the page, it gets confused and tries to download the .php file.  I&#8217;m not sure if it&#8217;s a browser issue or a PHP issue or a server issue.</p>
+<p>Edit: I updated a plugin that may be the cause of this issue.  Let me know if you receive this error in the future.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-19534">
+		<div id="div-comment-19534" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a5e1b87e393d14131e7b144d423ea979?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a5e1b87e393d14131e7b144d423ea979?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ny</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-19534">
+		June 21, 2008 at 11:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=19534#respond' onclick='return addComment.moveForm( "comment-19534", "19534", "respond", "121" )' aria-label='Reply to ny'> &middot; Reply</a></span>		 
+		</div>
+		<p>hay alex.. thanks lot man.. i know recursive function.. but after read this article.its so easy to solve recursive. now i completely understand recursive function. thanks lot</p>
+<p>cheers</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-19535">
+		<div id="div-comment-19535" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a5e1b87e393d14131e7b144d423ea979?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a5e1b87e393d14131e7b144d423ea979?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ny</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-19535">
+		June 21, 2008 at 11:20 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=19535#respond' onclick='return addComment.moveForm( "comment-19535", "19535", "respond", "121" )' aria-label='Reply to ny'> &middot; Reply</a></span>		 
+		</div>
+		<p>void quiz(int i)<br />
+    {<br />
+        if (i &gt; 1)<br />
+        {<br />
+            quiz(i / 2);<br />
+	    quiz(i / 2);<br />
+        }<br />
+        cout &lt;&lt; &#8220;*&#8221;;<br />
+    }</p>
+<p>if quiz (5) ??? then how many time start printed?</p>
+<p>get confused for this one.. </p>
+<p>how is going to solve step by step.. like u solved example one. .. ?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-58842">
+		<div id="div-comment-58842" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a5ac5efc247df607922ceed8ae4092e8?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a5ac5efc247df607922ceed8ae4092e8?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">santosh</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-58842">
+		April 22, 2009 at 9:42 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=58842#respond' onclick='return addComment.moveForm( "comment-58842", "58842", "respond", "121" )' aria-label='Reply to santosh'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey this functin is going to print * 15 times.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-71324">
+		<div id="div-comment-71324" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/da92ed26fe65a66e996551cf96064935?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/da92ed26fe65a66e996551cf96064935?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">bilal öztürk</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-71324">
+		October 30, 2009 at 11:21 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=71324#respond' onclick='return addComment.moveForm( "comment-71324", "71324", "respond", "121" )' aria-label='Reply to bilal öztürk'> &middot; Reply</a></span>		 
+		</div>
+		<p>7 times&#8230;</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-20737">
+		<div id="div-comment-20737" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0e003b5472d9e0e3d1dfe6517d45105a?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0e003b5472d9e0e3d1dfe6517d45105a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">khen</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-20737">
+		July 11, 2008 at 5:45 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=20737#respond' onclick='return addComment.moveForm( "comment-20737", "20737", "respond", "121" )' aria-label='Reply to khen'> &middot; Reply</a></span>		 
+		</div>
+		<p>hey,<br />
+I wanted to ask about the efficiency of Recursion versus using for loop or while.</p>
+<p>btw: your articles are great! I enjoy very much to read.</p>
+<p>thanks,<br />
+khen.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-21667">
+		<div id="div-comment-21667" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-21667">
+		July 23, 2008 at 5:30 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=21667#respond' onclick='return addComment.moveForm( "comment-21667", "21667", "respond", "121" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Iterative functions (those using a for or while loop) are almost always more efficient than their recursive counterparts.  The reason for this is because every time you call a function there is some amount of overhead that takes place.  Iterative functions avoid this overhead.</p>
+<p>That&#8217;s not to say iterative functions are always a better choice.  Sometimes the recursive implementation of a function is so much cleaner and easier to follow that incurring a little extra overhead is more than worth it for the benefit in maintainability.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-44236">
+		<div id="div-comment-44236" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6a178571dcf9ec708c43f8fb27b8ceb7?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6a178571dcf9ec708c43f8fb27b8ceb7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Kerrick</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-44236">
+		February 15, 2009 at 1:06 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=44236#respond' onclick='return addComment.moveForm( "comment-44236", "44236", "respond", "121" )' aria-label='Reply to Kerrick'> &middot; Reply</a></span>		 
+		</div>
+		<p>Note that the recursive implementation of a Fibonacci number generator is very inefficient. For example, to calculate Fibonacci(5), it calculates Fibonacci(4) and Fibonacci(3). To calculate Fibonacci(4), it recalculates Fibonacci(3), and so forth. In general, it will take an exponential number of calls to calculate the number; that is, it is O(exp(n)) in both time and space. <a href="http://pastebin.com/f15a55f90" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://pastebin.com/f15a55f90', 'See this code for a demonstration.']);" rel="nofollow">See this code for a demonstration.</a><a></a></p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-48415">
+		<div id="div-comment-48415" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-48415">
+		March 1, 2009 at 11:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=48415#respond' onclick='return addComment.moveForm( "comment-48415", "48415", "respond", "121" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>That is very true.  It&#8217;s much more efficient to write an iterative version.  I often see this question come up on job applications.  They&#8217;ll ask you to write a Fibonacci function, but the thing they are really interested in is whether you understand that the recursive version of Fibonacci is too inefficient to use for practical purposes.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-69959">
+		<div id="div-comment-69959" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/924c3316f4f97efbac33330c779c94cb?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/924c3316f4f97efbac33330c779c94cb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Kevin</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-69959">
+		October 8, 2009 at 8:52 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=69959#respond' onclick='return addComment.moveForm( "comment-69959", "69959", "respond", "121" )' aria-label='Reply to Kevin'> &middot; Reply</a></span>		 
+		</div>
+		<p>Iterative function that does the same.  It&#8217;s quite simple to do in a loop as you can just start adding the numbers up as you work up the sequence.  It&#8217;s easy to figure out when you look at the sequences working from left to right.</p>
+<p>0 1 1 2 3 5 8 13 21 34 55 89 144</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d86a78b581593027" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-2">2</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-4">4</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-6">6</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-8">8</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-10">10</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-12">12</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-14">14</div><div class="crayon-num" data-line="crayon-555d78d86a78b581593027-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a78b581593027-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d86a78b581593027-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Fibonacci2</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nNumber</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-3"><span class="crayon-h">	</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">fibnum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">fibminus2</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">fibminus1</span><span class="crayon-o">=</span><span class="crayon-cn">1</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-4"><span class="crayon-h">	</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">)</span><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nNumber</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-8"><span class="crayon-h">	</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">=</span><span class="crayon-cn">2</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-h"> </span><span class="crayon-v">nNumber</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">++</span><span class="crayon-sy">)</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-9"><span class="crayon-h">		</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-10"><span class="crayon-h">		</span><span class="crayon-v">fibnum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">fibminus1</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">fibminus2</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-11"><span class="crayon-h">		</span><span class="crayon-v">fibminus2</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">fibminus1</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-12"><span class="crayon-h">		</span><span class="crayon-v">fibminus1</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">fibnum</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-13"><span class="crayon-h">		</span><span class="crayon-sy">}</span><span class="crayon-h">	&nbsp;&nbsp; </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-14"><span class="crayon-h">&nbsp;&nbsp; 	</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">fibnum</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a78b581593027-15"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a78b581593027-16"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0033 seconds] -->
+<p></p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-79805">
+		<div id="div-comment-79805" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b6246887b76654a311ed82c608426323?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b6246887b76654a311ed82c608426323?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Yared</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-79805">
+		March 5, 2010 at 1:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=79805#respond' onclick='return addComment.moveForm( "comment-79805", "79805", "respond", "121" )' aria-label='Reply to Yared'> &middot; Reply</a></span>		 
+		</div>
+		<p>It is correct</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-96981">
+		<div id="div-comment-96981" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8c8fe958162d8ef37bf7d83a6ae6b61c?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8c8fe958162d8ef37bf7d83a6ae6b61c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">thekbe</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-96981">
+		February 22, 2012 at 3:19 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=96981#respond' onclick='return addComment.moveForm( "comment-96981", "96981", "respond", "121" )' aria-label='Reply to thekbe'> &middot; Reply</a></span>		 
+		</div>
+		<p>a better link would be <a href="http://ideone.com/Vvx8L" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://ideone.com/Vvx8L', 'this']);" rel="nofollow">this</a>, as ideone allows you to run code as well.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-63807">
+		<div id="div-comment-63807" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Quinn</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-63807">
+		July 6, 2009 at 4:06 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=63807#respond' onclick='return addComment.moveForm( "comment-63807", "63807", "respond", "121" )' aria-label='Reply to Quinn'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hahaha&#8230; apparently Linux doesn&#8217;t believe in stack overflows. I ran your stack overflowing program and it just kept going all the way past -4,000,000, when I stopped it. It didn&#8217;t even need to allocate any additional memory, I&#8217;m disappointed!</p>
+<p>Never tried doing that before, now I&#8217;m gonna see if I can fork bomb this beast!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-70668">
+		<div id="div-comment-70668" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9930e0808a0c08a71ee96a6c9eba5278?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9930e0808a0c08a71ee96a6c9eba5278?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">shibatus bhattacharjee</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-70668">
+		October 19, 2009 at 11:34 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=70668#respond' onclick='return addComment.moveForm( "comment-70668", "70668", "respond", "121" )' aria-label='Reply to shibatus bhattacharjee'> &middot; Reply</a></span>		 
+		</div>
+		<p>recursion is a funcion, that call itself repeatly.which have 3 must condition for doing program<br />
+program recusively three conditions are<br />
+                                      1.the problem should be writen in recursive form.<br />
+                                      2.should have a stopping condition.<br />
+                                      3.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-73800">
+		<div id="div-comment-73800" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b614f4d60c5a3c9e608e8ccd4b68b598?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b614f4d60c5a3c9e608e8ccd4b68b598?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">khawla hussein</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-73800">
+		December 7, 2009 at 8:07 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=73800#respond' onclick='return addComment.moveForm( "comment-73800", "73800", "respond", "121" )' aria-label='Reply to khawla hussein'> &middot; Reply</a></span>		 
+		</div>
+		<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d86a61e371299173" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d86a61e371299173-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d86a61e371299173-1"><span class="crayon-e">thank </span><span class="crayon-e">you </span><span class="crayon-e">very </span><span class="crayon-v">much</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-i">i</span><span class="crayon-h"> </span><span class="crayon-i">understand</span><span class="crayon-h"> </span><span class="crayon-i">a</span><span class="crayon-h"> </span><span class="crayon-v">recursion</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-e">it </span><span class="crayon-st">is</span><span class="crayon-h"> </span><span class="crayon-e">easy </span><span class="crayon-st">and</span><span class="crayon-h"> </span><span class="crayon-v">fine</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-e">thnks </span><span class="crayon-v">again</span><span class="crayon-sy">.</span><span class="crayon-h"> </span><span class="crayon-i">i</span><span class="crayon-h"> </span><span class="crayon-e">feel </span><span class="crayon-v">happy</span><span class="crayon-sy">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0010 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-78971">
+		<div id="div-comment-78971" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d58ae516bf929314157169063f7c9519?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d58ae516bf929314157169063f7c9519?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://none' rel='external nofollow' class='url'>jennifer</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-78971">
+		February 23, 2010 at 11:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=78971#respond' onclick='return addComment.moveForm( "comment-78971", "78971", "respond", "121" )' aria-label='Reply to jennifer'> &middot; Reply</a></span>		 
+		</div>
+		<p>can you help me deal with this??<br />
+i have to make a program using recursion in which,for example&#8230;the user will input 3 and 2<br />
+add it using recursion by means of 3+1+1 and that it outputs 5.. help me pls&#8230;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-80920">
+		<div id="div-comment-80920" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7afcaae06f342d90b8a920ce7df4d908?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7afcaae06f342d90b8a920ce7df4d908?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Simon Harpham</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-80920">
+		March 19, 2010 at 12:39 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=80920#respond' onclick='return addComment.moveForm( "comment-80920", "80920", "respond", "121" )' aria-label='Reply to Simon Harpham'> &middot; Reply</a></span>		 
+		</div>
+		<p>Here&#8217;s an extension of the fibonacci sequence to negative numbers. The results are a little counter-intuitive for negative numbers, cf. http://en.wikipedia.org/wiki/Negafibonacci for details.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d86a4ac919261683" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-2">2</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-4">4</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-6">6</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-8">8</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-10">10</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-12">12</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-14">14</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-16">16</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-18">18</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-20">20</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-22">22</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-24">24</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-26">26</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-28">28</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-30">30</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-32">32</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-34">34</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-36">36</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-38">38</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-40">40</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-42">42</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-43">43</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-44">44</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-45">45</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-46">46</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-47">47</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-48">48</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-49">49</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-50">50</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-51">51</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-52">52</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-53">53</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-54">54</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-55">55</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-56">56</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-57">57</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a4ac919261683-58">58</div><div class="crayon-num" data-line="crayon-555d78d86a4ac919261683-59">59</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d86a4ac919261683-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-2">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-3"><span class="crayon-r">typedef</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-t">integer</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-4">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-5"><span class="crayon-c">/*</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-6"><span class="crayon-c">&nbsp;&nbsp;Fibonacci sequence is defined as:</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-8"><span class="crayon-c">&nbsp;&nbsp;When n = 0 then 0;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-9"><span class="crayon-c">&nbsp;&nbsp;When n = 1 then 1;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-10"><span class="crayon-c">&nbsp;&nbsp;When n &gt; 1 then (n - 1) + (n - 2)</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-11"><span class="crayon-c">&nbsp;&nbsp;When n = -1 then -1;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-12"><span class="crayon-c">&nbsp;&nbsp;When n &lt; -1 then (n + 2) - (n + 1)</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-13"><span class="crayon-c">*/</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-14">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-15"><span class="crayon-t">integer</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-t">integer</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-16"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">switch</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">case</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">break</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-22">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">case</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">break</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-26">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">case</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">break</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-30">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">default</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-36">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-37"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-39"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-41"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-42"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-43">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-44"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-45"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-46"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-47">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-48"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-o">++</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-49"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-50"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-51"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-52">&nbsp;</div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-53"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-cn">10</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-o">--</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-54"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-55"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">fibonacci</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-56"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-57">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a4ac919261683-58"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d78d86a4ac919261683-59"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0062 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-84384">
+		<div id="div-comment-84384" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2eaea31f8be09365a899256ac256ea99?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2eaea31f8be09365a899256ac256ea99?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">cash</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-84384">
+		May 9, 2010 at 4:36 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=84384#respond' onclick='return addComment.moveForm( "comment-84384", "84384", "respond", "121" )' aria-label='Reply to cash'> &middot; Reply</a></span>		 
+		</div>
+		<p>Task One: Recursion versus iteration<br />
+The following is a recursive method for determining “something”. You need to figure out what is being<br />
+determined. You also need to describe an iterative method for determining the same something.<br />
+Algorithm main<br />
+Purpose ???<br />
+Input Nothing<br />
+Output ???<br />
+BEGIN main<br />
+DECLARE N of type INTEGER<br />
+DECLARE result of type REAL<br />
+PRINT ‘‘Enter Number of Elements.’’<br />
+GET N<br />
+DECLARE data[N] of type REAL<br />
+READ data<br />
+CALL zamolo WITH data, N-1 RETURNING result<br />
+DISPLAY result<br />
+END main</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-88928">
+		<div id="div-comment-88928" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/adfadd7ae3a31945bc85ada2976a6edf?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/adfadd7ae3a31945bc85ada2976a6edf?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jak</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-88928">
+		July 22, 2010 at 11:50 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=88928#respond' onclick='return addComment.moveForm( "comment-88928", "88928", "respond", "121" )' aria-label='Reply to jak'> &middot; Reply</a></span>		 
+		</div>
+		<p>it don&#8217;t know</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-89246">
+		<div id="div-comment-89246" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Sanjeev</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-89246">
+		July 29, 2010 at 4:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=89246#respond' onclick='return addComment.moveForm( "comment-89246", "89246", "respond", "121" )' aria-label='Reply to Sanjeev'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi,<br />
+In the below program, what&#8217;s making it to go to infinite loop?</p>
+<p>void CountDown(int nValue)<br />
+{<br />
+	cout &lt;&lt; nValue &lt; 0 )<br />
+		CountDown(nValue-1);<br />
+}</p>
+<p>int main(void)<br />
+{<br />
+	CountDown(10);<br />
+	return 0;<br />
+}</p>
+<p>At the end 0 is printed continuosly. What will  be the reason behind it? Can you please explain?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-89281">
+		<div id="div-comment-89281" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Sanjeev</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-89281">
+		July 29, 2010 at 9:09 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=89281#respond' onclick='return addComment.moveForm( "comment-89281", "89281", "respond", "121" )' aria-label='Reply to Sanjeev'> &middot; Reply</a></span>		 
+		</div>
+		<p>Sorry there is a formatting issue in the above question.</p>
+<p>	cout &lt;&lt; nValue &lt; 0 )<br />
+		CountDown(nValue-1);</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-89282">
+		<div id="div-comment-89282" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Sanjeev</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-89282">
+		July 29, 2010 at 9:18 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=89282#respond' onclick='return addComment.moveForm( "comment-89282", "89282", "respond", "121" )' aria-label='Reply to Sanjeev'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s while(nValue&lt;0). Sorry again.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-95192">
+		<div id="div-comment-95192" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/16f9c07dceab1393fde1ff840219456d?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/16f9c07dceab1393fde1ff840219456d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Moogie</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-95192">
+		February 20, 2011 at 2:54 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=95192#respond' onclick='return addComment.moveForm( "comment-95192", "95192", "respond", "121" )' aria-label='Reply to Moogie'> &middot; Reply</a></span>		 
+		</div>
+		<p>You supplied the initial value (10) for CountDown to use, but then didn&#8217;t implement any way for it to stop at 0. Your &#8220;while(nValue&#8221; instead.</p>
+<p>Then again, I don&#8217;t see why this works at all. Right from the start, &#8220;10 &lt; 0&quot; is false, so it shouldn&#039;t print anything at all&#8230;</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-95193">
+		<div id="div-comment-95193" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/16f9c07dceab1393fde1ff840219456d?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/16f9c07dceab1393fde1ff840219456d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Moogie</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-95193">
+		February 20, 2011 at 2:55 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=95193#respond' onclick='return addComment.moveForm( "comment-95193", "95193", "respond", "121" )' aria-label='Reply to Moogie'> &middot; Reply</a></span>		 
+		</div>
+		<p>Oh god damnit. This forum software sucks balls and butchered my reply. Now it makes no sense, AND I can&#8217;t even delete it or edit it!</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-91345">
+		<div id="div-comment-91345" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f8830b6872829ad5cd49e7c98247dc4e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f8830b6872829ad5cd49e7c98247dc4e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Bob</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-91345">
+		September 3, 2010 at 12:42 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=91345#respond' onclick='return addComment.moveForm( "comment-91345", "91345", "respond", "121" )' aria-label='Reply to Bob'> &middot; Reply</a></span>		 
+		</div>
+		<p>Is there actually a use of fibonacci numbers in C++? Apart from in a maths program!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-94266">
+		<div id="div-comment-94266" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2815cc0e150a1e708f268f02c4b19389?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2815cc0e150a1e708f268f02c4b19389?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">lunchmeat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-94266">
+		October 19, 2010 at 4:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=94266#respond' onclick='return addComment.moveForm( "comment-94266", "94266", "respond", "121" )' aria-label='Reply to lunchmeat'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey there.</p>
+<p>I&#8217;m just another guy who&#8217;s been reading through your tutorials (not always in a linear fashion) and I liked this one - especially coming from the previous article dealing with stack memory.</p>
+<p>I noticed something - when I write recursive statements, I don&#8217;t use a return statement until I break the recursion. I noticed that you use return statements as part of your recursion. For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d78d86a1d0569896261" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d78d86a1d0569896261-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a1d0569896261-2">2</div><div class="crayon-num" data-line="crayon-555d78d86a1d0569896261-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a1d0569896261-4">4</div><div class="crayon-num" data-line="crayon-555d78d86a1d0569896261-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a1d0569896261-6">6</div><div class="crayon-num" data-line="crayon-555d78d86a1d0569896261-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d78d86a1d0569896261-8">8</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d78d86a1d0569896261-1"><span class="crayon-c">// return the sum of 1 to nValue</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a1d0569896261-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">SumTo</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d86a1d0569896261-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a1d0569896261-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d78d86a1d0569896261-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a1d0569896261-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d78d86a1d0569896261-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">SumTo</span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">-</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d78d86a1d0569896261-8"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0012 seconds] -->
+<p></p>
+<p>When I&#8217;ve written code like this, I wouldn&#8217;t have thought to put the function call after a return statement in the else block. (In practice, it yields the same results.) You may have stated this, but I may have missed it - does using a return statement in front of the recursive function prevent the stack from filling up? Based on how you stated stacks worked in the previous tutorial, this seems to make sense&#8230;by issuing a return statement, the function variables and whatnot are removed from the stack each time it recurses so it doesn&#8217;t build up. Am I right or am I missing something? It seems to make sense, but something isn&#8217;t quite right&#8230;.</p>
+<p>As a side note, I made my own fibonacci sequence before reading this article (as practice for command-line arguments) but I used a recursive sequence that added the last and second-to-last numbers to get the next number. 1+1=2, 2+1=3, 3+2=5, 5+3=8, and so on. Seems like this method takes less overhead?</p>
+<p>Thank you for your tutorials!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-94930">
+		<div id="div-comment-94930" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/861708630ff4438b182a5ce611c7a2e6?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/861708630ff4438b182a5ce611c7a2e6?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Dr. HaXX</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-94930">
+		November 16, 2010 at 4:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=94930#respond' onclick='return addComment.moveForm( "comment-94930", "94930", "respond", "121" )' aria-label='Reply to Dr. HaXX'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;On the authors machine, this program counted down to -11732 before terminating!&#8221;<br />
+Then you must have quite some stack memory, my computer stopped counting at -4607 xD</p>
+<p>&#8220;Hahaha… apparently Linux doesn’t believe in stack overflows.<br />
+I ran your stack overflowing program and it just kept going all the way past -4,000,000, when I stopped it.&#8221;</p>
+<p>Lmao, apparently you have infinite stack memory on your pc ?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-95151">
+		<div id="div-comment-95151" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0e0f7d0c0755f629b200d5470331478d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0e0f7d0c0755f629b200d5470331478d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Nelson Jenkins</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-95151">
+		February 3, 2011 at 11:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=95151#respond' onclick='return addComment.moveForm( "comment-95151", "95151", "respond", "121" )' aria-label='Reply to Nelson Jenkins'> &middot; Reply</a></span>		 
+		</div>
+		<p>Probably related to the compiler and your RAM, or maybe even the byte size of your operating system (I hit -130,146 before crashing, just like clementl below me, and I&#8217;ve got 12 GB of RAM using Dev-C++ on Windows 7 64-bit). Perhaps the compiler Quinn used had some kind of fancy dynamic/large stack, unless he has a few TB of RAM.</p>
+<p>Fun to test, though. Someone should make a program using this principle that pops up error messages instead of cout&#8217;s to simulate the Windows experience for Mac/Linux users!</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-95071">
+		<div id="div-comment-95071" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e2f9c91f98ddf484768b36f215c2afb2?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e2f9c91f98ddf484768b36f215c2afb2?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">clementl</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-95071">
+		December 23, 2010 at 6:01 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=95071#respond' onclick='return addComment.moveForm( "comment-95071", "95071", "respond", "121" )' aria-label='Reply to clementl'> &middot; Reply</a></span>		 
+		</div>
+		<p>My pc stopped at -130146. Facinating!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-95317">
+		<div id="div-comment-95317" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/442ba68e9f819664a4e4ffb54e7dadcb?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/442ba68e9f819664a4e4ffb54e7dadcb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">mael</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-95317">
+		April 11, 2011 at 4:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=95317#respond' onclick='return addComment.moveForm( "comment-95317", "95317", "respond", "121" )' aria-label='Reply to mael'> &middot; Reply</a></span>		 
+		</div>
+		<p>#include </p>
+<p>using std::cout;<br />
+using std::cin;<br />
+int main()<br />
+{<br />
+double nOld(0), nNew(1), nSum(0), nThfibo;<br />
+   cout &lt;&lt; &quot;Numbers above the 30th, loose precision so \n&quot;;<br />
+   cout &lt;&lt; &quot;the 29th and the 30th numbers are 514,229 and 832,040 maybe you should go manual from there \n \n&quot;;<br />
+   cout &lt;&gt; nThfibo;</p>
+<p>      int iii = 1;<br />
+        while (iii &lt; nThfibo)<br />
+              {<br />
+                   nSum = nOld + nNew;<br />
+                   nOld = nNew;<br />
+                   nNew = nSum;<br />
+                   iii++;<br />
+              }<br />
+cout &lt;&lt; nSum &lt;&lt; &quot; is the &quot; &lt;&lt; nThfibo &lt;&lt; &quot;th Fibonacci number.\n&quot;;</p>
+<p>cin.clear();<br />
+cin.ignore(255, &#039;\n&#039;);<br />
+cin.get();<br />
+return 0;<br />
+}<br />
+Faster way to get the Fibbo you want?<br />
+but above 30th number you loose precision anyway to fix it??<br />
+Greate site <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-96117">
+		<div id="div-comment-96117" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://127.0.0.1/' rel='external nofollow' class='url'>zingmars</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-96117">
+		October 8, 2011 at 4:58 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=96117#respond' onclick='return addComment.moveForm( "comment-96117", "96117", "respond", "121" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>Use int (int64 or something) instead of double, and you won&#8217;t loose precision.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-96869">
+		<div id="div-comment-96869" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9d413f6d277aca993f8a8ac5ffeac769?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9d413f6d277aca993f8a8ac5ffeac769?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">abdelones</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-96869">
+		January 21, 2012 at 7:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=96869#respond' onclick='return addComment.moveForm( "comment-96869", "96869", "respond", "121" )' aria-label='Reply to abdelones'> &middot; Reply</a></span>		 
+		</div>
+		<p>hi every one i hope you can help me with this i found this countdown code in C<br />
+******************************<br />
+void countdown(int n)<br />
+{<br />
+    if (n&lt;10)<br />
+    {<br />
+        countdown()(n+1);<br />
+        printf(&quot;%d\n&quot;, n);<br />
+     }</p>
+<p>}</p>
+<p>void main()<br />
+{<br />
+    countdown()(1);<br />
+    getch();</p>
+<p>}<br />
+*********************************<br />
+when it&#039;s done we can saw countdown printed like that<br />
+9<br />
+8<br />
+7<br />
+.<br />
+.<br />
+.<br />
+the problem is that i just can&#039;t understand how it works and why it print last numbers in the first place ?  seek_help ?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-109621">
+		<div id="div-comment-109621" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1da585dd331f16bc6824655250135852?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1da585dd331f16bc6824655250135852?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">DrSuse</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-109621">
+		November 18, 2013 at 5:46 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=109621#respond' onclick='return addComment.moveForm( "comment-109621", "109621", "respond", "121" )' aria-label='Reply to DrSuse'> &middot; Reply</a></span>		 
+		</div>
+		<p>Check out my Fibonacci algorithm. I can barely figure out how I did this!<br />
+<code>#include &lt;iostream&gt;</p>
+<p>using namespace std;<br />
+int nFibarray[3];<br />
+int nLimit;<br />
+int main()<br />
+{<br />
+    cout &lt;&lt; &quot;Display Fibonacci numbers up to what number?  &quot;;<br />
+    cin &gt;&gt; nLimit;</p>
+<p>    for (*(nFibarray+2) = 1;  *(nFibarray + 1) &lt;= nLimit; *(nFibarray+2) =  *nFibarray + *(nFibarray + 1) )<br />
+    {</p>
+<p>        cout &lt;&lt; *(nFibarray + 1) &lt;&lt; &quot;   &quot; ;</p>
+<p>        *nFibarray = *(nFibarray + 1);<br />
+        *(nFibarray + 1) = *(nFibarray + 2);</p>
+<p>    }</p>
+<p>    return 0;<br />
+}</code></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-124040">
+		<div id="div-comment-124040" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/12b159434afe3584a9f31694c79a7f33?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/12b159434afe3584a9f31694c79a7f33?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">panqnik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-124040">
+		February 9, 2014 at 8:07 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=124040#respond' onclick='return addComment.moveForm( "comment-124040", "124040", "respond", "121" )' aria-label='Reply to panqnik'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey there,<br />
+Very useful post! I would like to invite you to visit my blog as well, and read my latest post about sequence points in C and C++.</p>
+<p>http://blog.panqnik.pl/dev/sequence-points-in-c-cpp/</p>
+<p>Best regards,<br />
+panqnik</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-124418">
+		<div id="div-comment-124418" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d579c10ecc88c6af0e627ff685592fa8?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d579c10ecc88c6af0e627ff685592fa8?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ahrramin</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-124418">
+		February 11, 2014 at 2:55 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=124418#respond' onclick='return addComment.moveForm( "comment-124418", "124418", "respond", "121" )' aria-label='Reply to ahrramin'> &middot; Reply</a></span>		 
+		</div>
+		<p>Here is my iterative Fibonacci program =) :</p>
+<p><code><br />
+#include &lt;iostream&gt;</p>
+<p>using namespace std;</p>
+<p>int Fibonacci(int x)<br />
+{<br />
+    int fibBack2 = 0;<br />
+    int fibBack1 = 1;<br />
+    int fibNow = 0;<br />
+    for(int iii=0; iii &lt; x; iii++)<br />
+    {<br />
+        if(iii == 0)<br />
+            fibNow = 0;<br />
+        else if(iii == 1)<br />
+            fibNow = 1;<br />
+        else<br />
+            fibNow = ((fibBack1) + (fibBack2));<br />
+        cout &lt;&lt; fibNow &lt;&lt; &quot; &quot;;<br />
+        fibBack2 = fibBack1;<br />
+        fibBack1 = fibNow;<br />
+    }</p>
+<p>}</p>
+<p>int main()<br />
+{<br />
+    int x;<br />
+    cin &gt;&gt; x;<br />
+    cout &lt;&lt; Fibonacci(x) &lt;&lt; endl;</p>
+<p>    return 0;<br />
+}<br />
+</code></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-135073">
+		<div id="div-comment-135073" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/55a1d1ecb21ded2858859a8d1cf73620?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/55a1d1ecb21ded2858859a8d1cf73620?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">sherrellbc</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-135073">
+		April 13, 2014 at 12:41 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=135073#respond' onclick='return addComment.moveForm( "comment-135073", "135073", "respond", "121" )' aria-label='Reply to sherrellbc'> &middot; Reply</a></span>		 
+		</div>
+		<p>Although the Fibonacci recursive implementation tends to be how the idea of recursion is introduced, the recursive implementation has extremely poor run-time efficiency compared to the iterative approach - think big-O. Many of the necessary calculations are computed repeatedly and it is therefore redundant. Formulate a recursion tree for the algorithm and prove it to yourself.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-190769">
+		<div id="div-comment-190769" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1fbbd8425186d1840a8790e4a9f66849?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1fbbd8425186d1840a8790e4a9f66849?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='https://www.facebook.com/citationdude' rel='external nofollow' class='url'>Tom</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/710-recursion/#comment-190769">
+		October 6, 2014 at 4:04 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/710-recursion/?replytocom=190769#respond' onclick='return addComment.moveForm( "comment-190769", "190769", "respond", "121" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>I try to include Fibonacci in my diet every morning.</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/710-recursion/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>ten &#8722; 7 = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4OTE0NHR5bTdtZjVxZ3o3ZGJwYWozMW04Mw==" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432189144" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='121' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="7e58aac298" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="57"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/710-recursion\/":121};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/710-recursion/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'121',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '121' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.769 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:19:04 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

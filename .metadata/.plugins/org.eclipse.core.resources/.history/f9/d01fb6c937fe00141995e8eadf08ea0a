@@ -1,0 +1,60 @@
+import java.util.Scanner;
+public class Mergesort
+{
+	public static void sort(int a[],int lo,int hi)
+	{
+		if(lo<hi)
+		{
+			int m = (lo+hi)/2;
+			sort(a,lo,m);
+			sort(a,m+1,hi);
+			merge(a,lo,hi);
+		}
+	}
+	public static void merge(int a[],int lo,int hi)
+	{
+		int i,j,k,b[] = new int[hi-lo+1];
+		int m = (hi+lo)/2;
+		for(i=lo;i<hi-lo+1;i++)
+			b[i] = a[i];
+		i=lo;
+		j=m+1;
+		k=lo;
+		System.out.println(i + " " + j + " " + k);
+		while(i<=m && j<=hi)
+		{
+			if(b[i]<=b[j])
+			{
+				a[k] = b[i];
+				k++;
+				i++;
+			}
+			else
+			{
+				a[k] = b[j];
+				k++;
+				j++;
+			}
+		}
+		while(i<=m)
+			a[k++] = b[i++];
+		while(j<=hi)
+			a[k++] = b[j++];
+	}
+	public static void main(String arg[])
+	{
+		int array[],x,size;
+		Scanner s = new Scanner(System.in);
+		System.out.println("Enter the size of the array : ");
+		size = s.nextInt();
+		array = new int[size];
+		System.out.println("Enter the elements of the array : ");
+		for(x=0;x<size;x++)
+			array[x] = s.nextInt();
+		sort(array,0,size-1);
+		System.out.print("Output : ");
+		for(x=0;x<size;x++)
+			System.out.print(array[x] + " ");
+		s.close();
+	}
+}

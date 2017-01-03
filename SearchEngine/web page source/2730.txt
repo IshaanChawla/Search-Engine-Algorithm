@@ -1,0 +1,942 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+<title>PHP AJAX and XML</title>
+<style>a.menu_php_ajax_xml{font-weight:bold;} a.topnav_php{background-color:#8AC007 !important;color:#ffffff !important;}</style>
+<style>
+#smallnavContainer {display:none;}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="Keywords" content="HTML,CSS,XML,JavaScript,DOM,jQuery,ASP.NET,PHP,SQL,colors,tutorial,programming,development,training,learning,quiz,primer,lessons,reference,examples,source code,demos,tips,color table,w3c,cascading style sheets,active server pages,Web building,Webmaster">
+<meta name="Description" content="Free HTML CSS JavaScript DOM jQuery XML AJAX Angular ASP .NET PHP SQL tutorials, references, web building examples">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="/bs/css/bootstrap_w3schools.css">
+<script src="/jquery.js"></script>
+<script src="/bs/js/bootstrap.min.js"></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-3855518-1', 'auto');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+
+<script type='text/javascript'>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type='text/javascript'>
+ // GPT slots
+ var gptAdSlots = [];
+ googletag.cmd.push(function() {
+
+   var leaderMapping = googletag.sizeMapping().
+   // Mobile ad
+   addSize([0, 0], [320, 50]). 
+   // Vertical Tablet ad
+   addSize([480, 0], [468, 60]). 
+   // Horizontal Tablet
+   addSize([700, 0], [728, 90]).
+   // Desktop and bigger ad
+   addSize([1200, 0], [[728, 90], [970, 90]]).build();
+
+   gptAdSlots[0] = googletag.defineSlot('/16833175/MainLeaderboard', [[728, 90], [970, 90]], 'div-gpt-ad-1422003450156-2').
+   defineSizeMapping(leaderMapping).addService(googletag.pubads());
+
+   var skyMapping = googletag.sizeMapping().
+   // Mobile ad
+   addSize([0, 0], [320, 50]). 
+   // Tablet ad
+   addSize([975, 0], [120, 600]). 
+   // Desktop
+   addSize([1100, 0], [[120, 600], [160, 600]]).
+   // Large Desktop
+   addSize([1675, 0], [[120, 600], [160, 600], [300, 600], [300, 1050]]).build();
+   gptAdSlots[1] = googletag.defineSlot('/16833175/WideSkyScraper', [[120, 600], [160, 600], [300, 600], [300, 1050]], 'div-gpt-ad-1422003450156-5').
+   defineSizeMapping(skyMapping).addService(googletag.pubads());
+
+   var bmrMapping = googletag.sizeMapping().
+   // Smaller
+   addSize([0, 0], [[300, 250], [336, 280]]). 
+   // Large Desktop
+   addSize([1200, 0], [[300, 250], [336, 280], [728, 280], [970, 250]]).build();
+   gptAdSlots[2] = googletag.defineSlot('/16833175/BottomMediumRectangle', [[300, 250], [336, 280], [728, 280], [970, 250]], 'div-gpt-ad-1422003450156-0').
+   defineSizeMapping(bmrMapping).setCollapseEmptyDiv(true).addService(googletag.pubads());
+
+   gptAdSlots[3] = googletag.defineSlot('/16833175/RightBottomMediumRectangle', [[300, 250], [336, 280]], 'div-gpt-ad-1422003450156-3').addService(googletag.pubads());
+
+   googletag.pubads().setTargeting("content","php");
+   googletag.enableServices();
+ });
+</script>
+<script>
+if (window.addEventListener) {              
+    window.addEventListener("resize", browserResize);
+} else if (window.attachEvent) {                 
+    window.attachEvent("onresize", browserResize);
+}
+var xbeforeResize = window.innerWidth;
+var ybeforeResize = window.innerWidth;
+var zbeforeResize = window.innerWidth;
+
+
+function skyscraperResize() {
+if (window.innerWidth < 975 + 17) {
+			document.getElementById("div-gpt-ad-1422003450156-5").style.minHeight="0";
+		}
+}
+
+function browserResize() {
+    var afterResize = window.innerWidth;
+    if ((xbeforeResize < (1200 + 14) && afterResize >= (1200 + 14)) || (xbeforeResize >= (1200 + 14) && afterResize < (1200 + 14)) ||
+        (xbeforeResize < (700 + 14) && afterResize >= (700 + 14)) || (xbeforeResize >= (700 + 14) && afterResize < (700 + 14)) ||
+        (xbeforeResize < (480 + 17) && afterResize >= (480 + 17)) ||(xbeforeResize >= (480 + 17) && afterResize < (480 + 17))) {
+        xbeforeResize = afterResize;
+        googletag.cmd.push(function() {
+            googletag.pubads().refresh([gptAdSlots[0]]);
+        });
+    }
+    if ((ybeforeResize < (1675 + 14) && afterResize >= (1675 + 14)) || (ybeforeResize >= (1675 + 14) && afterResize < (1675 + 14)) ||
+    	(ybeforeResize < (1100 + 14) && afterResize >= (1100 + 14)) || (ybeforeResize >= (1100 + 14) && afterResize < (1100 + 14)) ||
+        (ybeforeResize < (975 + 17) && afterResize >= (975 + 17)) || (ybeforeResize >= (975 + 17) && afterResize < (975 + 17))) {
+        ybeforeResize = afterResize;
+       	skyscraperResize()
+        googletag.cmd.push(function() {
+            googletag.pubads().refresh([gptAdSlots[1]]);
+        });
+    }
+    if ((zbeforeResize < (1200 + 14) && afterResize >= (1200 + 14)) || (zbeforeResize >= (1200 + 14) && afterResize < (1200 + 14))) {
+        zbeforeResize = afterResize;
+        googletag.cmd.push(function() {
+            googletag.pubads().refresh([gptAdSlots[2], gptAdSlots[3]]);
+        });
+	}
+}
+</script>
+<link rel="stylesheet" type="text/css" href="/stdtheme.css" />
+<script>
+function showCD(str)
+{
+if (str=="")
+  {
+  document.getElementById("txtHint").innerHTML="";
+  return;
+  }  
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("GET","getcd.php?q="+str,true);
+xmlhttp.send();
+}
+</script>
+</head>
+<body>
+<div id='leftBackground'></div><div id='topDIV' class='top'><a href='http://www.w3schools.com'><img id='topLogo' src='/images/w3schools.png' alt='W3Schools.com' class='img-responsive'></a><div id='toptext'>THE WORLD'S LARGEST WEB DEVELOPER SITE</div></div><div id='topnavDIV' class='topnavContainer'><div class='container-fluid' style='max-width:1600px;margin-left:0px;padding-left:0;'><ul class='nav nav-pills topnav'><li><a href='/default.asp' class='topnav_home' title='Home'>&nbsp;</a></li><li><a href='/html/default.asp' class='topnav_html' title='HTML Tutorial'>HTML</a></li><li><a href='/css/default.asp' class='topnav_css' title='CSS Tutorial'>CSS</a></li><li><a href='/js/default.asp' class='topnav_js' title='JavaScript Tutorial'>JAVASCRIPT</a></li><li><a href='/sql/default.asp' class='topnav_sql' title='SQL Tutorial'>SQL</a></li><li><a href='/php/default.asp' class='topnav_php' title='PHP Tutorial'>PHP</a></li><li><a href='/jquery/default.asp' class='topnav_jquery' title='jQuery Tutorial'>jQUERY</a></li><li><a href='/bootstrap/default.asp' class='topnav_bootstrap' title='Bootstrap Tutorial'>BOOTSTRAP</a></li><li><a href='/angular/default.asp' class='topnav_angular' title='Angular Tutorial'>ANGULAR</a></li><li><a href='/xml/default.asp' class='topnav_xml' title='XML Tutorial'>XML</a></li><li><a id='dropdownTutorialsBtn' href='#' class='topnav_tutorials' title='More Tutorials'>TUTORIALS <span class='caret'></span></a></li><li><a id='dropdownReferencesBtn' href='#' class='topnav_references' title='More References'>REFERENCES <span class='caret'></span></a></li><li><a id='dropdownExamplesBtn' href='#' class='topnav_examples' title='More Examples'>EXAMPLES <span class='caret'></span></a></li><li><a href='/forum/default.asp' class='topnav_forum' title='W3Schools Forum'>FORUM</a></li><li class='menuBtn'><a href='javascript:void(0)' class='topnav_menu' onclick='vismenyen()' title='Menu'><hr><hr><hr></a></li><li class='menuSearch'><a id='dropdownSearchBtn' href='javascript:void(0);' class='topnav_search' title='Search W3Schools'>&nbsp;</a></li><li class='menuTranslate'><a id='dropdownTranslateBtn' href='javascript:void(0);' class='topnav_translate' title='Translate W3Schools'>&nbsp;</a></li></ul></div></div><div class='container-fluid master'><div class='row'><div class='col-lg-2 col-md-2 col-sm-3 menu'><div id='menyen'><h2 class="left"><span class="left_h2">PHP</span> Tutorial</h2>
+<a target="_top" href="default.asp" class="menu_default">PHP HOME</a>
+<a target="_top" href="php_intro.asp" class="menu_php_intro">PHP Intro</a>
+<a target="_top" href="php_install.asp" class="menu_php_install">PHP Install</a>
+<a target="_top" href="php_syntax.asp" class="menu_php_syntax">PHP Syntax</a>
+<a target="_top" href="php_variables.asp" class="menu_php_variables">PHP Variables</a>
+<a target="_top" href="php_echo_print.asp" class="menu_php_echo_print">PHP Echo / Print</a>
+<a target="_top" href="php_datatypes.asp" class="menu_php_datatypes">PHP Data Types</a>
+<a target="_top" href="php_string.asp" class="menu_php_string">PHP Strings</a>
+<a target="_top" href="php_constants.asp" class="menu_php_constants">PHP Constants</a>
+<a target="_top" href="php_operators.asp" class="menu_php_operators">PHP Operators</a>
+<a target="_top" href="php_if_else.asp" class="menu_php_if_else">PHP If...Else...Elseif</a>
+<a target="_top" href="php_switch.asp" class="menu_php_switch">PHP Switch</a>
+<a target="_top" href="php_looping.asp" class="menu_php_looping">PHP While Loops</a>
+<a target="_top" href="php_looping_for.asp" class="menu_php_looping_for">PHP For Loops</a>
+<a target="_top" href="php_functions.asp" class="menu_php_functions">PHP Functions</a>
+<a target="_top" href="php_arrays.asp" class="menu_php_arrays">PHP Arrays</a>
+<a target="_top" href="php_arrays_sort.asp" class="menu_php_arrays_sort">PHP Sorting Arrays</a>
+<a target="_top" href="php_superglobals.asp" class="menu_php_superglobals">PHP Superglobals</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> Forms</h2>
+<a target="_top" href="php_forms.asp" class="menu_php_forms">PHP Form Handling</a>
+<a target="_top" href="php_form_validation.asp" class="menu_php_form_validation">PHP Form Validation</a>
+<a target="_top" href="php_form_required.asp" class="menu_php_form_required">PHP Form Required</a>
+<a target="_top" href="php_form_url_email.asp" class="menu_php_form_url_email">PHP Form URL/E-mail</a>
+<a target="_top" href="php_form_complete.asp" class="menu_php_form_complete">PHP Form Complete</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> Advanced</h2>
+<a target="_top" href="php_arrays_multi.asp" class="menu_php_arrays_multi">PHP Arrays Multi</a>
+<a target="_top" href="php_date.asp" class="menu_php_date">PHP Date and Time</a>
+<a target="_top" href="php_includes.asp" class="menu_php_includes">PHP Include</a>
+<a target="_top" href="php_file.asp" class="menu_php_file">PHP File Handling</a>
+<a target="_top" href="php_file_open.asp" class="menu_php_file_open">PHP File Open/Read</a>
+<a target="_top" href="php_file_create.asp" class="menu_php_file_create">PHP File Create/Write</a>
+<a target="_top" href="php_file_upload.asp" class="menu_php_file_upload">PHP File Upload</a>
+<a target="_top" href="php_cookies.asp" class="menu_php_cookies">PHP Cookies</a>
+<a target="_top" href="php_sessions.asp" class="menu_php_sessions">PHP Sessions</a>
+<a target="_top" href="php_filter.asp" class="menu_php_filter">PHP Filters</a>
+<a target="_top" href="php_filter_advanced.asp" class="menu_php_filter_advanced">PHP Filters Advanced</a>
+<a target="_top" href="php_error.asp" class="menu_php_error">PHP Error Handling</a>
+<a target="_top" href="php_exception.asp" class="menu_php_exception">PHP Exception</a>
+<br>  
+<h2 class="left"><span class="left_h2">MySQL</span> Database</h2>
+<a target="_top" href="php_mysql_intro.asp" class="menu_php_mysql_intro">MySQL Database</a>
+<a target="_top" href="php_mysql_connect.asp" class="menu_php_mysql_connect">MySQL Connect</a>
+<a target="_top" href="php_mysql_create.asp" class="menu_php_mysql_create">MySQL Create DB</a>
+<a target="_top" href="php_mysql_create_table.asp" class="menu_php_mysql_create_table">MySQL Create Table</a>
+<a target="_top" href="php_mysql_insert.asp" class="menu_php_mysql_insert">MySQL Insert Data</a>
+<a target="_top" href="php_mysql_insert_lastid.asp" class="menu_php_mysql_insert_lastid">MySQL Get Last ID</a>
+<a target="_top" href="php_mysql_insert_multiple.asp" class="menu_php_mysql_insert_multiple">MySQL Insert Multiple</a>
+<a target="_top" href="php_mysql_prepared_statements.asp" class="menu_php_mysql_prepared_statements">MySQL Prepared</a>
+<a target="_top" href="php_mysql_select.asp" class="menu_php_mysql_select">MySQL Select Data</a>
+<a target="_top" href="php_mysql_delete.asp" class="menu_php_mysql_delete">MySQL Delete Data</a>
+<a target="_top" href="php_mysql_update.asp" class="menu_php_mysql_update">MySQL Update Data</a>
+<a target="_top" href="php_mysql_select_limit.asp" class="menu_php_mysql_select_limit">MySQL Limit Data</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> - XML</h2>
+<a target="_top" href="php_xml_parsers.asp" class="menu_php_xml_parsers">PHP XML Parsers</a>
+<a target="_top" href="php_xml_simplexml_read.asp" class="menu_php_xml_simplexml_read">PHP SimpleXML Parser</a>
+<a target="_top" href="php_xml_simplexml_get.asp" class="menu_php_xml_simplexml_get">PHP SimpleXML - Get</a>
+<a target="_top" href="php_xml_parser_expat.asp" class="menu_php_xml_parser_expat">PHP XML Expat</a>
+<a target="_top" href="php_xml_dom.asp" class="menu_php_xml_dom">PHP XML DOM</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> - AJAX</h2>
+<a target="_top" href="php_ajax_intro.asp" class="menu_php_ajax_intro">AJAX Intro</a>
+<a target="_top" href="php_ajax_php.asp" class="menu_php_ajax_php">AJAX PHP</a>
+<a target="_top" href="php_ajax_database.asp" class="menu_php_ajax_database">AJAX Database</a>
+<a target="_top" href="php_ajax_xml.asp" class="menu_php_ajax_xml">AJAX XML</a>
+<a target="_top" href="php_ajax_livesearch.asp" class="menu_php_ajax_livesearch">AJAX Live Search</a>
+<a target="_top" href="php_ajax_rss_reader.asp" class="menu_php_ajax_rss_reader">AJAX RSS Reader</a>
+<a target="_top" href="php_ajax_poll.asp" class="menu_php_ajax_poll">AJAX Poll</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> Examples</h2>
+<a target="_top" href="php_examples.asp" class="menu_php_examples">PHP Examples</a>
+<a target="_top" href="php_quiz.asp" class="menu_php_quiz">PHP Quiz</a>
+<a target="_top" href="php_exam.asp" class="menu_php_exam">PHP Certificate</a>
+<br>
+<h2 class="left"><span class="left_h2">PHP</span> Reference</h2>
+<a target="_top" href="php_ref_array.asp" class="menu_php_ref_array">PHP Array</a>
+<a target="_top" href="php_ref_calendar.asp" class="menu_php_ref_calendar">PHP Calendar</a>
+<a target="_top" href="php_ref_date.asp" class="menu_php_ref_date">PHP Date</a>
+<a target="_top" href="php_ref_directory.asp" class="menu_php_ref_directory">PHP Directory</a>
+<a target="_top" href="php_ref_error.asp" class="menu_php_ref_error">PHP Error</a>
+<a target="_top" href="php_ref_filesystem.asp" class="menu_php_ref_filesystem">PHP Filesystem</a>
+<a target="_top" href="php_ref_filter.asp" class="menu_php_ref_filter">PHP Filter</a>
+<a target="_top" href="php_ref_ftp.asp" class="menu_php_ref_ftp">PHP FTP</a>
+<a target="_top" href="php_ref_http.asp" class="menu_php_ref_http">PHP HTTP</a>
+<a target="_top" href="php_ref_libxml.asp" class="menu_php_ref_libxml">PHP Libxml</a>
+<a target="_top" href="php_ref_mail.asp" class="menu_php_ref_mail">PHP Mail</a>
+<a target="_top" href="php_ref_math.asp" class="menu_php_ref_math">PHP Math</a>
+<a target="_top" href="php_ref_misc.asp" class="menu_php_ref_misc">PHP Misc</a>
+<a target="_top" href="php_ref_mysqli.asp" class="menu_php_ref_mysqli">PHP MySQLi</a>
+<a target="_top" href="php_ref_simplexml.asp" class="menu_php_ref_simplexml">PHP SimpleXML</a>
+<a target="_top" href="php_ref_string.asp" class="menu_php_ref_string">PHP String</a>
+<a target="_top" href="php_ref_xml.asp" class="menu_php_ref_xml">PHP XML</a>
+<a target="_top" href="php_ref_zip.asp" class="menu_php_ref_zip">PHP Zip</a>
+<a target="_top" href="php_ref_timezones.asp" class="menu_php_ref_timezones">PHP Timezones</a>
+</div></div><div class='col-lg-10 col-md-10 col-sm-9 leaderboard'><div id='mainLeaderboard' style='overflow:hidden;'><!-- MainLeaderboard--><div id='div-gpt-ad-1422003450156-2'><script type='text/javascript'>googletag.cmd.push(function() { googletag.display('div-gpt-ad-1422003450156-2'); });</script></div></div><div class='row'><div class='col-lg-10 col-md-10 col-sm-12 main'><div>
+<h1>PHP Example - <span class="color_h1">AJAX and XML</span></h1>
+<div class="chapter">
+<div class="prev"><a class="chapter" href="php_ajax_database.asp">&laquo; Previous</a></div>
+<div class="next"><a class="chapter" href="php_ajax_livesearch.asp">Next Chapter &raquo;</a></div>
+</div>
+<hr>
+<p class="intro">AJAX can be used for interactive communication with an XML file.</p>
+<hr>
+<h2>AJAX XML Example</h2>
+<p>The following example will demonstrate how a web page can fetch information from an XML file with AJAX:</p>
+
+<div class="example">
+
+<h2 class="example">Example</h2>
+<div class="example_result notranslate">
+<form action=""> 
+<select name="cds" onchange="showCD(this.value)">
+<option value="">Select a CD:</option>
+<option value="Bob Dylan">Bob Dylan</option>
+<option value="Bee Gees">Bee Gees</option>
+<option value="Cat Stevens">Cat Stevens</option>
+</select>
+</form>
+<br>
+<div id="txtHint">CD info will be listed here...</div>
+</div>
+<br>
+
+</div>
+<hr>
+
+<h2>Example Explained - The HTML Page</h2>
+<p>When a user selects a CD in the dropdown list above, a function called &quot;showCD()&quot; is executed. The 
+function is triggered by the &quot;onchange&quot; event:</p> 
+
+<div class="code notranslate"><div>
+
+&lt;html&gt;<br>
+&lt;head&gt;<br>
+&lt;script&gt;<br>
+function showCD(str)
+{<br>
+&nbsp;
+if (str==&quot;&quot;) {<br>
+&nbsp;
+&nbsp; document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;<br>
+&nbsp;&nbsp;&nbsp; return;<br>
+&nbsp; } <br>
+&nbsp;
+if (window.XMLHttpRequest) {<br>&nbsp;&nbsp;&nbsp; // code for IE7+, Firefox, Chrome, Opera, Safari<br>
+&nbsp;
+&nbsp; xmlhttp=new XMLHttpRequest();<br>
+&nbsp; }
+else {&nbsp; // code for IE6, IE5<br>
+&nbsp;
+&nbsp; xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);<br>
+&nbsp; }<br>
+&nbsp;
+xmlhttp.onreadystatechange=function() {<br>
+&nbsp;
+&nbsp; if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200) {<br>
+&nbsp;
+&nbsp;&nbsp;&nbsp; document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;<br>
+&nbsp;&nbsp;&nbsp; }<br>
+&nbsp; }<br>
+&nbsp;
+xmlhttp.open(&quot;GET&quot;,&quot;getcd.php?q=&quot;+str,true);<br>
+&nbsp;
+xmlhttp.send();<br>
+}<br>
+&lt;/script&gt;<br>
+&lt;/head&gt;<br>
+&lt;body&gt;<br>
+<br>
+&lt;form&gt;<br>
+Select a CD:<br>
+&lt;select name=&quot;cds&quot; onchange=&quot;showCD(this.value)&quot;&gt;<br>
+&lt;option value=&quot;&quot;&gt;Select a CD:&lt;/option&gt;<br>
+&lt;option value=&quot;Bob Dylan&quot;&gt;Bob Dylan&lt;/option&gt;<br>
+&lt;option value=&quot;Bonnie Tyler&quot;&gt;Bonnie Tyler&lt;/option&gt;<br>
+&lt;option value=&quot;Dolly Parton&quot;&gt;Dolly Parton&lt;/option&gt;<br>
+&lt;/select&gt;<br>
+&lt;/form&gt;<br>&lt;div id=&quot;txtHint&quot;&gt;&lt;b&gt;CD info will be listed here...&lt;/b&gt;&lt;/div&gt;<br><br>
+&lt;/body&gt;<br>
+&lt;/html&gt;</div></div>
+
+<p>The showCD() function does the following:</p>
+<ul>
+	<li>Check if a CD is selected</li>
+	<li>Create an XMLHttpRequest object</li>
+	<li>Create the function to be executed when the server response is ready</li>
+	<li>Send the request off to a file on the server</li>
+	<li>Notice that a parameter (q) is added to the URL (with the content of the 
+	dropdown list)</li>
+</ul>
+
+<hr>
+<h2>The PHP File</h2>
+
+<p>The page on the server called by the JavaScript above is a PHP file called &quot;getcd.php&quot;.</p>
+<p>The PHP script loads an XML document, &quot;<a target="_blank" href="cd_catalog.xml">cd_catalog.xml</a>&quot;, runs a query against the XML file, and returns the result as HTML:</p>
+<div class="code notranslate"><div>
+
+&lt;?php<br>
+$q=$_GET[&quot;q&quot;];<br>
+<br>
+$xmlDoc = new DOMDocument();<br>
+$xmlDoc-&gt;load(&quot;cd_catalog.xml&quot;);<br>
+<br>
+$x=$xmlDoc-&gt;getElementsByTagName('ARTIST');<br>
+<br>
+for ($i=0; $i&lt;=$x-&gt;length-1; $i++)
+{<br>
+&nbsp;
+//Process only element nodes<br>
+&nbsp;
+if ($x-&gt;item($i)-&gt;nodeType==1)&nbsp;{<br>
+&nbsp;
+&nbsp;&nbsp;if ($x-&gt;item($i)-&gt;childNodes-&gt;item(0)-&gt;nodeValue == $q) 
+	{<br>
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;$y=($x-&gt;item($i)-&gt;parentNode);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;}<br>
+}<br>
+<br>
+$cd=($y-&gt;childNodes);<br>
+<br>
+for ($i=0;$i&lt;$cd-&gt;length;$i++)
+{ <br>
+&nbsp;
+//Process only element nodes<br>
+&nbsp;
+if ($cd-&gt;item($i)-&gt;nodeType==1)&nbsp;{<br>
+&nbsp;
+&nbsp; echo(&quot;&lt;b&gt;&quot; . $cd-&gt;item($i)-&gt;nodeName . &quot;:&lt;/b&gt; &quot;);<br>
+&nbsp;&nbsp;&nbsp; echo($cd-&gt;item($i)-&gt;childNodes-&gt;item(0)-&gt;nodeValue);<br>
+&nbsp;
+&nbsp;&nbsp;echo(&quot;&lt;br&gt;&quot;);<br>
+&nbsp;&nbsp;}<br>
+}<br>
+?&gt;
+
+</div></div>
+<p>When the CD query is sent from the JavaScript to the PHP page, the following 
+happens:</p>
+<ol>
+	<li>PHP creates an XML DOM object</li>
+	<li>Find all &lt;artist&gt; elements that matches the 
+	name sent from the JavaScript</li>
+	<li>Output the album information (send to the &quot;txtHint&quot; placeholder)</li>
+</ol>
+<br>
+<div class="chapter">
+<div class="prev"><a class="chapter" href="php_ajax_database.asp">&laquo; Previous</a></div>
+<div class="next"><a class="chapter" href="php_ajax_livesearch.asp">Next Chapter &raquo;</a></div>
+</div>
+
+     <br>
+    </div>
+   </div>
+   <div class="col-lg-2 col-md-2 col-sm-12">
+     <div class="row sidesection" style="margin-top:15px;padding:0;overflow:visible;">
+      <div id="skyscraper">
+       <div id="div-gpt-ad-1422003450156-5" style="min-height:600px;">
+        <script>
+         googletag.cmd.push(function() {
+         googletag.display('div-gpt-ad-1422003450156-5');
+         });
+        </script> 
+       </div>
+      </div>
+     </div>
+     <div class="row sidesection">
+      <h3>W3SCHOOLS EXAMS</h3>
+      <a target="_blank" href="http://www.w3schools.com/cert/default.asp">HTML, CSS, JavaScript, PHP, jQuery, and XML Certifications</a>
+     </div>
+     <div class="row sidesection">
+      <h3>COLOR PICKER</h3>
+      <a href="/tags/ref_colorpicker.asp">
+      <img src="/images/colorpicker.gif" alt="colorpicker"></a>
+     </div>
+     <div class="row sidesection">
+      <h3>SHARE THIS PAGE</h3>
+      <div class="sharethis">
+       <script>
+       <!--
+       try{
+       loc=location.pathname;
+       if (loc.toUpperCase().indexOf(".ASP")<0) loc=loc+"default.asp";
+       txt='<a href="http://www.facebook.com/sharer.php?u=http://www.w3schools.com'+loc+'" target="_blank" title="Facebook"><span class="share sharefacebook social social-facebook"></span></a>';
+       txt=txt+'<a href="http://twitter.com/home?status=Currently reading http://www.w3schools.com'+loc+'" target="_blank" title="Twitter"><span class="share sharetwitter social social-twitter"></span></a>';
+       txt=txt+'<a href="https://plus.google.com/share?url=http://www.w3schools.com'+loc+'" target="_blank" title="Google+"><span class="share sharegoogle social social-google-plus"></span></a>';
+       document.write(txt);
+       }
+       catch(e) {}
+       //-->
+       </script>
+      </div>
+     </div>
+     <div class="row sidesection">
+       <a href="javascript:void(0);" onclick="clickFBLike()" title="Like W3Schools on Facebook">
+         <span class="share sharefblike glyphicons glyphicons-thumbs-up"></span>
+       </a>
+       <div id="fblikeframe">
+         <div id="popupframe"></div>
+         <div id="popupDIV"></div>
+       </div>
+     </div>
+   </div>
+  </div>
+  
+  <div class="row">
+   <div class="col-lg-12 col-md-12 col-sm-12">
+
+<hr style="margin-bottom:0;">
+<div class="bottomads" style="overflow:hidden;">
+<!-- BottomMediumRectangle -->
+<div id='div-gpt-ad-1422003450156-0'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1422003450156-0'); });
+</script>
+</div>
+<!-- RightBottomMediumRectangle -->
+<div id='div-gpt-ad-1422003450156-3'>
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1422003450156-3'); });
+</script>
+</div>
+<div style="clear:both"></div>
+</div>
+
+
+
+    <div class="footer">
+     <hr style="margin-bottom:14px;margin-top:0px;">
+     <div class="row">
+      <div class="col-lg-3 col-md-3 col-sm-12">
+	   <a href="" onclick="displayError();return false" style="white-space:nowrap;">REPORT ERROR</a>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+       <a href="" target="_blank" onclick="printPage();return false;">PRINT PAGE</a>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+       <a href="/forum/default.asp" target="_blank">FORUM</a>
+      </div>
+      <div class="col-lg-3 col-md-3 col-sm-12">
+	   <a href="/about/default.asp" target="_top">ABOUT</a>
+      </div>
+     </div>
+     <hr style="margin-bottom:2px;margin-top:14px;">
+     <div class="container-fluid jumbotron" id="err_form">
+      <button type="button" class="close" onclick="hideError()"><span>&times;</span></button>
+      <h2>Your Suggestion:</h2>
+      <form role="form">
+      <div class="form-group">
+        <label for="err_email">Your Email:</label>
+        <input class="form-control" type="email" id="err_email" name="err_email" />
+      </div>
+      <div class="form-group">
+        <label for="err_email">Page address:</label>
+        <input class="form-control" type="text" id="err_url" name="err_url" disabled="disabled" />
+      </div>
+      <div class="form-group">
+        <label for="err_email">Description:</label>
+        <textarea rows="10" class="form-control" id="err_desc" name="err_desc" style="max-width:100%;"></textarea>
+      </div>
+      <div class="form-group">        
+        <button type="button" class="btn btn-default" onclick="sendErr()">Submit</button>
+      </div>
+      </form>
+     </div>
+     <div class="container-fluid jumbotron" id="err_sent" style="clear:both;">
+      <button type="button" class="close" onclick="hideSent()"><span>&times;</span></button>
+      <h2>Thank You For Helping Us!</h2>
+      <p>Your message has been sent to W3Schools.</p>
+     </div>
+         
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="top10">
+                  <h3>Top 10 Tutorials</h3>
+                  <a href="/html/default.asp">HTML Tutorial</a><br>
+                  <a href="/css/default.asp">CSS Tutorial</a><br>
+                  <a href="/js/default.asp">JavaScript Tutorial</a><br>
+                  <a href="/sql/default.asp">SQL Tutorial</a><br>
+                  <a href="/php/default.asp">PHP Tutorial</a><br>
+                  <a href="/jquery/default.asp">jQuery Tutorial</a><br>
+                  <a href="/bootstrap/default.asp">Bootstrap Tutorial</a><br>
+                  <a href="/angular/default.asp">Angular Tutorial</a><br>
+                  <a href="/aspnet/default.asp">ASP.NET Tutorial</a><br>
+                  <a href="/xml/default.asp">XML Tutorial</a><br>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="top10">
+                  <h3>Top 10 References</h3>
+                  <a href="/tags/default.asp">HTML Reference</a><br>
+                  <a href="/cssref/default.asp">CSS Reference</a><br>
+                  <a href="/jsref/default.asp">JavaScript Reference</a><br>
+                  <a href="/browsers/default.asp">Browser Statistics</a><br>
+                  <a href="/jsref/dom_obj_document.asp">HTML DOM</a><br>
+                  <a href="/php/php_ref_array.asp">PHP Reference</a><br>
+                  <a href="/jquery/jquery_ref_selectors.asp">jQuery Reference</a><br>
+                  <a href="/tags/ref_colornames.asp">HTML Colors</a><br>
+                  <a href="/charsets/default.asp">HTML Character Sets</a><br>
+                  <a href="/dom/dom_nodetype.asp">XML DOM</a><br>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="top10">
+                  <h3>Top 10 Examples</h3>
+                  <a href="/html/html_examples.asp">HTML Examples</a><br>
+                  <a href="/css/css_examples.asp">CSS Examples</a><br>
+                  <a href="/js/js_examples.asp">JavaScript Examples</a><br>
+                  <a href="/js/js_dom_examples.asp">HTML DOM Examples</a><br>
+                  <a href="/php/php_examples.asp">PHP Examples</a><br>
+                  <a href="/jquery/jquery_examples.asp">jQuery Examples</a><br>
+                  <a href="/xml/xml_examples.asp">XML Examples</a><br>
+                  <a href="/dom/dom_examples.asp">XML DOM Examples</a><br>
+                  <a href="/asp/asp_examples.asp">ASP Examples</a><br>
+                  <a href="/svg/svg_examples.asp">SVG Examples</a>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6">
+                <div class="top10">
+                  <h3>Web Certificates</h3>
+                  <a href="/cert/default.asp">HTML Certificate</a><br>
+                  <a href="/cert/default.asp">HTML5 Certificate</a><br>
+                  <a href="/cert/default.asp">CSS Certificate</a><br>
+                  <a href="/cert/default.asp">JavaScript Certificate</a><br>
+                  <a href="/cert/default.asp">jQuery Certificate</a><br>
+                  <a href="/cert/default.asp">PHP Certificate</a><br>
+                  <a href="/cert/default.asp">XML Certificate</a><br>
+                  
+                </div>
+              </div>        
+            </div>        
+     <hr>
+    </div>
+     <div class="footer">
+       W3Schools is optimized for learning, testing, and training. Examples might be simplified to improve reading and basic understanding.
+       Tutorials, references, and examples are constantly reviewed to avoid errors, but we cannot warrant full correctness of all content.
+       While using this site, you agree to have read and accepted our <a href="/about/about_copyright.asp">terms of use</a>,
+       <a href="/about/about_privacy.asp">cookie and privacy policy</a>.
+       <a href="/about/about_copyright.asp">Copyright 1999-2015</a> by Refsnes Data. All Rights Reserved.<br><br>
+       <a href="http://www.w3schools.com">
+       <img style="width:150px;height:28px;border:0" src="/images/w3schoolscom_gray.gif" alt="W3Schools.com"></a>
+     </div>
+
+   </div>
+  </div>
+ </div>
+
+</div>
+</div>
+<div id='w3dropdowntutorials' class='w3DropdownMenu container-fluid'>
+<div class="w3DropdownInner">
+<button type="button" class="xclose w3DropdownClose" onclick="hideDropdownMenu()" title="Close"><span>&times;</span></button>
+<br>
+<div class="w3DropdownItem">
+<h3>HTML/CSS</h3>
+<a href='/html/default.asp'>HTML Tutorial</a>
+<a href='/css/default.asp'>CSS Tutorial</a>
+<a href='/bootstrap/default.asp'>Bootstrap Tutorial</a>
+<a href='/w3css/default.asp'>W3.CSS Tutorial</a>
+</div>
+<div class="w3DropdownItem">
+<h3>JavaScript</h3>
+<a href='/js/default.asp'>JavaScript Tutorial</a>
+<a href='/jquery/default.asp'>jQuery Tutorial</a>
+<a href='/jquerymobile/default.asp'>jQuery Mobile Tutorial</a>
+<a href='/appml/default.asp'>AppML Tutorial</a>
+<a href='/angular/default.asp'>AngularJS Tutorial</a>
+<a href='/ajax/default.asp'>AJAX Tutorial</a>
+<a href='/json/default.asp'>JSON Tutorial</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Graphics</h3>
+<a href='/canvas/default.asp'>Canvas Tutorial</a>
+<a href='/svg/default.asp'>SVG Tutorial</a>
+<a href='/googleapi/default.asp'>Google Maps Tutorial</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Server Side</h3>
+<a href='/sql/default.asp'>SQL Tutorial</a>
+<a href='/php/default.asp'>PHP Tutorial</a>
+<a href='/asp/default.asp'>ASP Tutorial</a>
+<a href='/aspnet/default.asp'>ASP.NET Tutorial</a>
+<a href='/vbscript/default.asp'>VBScript Tutorial</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Web</h3>
+<a href='/website/default.asp'>Web Building</a>
+<a href='/browsers/default.asp'>Web Statistics</a>
+<a href='/cert/default.asp'>Web Certification</a>
+</div>
+<div class="w3DropdownItem">
+<h3>XML</h3>
+<a href='/xml/default.asp'>XML Tutorial</a>
+<a href='/dtd/default.asp'>DTD Tutorial</a>
+<a href='/schema/default.asp'>Schema Tutorial</a>
+<a href='/dom/default.asp'>XML DOM Tutorial</a>
+<a href='/xpath/default.asp'>XPath Tutorial</a>
+<a href='/xsl/default.asp'>XSLT Tutorial</a>
+<a href='/xquery/default.asp'>XQuery Tutorial</a>
+<a href='/webservices/default.asp'>WSDL Tutorial</a>
+</div>
+</div>
+</div>
+<div id='w3dropdownreferences' class='w3DropdownMenu container-fluid'>
+<div class="w3DropdownInner">
+<button type="button" class="xclose w3DropdownClose" onclick="hideDropdownMenu()" title="Close"><span>&times;</span></button>
+<br>
+<div class="w3DropdownItem">
+<h3>HTML/CSS</h3>
+<a href='/tags/default.asp'>HTML Tag Reference</a>
+<a href='/tags/ref_eventattributes.asp'>HTML Event Reference</a>
+<a href='/tags/ref_colornames.asp'>HTML Color Reference</a>
+<a href='/cssref/default.asp'>CSS 1,2,3 Reference</a>
+<a href='/bootstrap/bootstrap_ref_css_text.asp'>Bootstrap Reference</a>
+<a href='/w3css/w3css_reference.asp'>W3.CSS Reference</a>
+</div>
+<div class="w3DropdownItem">
+<h3>JavaScript</h3>
+<a href='/jsref/default.asp'>JavaScript Reference</a>
+<a href='/jsref/default.asp'>HTML DOM Reference</a>
+<a href='/jquery/jquery_ref_selectors.asp'>jQuery Reference</a>
+<a href='/jquerymobile/jquerymobile_ref_data.asp'>jQuery Mobile Reference</a>
+<a href='/googleAPI/google_maps_ref.asp'>Google Maps Reference</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Server Side</h3>
+<a href='/php/php_ref_array.asp'>PHP Reference</a>
+<a href='/sql/sql_quickref.asp'>SQL Reference</a>
+<a href='/asp/asp_ref_response.asp'>ASP Reference</a>
+<a href='/vbscript/vbscript_ref_functions.asp'>VBScript Reference</a>
+<a href='/aspnet/webpages_ref_classes.asp'>Razor Reference</a>
+<a href='/aspnet/aspnet_refhtmlcontrols.asp'>ASP.NET Reference</a>
+</div>
+<div class="w3DropdownItem">
+<h3>XML</h3>
+<a href='/dom/dom_nodetype.asp'>XML DOM Reference</a>
+<a href='/xsl/xsl_w3celementref.asp'>XSLT Reference</a>
+<a href='/xpath/xpath_functions.asp'>XPath Reference</a>
+<a href='/xquery/xquery_reference.asp'>XQuery Reference</a>
+<a href='/schema/schema_elements_ref.asp'>Schema Reference</a>
+<a href='/svg/svg_reference.asp'>SVG Reference</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Charsets</h3>
+<a href='/charsets/default.asp'>HTML Character Sets</a>
+<a href='/charsets/ref_html_ascii.asp'>HTML ASCII</a>
+<a href='/charsets/ref_html_ansi.asp'>HTML ANSI</a>
+<a href='/charsets/ref_html_ansi.asp'>HTML Windows-1252</a>
+<a href='/charsets/ref_html_8859.asp'>HTML ISO-8859-1</a>
+<a href='/charsets/ref_html_symbols.asp'>HTML Symbols</a>
+<a href='/charsets/ref_html_utf8.asp'>HTML UTF-8</a>
+</div>
+</div>
+</div>
+<div id='w3dropdownexamples' class='w3DropdownMenu container-fluid'>
+<div class="w3DropdownInner">
+<button type="button" class="xclose w3DropdownClose" onclick="hideDropdownMenu()" title="Close"><span>&times;</span></button>
+<br>
+<div class="w3DropdownItem">
+<h3>HTML/CSS</h3>
+<a href='/html/html_examples.asp'>HTML Examples</a>
+<a href='/css/css_examples.asp'>CSS Examples</a>
+<a href='/w3css/w3css_demo.asp'>W3.CSS Examples</a>
+</div>
+<div class="w3DropdownItem">
+<h3>JavaScript</h3>
+<a href="/js/js_examples.asp" target="_top">JavaScript Examples</a>
+<a href="/js/js_dom_examples.asp" target="_top">HTML DOM Examples</a>
+<a href="/jquery/jquery_examples.asp" target="_top">jQuery Examples</a>
+<a href="/jquerymobile/jquerymobile_examples.asp" target="_top">jQuery Mobile Examples</a>
+<a href="/angular/angular_examples.asp" target="_top">AngularJS Examples</a>
+<a href="/ajax/ajax_examples.asp" target="_top">AJAX Examples</a>
+</div>
+<div class="w3DropdownItem">
+<h3>Server Side</h3>
+<a href="/php/php_examples.asp" target="_top">PHP Examples</a>
+<a href="/asp/asp_examples.asp" target="_top">ASP Examples</a>
+<a href="/vbscript/vbscript_examples.asp" target="_top">VBScript Examples</a>
+<a href="/aspnet/webpages_examples.asp" target="_top">Razor Examples</a>
+<a href="/aspnet/aspnet_examples.asp" target="_top">.NET Examples</a>
+</div>
+<div class="w3DropdownItem">
+<h3>XML</h3>
+<a href="/xml/xml_examples.asp" target="_top">XML Examples</a>
+<a href="/dtd/dtd_examples.asp" target="_top">DTD Examples</a>
+<a href="/dom/dom_examples.asp" target="_top">XML DOM Examples</a>
+<a href="/xsl/xsl_examples.asp" target="_top">XSL Examples</a>
+<a href="/xsl/xsl_examples.asp" target="_top">XSLT Examples</a>
+<a href="/xpath/xpath_examples.asp" target="_top">XPath Examples</a>
+<a href="/xquery/xquery_example.asp" target="_top">XQuery Examples</a>
+<a href="/schema/schema_example.asp" target="_top">Schema Examples</a>
+<a href="/svg/svg_examples.asp" target="_top">SVG Examples</a>
+</div>
+</div>
+</div>
+<div id='w3dropdownsearch' class='w3DropdownMenu container-fluid' style="overflow:visible;">
+<div class="w3DropdownInner">
+<button type="button" class="xclose w3DropdownClose" onclick="hideDropdownMenu()" title="Close"><span>&times;</span></button>
+<br>
+<div class="w3DropdownInnerInner">
+Search w3schools.com:
+<div id='googleSearch' style="color:#000000;font-size:15px !important;"><div class='gcse-search'></div></div>
+</div>
+</div>
+</div>
+<div id='w3dropdowntranslate' class='w3DropdownMenu container-fluid'>
+<div class="w3DropdownInner">
+<button type="button" class="xclose w3DropdownClose" onclick="hideDropdownMenu()" title="Close"><span>&times;</span></button>
+<br>
+<div class="w3DropdownInnerInner">
+<div id='translateSection'>
+Translate w3schools.com:<div id='google_translate_element'></div></div>
+</div>
+</div>
+</div>
+
+<script>
+var menu = $('#topnavDIV'), pos = menu.offset();
+$(window).scroll(function(){
+    if($(this).scrollTop() > 40){    
+        $("#topDIV").css("display","none");
+    } else {
+        $("#topDIV").css("display","");
+    }
+    if($(this).scrollTop() > pos.top){
+        menu.addClass('topnavContainerScroll');        
+        $(".w3DropdownMenu").addClass('w3DropdownMenuScroll');        
+        $("#menyen").addClass('menyenScroll');
+     } else if($(this).scrollTop() <= pos.top){
+        menu.removeClass('topnavContainerScroll');
+        $(".w3DropdownMenu").removeClass('w3DropdownMenuScroll');
+        $("#menyen").removeClass('menyenScroll');
+     } });
+$(document).ready(function(){
+    if($(this).scrollTop() > 40){    
+        $("#topDIV").css("display","none");
+    } else {
+        $("#topDIV").css("display","");
+    }
+    $("#dropdownTutorialsBtn").click(function(){
+    closeTheOthers("tutorials");
+    if ($("#w3dropdowntutorials").css("display") == "none") {
+      $("#dropdownTutorialsBtn").css("background-color","#f5f5f5");
+      $("#dropdownTutorialsBtn").css("color","#555555");
+    } else {
+      $("#dropdownTutorialsBtn").css("background-color","");
+      $("#dropdownTutorialsBtn").css("color","");
+    }
+    $("#w3dropdowntutorials").fadeToggle(200, function () {$("#dropdownTutorialsBtn").css("background-color","");$("#dropdownTutorialsBtn").css("color","");});
+    return false;      
+  });
+  $("#dropdownReferencesBtn").click(function(){
+    closeTheOthers("references");
+    if ($("#w3dropdownreferences").css("display") == "none") {
+      $("#dropdownReferencesBtn").css("background-color","#f5f5f5");
+      $("#dropdownReferencesBtn").css("color","#555555");
+    } else {
+      $("#dropdownReferencesBtn").css("background-color","");
+      $("#dropdownReferencesBtn").css("color","");
+    }
+    $("#w3dropdownreferences").fadeToggle(200, function(){$("#dropdownReferencesBtn").css("background-color","");$("#dropdownReferencesBtn").css("color","");});
+    return false;      
+  });
+  $("#dropdownExamplesBtn").click(function(){
+    closeTheOthers("examples");
+    if ($("#w3dropdownexamples").css("display") == "none") {
+      $("#dropdownExamplesBtn").css("background-color","#f5f5f5");
+      $("#dropdownExamplesBtn").css("color","#555555");
+    } else {
+      $("#dropdownExamplesBtn").css("background-color","");
+      $("#dropdownExamplesBtn").css("color","");
+    }
+    $("#w3dropdownexamples").fadeToggle(200, function(){$("#dropdownExamplesBtn").css("background-color","");$("#dropdownExamplesBtn").css("color","");});
+    return false;      
+  });
+  $("#dropdownSearchBtn").click(function(){
+    closeTheOthers("search");
+    if ($("#w3dropdownsearch").css("display") == "none") {
+      $("#dropdownSearchBtn").css("background-color","#f5f5f5");
+      $("#dropdownSearchBtn").css("color","#555555");
+    } else {
+      $("#dropdownSearchBtn").css("background-color","");
+      $("#dropdownSearchBtn").css("color","");
+    }
+    $("#w3dropdownsearch").fadeToggle(200, function(){$("#gsc-i-id1").focus();$("#dropdownSearchBtn").css("background-color","");});
+    return false;      
+  });
+  $("#dropdownTranslateBtn").click(function(){
+    closeTheOthers("translate");
+    if ($("#w3dropdowntranslate").css("display") == "none") {
+      $("#dropdownTranslateBtn").css("background-color","#f5f5f5");
+      $("#dropdownTranslateBtn").css("color","#555555");
+    } else {
+      $("#dropdownTranslateBtn").css("background-color","");
+      $("#dropdownTranslateBtn").css("color","");
+    }
+    $("#w3dropdowntranslate").fadeToggle(200, function(){$("#dropdownTranslateBtn").css("background-color","");});
+    return false;      
+  });
+  $(".main").click(function(){
+    closeTheOthers();
+  });
+  $(".top").click(function(){
+    closeTheOthers();
+  });
+});
+function closeTheOthers(x) {
+    if (x != "tutorials") { 
+        $("#dropdownTutorialsBtn").css("background-color","");
+        $("#dropdownTutorialsBtn").css("color","");
+        $("#w3dropdowntutorials").fadeOut(100);
+    }
+    if (x != "references") { 
+        $("#dropdownReferencesBtn").css("background-color","");
+        $("#dropdownReferencesBtn").css("color","");
+        $("#w3dropdownreferences").fadeOut(100);
+    }
+    if (x != "examples") { 
+        $("#dropdownExamplesBtn").css("background-color","");
+        $("#dropdownExamplesBtn").css("color","");
+        $("#w3dropdownexamples").fadeOut(100);
+    }
+    if (x != "search") { 
+        $("#dropdownSearchBtn").css("background-color","");
+        $("#dropdownSearchBtn").css("color","");
+        $("#w3dropdownsearch").fadeOut(100);
+    }
+    if (x != "translate") { 
+        $("#dropdownTranslateBtn").css("background-color","");
+        $("#dropdownTranslateBtn").css("color","");
+        $("#w3dropdowntranslate").fadeOut(100);
+    }
+}
+var menyknapp_hartrykket = 0;
+function vismenyen() {
+closeTheOthers();
+x = document.getElementById("menyen");
+if (menyknapp_hartrykket == 0) {
+	x.style.position = "fixed";
+	x.style.zIndex = "1000";	
+    if ($("#toptext").css("display") == "none") {
+        x.style.top = "105px";
+    } else {
+        x.style.top = "135px";
+    }
+	x.style.bottom = "0";	
+	x.style.overflow = "auto";	
+	x.style.display = "block";
+	x.style.right = "0";
+	x.style.backgroundColor = "#ffffff";
+	x.style.padding = "20px";
+	x.style.borderLeft = "2px solid #f1f1f1";
+	x.style.borderBottom = "2px solid #f1f1f1";
+    menyknapp_hartrykket = 1;
+} else {
+    x.style.display = "none";
+    menyknapp_hartrykket = 0;
+}
+}
+function hideDropdownMenu() {
+    closeTheOthers();
+}
+skyscraperResize();
+
+</script>
+<script src="/w3schools.js"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>  
+<![endif]-->
+</body>
+</html>
+

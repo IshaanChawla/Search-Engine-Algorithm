@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Adding records to a MySQL database</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Add a record to a MySQL database</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>To add records to a table in your database, you use more or less the same code 
+  as <a href="php13p2.html">previously</a>. The only thing that needs to change 
+  is your SQL statement. The steps we're going to be taking are these:</P>
+<OL>
+  <LI>Open a connection to MySQL</LI>
+  <LI>Specify the database we want to open</LI>
+  <LI>Set up a SQL Statement that can be used to add records to the database table</LI>
+  <LI>Use mysql_query( ) again, but this time to add records to the table</LI>
+  <LI>Close the connection</LI>
+</OL>
+<P>&nbsp;</P>
+<h3>Set up a SQL Statement to add records to the database</h3>
+<p>In <a href="php13p2.html">our previous script,</a> we used some SQL to grab 
+  records from our Address Book database table. We then used a While loop to print 
+  all the records out. Because we're now going to be adding records to the Address 
+  Book table, we need some different SQL. Here's the script. The new line is in 
+  blue (The double and single quotes need to be entered exactly, otherwise you'll 
+  get errors when you run the code):</p>
+<P class="TextIndent1">&lt;?PHP</P>
+<p class="indent_small">$user_name = &quot;root&quot;;<br>
+  $password = &quot;&quot;;<br>
+  $database = &quot;addressbook&quot;;<br>
+  $server = &quot;127.0.0.1&quot;;</p>
+<p class="indent_small">$db_handle = mysql_connect($server, $user_name, $password);<br>
+  $db_found = mysql_select_db($database, $db_handle);</p>
+<p class="indent_small">if ($db_found) {</p>
+<p class="indent_big_blue_no_bold">$SQL = &quot;INSERT INTO tb_address_book (First_Name, 
+  Surname, Address) VALUES ('bill', 'gates', 'Microsoft')&quot;;</p>
+<p class="indent_big">$result = mysql_query($SQL);</p>
+<p class="indent_big">mysql_close($db_handle);</p>
+<p class="indent_big">print &quot;Records added to the database&quot;;</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">print &quot;Database NOT Found &quot;;<br>
+  mysql_close($db_handle);</p>
+<p class="indent_small">}</p>
+<p class="TextIndent2">?&gt;</p>
+<P>You met all of this code from the previous section. The only difference is 
+  the new SQL statement! What the code does is to set up some variables, open 
+  a connection to the database, and then execute the SQL query. Let's have a look 
+  at the new, and rather long, statement.</P>
+<P>&nbsp;</P>
+<h3>INSERT INTO &#133; VALUES</h3>
+<p>To add records to your database, you can use the <b>INSERT</b> statement. There 
+  are plenty of ways to use this statement, but we'll stick with something simple: 
+  adding <br>
+  new values to all of our table columns.</p>
+<p>You start by typing the words &quot;<b>INSERT INTO</b>&quot;. This can be in 
+  any case you like: upper, lower or a mix. It's easier for you to read if it's 
+  in uppercase letters.</p>
+<p>The next thing you need is the name of a table to insert your new values into. 
+  For us, this is the table that we've called <b>tb_address_book</b>. </p>
+<p>Following the name of your table, type a pair of round brackets. Inside the 
+  round brackets, you can type the names of the columns in your table:</p>
+<p class="indent_small">INSERT INTO tb_address_book (First_Name, Surname, Address)</p>
+<p>Notice how we haven't included the ID column from our table. That's because 
+  the ID column was the one we set up to be an auto-incrementing number. We don't 
+  need to worry about this column because MySQL will take care of adding 1 to 
+  this field for us.</p>
+<p>Now that you've specified which table you want to insert values into, and specified 
+  your column names, you can add the values you want to insert.</p>
+<p>To add values, you type the word &quot;<b>VALUES</b>&quot; after the round 
+  brackets of your column names:</p>
+<p>INSERT INTO tb_address_book (First_Name, Surname, Address) VALUES</p>
+<p>After the word &quot;<b>VALUES</b>&quot;, you type another pair of round brackets. 
+  Inside of these brackets, you can type your values. Each value should be separated 
+  by a comma. You can use either direct text, like we've done, or variables. You 
+  can even get these values straight from your HTML form, which we'll see how 
+  to do later.</p>
+<p>So our whole line reads:</p>
+<P align="center"><b>$SQL = &quot;INSERT INTO tb_address_book (First_Name, Surname, 
+  Address) VALUES ('bill', 'gates', 'Microsoft')&quot;;</b></P>
+<p>Notice how we've surrounded all of our text with double quotes. But inside 
+  of the round brackets of VALUES, we've used single quotes.</p>
+<p>The syntax is really this (The SQL keywords are in bold):</p>
+<p align="center"><b>INSERT INTO </b>table_name ( Columns ) <b>VALUES</b> ( values 
+  for columns)</p>
+<p>But try your code out now, and see if it's all working properly. You should 
+  find that you now have two records in your database table.</p>
+<p><b>Exercise</b><br>
+  Replace the values 'bill', 'gates', and 'Microsoft' with values of your own. 
+  Run your script again to add your new record to the database. Now run your other 
+  script to read the values back out.</p>
+<p>In the next part, you'll learn about something called Magic Quotes.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php13p2.html">&lt;-- Back One Page</a> | <a href="php13p4.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

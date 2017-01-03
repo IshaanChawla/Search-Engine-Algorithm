@@ -1,0 +1,1277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>4.3 &#8212; Static duration variables &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 4.3 &#8212; Static duration variables Comments Feed" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"108.92.162.70","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/43-static-duration-variables\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='4.2 &#8212; Global variables and linkage' href='http://www.learncpp.com/cpp-tutorial/42-global-variables/' />
+<link rel='next' title='4.4 &#8212; Implicit type conversion (coercion)' href='http://www.learncpp.com/cpp-tutorial/44-implicit-type-conversion-coercion/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=66' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="4.3 -- Static duration variables" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/" />
+<meta property="og:description" content="The static keyword is one of the more confusing keyword in the C++ language (maybe with the exception of the keyword &quot;class&quot;). This is because it has different meanings depending on where it is use..." />
+<meta property="article:published_time" content="2007-06-20T01:46:40+00:00" />
+<meta property="article:modified_time" content="2015-05-14T00:31:25+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-66 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-66 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-66">
+						<div class="post-headline">		<h1>4.3 &#8212; Static duration variables</h1>
+		</div>		<div class="post-byline">By Alex, on June 19th, 2007</div>		<div class="post-bodycopy clearfix"><p>The static keyword is one of the more confusing keyword in the C++ language (maybe with the exception of the keyword &#8220;class&#8221;).  This is because it has different meanings depending on where it is used.</p>
+<p>In section <a href="http://www.learncpp.com/cpp-tutorial/42-global-variables/">4.2 -- Global variables</a>, you learned that when applied to a variable declared outside of a block, it defines a global variable with internal linkage, meaning the variable could only be used in the file in which it was defined.</p>
+<p>The static keyword can also be applied to variables declared inside a block, where it has a different meaning entirely.  In section <a href="http://www.learncpp.com/cpp-tutorial/4-1a-local-variables-and-local-scope/">4.1a -- Local variables and local scope</a>, you learned that local variables have automatic duration, which means they are created when the block is entered, and destroyed when the block is exited.  </p>
+<p>Using the static keyword on local variables changes them from automatic duration to static duration (also called fixed duration).  A <strong>static duration</strong> variable (also called a &#8220;static variable&#8221;) is one that retains its value even after the scope in which it has been created has been exited!  Static duration variables are only created (and initialized) once, and then they are persisted throughout the life of the program.</p>
+<p>The easiest way to show the difference between automatic and static duration variables is by example.</p>
+<p>Automatic duration (default):</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797a7ee710745801" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-2">2</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-4">4</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-6">6</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-8">8</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-10">10</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-12">12</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-14">14</div><div class="crayon-num" data-line="crayon-555d73797a7ee710745801-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a7ee710745801-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797a7ee710745801-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-2">&nbsp;</div><div class="crayon-line" id="crayon-555d73797a7ee710745801-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797a7ee710745801-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-t">value</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// automatic duration by default</span></div><div class="crayon-line" id="crayon-555d73797a7ee710745801-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">++</span><span class="crayon-t">value</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-t">value</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797a7ee710745801-9"><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-c">// value is destroyed here</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-10">&nbsp;</div><div class="crayon-line" id="crayon-555d73797a7ee710745801-11"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-12"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797a7ee710745801-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797a7ee710745801-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a7ee710745801-16"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0019 seconds] -->
+<p></p>
+<p>Each time incrementAndPrint is called, a variable named value is created and assigned the value of 1.  incrementAndPrint increments value to 2, and then prints the value of 2.  When incrementAndPrint is finished running, the variable goes out of scope and is destroyed.  Consequently, this program outputs:</p>
+<pre>
+2
+2
+2
+</pre>
+<p>Now consider the static scope version of this program.  The only difference between this and the above program is that we&#8217;ve changed the local variable value from automatic to static duration by using the static keyword.</p>
+<p>Static duration (using static keyword):</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797a800928728332" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797a800928728332-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-2">2</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-4">4</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-6">6</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-8">8</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-10">10</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-12">12</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-14">14</div><div class="crayon-num" data-line="crayon-555d73797a800928728332-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a800928728332-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797a800928728332-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-2">&nbsp;</div><div class="crayon-line" id="crayon-555d73797a800928728332-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797a800928728332-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">s_value</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// static duration via static keyword.&nbsp;&nbsp;This line is only executed once.</span></div><div class="crayon-line" id="crayon-555d73797a800928728332-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">++</span><span class="crayon-v">s_value</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">s_value</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797a800928728332-9"><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-c">// s_value is not destroyed here, but becomes inaccessible</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-10">&nbsp;</div><div class="crayon-line" id="crayon-555d73797a800928728332-11"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-12"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797a800928728332-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797a800928728332-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">incrementAndPrint</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a800928728332-16"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0019 seconds] -->
+<p></p>
+<p>In this program, because s_value has been declared as static, s_value is only created and initialized (to 1) once.  When it goes out of scope, it is not destroyed.  Each time the function incrementAndPrint() is called, the value of s_value is whatever we left it at previously.  Consequently, this program outputs:</p>
+<pre>
+2
+3
+4
+</pre>
+<p>Just like we use &#8220;g_&#8221; to prefix global variables, it&#8217;s common to use &#8220;s_&#8221; to prefix static (static scope) variables.  Note that internal linkage global variables (also declared using the static keyword get a &#8220;g_&#8221;, not a &#8220;s_&#8221;).</p>
+<p>One of the most common uses for static duration local variables is for unique identifier generators.  When dealing with a large number of similar objects within a program, it is often useful to assign each one a unique ID number so they can be identified.  This is very easy to do with a static duration local variable:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797a808831943581" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797a808831943581-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a808831943581-2">2</div><div class="crayon-num" data-line="crayon-555d73797a808831943581-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797a808831943581-4">4</div><div class="crayon-num" data-line="crayon-555d73797a808831943581-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797a808831943581-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">generateID</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a808831943581-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797a808831943581-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">s_itemID</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797a808831943581-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">s_itemID</span><span class="crayon-o">++</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797a808831943581-5"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>The first time this function is called, it returns 0.  The second time, it returns 1.  Each time it is called, it returns a number one higher than the previous time it was called.  You can assign these numbers as unique IDs for your objects.  Because s_itemID is a local variable, it can not be &#8220;tampered with&#8221; by other functions.</p>
+<p>Static variables offer some of the benefit of global variables (they don&#8217;t get destroyed until the end of the program) while limiting their visibility to block scope.  This makes them much safer for use than global variables.</p>
+<p><strong>Quiz</strong></p>
+<p>1) What effect does using keyword &#8220;static&#8221; have on a global variable?  What effect does it have on a local variable?</p>
+<p><strong>Quiz Answers</strong></p>
+<p>1) <a class="solution_link_show" href="javascript:void(0)" onclick="wpSolutionToggle(document.getElementById('id1795919150'), this, 'Show Solution', 'Hide Solution')">Show Solution</a></p>
+<div class="solution_div" id="id1795919150" style="display:none">
+When applied to a global variable, the static keyword defines the global variable as having internal linkage, meaning the variable cannot be exported to other files.</p>
+<p>When applied to a local variable, the static keyword defines the local variable as having static duration, meaning the variable will only be created once, and will not be destroyed until the end of the program.
+</p></div>
+<table border=0 cellpadding=3>
+<tr><td>
+	<a href="http://www.learncpp.com/cpp-tutorial/4-3a-namespaces/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 4.3a -- Namespaces</a>
+</td></tr>
+<tr><td>
+        <a href="http://www.learncpp.com/#Chapter0" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td></tr>
+<tr><td>
+	<a href="http://www.learncpp.com/cpp-tutorial/4-2a-why-global-variables-are-evil/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 4.2a -- Why global variables are evil</a>
+</td></tr>
+</table>
+
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-66" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-66" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-66" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-66" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">31 comments to 4.3 &#8212; Static duration variables</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-16032">
+		<div id="div-comment-16032" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/47eb0c1c0ab5eefa4079ca01ec009d15?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/47eb0c1c0ab5eefa4079ca01ec009d15?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">carmen</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-16032">
+		May 13, 2008 at 9:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=16032#respond' onclick='return addComment.moveForm( "comment-16032", "16032", "respond", "66" )' aria-label='Reply to carmen'> &middot; Reply</a></span>		 
+		</div>
+		<p>well .. if they become inaccessible &#8230; what&#8217;s the point? We can&#8217;t use them anyway &#8230; can we?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-17912">
+		<div id="div-comment-17912" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-17912">
+		May 30, 2008 at 4:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=17912#respond' onclick='return addComment.moveForm( "comment-17912", "17912", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>You can&#8217;t use them when they&#8217;re inaccessible, but you can use them if and when they do become accessible again.  For example, each time IncrementAndPrint() is called, s_nValue comes back into scope with it&#8217;s previous value.  This allows you to have a variable that keeps track of it&#8217;s value between calls without exposing that variable to other functions (which is dangerous, because they might change it).</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-91373">
+		<div id="div-comment-91373" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d9ebd5fccf0f6a303ad336754deeafc8?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d9ebd5fccf0f6a303ad336754deeafc8?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">MrAlshahawy</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-91373">
+		September 3, 2010 at 11:13 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=91373#respond' onclick='return addComment.moveForm( "comment-91373", "91373", "respond", "66" )' aria-label='Reply to MrAlshahawy'> &middot; Reply</a></span>		 
+		</div>
+		<p>Consider Static variable as a combination between Global and Local Variables benefits:</p>
+<p>Static takes the benefit of keeping its value after you go out of the scope just like Global, At the same time you avoid the downside of Global variable which is that any other functions may change its value causing unpredictable values.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-91488">
+		<div id="div-comment-91488" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2f1d688e9d18bea7e7d9444b38a9caf9?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2f1d688e9d18bea7e7d9444b38a9caf9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jon</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-91488">
+		September 5, 2010 at 7:00 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=91488#respond' onclick='return addComment.moveForm( "comment-91488", "91488", "respond", "66" )' aria-label='Reply to jon'> &middot; Reply</a></span>		 
+		</div>
+		<p>Also, since it is only declared once and not every time the function is called, it conserves memory. Right?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-3 clearfix" id="comment-251943">
+		<div id="div-comment-251943" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251943">
+		March 27, 2015 at 1:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251943#respond' onclick='return addComment.moveForm( "comment-251943", "251943", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>No.</p>
+<p>A static int and a local int both may take 4 bytes while in memory.  But the static int takes up that 4 bytes for the whole duration of the program, whereas the local variable takes up that 4 bytes only while the code is in the block where the local variable is defined.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-19805">
+		<div id="div-comment-19805" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/ccd224b5831e3f8b66c4bb90f49f883a?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/ccd224b5831e3f8b66c4bb90f49f883a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Hertz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-19805">
+		June 25, 2008 at 10:07 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=19805#respond' onclick='return addComment.moveForm( "comment-19805", "19805", "respond", "66" )' aria-label='Reply to Hertz'> &middot; Reply</a></span>		 
+		</div>
+		<p>Helped me a lot to understand the static keyword. The explanation is very clear and useful. Thanks.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-29513">
+		<div id="div-comment-29513" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/669065e706652bf22ca85c1da270a014?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/669065e706652bf22ca85c1da270a014?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Niaz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-29513">
+		October 9, 2008 at 5:04 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=29513#respond' onclick='return addComment.moveForm( "comment-29513", "29513", "respond", "66" )' aria-label='Reply to Niaz'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey Alex thank your very much. I got my concpet cleared not only about STATIC variable but other complex things such as Variable Passing Machanisam.</p>
+<p>Thanks<br />
+Niaz</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-36907">
+		<div id="div-comment-36907" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7e260ba6cae5d3e8cd9820eaac911511?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e260ba6cae5d3e8cd9820eaac911511?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alfreda</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-36907">
+		January 9, 2009 at 5:36 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=36907#respond' onclick='return addComment.moveForm( "comment-36907", "36907", "respond", "66" )' aria-label='Reply to Alfreda'> &middot; Reply</a></span>		 
+		</div>
+		<p>They really thought of everything when they made C/++ programming language didn&#8217;t they? O_O</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-36936">
+		<div id="div-comment-36936" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://developa2z.tk' rel='external nofollow' class='url'>absk007</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-36936">
+		January 10, 2009 at 12:19 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=36936#respond' onclick='return addComment.moveForm( "comment-36936", "36936", "respond", "66" )' aria-label='Reply to absk007'> &middot; Reply</a></span>		 
+		</div>
+		<p>No they didn&#8217;t. Rather it evolved gradually as &amp; when required by the mass.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-75238">
+		<div id="div-comment-75238" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c2ebf8fd798e3bc0412f8805bfdffa70?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c2ebf8fd798e3bc0412f8805bfdffa70?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">earlmw</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-75238">
+		December 31, 2009 at 5:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=75238#respond' onclick='return addComment.moveForm( "comment-75238", "75238", "respond", "66" )' aria-label='Reply to earlmw'> &middot; Reply</a></span>		 
+		</div>
+		<p>It really has since the original K&amp;R C programming</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-4 clearfix" id="comment-90489">
+		<div id="div-comment-90489" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/720c9f51032e5d9a71aeb8ae44f2ca6b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/720c9f51032e5d9a71aeb8ae44f2ca6b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://none' rel='external nofollow' class='url'>unknown</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-90489">
+		August 18, 2010 at 3:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=90489#respond' onclick='return addComment.moveForm( "comment-90489", "90489", "respond", "66" )' aria-label='Reply to unknown'> &middot; Reply</a></span>		 
+		</div>
+		<p>I have read everything so far, but to me they&#8217;ve missed some mathematical signs like the opposite of x^2, like ? (x)  I don&#8217;t know how it&#8217;s called in english but in dutch it&#8217;s called: worteltrekken ?<br />
+But, thx anyway Alex ?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-5 clearfix" id="comment-95655">
+		<div id="div-comment-95655" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2d0c67e0ef00634fd2244a2859ae5fb0?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2d0c67e0ef00634fd2244a2859ae5fb0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">lynx1241</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-95655">
+		July 3, 2011 at 8:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=95655#respond' onclick='return addComment.moveForm( "comment-95655", "95655", "respond", "66" )' aria-label='Reply to lynx1241'> &middot; Reply</a></span>		 
+		</div>
+		<p>In english it&#8217;s called square root. C++ doesn&#8217;t have a square root operator, like all other programming languages I know. But it does have a sqrt function in the &#8220;cmath&#8221; library.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-62874">
+		<div id="div-comment-62874" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/306d65692a97a7135963ae1c055f9ad0?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/306d65692a97a7135963ae1c055f9ad0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">mens sana in corpore sano</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-62874">
+		June 22, 2009 at 10:04 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=62874#respond' onclick='return addComment.moveForm( "comment-62874", "62874", "respond", "66" )' aria-label='Reply to mens sana in corpore sano'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex, you have great tutorial! I have one question, when working with multiple file:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797e14b144416919" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797e14b144416919-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-2">2</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-4">4</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-6">6</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-8">8</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-10">10</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-12">12</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e14b144416919-14">14</div><div class="crayon-num" data-line="crayon-555d73797e14b144416919-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797e14b144416919-1"><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-2">&nbsp;</div><div class="crayon-line" id="crayon-555d73797e14b144416919-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Increment_1</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">nValue</span><span class="crayon-o">++</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-7"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Increment_1: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-8"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-10"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Increment_2</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-11"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-12"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-13"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">+=</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e14b144416919-14"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Increment_2: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e14b144416919-15"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0023 seconds] -->
+<p></p>
+<p>Is there any different for the usage when im declaring file scope variable without <i>static</i> like code below? As my understanding, within this way nValue will be compiled as file scope variable.  Am I right?</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797e156505414474" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797e156505414474-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-2">2</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-4">4</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-6">6</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-8">8</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-10">10</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-12">12</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797e156505414474-14">14</div><div class="crayon-num" data-line="crayon-555d73797e156505414474-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797e156505414474-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-2">&nbsp;</div><div class="crayon-line" id="crayon-555d73797e156505414474-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Increment_1</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">nValue</span><span class="crayon-o">++</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-7"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Increment_1: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-8"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-10"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Increment_2</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-11"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-12"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-13"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">+=</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797e156505414474-14"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Increment_2: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797e156505414474-15"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0021 seconds] -->
+<p></p>
+<p>Thanks!</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-251312">
+		<div id="div-comment-251312" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f36a42670c2f8d383c4f4de46fdac6f2?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f36a42670c2f8d383c4f4de46fdac6f2?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Xanth</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251312">
+		January 31, 2015 at 3:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251312#respond' onclick='return addComment.moveForm( "comment-251312", "251312", "respond", "66" )' aria-label='Reply to Xanth'> &middot; Reply</a></span>		 
+		</div>
+		<p>The way you have it written out the second time declares it as a global variable. From my understanding even if it&#8217;s in a different file, it still has a global scope if it&#8217;s declared outside of a block without the static keyword.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-251944">
+		<div id="div-comment-251944" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251944">
+		March 27, 2015 at 1:34 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251944#respond' onclick='return addComment.moveForm( "comment-251944", "251944", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>In the first case, nValue has internal linkage, so it could only be used in the file in which it is defined.</p>
+<p>In the second case, nValue has external linkage, so it could be used in other files (via a variable forward declaration).</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-63868">
+		<div id="div-comment-63868" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/232832ea7de741ffd53138d6855f55dc?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/232832ea7de741ffd53138d6855f55dc?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Freyr</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-63868">
+		July 7, 2009 at 4:56 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=63868#respond' onclick='return addComment.moveForm( "comment-63868", "63868", "respond", "66" )' aria-label='Reply to Freyr'> &middot; Reply</a></span>		 
+		</div>
+		<p>If I make a multi-file program e.g. main.cpp, source1.cpp, source1.h and then apart from declaring functions in source1.h, I also declare some variables. If source1.h is included in main.cpp and source1.cpp, in which scope are the variables found? Are they global?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-75044">
+		<div id="div-comment-75044" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9543e49b0713b7edb9e9cda8e721625e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9543e49b0713b7edb9e9cda8e721625e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Falcon</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-75044">
+		December 29, 2009 at 6:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=75044#respond' onclick='return addComment.moveForm( "comment-75044", "75044", "respond", "66" )' aria-label='Reply to Falcon'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yes these variables will be having global scope. If you are declaring variables in source1.h they should be preceded with &#8220;extern&#8221; keyword.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-64982">
+		<div id="div-comment-64982" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/689c99a9a6b41ee1ccc0307c9f0b625c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/689c99a9a6b41ee1ccc0307c9f0b625c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">konda reddy</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-64982">
+		July 24, 2009 at 9:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=64982#respond' onclick='return addComment.moveForm( "comment-64982", "64982", "respond", "66" )' aria-label='Reply to konda reddy'> &middot; Reply</a></span>		 
+		</div>
+		<p>excellent tutorial for static variable concept.<br />
+thanks Alex.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-76998">
+		<div id="div-comment-76998" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c20e6c98d8c6fbfd7689bb09b20eb91a?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c20e6c98d8c6fbfd7689bb09b20eb91a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Brad</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-76998">
+		January 22, 2010 at 7:21 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=76998#respond' onclick='return addComment.moveForm( "comment-76998", "76998", "respond", "66" )' aria-label='Reply to Brad'> &middot; Reply</a></span>		 
+		</div>
+		<p>I assume static variables reset every time the program is exited? Is there a way to keep a variables value even after the program ends? Say for instance you wanted to create a counter that keeps up with how many time a program was run or a particular function was called?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-78375">
+		<div id="div-comment-78375" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2347789ad0d87e8278281022abb72547?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2347789ad0d87e8278281022abb72547?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-78375">
+		February 15, 2010 at 9:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=78375#respond' onclick='return addComment.moveForm( "comment-78375", "78375", "respond", "66" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Brad -</p>
+<p>The easiest way would be to write the variable to a file at the end of the program, then read it back in again when the program is next run.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-3 clearfix" id="comment-251945">
+		<div id="div-comment-251945" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251945">
+		March 27, 2015 at 1:37 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251945#respond' onclick='return addComment.moveForm( "comment-251945", "251945", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Static variables do get destroyed when the program is exited, so when you restart your program, they will be created anew.</p>
+<p>If you want to persist your variables beyond the scope of your entire program, you&#8217;ll need to write them to external storage.  The two most common options here are writing them to a file, or to a database.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-78005">
+		<div id="div-comment-78005" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2217a618118df1698451eb3c48c36ded?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2217a618118df1698451eb3c48c36ded?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://wearealchemists.com' rel='external nofollow' class='url'>Phil Oertel</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-78005">
+		February 6, 2010 at 7:50 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=78005#respond' onclick='return addComment.moveForm( "comment-78005", "78005", "respond", "66" )' aria-label='Reply to Phil Oertel'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex, thank you for this excellent tutorial! Great explanation of what is otherwise quite a tricky set of concepts.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-251271">
+		<div id="div-comment-251271" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3b17461249024ec7322ad509bd2c44ce?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3b17461249024ec7322ad509bd2c44ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">George</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251271">
+		January 28, 2015 at 8:30 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251271#respond' onclick='return addComment.moveForm( "comment-251271", "251271", "respond", "66" )' aria-label='Reply to George'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great tutorial! Thanks a lot <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251272">
+		<div id="div-comment-251272" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8d308c3b91e61589a0a8bb9e1311d813?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8d308c3b91e61589a0a8bb9e1311d813?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jay</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251272">
+		January 28, 2015 at 12:57 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251272#respond' onclick='return addComment.moveForm( "comment-251272", "251272", "respond", "66" )' aria-label='Reply to Jay'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey this is a great tutorial on the &#8220;static&#8221; keyword. I am also interested in the application for the use of static inside a class definition in another file as well. for instance : </p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797dce7960483658" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797dce7960483658-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-2">2</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-4">4</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-6">6</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-8">8</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-10">10</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-12">12</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-14">14</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-16">16</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-18">18</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-20">20</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-22">22</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-24">24</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-26">26</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-28">28</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-30">30</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-32">32</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-34">34</div><div class="crayon-num" data-line="crayon-555d73797dce7960483658-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797dce7960483658-36">36</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797dce7960483658-1"><span class="crayon-c">//class def in MyClass.cpp with prototype in MyClass.h</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-2">&nbsp;</div><div class="crayon-line" id="crayon-555d73797dce7960483658-3"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">MyClass</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">myVar</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">myClass</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-c">//static variable to keep track of amount of instances created by incrementing this??</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-o">++</span><span class="crayon-v">myVar</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-13">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// also can I access this variable with a getter function ????</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">getInstCnt</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">myVar</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-20">&nbsp;</div><div class="crayon-line" id="crayon-555d73797dce7960483658-21"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-22">&nbsp;</div><div class="crayon-line" id="crayon-555d73797dce7960483658-23"><span class="crayon-c">//in main.cpp</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-24"><span class="crayon-p">#include </span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-25"><span class="crayon-p">#include "MyClass.h"&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-26"><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-27">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-28"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-29"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-30"><span class="crayon-h">&nbsp;&nbsp; </span><span class="crayon-e">MyClass </span><span class="crayon-v">foo</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">foo1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">foo2</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">foo3</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-31">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">foo</span><span class="crayon-sy">.</span><span class="crayon-e">getInstCnt</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-c">// will i get the count of inst created ????</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">foo1</span><span class="crayon-sy">.</span><span class="crayon-e">getInstCnt</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// what will this be?? will it be 1 or zero again or error </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">foo2</span><span class="crayon-sy">.</span><span class="crayon-e">getInstCnt</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-c">// 2??</span></div><div class="crayon-line" id="crayon-555d73797dce7960483658-35">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73797dce7960483658-36"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0036 seconds] -->
+<p></p>
+<p>Just wondering when using static variables in the scope of a class definition in another file &quot;MyClass.h&quot;, if not how would someone go about using these type of variables.. Thanks for the help !!</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-251946">
+		<div id="div-comment-251946" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251946">
+		March 27, 2015 at 2:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251946#respond' onclick='return addComment.moveForm( "comment-251946", "251946", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I cover static member variables in section <a href="http://www.learncpp.com/cpp-tutorial/811-static-member-variables/" rel="nofollow">8.1.1 -- Static member variables</a>.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-251814">
+		<div id="div-comment-251814" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f06ca3de2f21852a05f3440a7f11d731?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f06ca3de2f21852a05f3440a7f11d731?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Elpops</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251814">
+		March 14, 2015 at 5:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251814#respond' onclick='return addComment.moveForm( "comment-251814", "251814", "respond", "66" )' aria-label='Reply to Elpops'> &middot; Reply</a></span>		 
+		</div>
+		<p>First, i thank you for this excellent website where anyone can learn c++ for free with great explanations (y).</p>
+<p>I have a question about this example :</p>
+<p>void IncrementAndPrint()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;static int s_nValue = 1; // fixed duration<br />
+&nbsp;&nbsp;&nbsp;&nbsp;++s_nValue;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; s_nValue &lt;&lt; endl;<br />
+} // s_nValue is not destroyed here, but becomes inaccessible</p>
+<p>int main()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IncrementAndPrint();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IncrementAndPrint();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;IncrementAndPrint();<br />
+}</p>
+<p>When incrementAndPrint is first called, i agree that it prints the value 2 for s_nvalue, but when it&#8217;s called the second time, the second line of incrementAndPrint decalaration states &quot;static int s_nValue = 1;&quot;, so the value of s_nvalue should be modified to 1, and the function should return the same value as earlier : 2.</p>
+<p>It&#8217;s like this line of the function declaration has been obliterated when it&#8217;s been called the 2nd time.</p>
+<p>Why isn&#8217;t it like i think it has to be ? i&#8217;ll appreciate your help with this situation ? !</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-251947">
+		<div id="div-comment-251947" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251947">
+		March 27, 2015 at 2:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251947#respond' onclick='return addComment.moveForm( "comment-251947", "251947", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Good question.  The static variable definition line is only executed once -- that means our initialization is also only executed once.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251995">
+		<div id="div-comment-251995" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c78ae872a3976b1fe37b5082b20323c3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c78ae872a3976b1fe37b5082b20323c3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Anon</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-251995">
+		March 31, 2015 at 4:53 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=251995#respond' onclick='return addComment.moveForm( "comment-251995", "251995", "respond", "66" )' aria-label='Reply to Anon'> &middot; Reply</a></span>		 
+		</div>
+		<p>I don&#8217;t get it.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797d9a4947083585" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797d9a4947083585-2">2</div><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797d9a4947083585-4">4</div><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797d9a4947083585-6">6</div><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797d9a4947083585-8">8</div><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73797d9a4947083585-10">10</div><div class="crayon-num" data-line="crayon-555d73797d9a4947083585-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797d9a4947083585-1"><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">GenerateID</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797d9a4947083585-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797d9a4947083585-3">    <span class="crayon-m">static</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">s_itemID</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797d9a4947083585-4">    <span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">s_itemID</span><span class="crayon-o">++</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797d9a4947083585-5"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797d9a4947083585-6">&nbsp;</div><div class="crayon-line" id="crayon-555d73797d9a4947083585-7"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797d9a4947083585-8"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73797d9a4947083585-9">    <span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">GenerateID</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"\n"</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73797d9a4947083585-10">    <span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73797d9a4947083585-11"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+<p></p>
+<p>Why does it print 0? I added the variable s_ItemID to watch, and debugged the program with a step into. At:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73797d9b0595187604" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73797d9b0595187604-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73797d9b0595187604-1"><span class="crayon-h"> </span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">s_itemID</span><span class="crayon-o">++</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p></p>
+<p>the value of s_itemID changes to 1, but it still prints 0.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-252009">
+		<div id="div-comment-252009" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-252009">
+		April 1, 2015 at 12:01 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=252009#respond' onclick='return addComment.moveForm( "comment-252009", "252009", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>s_itemID++ uses the postfix version of ++, which evaluates to a value and THEN increments.</p>
+<p>So stepping through what happens:<br />
+* s_itemID is initialized with value 0.<br />
+* The value of s_itemID (0) is temporarily set aside.  The ++ operator increments s_itemID to 1.  Then the set aside value of 0 is returned to the caller.<br />
+* The std::cout line prints the return value of 0.</p>
+<p>If we&#8217;d changed line 4 to be &#8220;return ++s_itemID;&#8221; instead, it would have returned 1, because in that case, the value of s_itemID is incremented before it&#8217;s returned rather than after.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-252081">
+		<div id="div-comment-252081" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/016e42a6198583c341a864184b1114eb?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/016e42a6198583c341a864184b1114eb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">termor</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-252081">
+		April 6, 2015 at 8:27 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=252081#respond' onclick='return addComment.moveForm( "comment-252081", "252081", "respond", "66" )' aria-label='Reply to termor'> &middot; Reply</a></span>		 
+		</div>
+		<p>Next lesson link wrong, must be namespaces.<br />
+Thanx for excellent lessons!</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-252100">
+		<div id="div-comment-252100" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/43-static-duration-variables/#comment-252100">
+		April 8, 2015 at 9:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/43-static-duration-variables/?replytocom=252100#respond' onclick='return addComment.moveForm( "comment-252100", "252100", "respond", "66" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Fixed.  Thanks for pointing this out!</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/43-static-duration-variables/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>18 &#8722; 9 = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4Nzc2OXR5bTdtZjVxZ3o3ZGJwYWozMW04OQ==" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432187769" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='66' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8bfff50ca3" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="247"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/43-static-duration-variables\/":66};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/43-static-duration-variables/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'66',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '66' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.746 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 21:56:09 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

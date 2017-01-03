@@ -1,0 +1,1728 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>JPA 2.0 with EclipseLink - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="JPA with Eclipselink This tutorial explains how to use EclipseLink, the reference implementation for the Java Persistence API (JPA). The usage of EclipseLink is demonstrated for stand-alone Java applications (outside the Java EE environment). The EclipseLink 2.3.X implementation is used for this tutorial.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d438544e1"></a>JPA 2.0 with EclipseLink - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 2.2</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008, 2009, 2010, 2011, 2012 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">16.03.2012</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>JPA with Eclipselink</b></p>
+                     <p> This tutorial explains how to use EclipseLink, the reference
+                        implementation for the Java Persistence API (JPA). The usage of
+                        EclipseLink is demonstrated for stand-alone Java applications
+                        (outside the
+                        Java EE environment). The EclipseLink 2.3.X
+                        implementation is used for this tutorial.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#jpaintro">1. JPA</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#jpaintro_overview">1.1. Overview</a></span></dt>
+                     <dt><span class="section"><a href="#jpaintro_entity">1.2. Entity</a></span></dt>
+                     <dt><span class="section"><a href="#jpaintro_fields">1.3. Persistence of fields</a></span></dt>
+                     <dt><span class="section"><a href="#jpaintro_relationships">1.4. Relationship Mapping</a></span></dt>
+                     <dt><span class="section"><a href="#jpaintro_entitymanager">1.5. Entity Manager</a></span></dt>
+                     <dt><span class="section"><a href="#jpaintro_persistenceunits">1.6. Persistence Units</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#eclipselink">2. EclipseLink</a></span></dt>
+               <dt><span class="section"><a href="#installation">3. Installation</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#installation_jpa">3.1. EclipseLink</a></span></dt>
+                     <dt><span class="section"><a href="#installation_database">3.2. Derby Database</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#simple">4. Simple Example</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#simple_model">4.1. Project and Entity</a></span></dt>
+                     <dt><span class="section"><a href="#example_persistenceunit">4.2. Persistence Unit</a></span></dt>
+                     <dt><span class="section"><a href="#simple_main">4.3. Test your installation</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#example">5. Relationship Example</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">6. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">6.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">6.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">6.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">7. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#resources_s1s2a">7.1. Java Persistence API Resources</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">7.2. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="jpaintro"></a>1.&nbsp;JPA
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_overview"></a>1.1.&nbsp;Overview
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> The process of mapping Java objects to
+                  database tables and vice
+                  versa is
+                  called "Object-relational mapping"
+                  (ORM).
+                  
+               </p>
+               <p>
+                  The Java
+                  Persistence API (JPA) is one possible approach to ORM.
+                  JPA is a
+                  specification and
+                  several
+                  implementations are
+                  available. Popular
+                  implementations are Hibernate, EclipseLink and Apache OpenJPA. The
+                  reference implementation of JPA is EclipseLink.
+                  
+                  
+               </p>
+               <p>
+                  Via JPA the
+                  developer
+                  can
+                  map, store,
+                  update and
+                  retrieve data from
+                  relational
+                  databases to
+                  Java
+                  objects and vice versa.
+                  
+               </p>
+               <p>
+                  JPA permits the developer to
+                  work directly
+                  with
+                  objects rather
+                  then
+                  with
+                  SQL
+                  statements. The JPA implementation is typically
+                  called
+                  persistence provider. JPA can be used in Java-EE and Java-SE
+                  applications.
+                  
+               </p>
+               <p> The mapping between Java objects and database tables is
+                  defined
+                  via
+                  persistence metadata.
+                  The JPA provider will use the persistence
+                  metadata
+                  information
+                  to
+                  perform
+                  the correct database operations.
+                  
+               </p>
+               <p>
+                  JPA typically
+                  defines the
+                  metadata via annotations in
+                  the Java
+                  class.
+                  Alternatively
+                  the metadata can be defined vian XML or
+                  a
+                  combination of both. A XML
+                  configuration
+                  overwrites the
+                  annotations.
+                  
+                  
+               </p>
+               <p>
+                  The following description will be based on the usage of
+                  annotations.
+                  
+                  
+               </p>
+               <p> JPA defines a SQL-like Query language for static
+                  and
+                  dynamic
+                  queries.
+                  
+               </p>
+               <p> Most JPA persistence provider offer the option to create
+                  automatically the database schema based on the metadata.
+                  
+               </p>
+               <p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_entity"></a>1.2.&nbsp;Entity
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  A class which should be persisted in a database it must be
+                  annotated
+                  with
+                  <code class="code">javax.persistence.Entity</code>. Such a class is called
+                  <code class="code">Entity</code>. JPA will create a table for the entity in your database.
+                  Instances
+                  of the class will be a row in the table.
+                  
+               </p>
+               <p>
+                  All entity classes must define a primary key, must have a
+                  non-arg
+                  constructor and or not allowed to be final. Keys can be a
+                  single
+                  field
+                  or a combination of fields.
+                  
+                  
+               </p>
+               <p>
+                  JPA allows to auto-generate the primary key
+                  in the database via the
+                  <code class="code">@GeneratedValue</code>
+                  annotation.
+                  
+               </p>
+               <p>
+                  By default, the table
+                  name
+                  corresponds to the class name. You can
+                  change this with the
+                  addition
+                  to the annotation
+                  @Table(name="NEWTABLENAME").
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_fields"></a>1.3.&nbsp;Persistence of fields
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The fields of the Entity will be saved in the database. JPA can use
+                  either your instance variables (fields) or the corresponding getters
+                  and setters to access the fields. You are not allowed to mix both
+                  methods. If you want to use the setter and getter methods the Java
+                  class must follow the Java Bean naming conventions. JPA persists per
+                  default all fields of an Entity, if fields should not be saved they
+                  must be marked with
+                  <code class="code">@Transient</code>.
+                  
+               </p>
+               <p>
+                  By default each field is mapped to a column with the name of
+                  the
+                  field. You can change the default name via
+                  <code class="code">@Column</code>
+                  (name="newColumnName").
+                  
+               </p>
+               <p> The following annotations can be used.</p>
+               <p>
+                  
+               </p>
+               <div class="table"><a name="d438544e107"></a><p class="title"><b>Table&nbsp;1.&nbsp;Annotations for fields / getter and setter</b></p>
+                  <div class="table-contents">
+                     <table summary="Annotations for fields / getter and setter" border="1">
+                        <colgroup>
+                           <col align="left" class="c1">
+                           <col align="left" class="c2">
+                        </colgroup>
+                        <tbody>
+                           <tr>
+                              <td align="left">@Id</td>
+                              <td align="left"> Identifies the unique ID of the database entry</td>
+                           </tr>
+                           <tr>
+                              <td align="left">@GeneratedValue</td>
+                              <td align="left"> Together with an ID this annotation defines that this value is generated
+                                 automatically.
+                                 
+                              </td>
+                           </tr>
+                           <tr>
+                              <td align="left">@Transient</td>
+                              <td align="left"> Field will not be saved in database</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p><br class="table-break">
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_relationships"></a>1.4.&nbsp;Relationship Mapping
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> JPA allows to define relationships between classes, e.g. it can
+                  be defined that a class is part of another class (containment).
+                  Classes can
+                  have one to one, one to many, many to one, and many to
+                  many
+                  relationships with other classes.
+                  
+               </p>
+               <p> A relationship can be bidirectional or unidirectional, e.g. in
+                  a bidirectional relationship both classes store a reference to each
+                  other while in an unidirectional case only one class has a reference
+                  to the other class. Within a bidirectional relationship you need to
+                  specify the
+                  owning side of this relationship in the other class with
+                  the
+                  attribute "mappedBy", e.g.
+                  @ManyToMany(mappedBy="attributeOfTheOwningClass".
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <p>
+                  
+               </p>
+               <div class="table"><a name="d438544e143"></a><p class="title"><b>Table&nbsp;2.&nbsp;Relationship annotations</b></p>
+                  <div class="table-contents">
+                     <table summary="Relationship annotations" border="1">
+                        <colgroup>
+                           <col align="left" class="c1">
+                        </colgroup>
+                        <tbody>
+                           <tr>
+                              <td align="left">@OneToOne</td>
+                           </tr>
+                           <tr>
+                              <td align="left">@OneToMany</td>
+                           </tr>
+                           <tr>
+                              <td align="left">@ManyToOne</td>
+                           </tr>
+                           <tr>
+                              <td align="left">@ManyToMany</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <p><br class="table-break">
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_entitymanager"></a>1.5.&nbsp;Entity Manager
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The entity manager
+                  <code class="code">javax.persistence.EntityManager</code>
+                  provides the operations from and to the database, e.g.
+                  find objects,
+                  persists them, remove objects from the
+                  database, etc.
+                  
+                  In a JavaEE
+                  application the entity manager is automatically
+                  inserted in the web
+                  application. Outside JavaEE you need to
+                  manage the entity manager
+                  yourself.
+                  
+               </p>
+               <p>
+                  Entities which are managed by an Entity Manager will
+                  automatically propagate these changes to the database (if this
+                  happens within a commit statement). If the Entity Manager is closed
+                  (via close()) then the managed entities are in a detached state. If
+                  synchronize them again with the database a Entity Manager provides
+                  the merge() method.
+                  
+               </p>
+               <p>
+                  The
+                  <span class="emphasis"><em>persistence context</em></span>
+                  describes all Entities of one Entity manager.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="jpaintro_persistenceunits"></a>1.6.&nbsp;Persistence Units
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The
+                  <code class="code">EntityManager</code>
+                  is created by the
+                  <code class="code">EntityManagerFactory</code>
+                  which is configured by the persistence unit. The persistence unit is
+                  described via the
+                  <code class="filename">persistence.xml</code>
+                  file in the
+                  <code class="filename">META-INF</code>
+                  directory of
+                  the source folder. A set of entities
+                  which are logical
+                  connected will
+                  be grouped via a persistence unit.
+                  The
+                  <code class="filename">persistence.xml</code>
+                  file
+                  defines the
+                  connection data to the database, e.g.
+                  the driver, the
+                  user
+                  and the
+                  password,
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="eclipselink"></a>2.&nbsp;EclipseLink
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               This tutorial
+               will use
+               EclipseLink
+               as JPA
+               implementation. EclipseLink
+               supports several Java standards:
+               
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>Java Persistence (JPA) 2.0 - JSR 317</p>
+                  </li>
+                  <li class="listitem">
+                     <p>Java Architecture for XML Binding (JAXB) 2.2 - JSR 222</p>
+                  </li>
+                  <li class="listitem">
+                     <p>Service Data Objects (SDO) 2.1.1 - JSR 235</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+               
+               
+            </p>
+            <p> This tutorial covers the usage of the JPA functionality. </p>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="installation"></a>3.&nbsp;Installation
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="installation_jpa"></a>3.1.&nbsp;EclipseLink
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Download the "EclipseLink Installer Zip" implementation from the
+                  <a class="ulink" href="http://www.eclipse.org/eclipselink/downloads/" target="_top"> EclipseLink Download Site</a>.
+                  
+               </p>
+               <p>
+                  The download contains several jars. We need the following jars:
+                  
+               </p>
+               <div class="itemizedlist">
+                  <ul class="itemizedlist" type="disc">
+                     <li class="listitem">
+                        <p>eclipselink.jar</p>
+                     </li>
+                     <li class="listitem">
+                        <p>javax.persistence_*.jar</p>
+                     </li>
+                  </ul>
+               </div>
+               <p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="installation_database"></a>3.2.&nbsp;Derby Database
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The example later will be using
+                  <a class="ulink" href="http://www.vogella.com/tutorials/ApacheDerby/article.html" target="_top">Apache Derby</a>
+                  as a database. Download Derby
+                  from
+                  <a class="ulink" href="http://db.apache.org/derby/" target="_top"> http://db.apache.org/derby/</a>
+                  From this tutorial we will need the "derby.jar".
+                  For details on Derby
+                  (which is not required for this tutorial)
+                  please see
+                  <a class="ulink" href="http://www.vogella.com/tutorials/ApacheDerby/article.html" target="_top">Apache Derby</a>.
+                  
+               </p>
+            </div>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="simple"></a>4.&nbsp;Simple Example
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="simple_model"></a>4.1.&nbsp;Project and Entity
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a
+                  <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html#firstjava" target="_top"> Java project</a>
+                  "de.vogella.jpa.simple". Create a
+                  folder
+                  "lib" and place the
+                  required
+                  JPA jars and derby.jar into this folder.
+                  <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html#classpath" target="_top">
+                     Add the libs to the project classpath.</a>
+                  
+               </p>
+               <p>Afterwards create the package "de.vogella.jpa.simple.model"
+                  and
+                  create
+                  the following classes.
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.simple.model;
+
+<span class="hl-keyword">import</span> javax.persistence.Entity;
+<span class="hl-keyword">import</span> javax.persistence.GeneratedValue;
+<span class="hl-keyword">import</span> javax.persistence.GenerationType;
+<span class="hl-keyword">import</span> javax.persistence.Id;
+
+<em><span class="hl-annotation" style="color: gray">@Entity</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Todo {
+  <em><span class="hl-annotation" style="color: gray">@Id</span></em>
+  <em><span class="hl-annotation" style="color: gray">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></em>
+  <span class="hl-keyword">private</span> Long id;
+  <span class="hl-keyword">private</span> String summary;
+  <span class="hl-keyword">private</span> String description;
+
+  <span class="hl-keyword">public</span> String getSummary() {
+    <span class="hl-keyword">return</span> summary;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setSummary(String summary) {
+    <span class="hl-keyword">this</span>.summary = summary;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> String toString() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"Todo [summary="</span> + summary + <span class="hl-string" style="color:blue">", description="</span> + description
+        + <span class="hl-string" style="color:blue">"]"</span>;
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="example_persistenceunit"></a>4.2.&nbsp;Persistence Unit
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create a
+                  directory
+                  "META-INF" in your "src" folder and create
+                  the
+                  file
+                  "persistence.xml". This examples uses EclipseLink specific flags
+                  for
+                  example via the
+                  parameter "eclipselink.ddl-generation" you specify
+                  that
+                  the database
+                  scheme will be automatically dropped and created.
+                  
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting">&lt;?xml version=<span class="hl-string" style="color:blue">"1.0"</span> encoding=<span class="hl-string" style="color:blue">"UTF-8"</span> ?&gt;
+&lt;persistence xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"</span>
+  version=<span class="hl-string" style="color:blue">"2.0"</span> xmlns=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/persistence"</span>&gt;
+  &lt;persistence-unit name=<span class="hl-string" style="color:blue">"todos"</span> transaction-type=<span class="hl-string" style="color:blue">"RESOURCE_LOCAL"</span>&gt;
+    &lt;<span class="hl-keyword">class</span>&gt;de.vogella.jpa.simple.model.Todo&lt;/<span class="hl-keyword">class</span>&gt;
+    &lt;properties&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.driver"</span> value=<span class="hl-string" style="color:blue">"org.apache.derby.jdbc.EmbeddedDriver"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.url"</span>
+        value=<span class="hl-string" style="color:blue">"jdbc:derby:/home/vogella/databases/simpleDb;create=true"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.user"</span> value=<span class="hl-string" style="color:blue">"test"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.password"</span> value=<span class="hl-string" style="color:blue">"test"</span> /&gt;
+
+      &lt;!-- EclipseLink should create the database schema automatically --&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"eclipselink.ddl-generation"</span> value=<span class="hl-string" style="color:blue">"create-tables"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"eclipselink.ddl-generation.output-mode"</span>
+        value=<span class="hl-string" style="color:blue">"database"</span> /&gt;
+    &lt;/properties&gt;
+
+  &lt;/persistence-unit&gt;
+&lt;/persistence&gt; </pre><p>
+                  
+               </p>
+               <p>
+                  The database specified via "javax.persistence.jdbc.url" will be
+                  automatically created by the
+                  Derby Driver. You may want to
+                  adjust the
+                  path, it currently is based on Linux notations and points to my home
+                  directory on my Linux system.
+                  
+               </p>
+               <p>
+                  To see the SQL generated for the databases set
+                  eclipselink.ddl-generation.output-mode value from "database"
+                  to
+                  "sql-script" or "both". Two files will get generated
+                  'createDDL.jdbc'
+                  and
+                  'dropDDL.jdbc'
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="simple_main"></a>4.3.&nbsp;Test your installation
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Create the following Main class which will create a new entry
+                  every
+                  time it is called. After the first call you need to remove the
+                  property "eclipselink.ddl-generation" from persistence.xml otherwise
+                  you will receive an error as EclipseLink tries to create the database
+                  scheme again. Alternative you could set the property to
+                  "drop-and-create-tables" but this would drop your database schema at
+                  every run. 
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.simple.main;
+
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">import</span> javax.persistence.EntityManager;
+<span class="hl-keyword">import</span> javax.persistence.EntityManagerFactory;
+<span class="hl-keyword">import</span> javax.persistence.Persistence;
+<span class="hl-keyword">import</span> javax.persistence.Query;
+
+<span class="hl-keyword">import</span> de.vogella.jpa.simple.model.Todo;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Main {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String PERSISTENCE_UNIT_NAME = <span class="hl-string" style="color:blue">"todos"</span>;
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> EntityManagerFactory factory;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    EntityManager em = factory.createEntityManager();
+    <em class="hl-comment" style="color: #080">// read the existing entries and write to console</em>
+    Query q = em.createQuery(<span class="hl-string" style="color:blue">"select t from Todo t"</span>);
+    List&lt;Todo&gt; todoList = q.getResultList();
+    <span class="hl-keyword">for</span> (Todo todo : todoList) {
+      System.out.println(todo);
+    }
+    System.out.println(<span class="hl-string" style="color:blue">"Size: "</span> + todoList.size());
+
+    <em class="hl-comment" style="color: #080">// create new todo</em>
+    em.getTransaction().begin();
+    Todo todo = <span class="hl-keyword">new</span> Todo();
+    todo.setSummary(<span class="hl-string" style="color:blue">"This is a test"</span>);
+    todo.setDescription(<span class="hl-string" style="color:blue">"This is a test"</span>);
+    em.persist(todo);
+    em.getTransaction().commit();
+
+    em.close();
+  }
+} </pre><p>
+                  
+               </p>
+               <p>Run you program several times to see that the database is
+                  filled. 
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="example"></a>5.&nbsp;Relationship Example
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Create a
+               Java project called
+               "de.vogella.jpa.eclipselink", create
+               again a
+               folder
+               "lib" and place the
+               required
+               JPA jars and derby.jar into
+               this folder.
+               
+            </p>
+            <p>
+               Create the
+               <code class="code">de.vogella.jpa.eclipselink.model</code>
+               package
+               and the following classes.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.eclipselink.model;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">import</span> javax.persistence.Entity;
+<span class="hl-keyword">import</span> javax.persistence.GeneratedValue;
+<span class="hl-keyword">import</span> javax.persistence.GenerationType;
+<span class="hl-keyword">import</span> javax.persistence.Id;
+<span class="hl-keyword">import</span> javax.persistence.OneToMany;
+
+<em><span class="hl-annotation" style="color: gray">@Entity</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Family {
+  <em><span class="hl-annotation" style="color: gray">@Id</span></em>
+  <em><span class="hl-annotation" style="color: gray">@GeneratedValue(strategy = GenerationType.TABLE)</span></em>
+  <span class="hl-keyword">private</span> <span class="hl-keyword">int</span> id;
+  <span class="hl-keyword">private</span> String description;
+
+  <em><span class="hl-annotation" style="color: gray">@OneToMany(mappedBy = "family")</span></em>
+  <span class="hl-keyword">private</span> <span class="hl-keyword">final</span> List&lt;Person&gt; members = <span class="hl-keyword">new</span> ArrayList&lt;Person&gt;();
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> getId() {
+    <span class="hl-keyword">return</span> id;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setId(<span class="hl-keyword">int</span> id) {
+    <span class="hl-keyword">this</span>.id = id;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+
+  <span class="hl-keyword">public</span> List&lt;Person&gt; getMembers() {
+    <span class="hl-keyword">return</span> members;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.eclipselink.model;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">import</span> javax.persistence.Entity;
+<span class="hl-keyword">import</span> javax.persistence.GeneratedValue;
+<span class="hl-keyword">import</span> javax.persistence.GenerationType;
+<span class="hl-keyword">import</span> javax.persistence.Id;
+<span class="hl-keyword">import</span> javax.persistence.ManyToOne;
+<span class="hl-keyword">import</span> javax.persistence.OneToMany;
+<span class="hl-keyword">import</span> javax.persistence.Transient;
+
+<em><span class="hl-annotation" style="color: gray">@Entity</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Person {
+  <em><span class="hl-annotation" style="color: gray">@Id</span></em>
+  <em><span class="hl-annotation" style="color: gray">@GeneratedValue(strategy = GenerationType.TABLE)</span></em>
+  <span class="hl-keyword">private</span> String id;
+  <span class="hl-keyword">private</span> String firstName;
+  <span class="hl-keyword">private</span> String lastName;
+
+  <span class="hl-keyword">private</span> Family family;
+
+  <span class="hl-keyword">private</span> String nonsenseField = <span class="hl-string" style="color:blue">""</span>;
+
+  <span class="hl-keyword">private</span> List&lt;Job&gt; jobList = <span class="hl-keyword">new</span> ArrayList&lt;Job&gt;();
+
+  <span class="hl-keyword">public</span> String getId() {
+    <span class="hl-keyword">return</span> id;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setId(String Id) {
+    <span class="hl-keyword">this</span>.id = Id;
+  }
+
+  <span class="hl-keyword">public</span> String getFirstName() {
+    <span class="hl-keyword">return</span> firstName;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setFirstName(String firstName) {
+    <span class="hl-keyword">this</span>.firstName = firstName;
+  }
+
+  <em class="hl-comment" style="color: #080">// Leave the standard column name of the table</em>
+  <span class="hl-keyword">public</span> String getLastName() {
+    <span class="hl-keyword">return</span> lastName;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setLastName(String lastName) {
+    <span class="hl-keyword">this</span>.lastName = lastName;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@ManyToOne</span></em>
+  <span class="hl-keyword">public</span> Family getFamily() {
+    <span class="hl-keyword">return</span> family;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setFamily(Family family) {
+    <span class="hl-keyword">this</span>.family = family;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Transient</span></em>
+  <span class="hl-keyword">public</span> String getNonsenseField() {
+    <span class="hl-keyword">return</span> nonsenseField;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setNonsenseField(String nonsenseField) {
+    <span class="hl-keyword">this</span>.nonsenseField = nonsenseField;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@OneToMany</span></em>
+  <span class="hl-keyword">public</span> List&lt;Job&gt; getJobList() {
+    <span class="hl-keyword">return</span> <span class="hl-keyword">this</span>.jobList;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setJobList(List&lt;Job&gt; nickName) {
+    <span class="hl-keyword">this</span>.jobList = nickName;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.eclipselink.model;
+
+<span class="hl-keyword">import</span> javax.persistence.Entity;
+<span class="hl-keyword">import</span> javax.persistence.GeneratedValue;
+<span class="hl-keyword">import</span> javax.persistence.GenerationType;
+<span class="hl-keyword">import</span> javax.persistence.Id;
+
+<em><span class="hl-annotation" style="color: gray">@Entity</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Job {
+  <em><span class="hl-annotation" style="color: gray">@Id</span></em>
+  <em><span class="hl-annotation" style="color: gray">@GeneratedValue(strategy = GenerationType.TABLE)</span></em>
+  <span class="hl-keyword">private</span> <span class="hl-keyword">int</span> id;
+  <span class="hl-keyword">private</span> <span class="hl-keyword">double</span> salery;
+  <span class="hl-keyword">private</span> String jobDescr;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">int</span> getId() {
+    <span class="hl-keyword">return</span> id;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setId(<span class="hl-keyword">int</span> id) {
+    <span class="hl-keyword">this</span>.id = id;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">double</span> getSalery() {
+    <span class="hl-keyword">return</span> salery;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setSalery(<span class="hl-keyword">double</span> salery) {
+    <span class="hl-keyword">this</span>.salery = salery;
+  }
+
+  <span class="hl-keyword">public</span> String getJobDescr() {
+    <span class="hl-keyword">return</span> jobDescr;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setJobDescr(String jobDescr) {
+    <span class="hl-keyword">this</span>.jobDescr = jobDescr;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               Create
+               the
+               file
+               "persistence.xml" in "src/META-INF". Remember to
+               change the path to the database.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting">&lt;?xml version=<span class="hl-string" style="color:blue">"1.0"</span> encoding=<span class="hl-string" style="color:blue">"UTF-8"</span> ?&gt;
+&lt;persistence xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"</span>
+  version=<span class="hl-string" style="color:blue">"2.0"</span> xmlns=<span class="hl-string" style="color:blue">"http://java.sun.com/xml/ns/persistence"</span>&gt;
+  &lt;persistence-unit name=<span class="hl-string" style="color:blue">"people"</span> transaction-type=<span class="hl-string" style="color:blue">"RESOURCE_LOCAL"</span>&gt;
+    
+    
+    &lt;<span class="hl-keyword">class</span>&gt;de.vogella.jpa.eclipselink.model.Person&lt;/<span class="hl-keyword">class</span>&gt;
+    &lt;<span class="hl-keyword">class</span>&gt;de.vogella.jpa.eclipselink.model.Family&lt;/<span class="hl-keyword">class</span>&gt;
+    &lt;<span class="hl-keyword">class</span>&gt;de.vogella.jpa.eclipselink.model.Job&lt;/<span class="hl-keyword">class</span>&gt;
+    
+    &lt;properties&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.driver"</span> value=<span class="hl-string" style="color:blue">"org.apache.derby.jdbc.EmbeddedDriver"</span> /&gt;
+        &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.url"</span>
+        value=<span class="hl-string" style="color:blue">"jdbc:derby:/home/vogella/databases/relationsshipDb;create=true"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.user"</span> value=<span class="hl-string" style="color:blue">"test"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"javax.persistence.jdbc.password"</span> value=<span class="hl-string" style="color:blue">"test"</span> /&gt;
+
+      &lt;!-- EclipseLink should create the database schema automatically --&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"eclipselink.ddl-generation"</span> value=<span class="hl-string" style="color:blue">"create-tables"</span> /&gt;
+      &lt;property name=<span class="hl-string" style="color:blue">"eclipselink.ddl-generation.output-mode"</span>
+        value=<span class="hl-string" style="color:blue">"database"</span> /&gt;
+    &lt;/properties&gt;
+
+  &lt;/persistence-unit&gt;
+&lt;/persistence&gt; </pre><p>
+               
+            </p>
+            <p>
+               The following check is implemented as a
+               <a class="ulink" href="http://www.vogella.com/tutorials/JUnit/article.html" target="_top"> JUnit</a>
+               Test. For details please see 
+               <a class="ulink" href="http://www.vogella.com/tutorials/JUnit/article.html" target="_top"> JUnit Tutorial</a>. The setup() method will create a few test entries. After the
+               test
+               entries are created, they will be read and the one field of the
+               entries is changed and saved to the database.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.jpa.eclipselink.main;
+
+<span class="hl-keyword">import</span> <span class="hl-keyword">static</span> org.junit.Assert.assertTrue;
+
+<span class="hl-keyword">import</span> javax.persistence.EntityManager;
+<span class="hl-keyword">import</span> javax.persistence.EntityManagerFactory;
+<span class="hl-keyword">import</span> javax.persistence.Persistence;
+<span class="hl-keyword">import</span> javax.persistence.Query;
+
+<span class="hl-keyword">import</span> org.junit.Before;
+<span class="hl-keyword">import</span> org.junit.Test;
+
+<span class="hl-keyword">import</span> de.vogella.jpa.eclipselink.model.Family;
+<span class="hl-keyword">import</span> de.vogella.jpa.eclipselink.model.Person;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> JpaTest {
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String PERSISTENCE_UNIT_NAME = <span class="hl-string" style="color:blue">"people"</span>;
+  <span class="hl-keyword">private</span> EntityManagerFactory factory;
+
+  <em><span class="hl-annotation" style="color: gray">@Before</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setUp() <span class="hl-keyword">throws</span> Exception {
+    factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+    EntityManager em = factory.createEntityManager();
+
+    <em class="hl-comment" style="color: #080">// Begin a new local transaction so that we can persist a new entity</em>
+    em.getTransaction().begin();
+
+    <em class="hl-comment" style="color: #080">// read the existing entries</em>
+    Query q = em.createQuery(<span class="hl-string" style="color:blue">"select m from Person m"</span>);
+    <em class="hl-comment" style="color: #080">// Persons should be empty</em>
+
+    <em class="hl-comment" style="color: #080">// do we have entries?</em>
+    <span class="hl-keyword">boolean</span> createNewEntries = (q.getResultList().size() == <span class="hl-number">0</span>);
+
+    <em class="hl-comment" style="color: #080">// No, so lets create new entries</em>
+    <span class="hl-keyword">if</span> (createNewEntries) {
+      assertTrue(q.getResultList().size() == <span class="hl-number">0</span>);
+      Family family = <span class="hl-keyword">new</span> Family();
+      family.setDescription(<span class="hl-string" style="color:blue">"Family for the Knopfs"</span>);
+      em.persist(family);
+      <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">40</span>; i++) {
+        Person person = <span class="hl-keyword">new</span> Person();
+        person.setFirstName(<span class="hl-string" style="color:blue">"Jim_"</span> + i);
+        person.setLastName(<span class="hl-string" style="color:blue">"Knopf_"</span> + i);
+        em.persist(person);
+        <em class="hl-comment" style="color: #080">// now persists the family person relationship</em>
+        family.getMembers().add(person);
+        em.persist(person);
+        em.persist(family);
+      }
+    }
+
+    <em class="hl-comment" style="color: #080">// Commit the transaction, which will cause the entity to</em>
+    <em class="hl-comment" style="color: #080">// be stored in the database</em>
+    em.getTransaction().commit();
+
+    <em class="hl-comment" style="color: #080">// It is always good practice to close the EntityManager so that</em>
+    <em class="hl-comment" style="color: #080">// resources are conserved.</em>
+    em.close();
+
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Test</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> checkAvailablePeople() {
+
+    <em class="hl-comment" style="color: #080">// now lets check the database and see if the created entries are there</em>
+    <em class="hl-comment" style="color: #080">// create a fresh, new EntityManager</em>
+    EntityManager em = factory.createEntityManager();
+
+    <em class="hl-comment" style="color: #080">// Perform a simple query for all the Message entities</em>
+    Query q = em.createQuery(<span class="hl-string" style="color:blue">"select m from Person m"</span>);
+
+    <em class="hl-comment" style="color: #080">// We should have 40 Persons in the database</em>
+    assertTrue(q.getResultList().size() == <span class="hl-number">40</span>);
+
+    em.close();
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Test</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> checkFamily() {
+    EntityManager em = factory.createEntityManager();
+    <em class="hl-comment" style="color: #080">// Go through each of the entities and print out each of their</em>
+    <em class="hl-comment" style="color: #080">// messages, as well as the date on which it was created</em>
+    Query q = em.createQuery(<span class="hl-string" style="color:blue">"select f from Family f"</span>);
+
+    <em class="hl-comment" style="color: #080">// We should have one family with 40 persons</em>
+    assertTrue(q.getResultList().size() == <span class="hl-number">1</span>);
+    assertTrue(((Family) q.getSingleResult()).getMembers().size() == <span class="hl-number">40</span>);
+    em.close();
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Test(expected = javax.persistence.NoResultException.class)</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> deletePerson() {
+    EntityManager em = factory.createEntityManager();
+    <em class="hl-comment" style="color: #080">// Begin a new local transaction so that we can persist a new entity</em>
+    em.getTransaction().begin();
+    Query q = em
+        .createQuery(<span class="hl-string" style="color:blue">"SELECT p FROM Person p WHERE p.firstName = :firstName AND p.lastName = :lastName"</span>);
+    q.setParameter(<span class="hl-string" style="color:blue">"firstName"</span>, <span class="hl-string" style="color:blue">"Jim_1"</span>);
+    q.setParameter(<span class="hl-string" style="color:blue">"lastName"</span>, <span class="hl-string" style="color:blue">"Knopf_!"</span>);
+    Person user = (Person) q.getSingleResult();
+    em.remove(user);
+    em.getTransaction().commit();
+    Person person = (Person) q.getSingleResult();
+    <em class="hl-comment" style="color: #080">// Begin a new local transaction so that we can persist a new entity</em>
+
+    em.close();
+  }
+} </pre><p>
+               
+            </p>
+            <p> The project should now look like the following.</p>
+            <p>
+               
+            </p>
+            <div class="mediaobject"><img src="images/xjpa10.gif.pagespeed.ic.bwAO7u1gDL.png"></div>
+            <p>
+               
+            </p>
+            <p> You should be able to run the JUnit tests successfully.
+               
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>6.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>6.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>7.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_s1s2a"></a>7.1.&nbsp;Java Persistence API Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.eclipse.org/eclipselink/" target="_top"> http://www.eclipse.org/eclipselink/</a>
+                  EclipseLink
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://java.sun.com/developer/technicalArticles/J2SE/Desktop/persistenceapi/" target="_top">
+                     http://java.sun.com/developer/technicalArticles/J2SE/Desktop/persistenceapi/</a>
+                  Using the Java Persistence API in Desktop Applications
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-typesafejpa/index.html" target="_top">
+                     http://www.ibm.com/developerworks/java/library/j-typesafejpa/index.html</a>
+                  Dynamic, typesafe queries in JPA 2.0 using the Criteria API
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>7.2.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <table border="0">
+                     <colgroup>
+                        <col width="50%" align="left">
+                        <col width="50%" align="left">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/training/" target="_top">TRAINING</a></th>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/consulting/" target="_top">SERVICE &amp; SUPPORT</a></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              The vogella company provides comprehensive <a class="ulink" href="http://www.vogella.com/training/" target="_top">training and education services</a> 
+                              from experts in the areas of Eclipse RCP, Android, Git, Java, Gradle and Spring.
+                              We offer both public and inhouse training. Whichever course you decide to take, you are guaranteed to experience 
+                              what many before you refer to as 
+                              <a class="ulink" href="http://www.vogella.com/training/" target="_top">&#8220;The best IT class I have ever attended&#8221;</a>.
+                              
+                           </td>
+                           <td align="left">
+                              The vogella company offers <a class="ulink" href="http://www.vogella.com/consulting/" target="_top">expert consulting</a> services, development support and coaching. Our customers range from
+                              Fortune 100 corporations to individual developers.  
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div><img src="http://vg04.met.vgwort.de/na/311d8976188a42138e948de1c7726ad9" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/JavaPersistenceAPI/article.html');
+//]]></script></body>
+</html>
+

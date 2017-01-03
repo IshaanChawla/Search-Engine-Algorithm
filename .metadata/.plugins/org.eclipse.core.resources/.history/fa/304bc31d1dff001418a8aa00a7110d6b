@@ -1,0 +1,67 @@
+public class GivingWeights 
+{
+	public void assign(String t,String ind)
+	{
+		ZoneIndexing table = new ZoneIndexing();
+		Kmp a = new Kmp();
+		String[] str,str1;
+		StringSensitivity ss = new StringSensitivity();
+		AccessFile af = new AccessFile();
+		AfterSearch as = new AfterSearch();
+		try
+		{
+			table.fetchvalues(ind);
+			int index = a.kmpfirstindexsearch(t,"meta name=\"keywords\" content=\"");
+			if(index>0)
+			{
+				str = as.keywordretrival(t,index,'\"',',');
+				str = ss.lowercase(str);
+				for(String i : str)
+				{
+					double count = a.kmpsearch(t,i,table);
+					if(count>0)
+					{
+						System.out.println("******");
+						af.addkeyword(i,count,ind);
+					}
+				}
+			}
+			else
+				str = null;
+			index = a.kmpfirstindexsearch(t,"<title>");	
+			if(index>0)
+			{
+				str1 = as.keywordretrival(t,index,'<',' ');
+				str1 = ss.lowercase(str1);
+				int indi = 0;
+				for(String i : str1)
+				{
+					int k=0,l=0;
+					for(String j : str)
+					{
+						if(ss.matchstring(i,j))
+							k++;
+					}
+					int indj = 0;
+					for (String j : str1)
+					{
+						if(ss.matchstring(i,j) && indi < indj)
+							l++;
+						indj++;
+					}
+					if(k == 0 && i.length()>4 && l == 0)
+					{
+						double count = a.kmpsearch(t,i,table);
+						if(count>0)
+							af.addkeyword(i,count,ind);
+					}
+					indi++;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		};
+	}
+}

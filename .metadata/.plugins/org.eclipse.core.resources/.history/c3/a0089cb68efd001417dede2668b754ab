@@ -1,0 +1,72 @@
+public class GivingWeights 
+{
+	public static void main(String arg[])
+	{
+		String t,url = new String("https://docs.oracle.com/javase/tutorial/java/data/buffers.html");
+		String[] str,str1;
+		StringSensitivity ss = new StringSensitivity();
+		GetSrcPage gsp = new GetSrcPage();
+		ZoneIndexing table = new ZoneIndexing();
+		AfterSearch as = new AfterSearch();
+		Kmp a = new Kmp();
+		AccessFile af = new AccessFile();
+		af.makebtrees();
+		String ind = af.urlindexfile(url);
+		if(ind != null)
+		{
+		try
+		{
+			t = gsp.getsrc(url);
+			table.computeratios(t);
+			af.zoneindexfiles(table,ind);
+			table.fetchvalues(ind);
+			int index = a.kmpfirstindexsearch(t,"meta name=\"keywords\" content=\"");
+			if(index>0)
+			{
+				str = as.keywordretrival(t,index,'\"',',');
+				str = ss.lowercase(str);
+				for(String i : str)
+				{
+					double count = a.kmpsearch(t,i,table);
+					af.addkeyword(i,count,ind);
+				}
+			}
+			else
+				str = null;
+			index = a.kmpfirstindexsearch(t,"<title>");	
+			if(index>0)
+			{
+				str1 = as.keywordretrival(t,index,'<',' ');
+				str1 = ss.lowercase(str1);
+				int indi = 0;
+				for(String i : str1)
+				{
+					int k=0,l=0;
+					for(String j : str)
+					{
+						if(ss.matchstring(i,j))
+							k++;
+					}
+					int indj = 0;
+					for (String j : str1)
+					{
+						if(ss.matchstring(i,j) && indi < indj)
+							l++;
+						indj++;
+					}
+					if(k == 0 && i.length()>3 && l==0)
+					{
+						double count = a.kmpsearch(t,i,table);
+						af.addkeyword(i,count,ind);
+					}
+					indi++;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		};
+	}
+	}
+}

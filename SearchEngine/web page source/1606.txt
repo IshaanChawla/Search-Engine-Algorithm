@@ -1,0 +1,1652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>7.6 &#8212; Function overloading &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 7.6 &#8212; Function overloading Comments Feed" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"54f9b93191"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"c4ba578057"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"54.209.60.63","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/76-function-overloading\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='7.5 &#8212; Inline functions' href='http://www.learncpp.com/cpp-tutorial/75-inline-functions/' />
+<link rel='next' title='7.7 &#8212; Default parameters' href='http://www.learncpp.com/cpp-tutorial/77-default-parameters/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/76-function-overloading/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=113' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="7.6 -- Function overloading" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/76-function-overloading/" />
+<meta property="og:description" content="Function overloading is a feature of C++ that allows us to create multiple functions with the same name, so long as they have different parameters. Consider the following function: [crayon-555d1ef6..." />
+<meta property="article:published_time" content="2007-08-04T04:25:20+00:00" />
+<meta property="article:modified_time" content="2007-08-04T04:25:20+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-113 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-113 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-113">
+						<div class="post-headline">		<h1>7.6 &#8212; Function overloading</h1>
+		</div>		<div class="post-byline">By Alex, on August 3rd, 2007</div>		<div class="post-bodycopy clearfix"><p><strong>Function overloading</strong> is a feature of C++ that allows us to create multiple functions with the same name, so long as they have different parameters.  Consider the following function:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165a2085407307" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165a2085407307-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165a2085407307-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165a2085407307-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165a2085407307-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165a2085407307-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165a2085407307-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef6165a2085407307-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165a2085407307-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>This trivial function adds two integers.  However, what if we also need to add two floating point numbers?  This function is not at all suitable, as any floating point parameters would be converted to integers, causing the floating point arguments to lose their fractional values.</p>
+<p>One way to work around this issue is to define multiple functions with slightly different names:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165b2823961074" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165b2823961074-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165b2823961074-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165b2823961074-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165b2823961074-4">4</div><div class="crayon-num" data-line="crayon-555d1ef6165b2823961074-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165b2823961074-6">6</div><div class="crayon-num" data-line="crayon-555d1ef6165b2823961074-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165b2823961074-8">8</div><div class="crayon-num" data-line="crayon-555d1ef6165b2823961074-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165b2823961074-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">AddI</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165b2823961074-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef6165b2823961074-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165b2823961074-4"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d1ef6165b2823961074-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165b2823961074-6"><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-e">AddD</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dY</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d1ef6165b2823961074-7"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165b2823961074-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">dX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">dY</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165b2823961074-9"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0014 seconds] -->
+<p></p>
+<p>However, for best effect, this requires that you define a consistent naming standard, remember the name of all the different flavors of the function, and call the correct one (calling AddD() with integer parameters may produce the wrong result due to precision issues).</p>
+<p>Function overloading provides a better solution.  Using function overloading, we can declare another Add() function that takes double parameters:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165ba385082072" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165ba385082072-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165ba385082072-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165ba385082072-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165ba385082072-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165ba385082072-1"><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165ba385082072-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef6165ba385082072-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">dX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">dY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165ba385082072-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>We now have two version of Add():</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165c0268380356" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165c0268380356-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165c0268380356-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165c0268380356-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// integer version</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165c0268380356-2"><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dY</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// floating point version</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p></p>
+<p>Which version of Add() gets called depends on the arguments used in the call -- if we provide two ints, C++ will know we mean to call Add(int, int).  If we provide two floating point numbers, C++ will know we mean to call Add(double, double).  In fact, we can define as many overloaded Add() functions as we want, so long as each Add() function has unique parameters.</p>
+<p>Consequently, it&#8217;s also possible to define Add() functions with a differing number of parameters:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165c6954401901" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165c6954401901-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165c6954401901-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165c6954401901-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165c6954401901-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165c6954401901-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nZ</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165c6954401901-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef6165c6954401901-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nZ</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165c6954401901-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0010 seconds] -->
+<p></p>
+<p>Even though this Add() function has 3 parameters instead of 2, because the parameters are different than any other version of Add(), this is valid.</p>
+<p>Note that the function&#8217;s return type is NOT considered when overloading functions.  Consider the case where you want to write a function that returns a random number, but you need a version that will return an int, and another version that will return a double.  You might be tempted to do this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165cd270553986" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165cd270553986-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165cd270553986-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165cd270553986-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">GetRandomValue</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165cd270553986-2"><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-e">GetRandomValue</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+<p>But the compiler will flag this as an error.  These two functions have the same parameters (none), and consequently, the second GetRandomValue() will be treated as an erroneous redeclaration of the first.  Consequently, these functions will need to be given different names.</p>
+<p>Also keep in mind that declaring a typedef does not introduce a new type -- consequently, the following the two declarations of Print() are considered identical:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165d3689967834" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165d3689967834-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165d3689967834-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165d3689967834-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165d3689967834-1"><span class="crayon-r">typedef</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-t">string</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165d3689967834-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165d3689967834-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p><strong>How function calls are matched with overloaded functions</strong></p>
+<p>Making a call to an overloaded function results in one of three possible outcomes:</p>
+<p>1) A match is found.  The call is resolved to a particular overloaded function.<br />
+2) No match is found.  The arguments can not be matched to any overloaded function.<br />
+3) An ambiguous match is found.  The arguments matched more than one overloaded function.</p>
+<p>When an overloaded function is called, C++ goes through the following process to determine which version of the function will be called:</p>
+<p>1) First, C++ tries to find an exact match.  This is the case where the actual argument exactly matches the parameter type of one of the overloaded functions.  For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165da571436281" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165da571436281-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165da571436281-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165da571436281-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165da571436281-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165da571436281-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165da571436281-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165da571436281-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165da571436281-4"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// exact match with Print(int)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>Although 0 could technically match Print(char*), it exactly matches Print(int).  Thus Print(int) is the best match available.</p>
+<p>2) If no exact match is found, C++ tries to find a match through promotion.  In the lesson on <a href="http://www.learncpp.com/cpp-tutorial/44-type-conversion-and-casting/">type conversion and casting</a>, we covered how certain types can be automatically promoted via internal type conversion to other types.  To summarize,</p>
+<ul>
+<li>Char, unsigned char, and short is promoted to an int.
+<li>Unsigned short can be promoted to int or unsigned int, depending on the size of an int
+<li>Float is promoted to double
+<li>Enum is promoted to int
+</ul>
+<p>For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165e1290953658" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165e1290953658-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165e1290953658-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165e1290953658-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165e1290953658-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165e1290953658-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165e1290953658-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165e1290953658-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165e1290953658-4"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-s">'a'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// promoted to match Print(int)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>In this case, because there is no Print(char), the char &#8216;a&#8217; is promoted to an integer, which then matches Print(int).</p>
+<p>3) If no promotion is found, C++ tries to find a match through standard conversion.  Standard conversions include:</p>
+<ul>
+<li>Any numeric type will match any other numeric type, including unsigned (eg. int to float)
+<li>Enum will match the formal type of a numeric type (eg. enum to float)
+<li>Zero will match a pointer type and numeric type (eg. 0 to char*, or 0 to float)
+<li>A pointer will match a void pointer
+</ul>
+<p>For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165e8196800932" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165e8196800932-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165e8196800932-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165e8196800932-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165e8196800932-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165e8196800932-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">float</span><span class="crayon-h"> </span><span class="crayon-v">fValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165e8196800932-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">struct</span><span class="crayon-h"> </span><span class="crayon-v">sValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165e8196800932-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165e8196800932-4"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-s">'a'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// promoted to match Print(float)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>In this case, because there is no Print(char), and no Print(int), the &#8216;a&#8217; is converted to a float and matched with Print(float).</p>
+<p>Note that all standard conversions are considered equal.  No standard conversion is considered better than any of the others.</p>
+<p>4) Finally, C++ tries to find a match through user-defined conversion.  Although we have not covered classes yet, classes (which are similar to structs) can define conversions to other types that can be implicitly applied to objects of that class.  For example, we might define a class X and a user-defined conversion to int.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165ef245269770" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165ef245269770-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165ef245269770-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165ef245269770-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165ef245269770-4">4</div><div class="crayon-num" data-line="crayon-555d1ef6165ef245269770-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165ef245269770-6">6</div><div class="crayon-num" data-line="crayon-555d1ef6165ef245269770-7">7</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165ef245269770-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-v">X</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// with user-defined conversion to int</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165ef245269770-2">&nbsp;</div><div class="crayon-line" id="crayon-555d1ef6165ef245269770-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">float</span><span class="crayon-h"> </span><span class="crayon-v">fValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165ef245269770-4"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165ef245269770-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165ef245269770-6"><span class="crayon-i">X</span><span class="crayon-h"> </span><span class="crayon-v">cValue</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// declare a variable named cValue of type class X</span></div><div class="crayon-line" id="crayon-555d1ef6165ef245269770-7"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-v">cValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// cValue will be converted to an int and matched to Print(int)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0012 seconds] -->
+<p></p>
+<p>Although cValue is of type class X, because this particular class has a user-defined conversion to int, the function call Print(cValue) will resolve to the Print(int) version of the function.</p>
+<p>We will cover the details on how to do user-defined conversions of classes when we cover classes.</p>
+<p><strong>Ambiguous matches</strong></p>
+<p>If every overloaded function has to have unique parameters, how is it possible that a call could result in more than one match?  Because all standard conversions are considered equal, and all user-defined conversions are considered equal, if a function call matches multiple candidates via standard conversion or user-defined conversion, an ambiguous match will result.  For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165f6913503967" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165f6913503967-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165f6913503967-2">2</div><div class="crayon-num" data-line="crayon-555d1ef6165f6913503967-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165f6913503967-4">4</div><div class="crayon-num" data-line="crayon-555d1ef6165f6913503967-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef6165f6913503967-6">6</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165f6913503967-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165f6913503967-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">float</span><span class="crayon-h"> </span><span class="crayon-v">fValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165f6913503967-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165f6913503967-4"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-s">'a'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef6165f6913503967-5"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef6165f6913503967-6"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-cn">3.14159</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+<p>In the case of <code>Print(&#039;a&#039;)</code>, C++ can not find an exact match.  It tries promoting &#8216;a&#8217; to an int, but there is no Print(int) either.  Using a standard conversion, it can convert &#8216;a&#8217; to both an unsigned int and a floating point value.  Because all standard conversions are considered equal, this is an ambiguous match.</p>
+<p><code>Print(0)</code> is similar.  0 is an int, and there is no Print(int).  It matches both calls via standard conversion.</p>
+<p><code>Print(3.14159)</code> might be a little surprising, as most programmers would assume it matches Print(float).  But remember that all literal floating point values are doubles unless they have the &#8216;f&#8217; suffix.  3.14159 is a double, and there is no Print(double).  Consequently, it matches both calls via standard conversion.</p>
+<p>Ambiguous matches are considered a compile-time error.  Consequently, an ambiguous match needs to be disambiguated before your program will compile.  There are two ways to resolve ambiguous matches:</p>
+<p>1) Often, the best way is simply to define a new overloaded function that takes parameters of exactly the type you are trying to call the function with.  Then C++ will be able to find an exact match for the function call.</p>
+<p>2) Alternatively, explicitly cast the ambiguous parameter(s) to the type of the function you want to call.  For example, to have Print(0) call the Print(unsigned int), you would do this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef6165fd220665514" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef6165fd220665514-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef6165fd220665514-1"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-r">static_cast</span><span class="crayon-o">&lt;</span><span class="crayon-t">unsigned</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-o">&gt;</span><span class="crayon-sy">(</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// will call Print(unsigned int)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p><strong>Multiple arguments</strong></p>
+<p>If there are multiple arguments, C++ applies the matching rules to each argument in turn.  The function chosen is the one for which each argument matches at least as well as all the other functions, with at least one argument matching better than all the other functions.  In other words, the function chosen must provide a better match than all the other candidate functions for at least one parameter, and no worse for all of the other parameters.</p>
+<p>In the case that such a function is found, it is clearly and unambiguously the best choice.  If no such function can be found, the call will be considered ambiguous (or a non-match).</p>
+<p><strong>Conclusion</strong></p>
+<p>Function overloading can lower a programs complexity significantly while introducing very little additional risk.  Although this particular lesson is long and may seem somewhat complex (particularly the matching rules), in reality function overloading typically works transparently and without any issues.  The compiler will flag all ambiguous cases, and they can generally be easily resolved.</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/77-default-parameters/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 7.7 -- Default parameters</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter7" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/75-inline-functions/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 7.5 -- Inline functions</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-113" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-113" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-113" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-113" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">37 comments to 7.6 &#8212; Function overloading</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-3487">
+		<div id="div-comment-3487" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3f876c696333a7b3638a17b54cf04944?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3f876c696333a7b3638a17b54cf04944?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.learncpp.com' rel='external nofollow' class='url'>prasanth</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-3487">
+		November 26, 2007 at 9:03 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=3487#respond' onclick='return addComment.moveForm( "comment-3487", "3487", "respond", "113" )' aria-label='Reply to prasanth'> &middot; Reply</a></span>		 
+		</div>
+		<p>this is very good site for c++.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-5803">
+		<div id="div-comment-5803" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Abhishek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-5803">
+		January 10, 2008 at 3:41 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=5803#respond' onclick='return addComment.moveForm( "comment-5803", "5803", "respond", "113" )' aria-label='Reply to Abhishek'> &middot; Reply</a></span>		 
+		</div>
+		<p>I agree</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-95069">
+		<div id="div-comment-95069" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e2f9c91f98ddf484768b36f215c2afb2?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e2f9c91f98ddf484768b36f215c2afb2?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">clementl</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-95069">
+		December 22, 2010 at 9:50 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=95069#respond' onclick='return addComment.moveForm( "comment-95069", "95069", "respond", "113" )' aria-label='Reply to clementl'> &middot; Reply</a></span>		 
+		</div>
+		<p>Me2</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-96297">
+		<div id="div-comment-96297" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6625cc01a3c447221af0d374e010fd5e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6625cc01a3c447221af0d374e010fd5e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://profiles.google.com/leif360' rel='external nofollow' class='url'>leif360</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-96297">
+		November 4, 2011 at 9:45 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=96297#respond' onclick='return addComment.moveForm( "comment-96297", "96297", "respond", "113" )' aria-label='Reply to leif360'> &middot; Reply</a></span>		 
+		</div>
+		<p>Me 3!</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-215510">
+		<div id="div-comment-215510" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/dd2330fa9f76894784f09a6590071ee2?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dd2330fa9f76894784f09a6590071ee2?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Bogdan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-215510">
+		November 11, 2014 at 8:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=215510#respond' onclick='return addComment.moveForm( "comment-215510", "215510", "respond", "113" )' aria-label='Reply to Bogdan'> &middot; Reply</a></span>		 
+		</div>
+		<p>4 me too!</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-4 clearfix" id="comment-251516">
+		<div id="div-comment-251516" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4410720086a3579e5708daf0d35d529?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4410720086a3579e5708daf0d35d529?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">nawendu</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-251516">
+		February 15, 2015 at 9:50 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=251516#respond' onclick='return addComment.moveForm( "comment-251516", "251516", "respond", "113" )' aria-label='Reply to nawendu'> &middot; Reply</a></span>		 
+		</div>
+		<p>i agree.<br />
+i have to learn cpp in 10 days and this site has been really helpful</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-8693">
+		<div id="div-comment-8693" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3a4a81b7f0acc25fcc9e7cd41565033d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a4a81b7f0acc25fcc9e7cd41565033d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Aaron</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-8693">
+		February 29, 2008 at 1:01 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=8693#respond' onclick='return addComment.moveForm( "comment-8693", "8693", "respond", "113" )' aria-label='Reply to Aaron'> &middot; Reply</a></span>		 
+		</div>
+		<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef61a2c0557206760" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef61a2c0557206760-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef61a2c0557206760-2">2</div><div class="crayon-num" data-line="crayon-555d1ef61a2c0557206760-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef61a2c0557206760-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef61a2c0557206760-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">strValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef61a2c0557206760-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef61a2c0557206760-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef61a2c0557206760-4"><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-s">'a'</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// promoted to match Print(int)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p></p>
+<p>&#8220;In this case, because there is no Print(char), the char &#8216;a&#8217; is promoted to an integer, which then matches Print(int).&#8221;</p>
+<p>There is a Print(char) though!!</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-8699">
+		<div id="div-comment-8699" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-8699">
+		February 29, 2008 at 2:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=8699#respond' onclick='return addComment.moveForm( "comment-8699", "8699", "respond", "113" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>No there isn&#8217;t. <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" />  There&#8217;s a Print(int) and a Print(char*).  Print(char*) is not the same thing as Print(char).  Print(char) would be used for single character.  Print(char*) would be used to print C-style character strings.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-8702">
+		<div id="div-comment-8702" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3a4a81b7f0acc25fcc9e7cd41565033d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a4a81b7f0acc25fcc9e7cd41565033d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Aaron</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-8702">
+		February 29, 2008 at 2:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=8702#respond' onclick='return addComment.moveForm( "comment-8702", "8702", "respond", "113" )' aria-label='Reply to Aaron'> &middot; Reply</a></span>		 
+		</div>
+		<p>Oh yea forgot about the * affecting the way it is evaluated. Good tutorials by the way. <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-3 clearfix" id="comment-20086">
+		<div id="div-comment-20086" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a3d19c4b0041c0f1384ca901e7faf1c0?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a3d19c4b0041c0f1384ca901e7faf1c0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">weirdolino</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-20086">
+		June 29, 2008 at 8:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=20086#respond' onclick='return addComment.moveForm( "comment-20086", "20086", "respond", "113" )' aria-label='Reply to weirdolino'> &middot; Reply</a></span>		 
+		</div>
+		<p>Minor issue but if it prints C-style character strings, shouldn&#8217;t the the parameter be called <strong>szValue</strong> according to Hungarian Notation? Like  void Print(char *szValue); ?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-4 clearfix" id="comment-20678">
+		<div id="div-comment-20678" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-20678">
+		July 10, 2008 at 5:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=20678#respond' onclick='return addComment.moveForm( "comment-20678", "20678", "respond", "113" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yes, and I&#8217;m horrible about following that rule.  I&#8217;m sure I&#8217;ve screwed it up in other tutorials as well.  Good observation, by the way.  I fixed it up for this tutorial at least.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-10082">
+		<div id="div-comment-10082" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-10082">
+		March 21, 2008 at 6:08 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=10082#respond' onclick='return addComment.moveForm( "comment-10082", "10082", "respond", "113" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello Alex -</p>
+<p>Another small typo:</p>
+<p>&#8220;Consequently, an ambiguous match needs to be disambiguated before your program will <b>compiler</b>.&#8221;</p>
+<p>Also, it would help if there were more quiz questions and exercises to reinforce the material - there is a lot here to remember.</p>
+<p>Thanks!</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-10091">
+		<div id="div-comment-10091" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-10091">
+		March 21, 2008 at 10:16 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=10091#respond' onclick='return addComment.moveForm( "comment-10091", "10091", "respond", "113" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Thanks for the note.  As you&#8217;ve noticed, the number of quiz questions and exercises falls off significantly as you go through the tutorials.  The reason for this is simple: they take a long time to write, especially as we get into more complex subjects.</p>
+<p>Given a limited amount of time to work on this site, I decided there was more benefit to spending my time writing subject tutorials than quiz questions.  Once the tutorials are done (which actually isn&#8217;t that far off now), I do intend to go back and add more quiz questions and exercises.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-34177">
+		<div id="div-comment-34177" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/407d6bec3684c48ecf8d2384887c648f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/407d6bec3684c48ecf8d2384887c648f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Vishnu Prasad.H</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-34177">
+		December 10, 2008 at 4:33 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=34177#respond' onclick='return addComment.moveForm( "comment-34177", "34177", "respond", "113" )' aria-label='Reply to Vishnu Prasad.H'> &middot; Reply</a></span>		 
+		</div>
+		<p>i did not understand the meaning of</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef61a021581743525" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef61a021581743525-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef61a021581743525-2">2</div><div class="crayon-num" data-line="crayon-555d1ef61a021581743525-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef61a021581743525-1"><span class="crayon-p"># typedef char *string;&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef61a021581743525-2"><span class="crayon-p"># void Print(string szValue);&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555d1ef61a021581743525-3"><span class="crayon-p"># void Print(char *szValue); </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p></p>
+<p>typedef is a keyword to give a new name to a data type right?<br />
+so which datatype gets the new name here ? and what is it?<br />
+will *string be th enew name for char? or *string be a pointer to  a char ?<br />
+then how come typedef serves it purpose?<br />
+some body plzzzz explain..</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-34214">
+		<div id="div-comment-34214" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-34214">
+		December 10, 2008 at 11:46 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=34214#respond' onclick='return addComment.moveForm( "comment-34214", "34214", "respond", "113" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It was somewhat ambiguously worded, so I rewrote the sentence just before that example.</p>
+<p>Typedef lets you give a new name to an existing type.</p>
+<p><code>typedef char *string</code> means we&#8217;re giving the new name &#8220;string&#8221; to the type &#8220;char *&#8221;  </p>
+<p>Consequently, the following are identical:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619f64760405347" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619f64760405347-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619f64760405347-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619f64760405347-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619f64760405347-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">szValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>There is more information in the <a href="http://www.learncpp.com/cpp-tutorial/46-typedefs/" rel="nofollow">lesson on typedefs</a></p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-90212">
+		<div id="div-comment-90212" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/794261a39d5f7663abb024fcf500bde1?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/794261a39d5f7663abb024fcf500bde1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">bla</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-90212">
+		August 13, 2010 at 10:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=90212#respond' onclick='return addComment.moveForm( "comment-90212", "90212", "respond", "113" )' aria-label='Reply to bla'> &middot; Reply</a></span>		 
+		</div>
+		<p>Got stuck at this too ?</p>
+<p>Wouldn&#8217;t this look clearer if you typed:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619a20028047059" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619a20028047059-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619a20028047059-1"><span class="crayon-h"> </span><span class="crayon-r">typedef</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-t">string</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-4 clearfix" id="comment-95214">
+		<div id="div-comment-95214" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/138079dc1d82141ec83b89ce9d8f66c6?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/138079dc1d82141ec83b89ce9d8f66c6?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Eiq</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-95214">
+		February 27, 2011 at 1:28 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=95214#respond' onclick='return addComment.moveForm( "comment-95214", "95214", "respond", "113" )' aria-label='Reply to Eiq'> &middot; Reply</a></span>		 
+		</div>
+		<p>Many people type:<br />
+char* a;<br />
+But I think this could lead to confusion:<br />
+char* a,b;<br />
+Are there two pointers to char ? No, actually there is one pointer a and one integer b. So this:<br />
+char *a,*b;<br />
+seems quite clear. But what about this:<br />
+char* a, * b;<br />
+or even<br />
+char* a, *b;<br />
+<img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-59031">
+		<div id="div-comment-59031" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/66cc29d4cee71fdcf1adeac25ef0eb00?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/66cc29d4cee71fdcf1adeac25ef0eb00?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Gareth37</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-59031">
+		April 24, 2009 at 1:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=59031#respond' onclick='return addComment.moveForm( "comment-59031", "59031", "respond", "113" )' aria-label='Reply to Gareth37'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex,<br />
+i dont understand what is the type &quot;char *&quot;  ?</p>
+<p>i have seen a different example from c code such as - </p>
+<p>char *animal = &quot;dog&quot;; //This creates a pointer (called animal) to the string &quot;dog&quot;.</p>
+<p>so if we had -<br />
+typedef char *string;</p>
+<p>then could we have<br />
+string animal = &quot;dog&quot;;  </p>
+<p>this would be the same as<br />
+char *animal = &quot;dog&quot;; </p>
+<p>[ Yes.  - Alex ]</p>
+<p>is the above true because a pointer is the same as an array so<br />
+char *animal = &quot;dog&quot;;</p>
+<p>is really the same as<br />
+char animal[] = &quot;dog&quot;;</p>
+<p>which after the typdef -<br />
+typdef char *string; </p>
+<p>means this is now also the same -<br />
+string animal = &quot;dog&quot;;</p>
+<p>[ Yes, however, a pointer is not the same thing as an array.  Arrays in C++ are implemented using pointers.  But it is possible (and common) to have pointers that point to things that are not arrays at all.  - Alex ]</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-63967">
+		<div id="div-comment-63967" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/76ef53557a67cf0c34819164fd7e2717?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/76ef53557a67cf0c34819164fd7e2717?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.iroms55.webs.com' rel='external nofollow' class='url'>Michel</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-63967">
+		July 8, 2009 at 6:47 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=63967#respond' onclick='return addComment.moveForm( "comment-63967", "63967", "respond", "113" )' aria-label='Reply to Michel'> &middot; Reply</a></span>		 
+		</div>
+		<p>_</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-63968">
+		<div id="div-comment-63968" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/76ef53557a67cf0c34819164fd7e2717?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/76ef53557a67cf0c34819164fd7e2717?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.iroms55.webs.com' rel='external nofollow' class='url'>Michel</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-63968">
+		July 8, 2009 at 6:55 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=63968#respond' onclick='return addComment.moveForm( "comment-63968", "63968", "respond", "113" )' aria-label='Reply to Michel'> &middot; Reply</a></span>		 
+		</div>
+		<p>-</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-69313">
+		<div id="div-comment-69313" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/549fbf098c5b2cb126a6e7f1645bc5a7?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/549fbf098c5b2cb126a6e7f1645bc5a7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://google.com' rel='external nofollow' class='url'>IYAMARERE</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-69313">
+		September 29, 2009 at 2:20 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=69313#respond' onclick='return addComment.moveForm( "comment-69313", "69313", "respond", "113" )' aria-label='Reply to IYAMARERE'> &middot; Reply</a></span>		 
+		</div>
+		<p>C++</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-75843">
+		<div id="div-comment-75843" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6b72abc918b7e8f4bf48b683fb30cfb6?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6b72abc918b7e8f4bf48b683fb30cfb6?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">manu</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-75843">
+		January 6, 2010 at 2:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=75843#respond' onclick='return addComment.moveForm( "comment-75843", "75843", "respond", "113" )' aria-label='Reply to manu'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex can you please explain what is abstraction and how we can implement in our project and how it is different from encapsulation?.data hiding is abstraction or encapsulation?.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-78510">
+		<div id="div-comment-78510" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/41aeaf127ece0e64023e5095ed73644f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/41aeaf127ece0e64023e5095ed73644f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">TomarBueno</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-78510">
+		February 17, 2010 at 1:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=78510#respond' onclick='return addComment.moveForm( "comment-78510", "78510", "respond", "113" )' aria-label='Reply to TomarBueno'> &middot; Reply</a></span>		 
+		</div>
+		<p>This is a excellent side to get answer clear neat&#8230;&#8230;.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-88470">
+		<div id="div-comment-88470" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/733724155ce268d53a46f18d9f94b30f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/733724155ce268d53a46f18d9f94b30f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Gammerz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-88470">
+		July 15, 2010 at 7:05 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=88470#respond' onclick='return addComment.moveForm( "comment-88470", "88470", "respond", "113" )' aria-label='Reply to Gammerz'> &middot; Reply</a></span>		 
+		</div>
+		<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619c64387373619" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619c64387373619-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619c64387373619-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619c64387373619-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">float</span><span class="crayon-h"> </span><span class="crayon-v">fValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619c64387373619-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">Print</span><span class="crayon-sy">(</span><span class="crayon-t">struct</span><span class="crayon-h"> </span><span class="crayon-v">sValue</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>In your above example, I don&#8217;t understand the syntax of the struct declaration. In section 4.7 (Structs), your function declarations don&#8217;t contain the keyword &#8220;struct&#8221;, &#8220;Employee&#8221; is a struct:-</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619c6e333227610" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619c6e333227610-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619c6e333227610-2">2</div><div class="crayon-num" data-line="crayon-555d1ef619c6e333227610-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619c6e333227610-4">4</div><div class="crayon-num" data-line="crayon-555d1ef619c6e333227610-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619c6e333227610-6">6</div><div class="crayon-num" data-line="crayon-555d1ef619c6e333227610-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619c6e333227610-8">8</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619c6e333227610-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">PrintInformation</span><span class="crayon-sy">(</span><span class="crayon-e">Employee </span><span class="crayon-v">sEmployee</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619c6e333227610-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef619c6e333227610-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619c6e333227610-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"ID:&nbsp;&nbsp; "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">sEmployee</span><span class="crayon-sy">.</span><span class="crayon-v">nID</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef619c6e333227610-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Age:&nbsp;&nbsp;"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">sEmployee</span><span class="crayon-sy">.</span><span class="crayon-v">nAge</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619c6e333227610-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Wage: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">sEmployee</span><span class="crayon-sy">.</span><span class="crayon-v">fWage</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef619c6e333227610-7"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619c6e333227610-8"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0021 seconds] -->
+<p></p>
+<p>Is this a new way of defining a prototype that I don&#8217;t believe I&#8217;ve come across in your tutorials?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-89716">
+		<div id="div-comment-89716" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">smitha</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-89716">
+		August 5, 2010 at 11:59 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=89716#respond' onclick='return addComment.moveForm( "comment-89716", "89716", "respond", "113" )' aria-label='Reply to smitha'> &middot; Reply</a></span>		 
+		</div>
+		<p>Can functions be overloaded on the basis of one of the arguments being a pointer?<br />
+e.g</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619b98456652189" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619b98456652189-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619b98456652189-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619b98456652189-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619b98456652189-2"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p>The compiler doesnt throw an error , so I presume that it is valid, but what I dont understand is that essentially both the arguments are of type int.(even if one contains an address). Kindly explain</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-90025">
+		<div id="div-comment-90025" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">smitha</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-90025">
+		August 10, 2010 at 10:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=90025#respond' onclick='return addComment.moveForm( "comment-90025", "90025", "respond", "113" )' aria-label='Reply to smitha'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;If there are multiple arguments, C++ applies the matching rules to each argument in turn. &#8221;</p>
+<p>if this is true, then why does the compiler report an ambigous call for the following code:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d1ef619ade083513803" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-mac print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-2">2</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-4">4</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-6">6</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-8">8</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-10">10</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-12">12</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-14">14</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-16">16</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d1ef619ade083513803-18">18</div><div class="crayon-num" data-line="crayon-555d1ef619ade083513803-19">19</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d1ef619ade083513803-1"><span class="crayon-p">#include &lt;iostream.h&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-2">&nbsp;</div><div class="crayon-line" id="crayon-555d1ef619ade083513803-3"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-4"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-5"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-6"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-cn">9.1</span><span class="crayon-sy">,</span><span class="crayon-cn">8</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">system</span><span class="crayon-sy">(</span><span class="crayon-s">"pause"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-9"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-10">&nbsp;</div><div class="crayon-line" id="crayon-555d1ef619ade083513803-11"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-12"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"dafsdfsad"</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-16"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">sum</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">c</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">r</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-17"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d1ef619ade083513803-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"hhhhh"</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d1ef619ade083513803-19"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0023 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-92096">
+		<div id="div-comment-92096" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6d01827b60b85a73fea6836b480c67fb?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6d01827b60b85a73fea6836b480c67fb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://mkforlag.com' rel='external nofollow' class='url'>matsolof</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-92096">
+		September 15, 2010 at 10:03 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=92096#respond' onclick='return addComment.moveForm( "comment-92096", "92096", "respond", "113" )' aria-label='Reply to matsolof'> &middot; Reply</a></span>		 
+		</div>
+		<p>Above it says:</p>
+<blockquote><p>There are two ways to resolve ambiguous matches:</p>
+<p>1) Define a new overloaded function that takes parameters of exactly the type you are trying to call the function with.</p>
+<p>2) Explicitly cast the ambiguous parameter(s) to the type of the function you want to call.</p></blockquote>
+<p>I would propose a third way:</p>
+<p>3) Simply give each and every function a unique name.</p>
+<p>In other words, avoid problems with overloading by not using overloading. At least as long as you don&#8217;t see considerate advantages with using overloading.</p>
+<p>PS: Though I&#8217;m rather good at PHP, that reminds of C++, I&#8217;m a C++ beginner and have never used overloading. Please correct me if you have more experience of C++ than I have and disagree with the piece of advice above.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-94182">
+		<div id="div-comment-94182" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">smitha</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-94182">
+		October 19, 2010 at 1:10 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=94182#respond' onclick='return addComment.moveForm( "comment-94182", "94182", "respond", "113" )' aria-label='Reply to smitha'> &middot; Reply</a></span>		 
+		</div>
+		<p>Not that am an expert in C++ but overloading  is one of the key concepts of C++ through which it implements polymorphism. The advantage is in terms of usability of a function . </p>
+<p>The classic textbook example would be a call a function Area() to find the area of different shapes depending on the number of parameters.<br />
+Overloading would basically be used when you need to do the same thing in different ways. for example finding the area of a rectangle is different from finding the area of a circle.<br />
+Area(int l, int b);<br />
+Area(int r);</p>
+<p>So here the decision as to which function should be executed goes automatically to the compiler and not to the programmer and thereby reducing the number of if-else statements.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-94482">
+		<div id="div-comment-94482" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bc660fc166768d86341231425b9c4a98?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bc660fc166768d86341231425b9c4a98?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Vivek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-94482">
+		October 21, 2010 at 9:00 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=94482#respond' onclick='return addComment.moveForm( "comment-94482", "94482", "respond", "113" )' aria-label='Reply to Vivek'> &middot; Reply</a></span>		 
+		</div>
+		<p>Overloading is very useful, especially for class constructors.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-95215">
+		<div id="div-comment-95215" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/138079dc1d82141ec83b89ce9d8f66c6?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/138079dc1d82141ec83b89ce9d8f66c6?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Eiq</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-95215">
+		February 27, 2011 at 1:59 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=95215#respond' onclick='return addComment.moveForm( "comment-95215", "95215", "respond", "113" )' aria-label='Reply to Eiq'> &middot; Reply</a></span>		 
+		</div>
+		<p>As smitha said, consider several classes that are derived from some base class (triangle, circle and square from object). Now you put thousands of them into vector and want to find their combined area. So you would probably run through some for cycle.<br />
+With overloading you just call area() member function for each one of them. Without overloading you would have to find out what class is the current class and then call appropriate function.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-95712">
+		<div id="div-comment-95712" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/ee1048793d9fec6ef95a5a7c6790ab1b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/ee1048793d9fec6ef95a5a7c6790ab1b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Matt</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-95712">
+		July 15, 2011 at 9:58 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=95712#respond' onclick='return addComment.moveForm( "comment-95712", "95712", "respond", "113" )' aria-label='Reply to Matt'> &middot; Reply</a></span>		 
+		</div>
+		<p>This really confuses me here.</p>
+<p>typedef char *string;<br />
+void Print(string szValue);<br />
+void Print(char *szValue);</p>
+<p>What exactly does the asterisk do in this situation? The closest thing I can relate it to is the pointer stuff but it&#8217;s not pointing to any address here. I tried reviewing the previous lessons again but I still don&#8217;t get it.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-95759">
+		<div id="div-comment-95759" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://127.0.0.1/' rel='external nofollow' class='url'>zingmars</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-95759">
+		July 19, 2011 at 3:43 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=95759#respond' onclick='return addComment.moveForm( "comment-95759", "95759", "respond", "113" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s the pointer thing.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96516">
+		<div id="div-comment-96516" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a5bbc704568cc3013a9b0ae43a1d7025?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a5bbc704568cc3013a9b0ae43a1d7025?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jyoti</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-96516">
+		November 30, 2011 at 9:19 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=96516#respond' onclick='return addComment.moveForm( "comment-96516", "96516", "respond", "113" )' aria-label='Reply to Jyoti'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex..<br />
+I have heard that &#8220;Avoid overloading function where one takes integral type argument and other takes pointer&#8221;<br />
+What could be the reason?</p>
+<p>Thanx</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-98212">
+		<div id="div-comment-98212" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b840229473ba5fd91c2b38317e82acee?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b840229473ba5fd91c2b38317e82acee?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">developer</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-98212">
+		March 3, 2013 at 9:58 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=98212#respond' onclick='return addComment.moveForm( "comment-98212", "98212", "respond", "113" )' aria-label='Reply to developer'> &middot; Reply</a></span>		 
+		</div>
+		<p>i was expecting name mangling here</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-108567">
+		<div id="div-comment-108567" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/921310efb7a470560b67bb1cd7fc84ed?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/921310efb7a470560b67bb1cd7fc84ed?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">shini</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-108567">
+		October 26, 2013 at 9:34 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=108567#respond' onclick='return addComment.moveForm( "comment-108567", "108567", "respond", "113" )' aria-label='Reply to shini'> &middot; Reply</a></span>		 
+		</div>
+		<p>what are the rules to be followed in function overloading?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251712">
+		<div id="div-comment-251712" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/57317799c5e2b5dc7233deec3a13952e?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/57317799c5e2b5dc7233deec3a13952e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Aparna</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-251712">
+		March 4, 2015 at 11:17 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=251712#respond' onclick='return addComment.moveForm( "comment-251712", "251712", "respond", "113" )' aria-label='Reply to Aparna'> &middot; Reply</a></span>		 
+		</div>
+		<p>Can you please explain this part better. I don&apos;t undertstand it. </p>
+<p>typedef char *string;&nbsp;&nbsp;// what does this typedef do exactly?<br />
+void Print(string szValue);<br />
+void Print(char *szValue); // this bit would be void Print(*string *szValue) and this makes no sense</p>
+<p>thanks!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-251843">
+		<div id="div-comment-251843" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2d5f18b8dd3f9350481de990ffb60c64?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2d5f18b8dd3f9350481de990ffb60c64?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">shiva</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/76-function-overloading/#comment-251843">
+		March 16, 2015 at 10:04 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/76-function-overloading/?replytocom=251843#respond' onclick='return addComment.moveForm( "comment-251843", "251843", "respond", "113" )' aria-label='Reply to shiva'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi alex,</p>
+<p>[ void add (int a, int b);<br />
+&nbsp;&nbsp;Void add (int a, int b, int c=0);]<br />
+ Which function gets called when add (5,10); is called</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/76-function-overloading/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>eighteen &#8722; six = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE2NjEzNHR5bTdtZjVxZ3o3ZGJwYWozMW04MTI=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432166134" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='113' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="29aaf89d7f" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="138"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/76-function-overloading\/":113};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/76-function-overloading/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'113',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '113' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.806 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 15:55:34 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

@@ -1,0 +1,1987 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; for loop, while loop, break and continue | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; for loop, while loop, break and continue" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,646] -->
+<meta name="description"  content="In every programming language, thus also in the C programming language, there are circumstances were you want to do the same thing many times. For instance you" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; for loop, while loop, break and continue Comments Feed" href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; The if and switch statement' href='http://www.codingunit.com/c-tutorial-the-if-and-switch-statement' />
+<link rel='next' title='C Tutorial &#8211; Arrays and Multi-Dimensional Arrays' href='http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=165' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-165">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">
+		C Tutorial &#8211; for loop, while loop, break and continue</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In every programming language, thus also in the C programming language, there are circumstances were you want to do the same thing many times. For instance you want to print the same words ten times. You could type ten printf function, but it is easier to use a loop. The only thing you have to do is to setup a loop that execute the same printf function ten times. <span id="more-165"></span><br />
+There are three basic types of loops which are:</p>
+<ul>
+<li>&#8220;for loop&#8221;</li>
+<li>&#8220;while loop&#8221;</li>
+<li>&#8220;do while loop&#8221;</li>
+</ul>
+<h2>The for loop</h2>
+<p>The &#8220;for loop&#8221; loops from one number to another number and increases by a specified value each time.<br />
+The &#8220;for loop&#8221; uses the following structure:</p>
+<div id="cl">
+<pre><code>
+      for (Start value; continue or end condition; increase value)
+     		statement;
+</code></pre>
+</div>
+<p>Look at the example below:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;</code>
+
+	int main()
+	{
+     		int i;
+     		for (i = 0; i &lt; 10; i++)
+     		{
+          		printf ("Hello\n");
+         		printf ("World\n");
+     		}
+     	return 0;
+	}</pre>
+</div>
+<p><strong>Note:</strong> A single instruction can be placed behind the &#8220;for loop&#8221; without the curly brackets.<br />
+<strong>Note:</strong> For those who don&#8217;t know printf or need to know more about printf format specifiers, then first a look at our <a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" title="printf and format specifiers">printf C language tutorial.</a></p>
+<p>Let&#8217;s look at the &#8220;for loop&#8221; from the example: We first start by setting the variable i to 0. This is  where we start to count. Then we say that the for loop must run if the counter i is smaller then ten. Last we say that every cycle i must be increased by one (i++).</p>
+<p>In the example we used i++ which is the same as using i = i + 1. This is called incrementing. The instruction i++ adds 1 to i. If you want to subtract 1 from i you can use i<code>--</code>. It is also possible to use ++i or <code>--</code>i. The difference is is that with ++i (prefix incrementing) the one is added before the &#8220;for loop&#8221; tests if i &lt; 10. With i++ (postfix incrementing) the one is added after the test i &lt; 10. In case of a for loop this make no difference, but in while loop test it makes a difference. But before we look at a postfix and prefix increment while loop example, we first look at the while loop.</p>
+<h2>The while loop</h2>
+<p>The while loop can be used if you don&#8217;t know how many times a loop must run. Here is an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+
+	{
+    		int counter, howmuch;
+
+    		scanf("%d", &amp;howmuch);
+    		counter = 0;
+    		while ( counter &lt; howmuch)
+    		{
+          		counter++;
+          		printf("%d\n", counter);
+    		}
+    		return 0;
+	}
+
+</code></pre>
+</div>
+<p>Let&#8217;s take a look at the example: First you must always initialize the counter before the while loop starts ( counter = 1). Then the while loop will run if the variable counter is smaller then the variable &#8220;howmuch&#8221;. If the input is ten, then 1 through 10 will be printed on the screen. A last thing you have to remember is to increment the counter inside the loop (counter++). If you forget this the loop becomes infinitive.</p>
+<p>As said before (after the for loop example) it makes a difference if prefix incrementing (++i) or postfix incrementing (i++) is used with while loop. Take a look at the following postfix and prefix increment while loop example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main(void) {
+		int i;
+	
+		i = 0;
+		while(i++ &lt; 5) {
+			printf("%d\n", i);
+		}
+		printf("\n");
+		i = 0;
+		while(++i &lt; 5) {
+			printf("%d\n", i);
+		}
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>The output of the postfix and prefix increment example will look like this:</p>
+<div id="cl">
+<pre><code>
+	1
+	2
+	3
+	4
+	5
+
+	1
+	2
+	3
+	4
+
+</code></pre>
+</div>
+<p>i++ will increment the value of i, but is using the pre-incremented value to test against &lt; 5.  That&#8217;s why we get 5 numbers.<br />
+++i will increment the value of i, but is using the incremented value to test against &lt; 5. That&#8217;s why we get 4 numbers.</p>
+<h2>The do while loop</h2>
+<p>The &#8220;do while loop&#8221; is almost the same as the while loop. The &#8220;do while loop&#8221; has the following form:</p>
+<div id="cl">
+<pre><code>
+	do
+	{
+    		do something;
+	}
+	while (expression);
+
+</code></pre>
+</div>
+<p>Do something first and then test if we have to continue. The result is that the loop always runs once. (Because the expression test comes afterward). Take a look at an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+     		int counter, howmuch;
+     		scanf("%d", &amp;howmuch);
+     		counter = 0;
+     		do
+     		{
+          		counter++;
+          		printf("%d\n", counter);
+     		}
+     		while ( counter &lt; howmuch);
+     		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> There is a semi-colon behind the while line.</p>
+<h2>Break and continue</h2>
+<p>To exit a loop you can use the break statement at any time. This can be very useful if you want to stop running a loop because a condition has been met other than the loop end condition. Take a look at the following example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+     		int i;
+
+		i = 0;
+		while ( i &lt; 20 )
+     		{
+          		i++;
+          		if ( i == 10)
+               		break;
+     		}
+     		return 0;
+	}
+
+</code></pre>
+</div>
+<p>In the example above, the while loop will run, as long i is smaller then twenty. In the while loop there is an if statement that states that if i equals ten the while loop must stop (break).</p>
+<p>With &#8220;continue;&#8221; it is possible to skip the rest of the commands in the current loop and start from the top again. (the loop variable must still be incremented). Take a look at the example below:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+		int i;
+
+		i = 0;
+     		while ( i &lt; 20 )
+     		{
+          		i++;
+          		continue;
+          		printf("Nothing to see\n");
+     		}
+     		return 0;
+	}
+
+</code></pre>
+</div>
+<p>In the example above, the printf function is never called because of the &#8220;continue;&#8221;.</p>
+<p>That was all for now. Don&#8217;t forget to make some example programs of your own, just for practice!</p>
+<p><strong>Update:</strong> You can also take a look at one of the following example(s) that also use <strong>for loops and while loops</strong>:</p>
+<ul>
+<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" title="Source code examples of star and triangle string using for loops">C tutorial: a star pyramid and string triangle using for loops</a></li>
+<li><a href="http://www.codingunit.com/printing-a-diamond-pattern-in-c" title="printing a diamond pattern in C language">printing a diamond pattern in C language</a></li>
+<li><a href="http://www.codingunit.com/how-to-print-floyds-triangle-in-c" title="How to print floyds triangle in C Language">How to print floyds triangle in C Language</a></li>
+</ul>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; for loop, while loop, break and continue http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 94 responses to &#8220;C Tutorial &#8211; for loop, while loop, break and continue&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-185">
+
+            			<cite>shelven</cite> on <small>December 5th, 2009</small>:
+			
+			<p>the examples given is good but I have to know first the program that will output , &#8220;Do you want to try again?&#8221;.<br />
+please help me.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-187">
+
+            			<cite>supriya bose</cite> on <small>December 5th, 2009</small>:
+			
+			<p>Write a program to print all the ASCII value using While Loop.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-189">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>December 6th, 2009</small>:
+			
+			<p>Looks like a home-work question, so we won&#8217;t give you a while-loop answer, instead we give a for loop example:</p>
+<p>To find ASCII value of character in C, you just have to remember the following: a variable of type char is just an 8-bit int.<br />
+<code><br />
+#include&lt;stdio.h&gt;<br />
+void main(void)<br />
+{<br />
+        int i;<br />
+        for (i = 0; i  &lt; 128; i++)<br />
+        {<br />
+                 printf("%d = %c\n", i, i);<br />
+        }<br />
+}<br />
+</code><br />
+For an ASCII-table look at <a href="http://www.asciitable.com/" rel="nofollow">http://www.asciitable.com/</a></p>
+<p>You can figure out the rest yourself!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-270">
+
+            			<cite>virgoptrex</cite> on <small>January 19th, 2010</small>:
+			
+			<p>@shelven,</p>
+<p>         You can try something like</p>
+<p>           do{</p>
+<p>             /* blah blah */</p>
+<p>            printf(&#8220;\n Do you want to continue? \n&#8221;);</p>
+<p>            } while(getchar()!=&#8217;n&#8217; &amp;&amp; getchar()!=&#8217;N&#8217;);    /* Continue while the response does *not* equal &#8216;n&#8217; or &#8216;N&#8217;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-271">
+
+            			<cite>virgoptrex</cite> on <small>January 19th, 2010</small>:
+			
+			<p>don&#8217;t forget parenthesis while using &#8220;&amp;&amp;&#8221; operator</p>
+<p>while( (getchar()!=’n’) &amp;&amp; (getchar()!=’N&#8217;) );</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-461">
+
+            			<cite>saurabh dubey</cite> on <small>January 29th, 2010</small>:
+			
+			<p>hello sir</p>
+<p> i want to know how we can use two FOR loop.</p>
+<p> which out put must be-</p>
+<p>A B C D E D C B A<br />
+A B C D   D C B A<br />
+A B C       C B A<br />
+A B           B A<br />
+A               A</p>
+<p>please help me</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-865">
+
+            			<cite>akhter</cite> on <small>March 4th, 2010</small>:
+			
+			<p>hello<br />
+i need this out put some one help<br />
+here a and b are variables<br />
+this output should be through loops.<br />
+a=1, b=0     a=5 , b=2 ;<br />
+a=3, b=1     a=7 , b=3 ;<br />
+a=1, b=0     a=5 , b=2 ;<br />
+a=3, b=1     a=7 , b=3 ;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3245">
+
+            			<cite>Sachin dwivedi</cite> on <small>February 22nd, 2011</small>:
+			
+			<p>Perfect</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3286">
+
+            			<cite>Teacher</cite> on <small>March 7th, 2011</small>:
+			
+			<p>********** code for Akhter*********<br />
+enjoy but try to understand programming</p>
+<p>void main()<br />
+{<br />
+clrscr();</p>
+<p>int a=1,b=0,c=0;<br />
+while (c&lt;2)<br />
+{<br />
+	cout&lt;&lt;endl;<br />
+	cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;&quot; ,b =&quot;&lt;&lt;b&lt;&lt;&quot;, a=&quot;&lt;&lt;a+4&lt;&lt;&quot;, b= &quot;&lt;&lt;b+4;<br />
+	a+=2;<br />
+	b+=1;<br />
+	cout&lt;&lt;endl;<br />
+	cout&lt;&lt;&quot;a=&quot;&lt;&lt;a&lt;&lt;&quot; ,b =&quot;&lt;&lt;b&lt;&lt;&quot;, a=&quot;&lt;&lt;a+4&lt;&lt;&quot;, b= &quot;&lt;&lt;b+4;<br />
+	c++;<br />
+	a=1;<br />
+	b=0;</p>
+<p>}<br />
+getch();</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3368">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>nooruddin</a></cite> on <small>April 15th, 2011</small>:
+			
+			<p>hi i am nooruddin i am IT teacher you are going good in programming, i like your lessons</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3376">
+
+            			<cite>Prithvi Macherla</cite> on <small>April 27th, 2011</small>:
+			
+			<p>it&#8217;s helpful <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3382">
+
+            			<cite>phillip Gonzaga</cite> on <small>May 2nd, 2011</small>:
+			
+			<p>you are doing well to reply our qns and to teche programming thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3397">
+
+            			<cite>Ashish</cite> on <small>May 13th, 2011</small>:
+			
+			<p>This helps me to understand d concept of while,do while and for loop &#8230;<br />
+thanx&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3556">
+
+            			<cite>Deepak b.l</cite> on <small>June 28th, 2011</small>:
+			
+			<p>the above examples are very good</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3621">
+
+            			<cite>shaker pamu</cite> on <small>July 27th, 2011</small>:
+			
+			<p>Thank u so much sir hv is vr use ful 2 me. Iam a b.com student&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3637">
+
+            			<cite>sukhi</cite> on <small>August 1st, 2011</small>:
+			
+			<p>thank u   so much sir this is vry heplful for me  am a btech student</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3661">
+
+            			<cite><a href='http://gmail.com' rel='external nofollow' class='url'>ankit</a></cite> on <small>August 5th, 2011</small>:
+			
+			<p>any body tell me &#8212; when i am run a for loop like for(i=0;i&lt;=10;i++)thn result is 012345678910<br />
+i wan to know how&#039;s the 0 come;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3693">
+
+            			<cite>kabumski</cite> on <small>August 14th, 2011</small>:
+			
+			<p>(i=0;i&lt;=10;i++) &#8212;-<br />
+i=0;    is the start   make it (i=1;<br />
+i&lt;=10    is the end process</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3738">
+
+            			<cite>Nikhila</cite> on <small>August 29th, 2011</small>:
+			
+			<p>reply for Ankit:</p>
+<p>Hi Ankit<br />
+the loop is  (i=0;i&lt;=10;i++)<br />
+ i is the variable which stands for starting value,ending value and inc or dec.<br />
+here u hav started with 0 only.Thts y it came 0.If u want to atrt with 1 means u should write ur loop like ths   (i=1;i&lt;=10;i++)</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3749">
+
+            			<cite>via cals</cite> on <small>September 6th, 2011</small>:
+			
+			<p>so good!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3755">
+
+            			<cite>kid</cite> on <small>September 8th, 2011</small>:
+			
+			<p>All,</p>
+<p>Can any one help me to code a program using while loop, that will count the charecters,numbers, alphanumerical.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3788">
+
+            			<cite>alankar</cite> on <small>September 24th, 2011</small>:
+			
+			<p>for ankit<br />
+hello ankit,in the 1st step of for loop the value are intialise ok,then second test the condition, then in third incre/decrement ok<br />
+now if initialise i=0<br />
+then 1st it will check condition then if condition is true then it will execute the block or a single line statement.<br />
+after that the value of i will going for incr/decrement ok<br />
+that&#8217;s why ur output will showing like that-<br />
+012345678910 ok</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4132">
+
+            			<cite>tarun</cite> on <small>November 10th, 2011</small>:
+			
+			<p>Hello Sir,</p>
+<p>i want to know that how to use for loop this statement<br />
+      *<br />
+    * A *<br />
+  * A * A *<br />
+* A * A * A *</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4137">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>November 10th, 2011</small>:
+			
+			<p>@tarun: take a look at <a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" title="C Tutorial a star pyramid an string triangle using for loops" rel="nofollow">C Tutorial a star pyramid an string triangle using for loops</a>. In that tutorial we do almost what you&#8217;re asking. You should be able to make the additional changes yourself.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4270">
+
+            			<cite><a href='http://www.google.com' rel='external nofollow' class='url'>Rakshith kumar</a></cite> on <small>November 24th, 2011</small>:
+			
+			<p>1 2 3 4 5 6 7 8 9 10 9 8 7 6 5 4 3 2 1<br />
+i want output like this<br />
+conditions<br />
+1)using single loop(for or while)<br />
+2)can use maximum of 2 variables</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4343">
+
+            			<cite>dhananjay</cite> on <small>December 8th, 2011</small>:
+			
+			<p>i read break statement in book. But didnt got it. i read here and instantly got it because of your simple language. thnx</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4355">
+
+            			<cite><a href='http://forum.codecall.net/c-c/42415-plzzz-help-loops-arrays.html#post320475' rel='external nofollow' class='url'>plzzz help ( loops and arrays)</a></cite> on <small>December 14th, 2011</small>:
+			
+			<p>[&#8230;] C Tutorial &#8211; for loop, while loop, break and continue | CodingUnit Programming Tutorials C Programming &#8211; Arrays  Basicly :  Code: [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4403">
+
+            			<cite>manas maity</cite> on <small>January 8th, 2012</small>:
+			
+			<p>**decimal to binary using while loop **</p>
+<p>#include<br />
+#include<br />
+#include<br />
+void main()<br />
+{<br />
+int n,s=0,r,x=0;<br />
+clrscr();<br />
+printf(&#8220;these programe is develope by manas maity.BCA \n&#8221;)<br />
+printf(&#8220;\n enter number:&#8221;);<br />
+scanf(&#8220;%d&#8221;&amp;n);<br />
+while(n!=0)<br />
+{<br />
+n=n%2;<br />
+s=s+r*pow(10,x);<br />
+n=n/2;<br />
+x++;<br />
+printf(&#8220;the number is  :  %d&#8221;,s);<br />
+}<br />
+getch();<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4404">
+
+            			<cite>manas maity</cite> on <small>January 8th, 2012</small>:
+			
+			<p>**write a programe to print  a pascal trangle using for loop. **</p>
+<p>#include<br />
+#include</p>
+<p>void main()<br />
+{<br />
+int<br />
+clrscr();<br />
+printf(&#8220;these programe is develope by manas maity.BCA \n&#8221;);<br />
+pintf(&#8220;enter number which u want: &#8220;);<br />
+scanf(&#8220;%d&#8221;,&amp;n);<br />
+for(i=1;i&lt;=n;i++)<br />
+{<br />
+  c=1;<br />
+    for(j=0;j&lt;=n-i;j++)<br />
+      printf(&quot;%3c&quot;,32);</p>
+<p>       for(j=0;j&lt;=i;j++)<br />
+        {<br />
+          printf(&quot;%6d&quot;,c);<br />
+          c=c*(i-j)/(j*1)<br />
+            }<br />
+      printf(&quot;\n&quot;);<br />
+      }<br />
+   getch();<br />
+       }</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4429">
+
+            			<cite><a href='http://Www.rajeevnpal@gmail.com' rel='external nofollow' class='url'>it is very helpfull;;;;;;thanks</a></cite> on <small>January 19th, 2012</small>:
+			
+			<p>It is very helpfull</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4457">
+
+            			<cite>shalizy</cite> on <small>February 3rd, 2012</small>:
+			
+			<p>this site is realy owsm&#8230;:)))</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4459">
+
+            			<cite>shalizy</cite> on <small>February 3rd, 2012</small>:
+			
+			<p>A        A+2        A+4        A+6<br />
+ 3         5          7       9<br />
+ 6        8           10        12<br />
+ 9        11           13        15<br />
+ 12        I7          19       21<br />
+how can i get this out put using loops. plz help me&#8230;.:)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4514">
+
+            			<cite>Bharath</cite> on <small>February 26th, 2012</small>:
+			
+			<p>It is very easy to understand</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4525">
+
+            			<cite>Shane</cite> on <small>February 29th, 2012</small>:
+			
+			<p>Work in progress but it only loops once&#8230; What did i enter wrong or am I missing something?</p>
+<p># include<br />
+# include<br />
+using namespace std;<br />
+int main()<br />
+{ //Declaring the variables needed<br />
+    double numyears;<br />
+    int count = 0;<br />
+    int month;<br />
+    string monthName[]={&#8220;January&#8221;,&#8221;Febuary&#8221;,&#8221;March&#8221;,&#8221;April&#8221;,&#8221;May&#8221;,&#8221;June&#8221;,&#8221;July&#8221;,&#8221;August&#8221;,&#8221;September&#8221;,&#8221;October&#8221;,&#8221;November&#8221;,&#8221;December&#8221;};<br />
+    int averageNum[11];</p>
+<p>    for (int month = 0; month &lt;= 11; month++); //Getting the averages for each month<br />
+    {<br />
+        cout &lt;&lt; &quot;Enter the average for &quot; &lt;&lt; monthName[month] &lt;&gt; averageNum[month];</p>
+<p>    }<br />
+    return 0;</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4549">
+
+            			<cite>ayaz memon</cite> on <small>March 10th, 2012</small>:
+			
+			<p>hello sir<br />
+iwant to know how we can use two FOR loop.<br />
+* * * * *<br />
+* * * *<br />
+* * *<br />
+* *<br />
+*</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4550">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>March 10th, 2012</small>:
+			
+			<p>@ayaz memon: Take a look at the following <a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" title="C language tutorial star pyramid" rel="nofollow">C language tutorial star pyramid</a></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4608">
+
+            			<cite>Nivetha</cite> on <small>March 24th, 2012</small>:
+			
+			<p>#include<br />
+void main()<br />
+{<br />
+int num,i=0;<br />
+do<br />
+}<br />
+cout&lt;&gt;num;<br />
+if(num2==0){<br />
+cout&lt;&lt;&quot;\n even&quot;&lt;&lt;endl;<br />
+i++;}<br />
+else<br />
+cout&lt;&lt;&quot;\n odd&quot;&lt;&lt;endl;<br />
+}<br />
+while(num!=999);<br />
+cout&lt;&lt;&quot;\n number of even number=&quot;&lt;&lt;i;<br />
+}</p>
+<p>plz help is it correct coding,,,</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4633">
+
+            			<cite>Sazzad Hossain</cite> on <small>March 31st, 2012</small>:
+			
+			<p>For Nivetha,</p>
+<p>What was ur question ? </p>
+<p>U can probably get some hints from following code :</p>
+<p>#include<br />
+using namespace std;</p>
+<p>int main()<br />
+{<br />
+int num,i=0;<br />
+do<br />
+{<br />
+    cout&lt;&gt;num;<br />
+    if(num%2==0){<br />
+       cout&lt;&lt;&quot;\n Number is even!! &quot;&lt;&lt;endl;<br />
+       i++;<br />
+      }<br />
+    else<br />
+       cout&lt;&lt;&quot;\n Number is odd !! &quot;&lt;&lt;endl;<br />
+      }</p>
+<p>   while(num&lt;=999);</p>
+<p>  cout&lt;&lt;&quot;\n number of even number=&quot;&lt;&lt;i;</p>
+<p>   return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4658">
+
+            			<cite>diraviyaa</cite> on <small>April 8th, 2012</small>:
+			
+			<p>hello sir it is very usefull  thanks toooooooooo</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4934">
+
+            			<cite>Kiran</cite> on <small>June 3rd, 2012</small>:
+			
+			<p>Nice but, i need understanding of working of two for loop. Awaiting for Quick Ans</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4974">
+
+            			<cite>hawa farisha iman</cite> on <small>June 12th, 2012</small>:
+			
+			<p>nice note ! thank :::</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5014">
+
+            			<cite>3shin</cite> on <small>June 19th, 2012</small>:
+			
+			<p>can u pls help me how make a program that inputs a string of keyboard characters and outputs the characters in reverse order using for loop statement.</p>
+<p>Sample Output:<br />
+Input  :        Syntacs College<br />
+Output :        egelloC scatnyS</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5086">
+
+            			<cite>mahesh rathore</cite> on <small>July 15th, 2012</small>:
+			
+			<p>very nice helpful</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5155">
+
+            			<cite>saddam hussain</cite> on <small>August 6th, 2012</small>:
+			
+			<p>hi this is simply superb&#8230;very nice examples &#8230; thanks for this postings ..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5200">
+
+            			<cite>mahesh rathore</cite> on <small>August 17th, 2012</small>:
+			
+			<p>For Nivetha,</p>
+<p>What was ur question ?</p>
+<p>U can probably get some hints from following code :</p>
+<p>#include<br />
+using namespace std;</p>
+<p>int main()<br />
+{<br />
+int num,i=0;<br />
+do<br />
+{<br />
+coutnum;<br />
+if(num%2==0){<br />
+cout&lt;&lt;&quot;\n Number is even!! &quot;&lt;&lt;endl;<br />
+i++;<br />
+}<br />
+else<br />
+cout&lt;&lt;&quot;\n Number is odd !! &quot;&lt;&lt;endl;<br />
+}</p>
+<p>while(num&lt;=999);</p>
+<p>cout&lt;&lt;&quot;\n number of even number=&quot;&lt;&lt;i;</p>
+<p>return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5307">
+
+            			<cite>Samantha</cite> on <small>September 18th, 2012</small>:
+			
+			<p>How to create a function to convert kg to pound and from pound to kg.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5309">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>September 18th, 2012</small>:
+			
+			<p>@Samantha: it isn&#8217;t that difficult, so try to make it yourself. That is the only way to learn.<br />
+Here are some hints: 1 kilogram = 2.2046 pounds, hence to kilograms into pounds: pounds = 2.2 * kilograms.<br />
+To create a program do something like this: create two floats (one for pounds and one for kilograms), get some user input using scanf (for instance), use formula pounds = 2.2 * kilograms and print the result of pounds.<br />
+Good luck, I know you can do it with the hints above!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5413">
+
+            			<cite>sebastien</cite> on <small>October 13th, 2012</small>:
+			
+			<p>I have a problem I did my program and my teacher wants it to exit  When I press Q there is my program<br />
+#include<br />
+#include </p>
+<p>int main()<br />
+{<br />
+    char type;<br />
+    int lenght, quantity=0.0;<br />
+    float total=0.0,Ecost,Ucost;</p>
+<p>    while(1)<br />
+    {<br />
+            printf(&#8220;Enter store code and quantity  :&#8221;);<br />
+            scanf(&#8221;  %c%d%d&#8221;,&amp;type,&amp;lenght,&amp;quantity);</p>
+<p>    if (type ==&#8217;Q&#8217;)<br />
+        {</p>
+<p>             break;</p>
+<p>        }<br />
+    else if(type==&#8217;E&#8217;)<br />
+        {<br />
+          if(lenght==25)</p>
+<p>        {</p>
+<p>                Ecost= quantity *18 ;<br />
+                total= Ecost;<br />
+                printf(&#8220;%d Ethernet cables (25 foot) costs %3.2f  (totalt = %5.2f)\n&#8221;,quantity,Ecost,total);<br />
+        }<br />
+          else if(lenght==50)<br />
+        {</p>
+<p>                Ecost = quantity * 30;<br />
+                total= Ecost;<br />
+                printf(&#8220;%d Ethernet cables (50 foot) costs %3.2f (total = %5.2f) \n&#8221;,quantity,Ecost,total);<br />
+        }<br />
+        }<br />
+      if (type == &#8216;U&#8217;)<br />
+        {<br />
+              if(lenght==6)<br />
+        {</p>
+<p>                Ucost=quantity*24;<br />
+                total = Ecost +Ucost;<br />
+                printf(&#8220;%d USB cables (6 foot) costs %3.2f (total = %5.2f)\n&#8221;,quantity,Ucost,total);<br />
+        }<br />
+        else if(lenght==10)<br />
+        {</p>
+<p>                Ucost=quantity*36;<br />
+                total = Ecost+Ucost;<br />
+                printf(&#8220;%d USB cables (10 foot) costs %3.2f (total = %5.2f)&#8221;,quantity,Ucost,total);<br />
+        }</p>
+<p>        {</p>
+<p>        }<br />
+    }</p>
+<p>    }</p>
+<p>        system(&#8220;pause&#8221;);<br />
+        return 0 ;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5460">
+
+            			<cite>Reema</cite> on <small>October 29th, 2012</small>:
+			
+			<p>/*coding for below output<br />
+*<br />
+* A *<br />
+* A * A *<br />
+* A * A * A *    */<br />
+#include<br />
+#include<br />
+void main()<br />
+{<br />
+int i;,k=0;<br />
+clrscr();<br />
+	for(i=1;i&lt;=4;i++)<br />
+	{<br />
+		for(j=1;j&lt;=i+k;j++)<br />
+		{<br />
+			if(j%2==0)<br />
+				printf(&quot; A&quot;);<br />
+			else<br />
+				printf(&quot; *&quot;);<br />
+		}<br />
+	}<br />
+	getch();<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5484">
+
+            			<cite>Jack goh</cite> on <small>November 9th, 2012</small>:
+			
+			<p>Can any1 help me fix this plz&#8230;<br />
+help me clear out  Leap year. and direct return 0&#8230;</p>
+<p>#include<br />
+#include</p>
+<p>int main()<br />
+{ int year=0;<br />
+do{<br />
+printf(&#8220;\n Enter year:&#8221;);<br />
+scanf(&#8220;%d&#8221;,&amp;year);</p>
+<p>if<br />
+(((year%4==0)&amp;&amp;(year%100!=0))||((year%4==0)&amp;&amp;(year%100==0)&amp;&amp;(year%400==0))||(year&lt;400))<br />
+printf(&quot; LeapYear.\n&#8221;,year);</p>
+<p>else<br />
+printf(&#8221; Not LeapYear. \n&#8221;,year);<br />
+  }</p>
+<p>  while(year &gt; 0);<br />
+  return 0;</p>
+<p>  }</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5486">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>November 10th, 2012</small>:
+			
+			<p>@jack goh: I&#8217;m not exactly sure what you are asking, but I assume something like this piece of code &#8211;</p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>#define TRUE    1<br />
+#define FALSE   0</p>
+<p>int main() {<br />
+	int year;</p>
+<p>	printf(&#8220;Please enter a year (example: 1999) : &#8220;);<br />
+	scanf(&#8220;%d&#8221;, &#038;year);</p>
+<p>	if(year% 4 == FALSE &#038;&#038; year%100 != FALSE || year%400 == FALSE) {<br />
+		printf(&#8220;%d is a Leapyear. \n&#8221;, year);<br />
+	} else {<br />
+		printf(&#8220;%d is NOT a Leapyear. \n&#8221;, year);<br />
+	}<br />
+	return 0;<br />
+}</p>
+<p>Also see the tutorial: <a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" title="How to make a calendar in C language" rel="nofollow">How to make a calendar in C language</a> for additional information.</p>
+<p>I hope that this helps!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5507">
+
+            			<cite>FMMK</cite> on <small>November 16th, 2012</small>:
+			
+			<p>(#include )</p>
+<p>int main ()<br />
+{</p>
+<p>    float Kilogram;</p>
+<p>    scanf(&#8220;%f&#8221;, &amp;Kilogram);</p>
+<p>    stdin;</p>
+<p>    float Pounds = Kilogram * 2.20046;</p>
+<p>    printf(&#8220;%f Kilograms = %f Pounds.\n&#8221;, Kilogram, Pounds);</p>
+<p>    float POUNDS;</p>
+<p>    scanf(&#8220;%f&#8221;, &amp;POUNDS);</p>
+<p>    stdin;</p>
+<p>    float KILOGRAMS = POUNDS / 2.20046;</p>
+<p>    printf(&#8220;%f POUNDS = %f KILOGRAMS&#8221;, POUNDS, KILOGRAMS);</p>
+<p>    return 0;</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5537">
+
+            			<cite>ranjan</cite> on <small>November 20th, 2012</small>:
+			
+			<p>Write a program to calculate the sum of all the numbers less than a given number n.<br />
+ex: output<br />
+Enter number : 3<br />
+6<br />
+Enter number : 5<br />
+15</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5558">
+
+            			<cite>varshu</cite> on <small>November 22nd, 2012</small>:
+			
+			<p>really its so amazing for learn&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5694">
+
+            			<cite>anirban</cite> on <small>December 20th, 2012</small>:
+			
+			<p>it was really helpfull <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5757">
+
+            			<cite><a href='http://shivanisinghal.1995@gmail.com' rel='external nofollow' class='url'>sivi</a></cite> on <small>December 26th, 2012</small>:
+			
+			<p>nice</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5822">
+
+            			<cite>rohan</cite> on <small>December 31st, 2012</small>:
+			
+			<p>hey ..could any body write a function to solve simultaneous equations ..<br />
+in have great difficulties with this</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6321">
+
+            			<cite>Carlo</cite> on <small>January 27th, 2013</small>:
+			
+			<p>Hello sir </p>
+<p>Can you please help me to output the sum of numbers from 1 to 15 (inclusive) and sum of odd numbers from 15-45 (inclusive) ?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6379">
+
+            			<cite>vinshade21</cite> on <small>January 30th, 2013</small>:
+			
+			<p>@Rakshith kumar:</p>
+<p>#include<br />
+int main()<br />
+{<br />
+ int i=1,j=10;<br />
+  while(j&gt;1)<br />
+   {</p>
+<p>     if(i&lt;11)<br />
+   {<br />
+    printf(&quot;%d &quot;,i);<br />
+      ++i;<br />
+   }<br />
+  else<br />
+{<br />
+     &#8211;j;<br />
+   printf(&quot;%d &quot;,j);<br />
+ }<br />
+   }<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6382">
+
+            			<cite>mujeeb</cite> on <small>January 30th, 2013</small>:
+			
+			<p>good job sir</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6541">
+
+            			<cite>Mohamed F.</cite> on <small>February 24th, 2013</small>:
+			
+			<p>While testing on continue; i discovered it could be used to skip a certain number too, like when using this:<br />
+	i = 0;<br />
+	while ( i++ &lt; 20 )<br />
+	{<br />
+		if ( i == 16 ) continue;<br />
+		printf(&quot;number %d\n&quot;, i );<br />
+	}<br />
+it will skip the number 16 but will print every number in the range 1 to 20</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6577">
+
+            			<cite>prince pandey</cite> on <small>March 7th, 2013</small>:
+			
+			<p>sir this is very nice tutorial by you</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6609">
+
+            			<cite>kundan</cite> on <small>March 16th, 2013</small>:
+			
+			<p>thankyou</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6619">
+
+            			<cite><a href='http://www.acestutoracademy.com' rel='external nofollow' class='url'>M.Salman</a></cite> on <small>March 17th, 2013</small>:
+			
+			<p>void main(void)<br />
+{<br />
+for(a=2;a&lt;=400;a+2)<br />
+{<br />
+printf(&quot;%d&quot;,a);<br />
+}</p>
+<p>i m not getting the series of even num help me???? output showing only 400 nd its blinking !! :S</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6635">
+
+            			<cite>werke ayalew</cite> on <small>March 22nd, 2013</small>:
+			
+			<p>#include<br />
+  void main(void)<br />
+{<br />
+  int a;<br />
+ for(a=2;a&lt;=400;a+2)<br />
+  {<br />
+printf(&quot;%d&quot;,a);<br />
+   }<br />
+   }</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6636">
+
+            			<cite>werke ayalew</cite> on <small>March 22nd, 2013</small>:
+			
+			<p>your simple error is only on the declaration of &#8216;a&#8217; that must be an integer.otherwise the compiler doesn&#8217;t know what variable &#8216;a&#8217; is.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6666">
+
+            			<cite>ush</cite> on <small>March 31st, 2013</small>:
+			
+			<p>it was good n easy..<br />
+plzz tell the purpose of getch and also explain nested loops if possible..<br />
+thankyou</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6719">
+
+            			<cite>hemanth</cite> on <small>April 12th, 2013</small>:
+			
+			<p>nice gather</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6755">
+
+            			<cite>manoj</cite> on <small>April 24th, 2013</small>:
+			
+			<p>#include<br />
+using namespace std;<br />
+int main()<br />
+{<br />
+	int n,factorial=1;<br />
+	cout&lt;&gt;n;<br />
+	for(int i=n;i&gt;0;i&#8211;){<br />
+		factorial=i*factorial;<br />
+	}<br />
+	cout&lt;&lt;factorial&lt;&lt;endl;<br />
+	return (0);<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7076">
+
+            			<cite>obazee ruth</cite> on <small>June 12th, 2013</small>:
+			
+			<p>can all for loops be rewritten using a while loop?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7201">
+
+            			<cite>Eustacia</cite> on <small>July 1st, 2013</small>:
+			
+			<p>Thanks so much for your tutorials! I&#8217;m doing a basic course in C Code, but it&#8217;s taught in Japanese so these are really saving my grade!</p>
+<p>I have a question: I&#8217;m supposed to build a program where I enter an integer below a hundred, and all numbers smaller than said integer and containing the number &#8220;3&#8221; appear on the screen (etc, if I enter 14, the numbers &#8220;3, 13&#8243; should appear). </p>
+<p>However, there&#8217;s something wrong with my code, please help! Thank you!</p>
+<p>The code:</p>
+<p>#include </p>
+<p>int main(int argc, const char * argv [])<br />
+{<br />
+	int wholenumber;<br />
+	printf(&#8220;???????????????\n&#8221;);<br />
+	scanf_s(&#8220;%d&#8221;, &amp;wholenumber);</p>
+<p>	while(0 &lt;wholenumber)<br />
+	{<br />
+		wholenumber&#8211;;</p>
+<p>		while(0 &lt; wholenumber){<br />
+		wholenumber = 3 %10;<br />
+		wholenumber = 3 /10;</p>
+<p>		if (wholenumber == 3);<br />
+		{printf(&quot;%3d&quot;,wholenumber);}<br />
+	}<br />
+	}<br />
+	return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7359">
+
+            			<cite>bhawana</cite> on <small>July 14th, 2013</small>:
+			
+			<p>piz clear these concept also&#8230;<br />
+while(n!=0)<br />
+{<br />
+n/=10<br />
+++count<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7455">
+
+            			<cite>akj</cite> on <small>July 20th, 2013</small>:
+			
+			<p>#include<br />
+int main()<br />
+{<br />
+int i;<br />
+for (i=400;i&gt;=1;i&#8211;)<br />
+{<br />
+printf(&#8220;%d\n&#8221;,i);<br />
+}<br />
+return 0;<br />
+}</p>
+<p>y can&#8217;t i see 400, the output is starting from 298 and continues till printing 1</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7781">
+
+            			<cite><a href='http://fb.com' rel='external nofollow' class='url'>Carl</a></cite> on <small>August 7th, 2013</small>:
+			
+			<p>Thx for this! I understand loops clearly</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7896">
+
+            			<cite>Mahesh</cite> on <small>September 5th, 2013</small>:
+			
+			<p>Program for 12345678910987654321</p>
+<p>#include<br />
+main()<br />
+{<br />
+    int i,j;<br />
+ for(i=1,j=9;i=1;i++){<br />
+if(i&lt;=10)<br />
+printf(&quot;%d&quot;,i);<br />
+else{<br />
+printf(&quot;%d&quot;,j);<br />
+j&#8211;;<br />
+}<br />
+}<br />
+getch();<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7943">
+
+            			<cite>mike swabe</cite> on <small>September 17th, 2013</small>:
+			
+			<p>how to make 5 * diomond?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7968">
+
+            			<cite>Stephen</cite> on <small>September 23rd, 2013</small>:
+			
+			<p>Excuse me!<br />
+How shall I program two integers then display the factors of the integers and then get their greatest common factors(GCF)&#8230;<br />
+May I ask anyone to help me?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7972">
+
+            			<cite>Bhagyashree</cite> on <small>September 23rd, 2013</small>:
+			
+			<p>Thank you so much! I had been looking so long for a proper C tutorial for beginners. Your explanations and examples make it so much easier to understand.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8592">
+
+            			<cite>avanish singh</cite> on <small>October 13th, 2013</small>:
+			
+			<p>hi, sir i want a loop statement then are perform a working<br />
+that are i know you loop dry run</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8738">
+
+            			<cite>kuldeep</cite> on <small>October 16th, 2013</small>:
+			
+			<p>can we possibly write this way.</p>
+<p>for(scanf(&#8220;%d&#8221;, &amp;i)); i&lt;10; i++)<br />
+printf(&quot;%d&quot;,i);</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8739">
+
+            			<cite>kuldeep</cite> on <small>October 16th, 2013</small>:
+			
+			<p>and also this way<br />
+for(i = 1; i&lt;10; printf(&quot;%d&quot;,i++))</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8742">
+
+            			<cite>kuldeep</cite> on <small>October 16th, 2013</small>:
+			
+			<p>or if i&#8217;ll use</p>
+<p>for(i=0;i++&lt;10;)<br />
+printf(&quot;%d\n&quot;,i);</p>
+<p>what will first done in for statement (i++&lt;10)  incrementation or comparison</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8744">
+
+            			<cite>THULASI THAMBI</cite> on <small>October 16th, 2013</small>:
+			
+			<p>IT WAS  HELPFULL &amp; EASIER TO UNDERSTAND&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9150">
+
+            			<cite>jakir</cite> on <small>November 28th, 2013</small>:
+			
+			<p>#include<br />
+int main()<br />
+{<br />
+     int num=3,i,a;</p>
+<p>     a=0;</p>
+<p>          for(i=1;i&lt;=num;i++)  {<br />
+               a=a+2;<br />
+               printf(&quot;%d     &quot;,a);<br />
+             }<br />
+          printf(&quot;\n&quot;);</p>
+<p>               for(i=1;i&lt;=num;i++)      {<br />
+                    a=a+4;<br />
+                    printf(&quot;%d     &quot;,a);<br />
+               }<br />
+             printf(&quot;\n&quot;);</p>
+<p>                    for(i=1;i&lt;=num;i++)    {<br />
+                         a=a+6;<br />
+                         printf(&quot;%d    &quot;,a);<br />
+                    }<br />
+     return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9151">
+
+            			<cite>jakir</cite> on <small>November 28th, 2013</small>:
+			
+			<p>/*the ans of M.Salman question*/<br />
+/*the series of even no.*/</p>
+<p>#include<br />
+int main()</p>
+<p>{<br />
+     int num;<br />
+     int n;<br />
+          //printf(&#8220;enter ur number: &#8220;);<br />
+          //scanf(&#8220;%d&#8221;,&amp;num);<br />
+          for(n=0;n&lt;=100;n++){<br />
+               if(n%2==0){<br />
+                    printf(&quot;%d     &quot;,n);<br />
+               }<br />
+               printf(&quot;\n&quot;);<br />
+          }<br />
+     return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9247">
+
+            			<cite>jhonmark</cite> on <small>December 15th, 2013</small>:
+			
+			<p>thanks for the codes i will study this codes</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9249">
+
+            			<cite>J.Aravind Amuthuraj</cite> on <small>December 15th, 2013</small>:
+			
+			<p>Any one tell me i cant understand the difference between ++i and i++.Please explain in the way of easy understanding.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9309">
+
+            			<cite>abhijeet</cite> on <small>December 30th, 2013</small>:
+			
+			<p>@ Mr. J.Aravind Amuthuraj </p>
+<p>i++ and ++i both are similar&#8230;<br />
+but it depends upon the situation&#8230; when you are using them,</p>
+<p>lets take an example,</p>
+<p>#include</p>
+<p>int main()<br />
+{</p>
+<p>int x = 10,y;<br />
+int v = 10,z;</p>
+<p>y = ++x + x++;<br />
+z = ++v + ++v;</p>
+<p>printf(&#8220;x = %d y = %d&#8221;,x,y);<br />
+printf(&#8220;\n\nv = %d z = %d&#8221;,v,z);</p>
+<p>return 0;<br />
+}</p>
+<p>OUTPUT &#8211; x = 12 y = 22</p>
+<p>                 v = 12 z = 23</p>
+<p>// here as you can see, the values of y and z are changed </p>
+<p>because of the difference of position of &#8216;++&#8217; increment operator&#8230;</p>
+<p>if ++ operator is after the variable then it is executed later&#8230; and if ++ operator is before the operator then it is executed first..<br />
+so the value of x is first incremented to 11 and as x = 11 therefore the x++ will result as 11&#8230;<br />
+and addition of 2 eleven is 22 so y = 22,</p>
+<p>but in z the value of v is ++v = 11 and then as v = 11 so again ++v = 12<br />
+therefore addition of ++v + ++v will be 23<br />
+hence z will result in 23.</p>
+<p>i hope you understand the difference between ++x and x++. <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9429">
+
+            			<cite>Nik</cite> on <small>February 1st, 2014</small>:
+			
+			<p>A B C D E D C B A<br />
+A B C D D C B A<br />
+A B C C B A<br />
+A B B A<br />
+A A<br />
+code for this one<br />
+#include<br />
+int main( )<br />
+{<br />
+	int i,j,k=65,l;<br />
+	for(i=5;i&gt;0;i&#8211;)<br />
+	{<br />
+    for(l=5;l&gt;i;l&#8211;)<br />
+		{<br />
+		 printf(&#8221; &#8220;);<br />
+		}<br />
+	for(j=0;j&lt;i;j++)<br />
+	    {<br />
+		printf(&quot;%c&quot;,k+j);<br />
+	    }<br />
+    for(j=0;j&lt;i;j++)<br />
+		{<br />
+        printf(&quot;%c&quot;,k-j+i-1);<br />
+		}<br />
+	printf(&quot;\n&quot;);<br />
+	}<br />
+getchar();<br />
+	return 0;</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9633">
+
+            			<cite>jasveer</cite> on <small>February 15th, 2014</small>:
+			
+			<p>dear Rakshith kumar:<br />
+i have the answer to your problem:</p>
+<p>#include<br />
+#include<br />
+void main()<br />
+{<br />
+for(int i=1;i&lt;=10;i++)<br />
+{<br />
+cout&lt;<i>=1;i&#8211;)<br />
+{<br />
+cout&lt;&lt;i;<br />
+}<br />
+getch();<br />
+}</i></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9861">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>vaio</a></cite> on <small>March 8th, 2014</small>:
+			
+			<p>are,<br />
+for(i=1;i&lt;=5;i++)<br />
+and for(i=1;i++,&lt;= operators because i tend to make mistakes when = are inserted in loops.<br />
+also,for(int i=0;i&lt;10;i++) prints from 0 whereas for(i=1;i++&lt;=5;) prints from 2 to 6.<br />
+i mean if i is initialized from 1 it should start from 1.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-10370">
+
+            			<cite>chala</cite> on <small>April 7th, 2014</small>:
+			
+			<p>Really helpful sir</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-27099">
+
+            			<cite>siddharth</cite> on <small>April 27th, 2014</small>:
+			
+			<p>can we use the while loop for true or false function?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-82591">
+
+            			<cite>Lydia</cite> on <small>May 25th, 2014</small>:
+			
+			<p>I just found this site, and well organized and useful, thank you!!!</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.993 seconds. -->
+</body>
+</html>
+

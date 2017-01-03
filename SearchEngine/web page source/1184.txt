@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?><rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/" version="2.0">
+
+<channel>
+	<title>Mkyong.com</title>
+	
+	<link>http://www.mkyong.com</link>
+	<description>Collection of Java web development tutorials, FAQs, and articles.</description>
+	<lastBuildDate>Mon, 18 May 2015 14:27:30 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=4.1.5</generator>
+	<atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/FeedForMkyong" /><feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="feedformkyong" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" /><feedburner:emailServiceId xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">FeedForMkyong</feedburner:emailServiceId><feedburner:feedburnerHostname xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">https://feedburner.google.com</feedburner:feedburnerHostname><item>
+		<title>NameCheap domain name and Amazon EC2</title>
+		<link>http://www.mkyong.com/server/namecheap-domain-name-and-amazon-ec2/</link>
+		<comments>http://www.mkyong.com/server/namecheap-domain-name-and-amazon-ec2/#comments</comments>
+		<pubDate>Wed, 22 Apr 2015 08:49:51 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[server]]></category>
+		<category><![CDATA[aws]]></category>
+		<category><![CDATA[dns]]></category>
+		<category><![CDATA[ec2]]></category>
+		<category><![CDATA[namecheap]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13706</guid>
+		<description><![CDATA[In this tutorial, we will show you how to associate a N [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In this tutorial, we will show you how to associate a NameCheap domain name to an Amazon EC2 instance.</p>
+<p><strong>In AWS</strong></p>
+<ol>
+<li>Create an Elastic IP and point to the Amazon EC2 instance.</li>
+<li>Go to service Route 53, create a &#8216;A&#8217; record and point to the Elastic IP.</li>
+<li>In Route 53, copy the Amazon NS (name server) urls.</li>
+</ol>
+<p><strong>In NameCheap</strong></p>
+<ol>
+<li>Paste the Amazon NS urls into the NameCheap DNS settings.</li>
+</ol>
+<p><strong>In Summary</strong><br />
+Request <==> NameCheap <==> Amazon NS <==> Route 53 <==> Elastic IP <==> EC2 Instance.</p>
+<div class="note">
+<strong>Note</strong><br />
+This DNS changes may take 24 hours to propagate.
+</div>
+<h2>1. AWS : EC2 and Elastic IP</h2>
+<p>1.1 After the Amazon EC2 instance is launched, both public IP and public DNS will be assigned automatically. </p>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/aws-ec2-example.png" alt="aws-ec2-example" width="800" height="454" class="alignnone size-full wp-image-13708" />
+</div>
+<div class="note">
+<strong>Note</strong><br />
+If this EC2 instance is &#8220;stop&#8221; and &#8220;start&#8221;, both public IP and public DNS will be changed. This is the reason to create an elastic IP and point it to an EC2 instance, because elastic IP will not change even if the instance is &#8220;stop&#8221; and &#8220;start&#8221;.
+</div>
+<p>1.2 Create an Elastic IP :</p>
+<ul>
+<li>Clicks on the &#8220;Allocate New Address&#8221; button, a new elastic IP will be created automatically.</li>
+<li>Clicks on the &#8220;Associate Address&#8221; button, select the EC2 instance.</li>
+</ul>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/aws-ec2-elastic-ip-create.png" alt="aws-ec2-elastic-ip-create" width="800" height="421" class="alignnone size-full wp-image-13709" />
+</div>
+<p>Done, the Elastic IP is associated with the EC2 instance.</p>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/aws-ec2-elastic-ip-example.png" alt="aws-ec2-elastic-ip-example" width="800" height="425" class="alignnone size-full wp-image-13710" />
+</div>
+<p>Next, configure the DNS settings (Route 53).</p>
+<h2>2. AWS : Route 53 (DNS)</h2>
+<p>2.1 Go to service &#8220;Route 53&#8243;, create a hosted zone, two record set (NS and SOA) will be created automatically. Clicks on the &#8220;NS&#8221; type, copy the Amazon NS urls, later we need to put these urls in NameCheap.</p>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/aws-route53-example1.png" alt="aws-route53-example1" width="800" height="388" class="alignnone size-full wp-image-13711" />
+</div>
+<p>Amazon NS urls</p>
+
+<div class="wp_syntax"><div class="code"><pre class="json" style="font-family:monospace;">ns-396.awsdns-49.com.
+ns-1143.awsdns-14.org.
+ns-1676.awsdns-17.co.uk.
+ns-879.awsdns-45.net.</pre></div></div>
+
+<p>2.2 Create two new &#8220;A&#8221; or &#8220;A &#8211; IPv4 address&#8221; records (root domain and www.domain) and point it to the Elastic IP.</p>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/aws-route53-example2.png" alt="aws-route53-example2" width="800" height="389" class="alignnone size-full wp-image-13712" />
+</div>
+<h2>3. NameCheap : DNS</h2>
+<p>3.1 Copy the Amazon name server urls and puts it into the NameCheap DNS settings.</p>
+<p>Amazon NS urls</p>
+
+<div class="wp_syntax"><div class="code"><pre class="json" style="font-family:monospace;">ns-396.awsdns-49.com.
+ns-1143.awsdns-14.org.
+ns-1676.awsdns-17.co.uk.
+ns-879.awsdns-45.net.</pre></div></div>
+
+<p>3.2 In NameCheap, select the domain name, and clicks &#8220;<strong>Transfer DNS to Webhost</strong>&#8221; or &#8220;<strong>Domain Name Server Setup</strong>&#8220;, copy and paste the Amazon NS urls  :</p>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/namecheap-aws-ec2-example.png" alt="namecheap-aws-ec2-example" width="882" height="487" class="alignnone size-full wp-image-13713" />
+</div>
+<p>Done.</p>
+<h2>References</h2>
+<ol>
+<li><a href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/web-app-hosting-intro.html" target="_blank">Hosting a Web App on Amazon Web Services</a></li>
+<li><a href="http://serverfault.com/questions/202109/ip-changed-when-ec2-instance-stopped-and-started" target="_blank">ServerFault : IP changed when EC2 instance stopped and started</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/server/namecheap-domain-name-and-amazon-ec2/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Java – Display double in 2 decimal points</title>
+		<link>http://www.mkyong.com/java/java-display-double-in-2-decimal-points/</link>
+		<comments>http://www.mkyong.com/java/java-display-double-in-2-decimal-points/#comments</comments>
+		<pubDate>Thu, 16 Apr 2015 22:16:13 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[java]]></category>
+		<category><![CDATA[decimal]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13702</guid>
+		<description><![CDATA[This article shows you a few examples to display a doub [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>This article shows you a few examples to display a <code>double</code> variable in 2 decimal points format.</p>
+<h2>1. DecimalFormat example</h2>
+<div class="filename">TestDouble.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.test</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.text.DecimalFormat</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> TestDouble<span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">private</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #003399;">DecimalFormat</span> df2 <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> <span style="color: #003399;">DecimalFormat</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;.##&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #000066; font-weight: bold;">void</span> main<span style="color: #009900;">&#40;</span><span style="color: #003399;">String</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> args<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		<span style="color: #000066; font-weight: bold;">double</span> input <span style="color: #339933;">=</span> <span style="color: #cc66cc;">32.123456</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double : &quot;</span> <span style="color: #339933;">+</span> input<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double : &quot;</span> <span style="color: #339933;">+</span> df2.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span>input<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<p>Output</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">double : <span style="color: #000000;">32.123456</span>
+double : <span style="color: #000000;">32.12</span></pre></div></div>
+
+<p>By default, <code>DecimalFormat</code> uses <code>RoundingMode.HALF_EVEN</code>.</p>
+<div class="filename">TestDouble.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.test</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.math.RoundingMode</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.text.DecimalFormat</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> TestDouble <span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">private</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #003399;">DecimalFormat</span> df2 <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> <span style="color: #003399;">DecimalFormat</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;.##&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #000066; font-weight: bold;">void</span> main<span style="color: #009900;">&#40;</span><span style="color: #003399;">String</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> args<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		<span style="color: #000066; font-weight: bold;">double</span> input <span style="color: #339933;">=</span> <span style="color: #cc66cc;">32.123456</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double : &quot;</span> <span style="color: #339933;">+</span> input<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double (default) : &quot;</span> <span style="color: #339933;">+</span> df2.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span>input<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		df2.<span style="color: #006633;">setRoundingMode</span><span style="color: #009900;">&#40;</span>RoundingMode.<span style="color: #006633;">UP</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double (UP) : &quot;</span> <span style="color: #339933;">+</span> df2.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span>input<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		df2.<span style="color: #006633;">setRoundingMode</span><span style="color: #009900;">&#40;</span>RoundingMode.<span style="color: #006633;">DOWN</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double (DOWN) : &quot;</span> <span style="color: #339933;">+</span> df2.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span>input<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<p>Output</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">double : <span style="color: #000000;">32.123456</span>
+double <span style="color: #7a0874; font-weight: bold;">&#40;</span>default<span style="color: #7a0874; font-weight: bold;">&#41;</span> : <span style="color: #000000;">32.12</span>
+double <span style="color: #7a0874; font-weight: bold;">&#40;</span>UP<span style="color: #7a0874; font-weight: bold;">&#41;</span> : <span style="color: #000000;">32.13</span>
+double <span style="color: #7a0874; font-weight: bold;">&#40;</span>DOWN<span style="color: #7a0874; font-weight: bold;">&#41;</span> : <span style="color: #000000;">32.12</span></pre></div></div>
+
+<h2>2. String.format example</h2>
+<div class="filename">TestDouble.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.loan</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> Test<span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #000066; font-weight: bold;">void</span> main<span style="color: #009900;">&#40;</span><span style="color: #003399;">String</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> args<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		<span style="color: #000066; font-weight: bold;">double</span> input <span style="color: #339933;">=</span> <span style="color: #cc66cc;">32.123456</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double : &quot;</span> <span style="color: #339933;">+</span> input<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;double : &quot;</span> <span style="color: #339933;">+</span> <span style="color: #003399;">String</span>.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;%.2f&quot;</span>, input<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<p>Output</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">double : <span style="color: #000000;">32.123456</span>
+double : <span style="color: #000000;">32.12</span></pre></div></div>
+
+<h2>References</h4>
+<ol>
+<li><a href="https://docs.oracle.com/javase/7/docs/api/java/text/DecimalFormat.html" target="_blank">DecimalFormat JavaDoc</a></li>
+<li><a href="http://docs.oracle.com/javase/6/docs/api/java/math/RoundingMode.html" target="_blank">DecimalFormat RoundingMode JavaDoc</a></li>
+<li><a href="http://docs.oracle.com/javase/7/docs/api/java/util/Formatter.html#syntax" target="_blank">String.format, formatter JavaDoc</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/java/java-display-double-in-2-decimal-points/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Java – Math.pow example</title>
+		<link>http://www.mkyong.com/java/java-math-pow-example/</link>
+		<comments>http://www.mkyong.com/java/java-math-pow-example/#comments</comments>
+		<pubDate>Wed, 15 Apr 2015 23:00:38 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[java]]></category>
+		<category><![CDATA[math]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13703</guid>
+		<description><![CDATA[A simple Math.pow example, display 2 to the power of 8. [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>A simple <code>Math.pow</code> example, display 2 to the power of 8.</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">In Math
+<span style="color: #000000;">2</span>^<span style="color: #000000;">8</span> = 2x2x2x2x2x2x2x2 =<span style="color: #000000;">256</span>
+&nbsp;
+In Java
+Math.pow<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #000000;">2</span>, <span style="color: #000000;">8</span><span style="color: #7a0874; font-weight: bold;">&#41;</span></pre></div></div>
+
+<div class="note">
+<strong>Note</strong><br />
+In Java, the symbol <code>^</code> is a <a href="http://en.wikipedia.org/wiki/Exclusive_or " target="_blank">XOR operator</a>, DON&#8217;T use this for the power calculation.
+</div>
+<div class="filename">TestPower.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.test</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.text.DecimalFormat</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> TestPower <span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">static</span> <span style="color: #003399;">DecimalFormat</span> df <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> <span style="color: #003399;">DecimalFormat</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;.00&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">static</span> <span style="color: #000066; font-weight: bold;">void</span> main<span style="color: #009900;">&#40;</span><span style="color: #003399;">String</span><span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> args<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		<span style="color: #666666; font-style: italic;">//1. Math.pow returns double, need cast, display 256</span>
+		<span style="color: #000066; font-weight: bold;">int</span> result <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #000066; font-weight: bold;">int</span><span style="color: #009900;">&#41;</span> <span style="color: #003399;">Math</span>.<span style="color: #006633;">pow</span><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">2</span>, <span style="color: #cc66cc;">8</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Math.pow(2, 8) : &quot;</span> <span style="color: #339933;">+</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #666666; font-style: italic;">//2. Wrong, ^ is a binary XOR operator, display 10</span>
+		<span style="color: #000066; font-weight: bold;">int</span> result2 <span style="color: #339933;">=</span> <span style="color: #cc66cc;">2</span> <span style="color: #339933;">^</span> <span style="color: #cc66cc;">8</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;2 ^ 8 : &quot;</span> <span style="color: #339933;">+</span> result2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #666666; font-style: italic;">//3. Test double , display 127628.16</span>
+		<span style="color: #000066; font-weight: bold;">double</span> result3 <span style="color: #339933;">=</span> <span style="color: #003399;">Math</span>.<span style="color: #006633;">pow</span><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">10.5</span>, <span style="color: #cc66cc;">5</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #003399;">System</span>.<span style="color: #006633;">out</span>.<span style="color: #006633;">println</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Math.pow(10.5, 5) : &quot;</span> <span style="color: #339933;">+</span> df.<span style="color: #006633;">format</span><span style="color: #009900;">&#40;</span>result3<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<p>Output</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">Math.pow<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #000000;">2</span>, <span style="color: #000000;">8</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> : <span style="color: #000000;">256</span>
+<span style="color: #000000;">2</span> ^ <span style="color: #000000;">8</span> : <span style="color: #000000;">10</span>
+Math.pow<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #000000;">10.5</span>, <span style="color: #000000;">5</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> : <span style="color: #000000;">127628.16</span></pre></div></div>
+
+<h2>References</h4>
+<ol>
+<li><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Math.html#pow(double,%20double)" target="_blank">Math.pow JavaDoc</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Exclusive_or" target="_blank">Wikipedia Exclusive or (XOR)</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/java/java-math-pow-example/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Gradle – Create Java project structure automatically</title>
+		<link>http://www.mkyong.com/gradle/gradle-create-java-project-structure-automatically/</link>
+		<comments>http://www.mkyong.com/gradle/gradle-create-java-project-structure-automatically/#comments</comments>
+		<pubDate>Wed, 15 Apr 2015 08:30:38 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[gradle]]></category>
+		<category><![CDATA[java project]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13700</guid>
+		<description><![CDATA[To quick start a new Gradle Java project, type gradle i [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>To quick start a new Gradle Java project, type <code>gradle init --type java-library</code></p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">$ gradle init <span style="color: #660033;">--type</span> java-library
+:wrapper
+:init
+&nbsp;
+BUILD SUCCESSFUL
+&nbsp;
+Total time: <span style="color: #000000;">4.866</span> secs</pre></div></div>
+
+<p>The following files and folders will be created automatically.</p>
+<p><em>P.S Tested with Gradle 2.0</em></p>
+<h2>1. Java Project Structure</h2>
+<div class="pic">
+<img src="http://www.mkyong.com/wp-content/uploads/2015/04/gradle-java-init.png" alt="gradle-java-init" width="592" height="338" class="alignnone size-full wp-image-13701" />
+</div>
+<p>Both <code>src/main/java</code> and <code>src/test/java</code> folders are created. The <code>Library*.java</code> is a sample file, just delete it.</p>
+<h2>2. Gradle Files</h2>
+<p>1. A simple <code>gradle.build</code> file for Java project.</p>
+<div class="filename">gradle.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">apply plugin: <span style="color: #ff0000;">'java'</span>
+&nbsp;
+repositories <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+    mavenCentral<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #7a0874; font-weight: bold;">&#41;</span>
+<span style="color: #7a0874; font-weight: bold;">&#125;</span>
+&nbsp;
+dependencies <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+    compile <span style="color: #ff0000;">'org.slf4j:slf4j-api:1.7.5'</span>
+    testCompile <span style="color: #ff0000;">'junit:junit:4.11'</span>
+<span style="color: #7a0874; font-weight: bold;">&#125;</span></pre></div></div>
+
+<p>2. A simple <code>settings.build</code> file, for multi project build. Ignore this file if you are not going to create a  multi module project.</p>
+<div class="filename">settings.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">rootProject.name = <span style="color: #ff0000;">'your-project-folder'</span></pre></div></div>
+
+<p>3. Some Gradle wrapper files.</p>
+<h2>References</h2>
+<ol>
+<li><a href="https://gradle.org/docs/current/userguide/build_init_plugin.html" target="_blank">Gradle build init plugin</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/gradle/gradle-create-java-project-structure-automatically/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Spring Data MongoDB – Aggregation Grouping Example</title>
+		<link>http://www.mkyong.com/mongodb/spring-data-mongodb-aggregation-grouping-example/</link>
+		<comments>http://www.mkyong.com/mongodb/spring-data-mongodb-aggregation-grouping-example/#comments</comments>
+		<pubDate>Thu, 12 Mar 2015 10:19:14 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[mongodb]]></category>
+		<category><![CDATA[aggregation]]></category>
+		<category><![CDATA[spring-data]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13628</guid>
+		<description><![CDATA[In this tutorial, we will show you how to do the data g [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In this tutorial, we will show you how to do the data grouping with Spring Data + MongoDB aggregation framework.</p>
+<h2>1. Test Data</h2>
+<div class="filename">domain.json</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">1</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test1.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;hostgator.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">2</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test2.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;aws.amazon.com&quot;</span><span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">3</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test3.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;aws.amazon.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">4</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test4.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;hostgator.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">5</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test5.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;aws.amazon.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">6</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test6.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;cloud.google.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">7</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test7.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;aws.amazon.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">8</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test8.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;hostgator.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">9</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test9.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;cloud.google.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">10</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test10.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;godaddy.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+...
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #000000;">100</span>, <span style="color: #ff0000;">&quot;domainName&quot;</span> : <span style="color: #ff0000;">&quot;test10.com&quot;</span>, <span style="color: #ff0000;">&quot;hosting&quot;</span> : <span style="color: #ff0000;">&quot;godaddy.com&quot;</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span></pre></div></div>
+
+<h2>2. MongoDB Aggregation Example</h2>
+<p>MongoDB aggregation example to sum the total number of hosting :</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">db.domain.aggregate<span style="color: #7a0874; font-weight: bold;">&#40;</span>
+    <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+	<span style="color: #007800;">$match</span> : <span style="color: #7a0874; font-weight: bold;">&#123;</span>_id:<span style="color: #7a0874; font-weight: bold;">&#123;</span><span style="color: #007800;">$lt</span>:<span style="color: #000000;">10</span><span style="color: #7a0874; font-weight: bold;">&#125;</span><span style="color: #7a0874; font-weight: bold;">&#125;</span>
+    <span style="color: #7a0874; font-weight: bold;">&#125;</span>,
+    <span style="color: #7a0874; font-weight: bold;">&#123;</span> 
+	<span style="color: #007800;">$group</span> : <span style="color: #7a0874; font-weight: bold;">&#123;</span>_id : <span style="color: #ff0000;">&quot;<span style="color: #007800;">$hosting</span>&quot;</span>, total : <span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #007800;">$sum</span> : <span style="color: #000000;">1</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span><span style="color: #7a0874; font-weight: bold;">&#125;</span>
+    <span style="color: #7a0874; font-weight: bold;">&#125;</span>,
+    <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+	<span style="color: #007800;">$sort</span> : <span style="color: #7a0874; font-weight: bold;">&#123;</span>total : -<span style="color: #000000;">1</span><span style="color: #7a0874; font-weight: bold;">&#125;</span>
+    <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#41;</span>;</pre></div></div>
+
+<p>Output</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #ff0000;">&quot;aws.amazon.com&quot;</span>, <span style="color: #ff0000;">&quot;total&quot;</span> : <span style="color: #000000;">4</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #ff0000;">&quot;hostgator.com&quot;</span>, <span style="color: #ff0000;">&quot;total&quot;</span> : <span style="color: #000000;">3</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #ff0000;">&quot;cloud.google.com&quot;</span>, <span style="color: #ff0000;">&quot;total&quot;</span> : <span style="color: #000000;">2</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+<span style="color: #7a0874; font-weight: bold;">&#123;</span> <span style="color: #ff0000;">&quot;_id&quot;</span> : <span style="color: #ff0000;">&quot;godaddy.com&quot;</span>, <span style="color: #ff0000;">&quot;total&quot;</span> : <span style="color: #000000;">1</span> <span style="color: #7a0874; font-weight: bold;">&#125;</span></pre></div></div>
+
+<h2>2. Spring Data + MongoDB Aggregation Example</h2>
+<p>This is the equivalent example in Spring Data MongoDB. </p>
+<div class="filename">DomainDaoImpl.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.core.domain.dao</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">//imports as static</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">static</span> org.<span style="color: #006633;">springframework</span>.<span style="color: #006633;">data</span>.<span style="color: #006633;">mongodb</span>.<span style="color: #006633;">core</span>.<span style="color: #006633;">aggregation</span>.<span style="color: #006633;">Aggregation</span>.<span style="color: #006633;">group</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">static</span> org.<span style="color: #006633;">springframework</span>.<span style="color: #006633;">data</span>.<span style="color: #006633;">mongodb</span>.<span style="color: #006633;">core</span>.<span style="color: #006633;">aggregation</span>.<span style="color: #006633;">Aggregation</span>.<span style="color: #006633;">match</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">static</span> org.<span style="color: #006633;">springframework</span>.<span style="color: #006633;">data</span>.<span style="color: #006633;">mongodb</span>.<span style="color: #006633;">core</span>.<span style="color: #006633;">aggregation</span>.<span style="color: #006633;">Aggregation</span>.<span style="color: #006633;">newAggregation</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">static</span> org.<span style="color: #006633;">springframework</span>.<span style="color: #006633;">data</span>.<span style="color: #006633;">mongodb</span>.<span style="color: #006633;">core</span>.<span style="color: #006633;">aggregation</span>.<span style="color: #006633;">Aggregation</span>.<span style="color: #006633;">project</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">static</span> org.<span style="color: #006633;">springframework</span>.<span style="color: #006633;">data</span>.<span style="color: #006633;">mongodb</span>.<span style="color: #006633;">core</span>.<span style="color: #006633;">aggregation</span>.<span style="color: #006633;">Aggregation</span>.<span style="color: #006633;">sort</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.beans.factory.annotation.Autowired</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.domain.Sort</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.MongoTemplate</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.aggregation.Aggregation</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.aggregation.AggregationResults</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Criteria</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Query</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Update</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.stereotype.Repository</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">com.mkyong.core.domain.model.Domain</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">com.mkyong.core.hosting.model.HostingCount</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.util.List</span><span style="color: #339933;">;</span>
+&nbsp;
+@<span style="color: #003399;">Repository</span>
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> DomainDaoImpl <span style="color: #000000; font-weight: bold;">implements</span> DomainDao <span style="color: #009900;">&#123;</span>
+&nbsp;
+	@Autowired
+	MongoTemplate mongoTemplate<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">public</span> List<span style="color: #339933;">&lt;</span>HostingCount<span style="color: #339933;">&gt;</span> getHostingCount<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		Aggregation agg <span style="color: #339933;">=</span> newAggregation<span style="color: #009900;">&#40;</span>
+			match<span style="color: #009900;">&#40;</span>Criteria.<span style="color: #006633;">where</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;_id&quot;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">lt</span><span style="color: #009900;">&#40;</span><span style="color: #cc66cc;">10</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span>,
+			group<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;hosting&quot;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">count</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">as</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;total&quot;</span><span style="color: #009900;">&#41;</span>,
+			project<span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;total&quot;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">and</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;hosting&quot;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">previousOperation</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>,
+			sort<span style="color: #009900;">&#40;</span>Sort.<span style="color: #006633;">Direction</span>.<span style="color: #006633;">DESC</span>, <span style="color: #0000ff;">&quot;total&quot;</span><span style="color: #009900;">&#41;</span>
+&nbsp;
+		<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #666666; font-style: italic;">//Convert the aggregation result into a List</span>
+		AggregationResults<span style="color: #339933;">&lt;</span>HostingCount<span style="color: #339933;">&gt;</span> groupResults 
+			<span style="color: #339933;">=</span> mongoTemplate.<span style="color: #006633;">aggregate</span><span style="color: #009900;">&#40;</span>agg, Domain.<span style="color: #000000; font-weight: bold;">class</span>, HostingCount.<span style="color: #000000; font-weight: bold;">class</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		List<span style="color: #339933;">&lt;</span>HostingCount<span style="color: #339933;">&gt;</span> result <span style="color: #339933;">=</span> groupResults.<span style="color: #006633;">getMappedResults</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #000000; font-weight: bold;">return</span> result<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<div class="filename">HostingCount.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.core.hosting.model</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> HostingCount <span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">private</span> <span style="color: #003399;">String</span> hosting<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">private</span> <span style="color: #000066; font-weight: bold;">long</span> total<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #666666; font-style: italic;">//...</span>
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<div class="note">
+<strong>More Examples</strong><br />
+Refer to this official <a href="http://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.aggregation" target="_blank">Spring data &#8211; Aggregation Framework Support</a>
+</div>
+<h2>References</h2>
+<ol>
+<li><a href="http://docs.mongodb.org/manual/core/aggregation/" target="_blank">MongoDB &#8211; Aggregation Concepts</a></li>
+<li><a href="http://www.mkyong.com/mongodb/mongodb-aggregate-and-group-example/" target="_blank">MongoDB – Aggregate And Group Example</a></li>
+<li><a href="http://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.aggregation" target="_blank">Spring.io &#8211; Aggregation Framework Support</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/mongodb/spring-data-mongodb-aggregation-grouping-example/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Gradle Application Plugin – APP_HOME in applicationDefaultJvmArgs</title>
+		<link>http://www.mkyong.com/gradle/gradle-application-plugin-app_home-in-applicationdefaultjvmargs/</link>
+		<comments>http://www.mkyong.com/gradle/gradle-application-plugin-app_home-in-applicationdefaultjvmargs/#comments</comments>
+		<pubDate>Fri, 06 Mar 2015 00:27:36 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[gradle]]></category>
+		<category><![CDATA[distzip]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13626</guid>
+		<description><![CDATA[In Gardle, the application plugin, you can pass the sys [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In Gardle, the <a href="http://gradle.org/docs/current/userguide/application_plugin.html" target="_blank">application plugin</a>, you can pass the system properties via <code>applicationDefaultJvmArgs</code> :</p>
+<div class="filename">gradle.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="groovy" style="font-family:monospace;">	apply plugin:<span style="color: #ff0000;">'application'</span>
+	mainClassName <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">&quot;com.mkyong.analyzer.engine.hydra.entryPointForJar&quot;</span>
+	applicationName <span style="color: #66cc66;">=</span> <span style="color: #ff0000;">'analyzer'</span>
+&nbsp;
+	distZip <span style="color: #66cc66;">&#123;</span>
+		archiveName <span style="color: #ff0000;">'analyzer-'</span> <span style="color: #66cc66;">+</span> version <span style="color: #66cc66;">+</span> <span style="color: #ff0000;">'.zip'</span>
+	<span style="color: #66cc66;">&#125;</span>
+&nbsp;
+	applicationDefaultJvmArgs <span style="color: #66cc66;">=</span> <span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">&quot;-Dlogback.configurationFile=logback.xml&quot;</span><span style="color: #66cc66;">&#93;</span></pre></div></div>
+
+<p>The problem is how to get the APP_HOME for <code>logback.xml</code>?</p>
+<div class="filename">gradle.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="groovy" style="font-family:monospace;">	applicationDefaultJvmArgs <span style="color: #66cc66;">=</span> <span style="color: #66cc66;">&#91;</span><span style="color: #ff0000;">&quot;-Dlogback.configurationFile=APP_HOME/logback.xml&quot;</span><span style="color: #66cc66;">&#93;</span></pre></div></div>
+
+<p>You can hard code the APP_HOME, but this will only work for one platform (Windows or *nix). </p>
+<h2>1. Solution</h2>
+<p>To fix it, create a custom &#8220;MY_APP_HOME&#8221; variable, and replace it with <code>doLast</code>  </p>
+<div class="filename">gradle.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">	applicationDefaultJvmArgs = <span style="color: #7a0874; font-weight: bold;">&#91;</span><span style="color: #ff0000;">&quot;-Dlogback.configurationFile=MY_APP_HOME/logback.xml&quot;</span><span style="color: #7a0874; font-weight: bold;">&#93;</span>
+&nbsp;
+	startScripts <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+		doLast <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+			unixScript.text = unixScript.text.replace<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #ff0000;">'MY_APP_HOME'</span>, <span style="color: #ff0000;">'\$APP_HOME'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> 
+			windowsScript.text = windowsScript.text.replace<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #ff0000;">'MY_APP_HOME'</span>, <span style="color: #ff0000;">'%~dp0..'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span>
+		<span style="color: #7a0874; font-weight: bold;">&#125;</span>
+	<span style="color: #7a0874; font-weight: bold;">&#125;</span></pre></div></div>
+
+<div class="note">
+<strong>Note</strong><br />
+This solution works in both Windows and *nix platforms. Tested with Gradle 2.0
+</div>
+<p>Build it.</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">gradle distZip</pre></div></div>
+
+<p>Output</p>
+<div class="filename">${project}\build\distributions\${project-name}\bin\analyzer</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">#!/usr/bin/env bash</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">##############################################################################</span>
+<span style="color: #666666; font-style: italic;">##</span>
+<span style="color: #666666; font-style: italic;">##  analyzer start up script for UN*X</span>
+<span style="color: #666666; font-style: italic;">##</span>
+<span style="color: #666666; font-style: italic;">##############################################################################</span>
+&nbsp;
+<span style="color: #007800;">DEFAULT_JVM_OPTS</span>=<span style="color: #ff0000;">'&quot;-Dlogback.configurationFile=$APP_HOME/logback.xml&quot;</span></pre></div></div>
+
+<div class="filename">${project}\build\distributions\${project-name}\bin\analyzer.bat</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">@</span><span style="color: #000000; font-weight: bold;">if</span> <span style="color: #ff0000;">&quot;%DEBUG%&quot;</span> == <span style="color: #ff0000;">&quot;&quot;</span> <span style="color: #000000; font-weight: bold;">@</span><span style="color: #7a0874; font-weight: bold;">echo</span> off
+<span style="color: #000000; font-weight: bold;">@</span>rem <span style="color: #666666; font-style: italic;">##########################################################################</span>
+<span style="color: #000000; font-weight: bold;">@</span>rem
+<span style="color: #000000; font-weight: bold;">@</span>rem  analyzer startup script <span style="color: #000000; font-weight: bold;">for</span> Windows
+<span style="color: #000000; font-weight: bold;">@</span>rem
+<span style="color: #000000; font-weight: bold;">@</span>rem <span style="color: #666666; font-style: italic;">##########################################################################</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">set</span> <span style="color: #007800;">DEFAULT_JVM_OPTS</span>=<span style="color: #ff0000;">&quot;-Dlogback.configurationFile=%~dp0../logback.xml&quot;</span></pre></div></div>
+
+<h2>2. Solution &#8211; Custom Startup Script</h2>
+<p>This is for the custom startup script:</p>
+<div class="filename">gradle.build</div>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;">&nbsp;
+  task abcStartScripts<span style="color: #7a0874; font-weight: bold;">&#40;</span>type: CreateStartScripts<span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+	mainClassName = <span style="color: #ff0000;">&quot;com.mkyong.analyzer.engine.hydra.entryPointForJar&quot;</span>
+	classpath = startScripts.classpath
+	outputDir = startScripts.outputDir
+	applicationName = <span style="color: #ff0000;">'analyzer'</span>
+	defaultJvmOpts = <span style="color: #7a0874; font-weight: bold;">&#91;</span><span style="color: #ff0000;">&quot;-Dlogback.configurationFile=MY_APP_HOME/logback.xml&quot;</span><span style="color: #7a0874; font-weight: bold;">&#93;</span>
+&nbsp;
+	abcStartScripts <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+		doLast <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+			unixScript.text = unixScript.text.replace<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #ff0000;">'MY_APP_HOME'</span>, <span style="color: #ff0000;">'\$APP_HOME'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> 
+			windowsScript.text = windowsScript.text.replace<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #ff0000;">'MY_APP_HOME'</span>, <span style="color: #ff0000;">'%~dp0..'</span><span style="color: #7a0874; font-weight: bold;">&#41;</span>
+		<span style="color: #7a0874; font-weight: bold;">&#125;</span>
+	<span style="color: #7a0874; font-weight: bold;">&#125;</span>
+&nbsp;
+  <span style="color: #7a0874; font-weight: bold;">&#125;</span>
+&nbsp;
+  applicationDistribution.into<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #ff0000;">&quot;bin&quot;</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #7a0874; font-weight: bold;">&#123;</span>
+        from<span style="color: #7a0874; font-weight: bold;">&#40;</span>hostingStatStartScripts<span style="color: #7a0874; font-weight: bold;">&#41;</span>
+        fileMode = 0755
+  <span style="color: #7a0874; font-weight: bold;">&#125;</span></pre></div></div>
+
+<h2>References</h2>
+<ol>
+<li><a href="http://gradle.org/docs/current/userguide/application_plugin.html" target="_blank">Gradle &#8211; The Application Plugin</a></li>
+<li><a href="http://gradle.org/docs/current/dsl/org.gradle.api.tasks.application.CreateStartScripts.html" target="_blank">Gradle DSL reference &#8211; CreateStartScripts</a></li>
+<li><a href="http://gradle.org/docs/current/dsl/org.gradle.api.Project.html#N14272" target="_blank">Gradle DSL Reference &#8211; The Application plugin </a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/gradle/gradle-application-plugin-app_home-in-applicationdefaultjvmargs/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Spring MVC – Beans loaded twice</title>
+		<link>http://www.mkyong.com/spring-mvc/spring-mvc-beans-loaded-twice/</link>
+		<comments>http://www.mkyong.com/spring-mvc/spring-mvc-beans-loaded-twice/#comments</comments>
+		<pubDate>Thu, 05 Mar 2015 10:28:54 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[spring mvc]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13622</guid>
+		<description><![CDATA[A Spring MVC web application, noticed all the Spring&#8 [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>A Spring MVC web application, noticed all the Spring&#8217;s beans are loaded twice!?</p>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.config.db</span><span style="color: #339933;">;</span>
+&nbsp;
+@Configuration
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> MongoDevConfig <span style="color: #009900;">&#123;</span>
+&nbsp;
+	<span style="color: #000000; font-weight: bold;">private</span> <span style="color: #000000; font-weight: bold;">final</span> <span style="color: #000000; font-weight: bold;">static</span> Logger logger <span style="color: #339933;">=</span> LoggerFactory.<span style="color: #006633;">getLogger</span><span style="color: #009900;">&#40;</span>MongoDevConfig.<span style="color: #000000; font-weight: bold;">class</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	@Bean
+	MongoDbFactory mongoDbFactory<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #000000; font-weight: bold;">throws</span> <span style="color: #003399;">Exception</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		logger.<span style="color: #006633;">debug</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;Init...... MongoDbFactory() in production mode!&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #666666; font-style: italic;">//...</span>
+		<span style="color: #000000; font-weight: bold;">return</span> <span style="color: #000000; font-weight: bold;">new</span> <span style="color: #000000; font-weight: bold;">new</span> SimpleMongoDbFactory<span style="color: #009900;">&#40;</span>mongo, <span style="color: #0000ff;">&quot;db&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<p>During Application startup :</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #000000;">2015</span>-03-05 <span style="color: #000000;">17</span>:<span style="color: #000000;">52</span>:<span style="color: #000000;">32</span> DEBUG c.m.config.MongoLiveConfig - Init...... MongoDbFactory<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #000000; font-weight: bold;">in</span> production mode<span style="color: #000000; font-weight: bold;">!</span>
+<span style="color: #000000;">2015</span>-03-05 <span style="color: #000000;">17</span>:<span style="color: #000000;">52</span>:<span style="color: #000000;">32</span> DEBUG c.m.config.MongoLiveConfig - Init...... MongoDbFactory<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #7a0874; font-weight: bold;">&#41;</span> <span style="color: #000000; font-weight: bold;">in</span> production mode<span style="color: #000000; font-weight: bold;">!</span></pre></div></div>
+
+<h2>1. Spring Configuration</h2>
+<p>Here is the Spring MVC configuration.</p>
+<div class="filename">web.xml</div>
+
+<div class="wp_syntax"><div class="code"><pre class="xml" style="font-family:monospace;"><span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>mvc-dispatcher<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+			org.springframework.web.servlet.DispatcherServlet
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;load-on-startup<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>1<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/load-on-startup<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-mapping<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>mvc-dispatcher<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;url-pattern<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>/<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/url-pattern<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-mapping<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;listener<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;listener-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+			org.springframework.web.context.ContextLoaderListener
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/listener-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/listener<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;context-param<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;param-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>contextConfigLocation<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/param-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;param-value<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>/WEB-INF/mvc-dispatcher-servlet.xml<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/param-value<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/context-param<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span></pre></div></div>
+
+<div class="filename">mvc-dispatcher-servlet.xml</div>
+
+<div class="wp_syntax"><div class="code"><pre class="xml" style="font-family:monospace;"><span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;beans...<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+ 	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;context:component-scan</span> <span style="color: #000066;">base-package</span>=<span style="color: #ff0000;">&quot;com.mkyong&quot;</span> <span style="color: #000000; font-weight: bold;">/&gt;</span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;mvc:annotation-driven</span> <span style="color: #000000; font-weight: bold;">/&gt;</span></span>
+&nbsp;
+<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/beans<span style="color: #000000; font-weight: bold;">&gt;</span></span></span></pre></div></div>
+
+<h2>2. Solution</h2>
+<p>Read this <a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-servlet" target="_blank">Spring DispatcherServlet reference</a> to understand how Spring pick up the XML file :</p>
+<blockquote><p>Upon initialization of a DispatcherServlet, Spring MVC looks for a file named [servlet-name]-servlet.xml in the WEB-INF directory of your web application and &#8230;</p></blockquote>
+<p>In Above Spring configuration :</p>
+<ol>
+<li>The servlet <code>mvc-dispatcher</code> will load <code>mvc-dispatcher-servlet.xml</code></li>
+<li>And the listener <code>ContextLoaderListener</code> will loads<code>mvc-dispatcher-servlet.xml</code> again</li>
+</ol>
+<p>To fix it, just renamed the servlet name <code>mvc-dispatcher</code> to something else.</p>
+<div class="filename">web.xml</div>
+
+<div class="wp_syntax"><div class="code"><pre class="xml" style="font-family:monospace;"><span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #808080; font-style: italic;">&lt;!-- Now it will find hello-dispatcher-servlet.xml --&gt;</span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>hello-dispatcher<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+			org.springframework.web.servlet.DispatcherServlet
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-class<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;load-on-startup<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>1<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/load-on-startup<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-mapping<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>hello-dispatcher<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+		<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;url-pattern<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>/<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/url-pattern<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/servlet-mapping<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+&nbsp;
+<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span></pre></div></div>
+
+<p>In short, make sure Spring will not pick up the Spring XML configuration twice.</p>
+<h2>References</h2>
+<ol>
+<li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html#mvc-servlet" target="_blank">Spring IO : The DispatcherServlet</a></li>
+<li><a href="http://stackoverflow.com/questions/19826228/spring-web-security-web-xml-mvc-dispatcher-bean-is-created-twice" target="_blank">StackOverflow : spring web, security + web.xml + mvc dispatcher + Bean is created twice</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/spring-mvc/spring-mvc-beans-loaded-twice/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Spring Data MongoDB – Select fields to return</title>
+		<link>http://www.mkyong.com/mongodb/spring-data-mongodb-select-fields-to-return/</link>
+		<comments>http://www.mkyong.com/mongodb/spring-data-mongodb-select-fields-to-return/#comments</comments>
+		<pubDate>Wed, 04 Mar 2015 11:06:41 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[mongodb]]></category>
+		<category><![CDATA[spring-data]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13624</guid>
+		<description><![CDATA[In MongoDB console, you can use field:1 to select the f [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In MongoDB console, you can use <code>field:1</code> to select the fields to return from a query :</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">&gt;</span> db.hosting.find<span style="color: #7a0874; font-weight: bold;">&#40;</span><span style="color: #7a0874; font-weight: bold;">&#123;</span><span style="color: #7a0874; font-weight: bold;">&#125;</span>,<span style="color: #7a0874; font-weight: bold;">&#123;</span>domain:<span style="color: #000000;">1</span>, count:<span style="color: #000000;">1</span><span style="color: #7a0874; font-weight: bold;">&#125;</span><span style="color: #7a0874; font-weight: bold;">&#41;</span>;</pre></div></div>
+
+<p>In Spring Data for MongoDB, you use <code>query.fields().include</code> :</p>
+<div class="filename">HostingDaoImpl.java</div>
+
+<div class="wp_syntax"><div class="code"><pre class="java" style="font-family:monospace;"><span style="color: #000000; font-weight: bold;">package</span> <span style="color: #006699;">com.mkyong.core.hosting.dao</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">java.util.List</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.domain.Sort</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Criteria</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Query</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.data.mongodb.core.query.Update</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">org.springframework.stereotype.Repository</span><span style="color: #339933;">;</span>
+<span style="color: #000000; font-weight: bold;">import</span> <span style="color: #006699;">com.hostingcompass.core.db.dao.MongoDaoImpl</span><span style="color: #339933;">;</span>
+&nbsp;
+@<span style="color: #003399;">Repository</span>
+<span style="color: #000000; font-weight: bold;">public</span> <span style="color: #000000; font-weight: bold;">class</span> HostingDaoImpl 
+	<span style="color: #000000; font-weight: bold;">extends</span> MongoDaoImpl<span style="color: #339933;">&lt;</span>Hosting<span style="color: #339933;">&gt;</span> <span style="color: #000000; font-weight: bold;">implements</span> HostingDao <span style="color: #009900;">&#123;</span>
+&nbsp;
+	@Override
+	<span style="color: #000000; font-weight: bold;">public</span> List<span style="color: #339933;">&lt;</span>Hosting<span style="color: #339933;">&gt;</span> findTopHosting<span style="color: #009900;">&#40;</span><span style="color: #000066; font-weight: bold;">int</span> numOfRecord<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+&nbsp;
+		Query query <span style="color: #339933;">=</span> <span style="color: #000000; font-weight: bold;">new</span> Query<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #000000; font-weight: bold;">if</span> <span style="color: #009900;">&#40;</span>numOfRecord <span style="color: #339933;">&gt;</span> <span style="color: #cc66cc;">0</span><span style="color: #009900;">&#41;</span>
+			query.<span style="color: #006633;">limit</span><span style="color: #009900;">&#40;</span>numOfRecord<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		query.<span style="color: #006633;">with</span><span style="color: #009900;">&#40;</span><span style="color: #000000; font-weight: bold;">new</span> Sort<span style="color: #009900;">&#40;</span>Sort.<span style="color: #006633;">Direction</span>.<span style="color: #006633;">DESC</span>, <span style="color: #0000ff;">&quot;count&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		query.<span style="color: #006633;">fields</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">include</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;_id&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		query.<span style="color: #006633;">fields</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">include</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;domain&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		query.<span style="color: #006633;">fields</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>.<span style="color: #006633;">include</span><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;count&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+		<span style="color: #000000; font-weight: bold;">return</span> findAll<span style="color: #009900;">&#40;</span>query, Hosting.<span style="color: #000000; font-weight: bold;">class</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></div>
+
+<h2>References</h2>
+<ol>
+<li><a href="http://docs.mongodb.org/manual/tutorial/project-fields-from-query-results/" target="_blank">Limit Fields to Return from a Query</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/mongodb/spring-data-mongodb-select-fields-to-return/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>Gradle War Plugin – Change output WAR filename</title>
+		<link>http://www.mkyong.com/gradle/gradle-war-plugin-change-output-war-filename/</link>
+		<comments>http://www.mkyong.com/gradle/gradle-war-plugin-change-output-war-filename/#comments</comments>
+		<pubDate>Sun, 01 Mar 2015 23:33:03 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[gradle]]></category>
+		<category><![CDATA[war]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13625</guid>
+		<description><![CDATA[In Gradle, the WAR plugin will generate the final WAR f [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In Gradle, the WAR plugin will generate the final WAR file with the following pattern:</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #800000;">${baseName}</span>-<span style="color: #800000;">${appendix}</span>-<span style="color: #800000;">${version}</span>-<span style="color: #800000;">${classifier}</span>.<span style="color: #800000;">${extension}</span>
+&nbsp;
+Example :
+hello.1.0.war</pre></div></div>
+
+<p>To change the default WAR filename, update <code>war.archiveName</code>. For example :</p>
+<div class="filename">build.gradle</div>
+
+<div class="wp_syntax"><div class="code"><pre class="groovy" style="font-family:monospace;">project<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">':web'</span><span style="color: #66cc66;">&#41;</span> <span style="color: #66cc66;">&#123;</span>
+&nbsp;
+    apply plugin: <span style="color: #ff0000;">'war'</span>
+&nbsp;
+    war <span style="color: #66cc66;">&#123;</span>
+	archiveName <span style="color: #ff0000;">'hello-gradle.war'</span>
+    <span style="color: #66cc66;">&#125;</span>
+&nbsp;
+    dependencies <span style="color: #66cc66;">&#123;</span>
+        compile project<span style="color: #66cc66;">&#40;</span><span style="color: #ff0000;">':core'</span><span style="color: #66cc66;">&#41;</span>
+	providedCompile <span style="color: #ff0000;">'javax.servlet:servlet-api:2.5'</span>
+	providedCompile <span style="color: #ff0000;">'org.apache.tomcat:tomcat-jsp-api:7.0.55'</span>
+        <span style="color: #808080; font-style: italic;">//...</span>
+    <span style="color: #66cc66;">&#125;</span>
+<span style="color: #66cc66;">&#125;</span></pre></div></div>
+
+<p>Build it&#8230;</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #666666;">$ </span>gradle :web:war</pre></div></div>
+
+<p>Output, a <code>hello-gradle. war</code> file will be generated in the following folder :</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #7a0874; font-weight: bold;">&#123;</span>project<span style="color: #7a0874; font-weight: bold;">&#125;</span>\web\build\libs\hello-gradle.war</pre></div></div>
+
+<h2>References</h2>
+<ol>
+<li><a href="http://gradle.org/docs/current/userguide/war_plugin.html" target="_blank">Gradle &#8211; The War Plugin</a></li>
+<li><a href="http://gradle.org/docs/current/dsl/org.gradle.api.tasks.bundling.War.html#org.gradle.api.tasks.bundling.War:archiveName" target="_blank">Gradle DSL References &#8211; WAR Plugin</a></li>
+</ol>
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/gradle/gradle-war-plugin-change-output-war-filename/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+		<item>
+		<title>How to pass System Properties in web.xml</title>
+		<link>http://www.mkyong.com/web-development/how-to-pass-system-properties-in-web-xml/</link>
+		<comments>http://www.mkyong.com/web-development/how-to-pass-system-properties-in-web-xml/#comments</comments>
+		<pubDate>Sun, 01 Mar 2015 10:51:22 +0000</pubDate>
+		<dc:creator><![CDATA[mkyong]]></dc:creator>
+				<category><![CDATA[web development]]></category>
+		<category><![CDATA[web.xml]]></category>
+
+		<guid isPermaLink="false">http://www.mkyong.com/?p=13623</guid>
+		<description><![CDATA[In Java standalone application, you can use -D option t [&#8230;]]]></description>
+				<content:encoded><![CDATA[<p>In Java standalone application, you can use <code>-D</code> option to pass in the system properties :</p>
+
+<div class="wp_syntax"><div class="code"><pre class="bash" style="font-family:monospace;"><span style="color: #666666;">$ </span>java -Dgeoip.file=<span style="color: #ff0000;">&quot;/home/mkyong/geoip/test.db&quot;</span> test.jar</pre></div></div>
+
+<p>In Java web application, you can pass the system properties via <code>context-param</code> in <code>web.xml</code> :</p>
+<div class="filename">web.xml</div>
+
+<div class="wp_syntax"><div class="code"><pre class="xml" style="font-family:monospace;"><span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;context-param<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	    <span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;param-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>geoip.file<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/param-name<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	    <span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;param-value<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>/home/mkyong/geoip/test.db<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/param-value<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+	<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/context-param<span style="color: #000000; font-weight: bold;">&gt;</span></span></span>
+<span style="color: #009900;"><span style="color: #000000; font-weight: bold;">&lt;/web-app<span style="color: #000000; font-weight: bold;">&gt;</span></span></span></pre></div></div>
+
+]]></content:encoded>
+			<wfw:commentRss>http://www.mkyong.com/web-development/how-to-pass-system-properties-in-web-xml/feed/</wfw:commentRss>
+		<slash:comments>0</slash:comments>
+		</item>
+	</channel>
+</rss><!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk: enhanced
+
+ Served from: www.mkyong.com @ 2015-05-19 07:39:27 by W3 Total Cache -->
+

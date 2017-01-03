@@ -1,0 +1,1207 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>RSS feeds with Java - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="RSS Feeds with Java This tutorial explains how to read and create RSS feeds with Java. It uses the Stax XML API. Eclipse is used as the Java IDE and Java7 is used.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d498237e1"></a>RSS feeds with Java - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 2.1</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008, 2009, 2010, 2011, 2012, 2013 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">06.03.2013</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>RSS Feeds with Java</b></p>
+                     <p> This tutorial explains how to read and create RSS feeds with
+                        Java. It uses the Stax XML API. Eclipse
+                        is used as the Java IDE and Java7 is used.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#rssoverview">1. RSS - Really Simple Syndication</a></span></dt>
+               <dt><span class="section"><a href="#rssoverview_java">2. Prerequisites</a></span></dt>
+               <dt><span class="section"><a href="#setup_model">3. Project and Domain model</a></span></dt>
+               <dt><span class="section"><a href="#read">4. Read RSS Feeds with Stax</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#read_stax">4.1. Create the XML Reader class</a></span></dt>
+                     <dt><span class="section"><a href="#read_test">4.2. Test the code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#write">5. Write RSS Feeds with Stax</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#write_stax">5.1. Create writer</a></span></dt>
+                     <dt><span class="section"><a href="#write_test">5.2. Test the code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#supportandlicense">6. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">6.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">6.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">6.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">7. Links and Literature</a></span></dt>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="rssoverview"></a>1.&nbsp;RSS - Really Simple Syndication
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               An
+               <em class="wordasword">RSS</em>
+               document is an XML file which can be used to publish blog
+               entries and
+               news. The format of the XML
+               file
+               is specified via the RSS
+               specification.
+               
+            </p>
+            <p>
+               RSS stands for
+               <em class="wordasword">Really Simple Syndication</em>
+               (in version 2.0 of
+               the
+               RSS specification).
+               
+            </p>
+            <p>Typically a RSS file is provided by a web server, which RSS client
+               read.
+               These RSS clients parse the file and display it.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="rssoverview_java"></a>2.&nbsp;Prerequisites
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> As an RSS feed is a XML file we can use the Java XML parsers to
+               read and create
+               RSS feeds. The following will use the Java Stax XML
+               parser.
+               
+            </p>
+            <p>
+               For an introduction into XML and its usage with Java see
+               <a class="ulink" href="http://www.vogella.com/tutorials/JavaXML/article.html" target="_top"> Java XML Tutorial</a>.
+               
+            </p>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="setup_model"></a>3.&nbsp;Project and Domain model
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Create the Java project called
+               <em class="wordasword">de.vogella.rss</em>. Create the following
+               Java classes, which is used as
+               domain
+               model.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.model;
+
+<em class="hl-comment" style="color: #080">/*
+ * Represents one RSS message
+ */</em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> FeedMessage {
+
+  String title;
+  String description;
+  String link;
+  String author;
+  String guid;
+
+  <span class="hl-keyword">public</span> String getTitle() {
+    <span class="hl-keyword">return</span> title;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setTitle(String title) {
+    <span class="hl-keyword">this</span>.title = title;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setDescription(String description) {
+    <span class="hl-keyword">this</span>.description = description;
+  }
+
+  <span class="hl-keyword">public</span> String getLink() {
+    <span class="hl-keyword">return</span> link;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setLink(String link) {
+    <span class="hl-keyword">this</span>.link = link;
+  }
+
+  <span class="hl-keyword">public</span> String getAuthor() {
+    <span class="hl-keyword">return</span> author;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setAuthor(String author) {
+    <span class="hl-keyword">this</span>.author = author;
+  }
+
+  <span class="hl-keyword">public</span> String getGuid() {
+    <span class="hl-keyword">return</span> guid;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setGuid(String guid) {
+    <span class="hl-keyword">this</span>.guid = guid;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> String toString() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"FeedMessage [title="</span> + title + <span class="hl-string" style="color:blue">", description="</span> + description
+        + <span class="hl-string" style="color:blue">", link="</span> + link + <span class="hl-string" style="color:blue">", author="</span> + author + <span class="hl-string" style="color:blue">", guid="</span> + guid
+        + <span class="hl-string" style="color:blue">"]"</span>;
+  }
+
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.model;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<em class="hl-comment" style="color: #080">/*
+ * Stores an RSS feed
+ */</em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Feed {
+
+  <span class="hl-keyword">final</span> String title;
+  <span class="hl-keyword">final</span> String link;
+  <span class="hl-keyword">final</span> String description;
+  <span class="hl-keyword">final</span> String language;
+  <span class="hl-keyword">final</span> String copyright;
+  <span class="hl-keyword">final</span> String pubDate;
+
+  <span class="hl-keyword">final</span> List&lt;FeedMessage&gt; entries = <span class="hl-keyword">new</span> ArrayList&lt;FeedMessage&gt;();
+
+  <span class="hl-keyword">public</span> Feed(String title, String link, String description, String language,
+      String copyright, String pubDate) {
+    <span class="hl-keyword">this</span>.title = title;
+    <span class="hl-keyword">this</span>.link = link;
+    <span class="hl-keyword">this</span>.description = description;
+    <span class="hl-keyword">this</span>.language = language;
+    <span class="hl-keyword">this</span>.copyright = copyright;
+    <span class="hl-keyword">this</span>.pubDate = pubDate;
+  }
+
+  <span class="hl-keyword">public</span> List&lt;FeedMessage&gt; getMessages() {
+    <span class="hl-keyword">return</span> entries;
+  }
+
+  <span class="hl-keyword">public</span> String getTitle() {
+    <span class="hl-keyword">return</span> title;
+  }
+
+  <span class="hl-keyword">public</span> String getLink() {
+    <span class="hl-keyword">return</span> link;
+  }
+
+  <span class="hl-keyword">public</span> String getDescription() {
+    <span class="hl-keyword">return</span> description;
+  }
+
+  <span class="hl-keyword">public</span> String getLanguage() {
+    <span class="hl-keyword">return</span> language;
+  }
+
+  <span class="hl-keyword">public</span> String getCopyright() {
+    <span class="hl-keyword">return</span> copyright;
+  }
+
+  <span class="hl-keyword">public</span> String getPubDate() {
+    <span class="hl-keyword">return</span> pubDate;
+  }
+
+  <em><span class="hl-annotation" style="color: gray">@Override</span></em>
+  <span class="hl-keyword">public</span> String toString() {
+    <span class="hl-keyword">return</span> <span class="hl-string" style="color:blue">"Feed [copyright="</span> + copyright + <span class="hl-string" style="color:blue">", description="</span> + description
+        + <span class="hl-string" style="color:blue">", language="</span> + language + <span class="hl-string" style="color:blue">", link="</span> + link + <span class="hl-string" style="color:blue">", pubDate="</span>
+        + pubDate + <span class="hl-string" style="color:blue">", title="</span> + title + <span class="hl-string" style="color:blue">"]"</span>;
+  }
+
+} </pre><p>
+               
+            </p>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="read"></a>4.&nbsp;Read RSS Feeds with Stax
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="read_stax"></a>4.1.&nbsp;Create the XML Reader class
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create the following
+                  class to read the XML file.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.read;
+
+<span class="hl-keyword">import</span> java.io.IOException;
+<span class="hl-keyword">import</span> java.io.InputStream;
+<span class="hl-keyword">import</span> java.net.MalformedURLException;
+<span class="hl-keyword">import</span> java.net.URL;
+
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventReader;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLInputFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLStreamException;
+<span class="hl-keyword">import</span> javax.xml.stream.events.Characters;
+<span class="hl-keyword">import</span> javax.xml.stream.events.XMLEvent;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> RSSFeedParser {
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String TITLE = <span class="hl-string" style="color:blue">"title"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String DESCRIPTION = <span class="hl-string" style="color:blue">"description"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String CHANNEL = <span class="hl-string" style="color:blue">"channel"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String LANGUAGE = <span class="hl-string" style="color:blue">"language"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String COPYRIGHT = <span class="hl-string" style="color:blue">"copyright"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String LINK = <span class="hl-string" style="color:blue">"link"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String AUTHOR = <span class="hl-string" style="color:blue">"author"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String ITEM = <span class="hl-string" style="color:blue">"item"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String PUB_DATE = <span class="hl-string" style="color:blue">"pubDate"</span>;
+  <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> String GUID = <span class="hl-string" style="color:blue">"guid"</span>;
+
+  <span class="hl-keyword">final</span> URL url;
+
+  <span class="hl-keyword">public</span> RSSFeedParser(String feedUrl) {
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">this</span>.url = <span class="hl-keyword">new</span> URL(feedUrl);
+    } <span class="hl-keyword">catch</span> (MalformedURLException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+  }
+
+  <span class="hl-keyword">public</span> Feed readFeed() {
+    Feed feed = null;
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">boolean</span> isFeedHeader = true;
+      <em class="hl-comment" style="color: #080">// Set header values intial to the empty string</em>
+      String description = <span class="hl-string" style="color:blue">""</span>;
+      String title = <span class="hl-string" style="color:blue">""</span>;
+      String link = <span class="hl-string" style="color:blue">""</span>;
+      String language = <span class="hl-string" style="color:blue">""</span>;
+      String copyright = <span class="hl-string" style="color:blue">""</span>;
+      String author = <span class="hl-string" style="color:blue">""</span>;
+      String pubdate = <span class="hl-string" style="color:blue">""</span>;
+      String guid = <span class="hl-string" style="color:blue">""</span>;
+
+      <em class="hl-comment" style="color: #080">// First create a new XMLInputFactory</em>
+      XMLInputFactory inputFactory = XMLInputFactory.newInstance();
+      <em class="hl-comment" style="color: #080">// Setup a new eventReader</em>
+      InputStream in = read();
+      XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+      <em class="hl-comment" style="color: #080">// read the XML document</em>
+      <span class="hl-keyword">while</span> (eventReader.hasNext()) {
+        XMLEvent event = eventReader.nextEvent();
+        <span class="hl-keyword">if</span> (event.isStartElement()) {
+          String localPart = event.asStartElement().getName()
+              .getLocalPart();
+          <span class="hl-keyword">switch</span> (localPart) {
+          <span class="hl-keyword">case</span> ITEM:
+            <span class="hl-keyword">if</span> (isFeedHeader) {
+              isFeedHeader = false;
+              feed = <span class="hl-keyword">new</span> Feed(title, link, description, language,
+                  copyright, pubdate);
+            }
+            event = eventReader.nextEvent();
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> TITLE:
+            title = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> DESCRIPTION:
+            description = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> LINK:
+            link = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> GUID:
+            guid = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> LANGUAGE:
+            language = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> AUTHOR:
+            author = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> PUB_DATE:
+            pubdate = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          <span class="hl-keyword">case</span> COPYRIGHT:
+            copyright = getCharacterData(event, eventReader);
+            <span class="hl-keyword">break</span>;
+          }
+        } <span class="hl-keyword">else</span> <span class="hl-keyword">if</span> (event.isEndElement()) {
+          <span class="hl-keyword">if</span> (event.asEndElement().getName().getLocalPart() == (ITEM)) {
+            FeedMessage message = <span class="hl-keyword">new</span> FeedMessage();
+            message.setAuthor(author);
+            message.setDescription(description);
+            message.setGuid(guid);
+            message.setLink(link);
+            message.setTitle(title);
+            feed.getMessages().add(message);
+            event = eventReader.nextEvent();
+            <span class="hl-keyword">continue</span>;
+          }
+        }
+      }
+    } <span class="hl-keyword">catch</span> (XMLStreamException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+    <span class="hl-keyword">return</span> feed;
+  }
+
+  <span class="hl-keyword">private</span> String getCharacterData(XMLEvent event, XMLEventReader eventReader)
+      <span class="hl-keyword">throws</span> XMLStreamException {
+    String result = <span class="hl-string" style="color:blue">""</span>;
+    event = eventReader.nextEvent();
+    <span class="hl-keyword">if</span> (event <span class="hl-keyword">instanceof</span> Characters) {
+      result = event.asCharacters().getData();
+    }
+    <span class="hl-keyword">return</span> result;
+  }
+
+  <span class="hl-keyword">private</span> InputStream read() {
+    <span class="hl-keyword">try</span> {
+      <span class="hl-keyword">return</span> url.openStream();
+    } <span class="hl-keyword">catch</span> (IOException e) {
+      <span class="hl-keyword">throw</span> <span class="hl-keyword">new</span> RuntimeException(e);
+    }
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="read_test"></a>4.2.&nbsp;Test the code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following uses a main method to test. You could also use
+                  <a class="ulink" href="http://www.vogella.com/tutorials/JUnit/article.html" target="_top"> JUnit</a>.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.tests;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+<span class="hl-keyword">import</span> de.vogella.rss.read.RSSFeedParser;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ReadTest {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    RSSFeedParser parser = <span class="hl-keyword">new</span> RSSFeedParser(<span class="hl-string" style="color:blue">"http://www.vogella.com/article.rss"</span>);
+    Feed feed = parser.readFeed();
+    System.out.println(feed);
+    <span class="hl-keyword">for</span> (FeedMessage message : feed.getMessages()) {
+      System.out.println(message);
+
+    }
+
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="write"></a>5.&nbsp;Write RSS Feeds with Stax
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="write_stax"></a>5.1.&nbsp;Create writer
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Create the following class to write the XML file.</p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.write;
+
+<span class="hl-keyword">import</span> java.io.FileOutputStream;
+
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLEventWriter;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLOutputFactory;
+<span class="hl-keyword">import</span> javax.xml.stream.XMLStreamException;
+<span class="hl-keyword">import</span> javax.xml.stream.events.Characters;
+<span class="hl-keyword">import</span> javax.xml.stream.events.EndElement;
+<span class="hl-keyword">import</span> javax.xml.stream.events.StartDocument;
+<span class="hl-keyword">import</span> javax.xml.stream.events.StartElement;
+<span class="hl-keyword">import</span> javax.xml.stream.events.XMLEvent;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> RSSFeedWriter {
+
+  <span class="hl-keyword">private</span> String outputFile;
+  <span class="hl-keyword">private</span> Feed rssfeed;
+
+  <span class="hl-keyword">public</span> RSSFeedWriter(Feed rssfeed, String outputFile) {
+    <span class="hl-keyword">this</span>.rssfeed = rssfeed;
+    <span class="hl-keyword">this</span>.outputFile = outputFile;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> write() <span class="hl-keyword">throws</span> Exception {
+
+    <em class="hl-comment" style="color: #080">// create a XMLOutputFactory</em>
+    XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+
+    <em class="hl-comment" style="color: #080">// create XMLEventWriter</em>
+    XMLEventWriter eventWriter = outputFactory
+        .createXMLEventWriter(<span class="hl-keyword">new</span> FileOutputStream(outputFile));
+
+    <em class="hl-comment" style="color: #080">// create a EventFactory</em>
+
+    XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+    XMLEvent end = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\n"</span>);
+
+    <em class="hl-comment" style="color: #080">// create and write Start Tag</em>
+
+    StartDocument startDocument = eventFactory.createStartDocument();
+
+    eventWriter.add(startDocument);
+
+    <em class="hl-comment" style="color: #080">// create open tag</em>
+    eventWriter.add(end);
+
+    StartElement rssStart = eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"rss"</span>);
+    eventWriter.add(rssStart);
+    eventWriter.add(eventFactory.createAttribute(<span class="hl-string" style="color:blue">"version"</span>, <span class="hl-string" style="color:blue">"2.0"</span>));
+    eventWriter.add(end);
+
+    eventWriter.add(eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"channel"</span>));
+    eventWriter.add(end);
+
+    <em class="hl-comment" style="color: #080">// Write the different nodes</em>
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"title"</span>, rssfeed.getTitle());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"link"</span>, rssfeed.getLink());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"description"</span>, rssfeed.getDescription());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"language"</span>, rssfeed.getLanguage());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"copyright"</span>, rssfeed.getCopyright());
+
+    createNode(eventWriter, <span class="hl-string" style="color:blue">"pubdate"</span>, rssfeed.getPubDate());
+
+    <span class="hl-keyword">for</span> (FeedMessage entry : rssfeed.getMessages()) {
+      eventWriter.add(eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"item"</span>));
+      eventWriter.add(end);
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"title"</span>, entry.getTitle());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"description"</span>, entry.getDescription());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"link"</span>, entry.getLink());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"author"</span>, entry.getAuthor());
+      createNode(eventWriter, <span class="hl-string" style="color:blue">"guid"</span>, entry.getGuid());
+      eventWriter.add(end);
+      eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"item"</span>));
+      eventWriter.add(end);
+
+    }
+
+    eventWriter.add(end);
+    eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"channel"</span>));
+    eventWriter.add(end);
+    eventWriter.add(eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">"rss"</span>));
+
+    eventWriter.add(end);
+
+    eventWriter.add(eventFactory.createEndDocument());
+
+    eventWriter.close();
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">void</span> createNode(XMLEventWriter eventWriter, String name,
+
+  String value) <span class="hl-keyword">throws</span> XMLStreamException {
+    XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+    XMLEvent end = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\n"</span>);
+    XMLEvent tab = eventFactory.createDTD(<span class="hl-string" style="color:blue">"\t"</span>);
+    <em class="hl-comment" style="color: #080">// create Start node</em>
+    StartElement sElement = eventFactory.createStartElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, name);
+    eventWriter.add(tab);
+    eventWriter.add(sElement);
+    <em class="hl-comment" style="color: #080">// create Content</em>
+    Characters characters = eventFactory.createCharacters(value);
+    eventWriter.add(characters);
+    <em class="hl-comment" style="color: #080">// create End node</em>
+    EndElement eElement = eventFactory.createEndElement(<span class="hl-string" style="color:blue">""</span>, <span class="hl-string" style="color:blue">""</span>, name);
+    eventWriter.add(eElement);
+    eventWriter.add(end);
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="write_test"></a>5.2.&nbsp;Test the code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The following uses a main method to test.
+                  
+               </p>
+               <p>
+                  Run the program to write the
+                  <code class="filename">articles.rss</code>
+                  file.
+                  
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.rss.tests;
+
+<span class="hl-keyword">import</span> java.text.SimpleDateFormat;
+<span class="hl-keyword">import</span> java.util.Calendar;
+<span class="hl-keyword">import</span> java.util.Date;
+<span class="hl-keyword">import</span> java.util.GregorianCalendar;
+<span class="hl-keyword">import</span> java.util.Locale;
+
+<span class="hl-keyword">import</span> de.vogella.rss.model.Feed;
+<span class="hl-keyword">import</span> de.vogella.rss.model.FeedMessage;
+<span class="hl-keyword">import</span> de.vogella.rss.write.RSSFeedWriter;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> WriteTest {
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <em class="hl-comment" style="color: #080">// create the rss feed</em>
+    String copyright = <span class="hl-string" style="color:blue">"Copyright hold by Lars Vogel"</span>;
+    String title = <span class="hl-string" style="color:blue">"Eclipse and Java Information"</span>;
+    String description = <span class="hl-string" style="color:blue">"Eclipse and Java Information"</span>;
+    String language = <span class="hl-string" style="color:blue">"en"</span>;
+    String link = <span class="hl-string" style="color:blue">"http://www.vogella.com"</span>;
+    Calendar cal = <span class="hl-keyword">new</span> GregorianCalendar();
+    Date creationDate = cal.getTime();
+    SimpleDateFormat date_format = <span class="hl-keyword">new</span> SimpleDateFormat(<span class="hl-string" style="color:blue">"EEE', 'dd' 'MMM' 'yyyy' 'HH:mm:ss' 'Z"</span>, Locale.US);
+    String pubdate = date_format.format(creationDate);
+    Feed rssFeeder = <span class="hl-keyword">new</span> Feed(title, link, description, language,
+        copyright, pubdate);
+
+    <em class="hl-comment" style="color: #080">// now add one example entry</em>
+    FeedMessage feed = <span class="hl-keyword">new</span> FeedMessage();
+    feed.setTitle(<span class="hl-string" style="color:blue">"RSSFeed"</span>);
+    feed.setDescription(<span class="hl-string" style="color:blue">"This is a description"</span>);
+    feed.setAuthor(<span class="hl-string" style="color:blue">"nonsense@somewhere.de (Lars Vogel)"</span>);
+    feed.setGuid(<span class="hl-string" style="color:blue">"http://www.vogella.com/tutorials/RSSFeed/article.html"</span>);
+    feed.setLink(<span class="hl-string" style="color:blue">"http://www.vogella.com/tutorials/RSSFeed/article.html"</span>);
+    rssFeeder.getMessages().add(feed);
+
+    <em class="hl-comment" style="color: #080">// now write the file</em>
+    RSSFeedWriter writer = <span class="hl-keyword">new</span> RSSFeedWriter(rssFeeder, <span class="hl-string" style="color:blue">"articles.rss"</span>);
+    <span class="hl-keyword">try</span> {
+      writer.write();
+    } <span class="hl-keyword">catch</span> (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>6.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>6.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>7.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               <a class="ulink" href="http://feedvalidator.org/" target="_top">
+                  http://feedvalidator.org/</a>
+               Webpage which validates feeds
+               
+            </p>
+         </div><img src="http://vg08.met.vgwort.de/na/9ea880713522470b93994cf908010264" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/RSSFeed/article.html');
+//]]></script></body>
+</html>
+

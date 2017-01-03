@@ -1,0 +1,1650 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>5.2 &#8212; If statements &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 5.2 &#8212; If statements Comments Feed" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"73.15.218.250","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/52-if-statements\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='5.1 &#8212; Control flow introduction' href='http://www.learncpp.com/cpp-tutorial/51-control-flow-introduction/' />
+<link rel='next' title='5.3 &#8212; Switch statements' href='http://www.learncpp.com/cpp-tutorial/53-switch-statements/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/52-if-statements/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=73' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="5.2 -- If statements" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/52-if-statements/" />
+<meta property="og:description" content="The most basic kind of conditional branch in C++ is the if statement. An if statement takes the form: if (expression) statement or if (expression) statement else statement2 If the expression evalut..." />
+<meta property="article:published_time" content="2007-06-21T18:01:52+00:00" />
+<meta property="article:modified_time" content="2007-06-21T18:01:52+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-73 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-73 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-73">
+						<div class="post-headline">		<h1>5.2 &#8212; If statements</h1>
+		</div>		<div class="post-byline">By Alex, on June 21st, 2007</div>		<div class="post-bodycopy clearfix"><p>The most basic kind of conditional branch in C++ is the <strong>if statement</strong>.  An <em>if statement</em> takes the form:</p>
+<pre>
+if (expression)
+    statement
+</pre>
+<p>or</p>
+<pre>
+if (expression)
+    statement
+else
+    statement2
+</pre>
+<p>If the expression evalutes to true (non-zero), the statement executes.  If the expression evaluates to false, the <em>else statement</em> is executed if it exists.</p>
+<p>Here is a simple program that uses an <em>if statement</em>:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c91f692904501" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c91f692904501-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c91f692904501-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c91f692904501-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c91f692904501-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c91f692904501-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c91f692904501-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c91f692904501-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c91f692904501-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is greater than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d734f2c91f692904501-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is not greater than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-14">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c91f692904501-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c91f692904501-16"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0022 seconds] -->
+<p></p>
+<p>Note that the <em>if statement</em> only executes a single statement if the expression is true, and the <em>else</em> only executes a single statement if the expression is false.  In order to execute multiple statements, we can use a block:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c92f558007133" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-16">16</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-18">18</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-20">20</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-22">22</div><div class="crayon-num" data-line="crayon-555d734f2c92f558007133-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c92f558007133-24">24</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c92f558007133-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c92f558007133-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// both statements will be executed if nX &gt; 10</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"You entered "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is greater than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// both statements will be executed if nX &lt;= 10</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"You entered "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is not greater than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c92f558007133-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-22">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c92f558007133-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c92f558007133-24"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0032 seconds] -->
+<p></p>
+<p>It is possible to chain if-else statements together:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c937236487808" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c937236487808-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c937236487808-16">16</div><div class="crayon-num" data-line="crayon-555d734f2c937236487808-17">17</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c937236487808-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is greater than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">)</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is less than 5"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// could add more else if statements here</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is between 5 and 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c937236487808-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c937236487808-17"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0028 seconds] -->
+<p></p>
+<p>It is also possible to nest if statements within other if statements:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c93d828328277" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-16">16</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-18">18</div><div class="crayon-num" data-line="crayon-555d734f2c93d828328277-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c93d828328277-20">20</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c93d828328277-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c93d828328277-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// it is bad coding style to nest if statements this way</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">20</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is between 10 and 20"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-14">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c93d828328277-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// who does this else belong to?</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d734f2c93d828328277-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is greater than 20"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-18">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c93d828328277-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c93d828328277-20"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p>The above program introduces a source of potential ambiguity called a <strong>dangling else</strong> problem.  Is the <em>else statement</em> in the above program matched up with the outer or inner <em>if statement</em>?</p>
+<p>The answer is that an <em>else statement</em> is paired up with the last unmatched <em>if statement</em> in the same block.  Thus, in the program above, the <em>else</em> is matched up with the inner <em>if statement</em>.</p>
+<p>To avoid such ambiguities when nesting complex statements, it is generally a good idea to enclose the statement within a block.  Here is the above program written without ambiguity:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c944989298507" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c944989298507-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-16">16</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c944989298507-18">18</div><div class="crayon-num" data-line="crayon-555d734f2c944989298507-19">19</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c944989298507-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c944989298507-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">20</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is between 10 and 20"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-c">// attached to inner if statement</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is greater than 20"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c944989298507-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c944989298507-19"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p>Now it is much clearer that the <em>else statement</em> belongs to the inner <em>if statement</em>.</p>
+<p>Encasing the inner <em>if statement</em> in a block also allows us to explicitly attach an <em>else</em> to the outer <em>if statement</em>:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c94b882337169" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-12">12</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-14">14</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-16">16</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c94b882337169-18">18</div><div class="crayon-num" data-line="crayon-555d734f2c94b882337169-19">19</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c94b882337169-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f2c94b882337169-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Enter a number: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-cn">10</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">20</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is between 10 and 20"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-c">// attached to outer if statement</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"is less than 10"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c94b882337169-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c94b882337169-19"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p>The use of a block tells the compiler that the <em>else statement</em> should attach to the <em>if statement</em> before the block.  Without the block, the <em>else statement</em> would attach to the nearest unmatched <em>if statement</em>, which would be the inner <em>if statement</em>.</p>
+<p><em>If statements</em> are commonly used to do error checking.  For example, to calculate a square root, the value passed to the square root function should be a non-negative number:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c952879943436" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c952879943436-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c952879943436-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c952879943436-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c952879943436-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c952879943436-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c952879943436-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c952879943436-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c952879943436-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c952879943436-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c952879943436-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c952879943436-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c952879943436-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c952879943436-2"><span class="crayon-p">#include &lt;cmath&gt; // for sqrt()</span></div><div class="crayon-line" id="crayon-555d734f2c952879943436-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c952879943436-4"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">PrintSqrt</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-h"> </span><span class="crayon-v">dValue</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c952879943436-5"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c952879943436-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c952879943436-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">dValue</span><span class="crayon-h"> </span><span class="crayon-o">&gt;=</span><span class="crayon-h"> </span><span class="crayon-cn">0.0</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c952879943436-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"The square root of "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">dValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" is "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">sqrt</span><span class="crayon-sy">(</span><span class="crayon-v">dValue</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c952879943436-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c952879943436-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Error: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">dValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" is negative"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c952879943436-11"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0021 seconds] -->
+<p></p>
+<p><em>If statements</em> can also be used to do <strong>early returns</strong>, where a function returns control to the caller before the end of the function.  In the following program, if the parameter nValue is negative, the function returns a symbolic constant or enumerated value error code to the caller right away.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c958726411381" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c958726411381-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c958726411381-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c958726411381-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c958726411381-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c958726411381-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c958726411381-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c958726411381-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c958726411381-8">8</div><div class="crayon-num" data-line="crayon-555d734f2c958726411381-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c958726411381-10">10</div><div class="crayon-num" data-line="crayon-555d734f2c958726411381-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c958726411381-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">DoCalculation</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c958726411381-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c958726411381-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// if nValue is a negative number</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c958726411381-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f2c958726411381-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-c">// early return an error code</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c958726411381-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">ERROR_NEGATIVE_NUMBER</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c958726411381-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c958726411381-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Do calculations on nValue here</span></div><div class="crayon-line" id="crayon-555d734f2c958726411381-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c958726411381-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c958726411381-11"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+<p><em>If statements</em> are also commonly used to do simple math functionality, such as a min() or max() function that returns the minimum or maximum of it&#8217;s parameters:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c95f963655719" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c95f963655719-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c95f963655719-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c95f963655719-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c95f963655719-4">4</div><div class="crayon-num" data-line="crayon-555d734f2c95f963655719-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c95f963655719-6">6</div><div class="crayon-num" data-line="crayon-555d734f2c95f963655719-7">7</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c95f963655719-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">min</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c95f963655719-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c95f963655719-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c95f963655719-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c95f963655719-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">else</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c95f963655719-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f2c95f963655719-7"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+<p>Note that this last function is so simple, it can also be written using the arithmetic if operator (?:):</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f2c965321521181" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f2c965321521181-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c965321521181-2">2</div><div class="crayon-num" data-line="crayon-555d734f2c965321521181-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f2c965321521181-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f2c965321521181-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">min</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c965321521181-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f2c965321521181-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">&gt;</span><span class="crayon-h"> </span><span class="crayon-i">nY</span><span class="crayon-h"> </span><span class="crayon-sy">?</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f2c965321521181-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0009 seconds] -->
+<p></p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/53-switch-statements/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 5.3 -- Switch statements</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter5" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/51-control-flow-introduction/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 5.1 -- Control flow introduction</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-73" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-73" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-73" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-73" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/52-if-statements/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">36 comments to 5.2 &#8212; If statements</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-11351">
+		<div id="div-comment-11351" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/95b0a35f00537468734f7e0be284d191?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/95b0a35f00537468734f7e0be284d191?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Louie Hancock</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-11351">
+		April 10, 2008 at 10:31 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=11351#respond' onclick='return addComment.moveForm( "comment-11351", "11351", "respond", "73" )' aria-label='Reply to Louie Hancock'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi, great website btw!<br />
+However, whenever i try to use a char variable in an if statement (e.g : </p>
+<p>if(a = &#8220;Hello&#8221;)<br />
+cout &lt;&lt; &#8220;Hello there&#8221;;</p>
+<p>it does not compile correctly.</p>
+<p>can anyone help? if so please email me on fight.the.purple@hotmail.co.uk or leave a comment</p>
+<p>many thanks</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-11547">
+		<div id="div-comment-11547" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-11547">
+		April 12, 2008 at 2:18 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=11547#respond' onclick='return addComment.moveForm( "comment-11547", "11547", "respond", "73" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>First off, = is for assignment, not comparison.  You would normally use == to do comparisons, except == doesn&#8217;t work on string literals (which is anything inside double quotes).  Probably the best way is to declare your a variable as a std::string instead of a char.  Then it will work as you expect.  This is covered in <a href="http://www.learncpp.com/cpp-tutorial/66-c-style-strings/" rel="nofollow">lesson 6.6</a>.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-21515">
+		<div id="div-comment-21515" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bbfa9b05c996a04fe4e49b9b49ac1250?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bbfa9b05c996a04fe4e49b9b49ac1250?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ameya Shashank</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-21515">
+		July 22, 2008 at 7:59 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=21515#respond' onclick='return addComment.moveForm( "comment-21515", "21515", "respond", "73" )' aria-label='Reply to Ameya Shashank'> &middot; Reply</a></span>		 
+		</div>
+		<p>I&#8217;m trying to write a code, in which the user will enter a number, enter another number than write whether the 1st number was greater than, less than, or equal to, the 2nd number number. All numbers work, except when the 1st and 2nd numbers are both 0. In that case, it says nothing. My code is below; can you see the problem?</p>
+<p>using namespace std;<br />
+	cout &lt;&gt; nX;<br />
+	cout &lt;&lt; &#8220;You entered &#8221; &lt;&lt; nX &lt;&lt; endl;</p>
+<p>using namespace std;<br />
+	cout &lt;&gt; nY;<br />
+	cout &lt;&lt; &#8220;You entered &#8221; &lt;&lt; nY &lt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is greater than &#8221; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX &lt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is less than &#8221; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX = nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is equal to &#8221; &lt;&lt; nY &lt;&lt; endl;<br />
+Thanks.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-25276">
+		<div id="div-comment-25276" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fe0dc54421fb412898290e021f30f31b?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fe0dc54421fb412898290e021f30f31b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">buck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-25276">
+		August 28, 2008 at 2:08 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=25276#respond' onclick='return addComment.moveForm( "comment-25276", "25276", "respond", "73" )' aria-label='Reply to buck'> &middot; Reply</a></span>		 
+		</div>
+		<p>Try this</p>
+<p>#include &quot;stdafx.h&quot;<br />
+#include &lt;iostream&gt;</p>
+<p>int main()<br />
+{<br />
+	using namespace std;</p>
+<p>	int nX;<br />
+	int nY;<br />
+	cout &lt;&lt; &quot;Please enter a number: &quot; &lt;&lt; endl;<br />
+	cin &gt;&gt; nX;<br />
+	cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; nX &lt;&lt; endl;<br />
+	cout &lt;&lt; &quot;Please enter another number: &quot; &lt;&lt; endl;<br />
+	cin &gt;&gt; nY;<br />
+	cout &lt;&lt; &quot;You entered: &quot; &lt;&lt; nY &lt;&lt; endl;<br />
+	if (nX &gt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &quot; is greater than &quot; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX &lt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &quot; is less than &quot; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX == nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &quot; is equal to &quot; &lt;&lt; nY &lt;&lt; endl;<br />
+	else<br />
+		cout &lt;&lt; &quot;YOU DID NOT ENTER A VALID NUMBER&quot; &lt;&lt; endl;</p>
+<p>	return 0;<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-21516">
+		<div id="div-comment-21516" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bbfa9b05c996a04fe4e49b9b49ac1250?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bbfa9b05c996a04fe4e49b9b49ac1250?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ameya Shashank</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-21516">
+		July 22, 2008 at 8:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=21516#respond' onclick='return addComment.moveForm( "comment-21516", "21516", "respond", "73" )' aria-label='Reply to Ameya Shashank'> &middot; Reply</a></span>		 
+		</div>
+		<p>Sorry, this is correct code.</p>
+<p>using namespace std;<br />
+	cout &lt;&gt; nX;<br />
+	cout &lt;&lt; &#8220;You entered &#8221; &lt;&lt; nX &lt;&lt; endl;</p>
+<p>	using namespace std;<br />
+	cout &lt;&gt; nY;<br />
+	cout &lt;&lt; &#8220;You entered &#8221; &lt;&lt; nY &lt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is greater than &#8221; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX &lt; nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is less than &#8221; &lt;&lt; nY &lt;&lt; endl;<br />
+	else if (nX = nY)<br />
+		cout &lt;&lt; nX &lt;&lt; &#8221; is equal to &#8221; &lt;&lt; nY &lt;&lt; endl;</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-61544">
+		<div id="div-comment-61544" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/96c5a429538e195efafd9157b91dd601?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/96c5a429538e195efafd9157b91dd601?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jdurham</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-61544">
+		May 27, 2009 at 4:47 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=61544#respond' onclick='return addComment.moveForm( "comment-61544", "61544", "respond", "73" )' aria-label='Reply to jdurham'> &middot; Reply</a></span>		 
+		</div>
+		<p>the problem is that you have if(nX = nY) instead of if(nX == nY).<br />
+with the single =, you are doing and assignment (of the value 0), which means that you end up with if(0), so it doesn&#8217;t ever evaluate.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-92389">
+		<div id="div-comment-92389" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f82e9f3c1fc90020f738a83130081eef?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f82e9f3c1fc90020f738a83130081eef?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-92389">
+		September 20, 2010 at 1:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=92389#respond' onclick='return addComment.moveForm( "comment-92389", "92389", "respond", "73" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>this is not correct code cout  nX;</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-29697">
+		<div id="div-comment-29697" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2f034819aa7052c0734fb2b356ccb321?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2f034819aa7052c0734fb2b356ccb321?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">bogdy</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-29697">
+		October 11, 2008 at 12:24 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=29697#respond' onclick='return addComment.moveForm( "comment-29697", "29697", "respond", "73" )' aria-label='Reply to bogdy'> &middot; Reply</a></span>		 
+		</div>
+		<p>I saw in the previous comment </p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f308a8697870326" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f308a8697870326-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f308a8697870326-1"><span class="crayon-h"> </span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-v">nY</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p>.<br />
+Is this correct??<br />
+P.S. Great tutorials!!!</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-30011">
+		<div id="div-comment-30011" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-30011">
+		October 14, 2008 at 6:47 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=30011#respond' onclick='return addComment.moveForm( "comment-30011", "30011", "respond", "73" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>No. <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" />  There is no &lt;&gt; operator in C++.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-62651">
+		<div id="div-comment-62651" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9a037aa86228a137f65308d09c1ee5b0?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9a037aa86228a137f65308d09c1ee5b0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">James</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-62651">
+		June 18, 2009 at 10:32 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=62651#respond' onclick='return addComment.moveForm( "comment-62651", "62651", "respond", "73" )' aria-label='Reply to James'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi, i am a bit confused.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f3073f538111066" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f3073f538111066-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3073f538111066-2">2</div><div class="crayon-num" data-line="crayon-555d734f3073f538111066-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3073f538111066-4">4</div><div class="crayon-num" data-line="crayon-555d734f3073f538111066-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3073f538111066-6">6</div><div class="crayon-num" data-line="crayon-555d734f3073f538111066-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3073f538111066-8">8</div><div class="crayon-num" data-line="crayon-555d734f3073f538111066-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3073f538111066-10">10</div><div class="crayon-num" data-line="crayon-555d734f3073f538111066-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f3073f538111066-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">DoCalculation</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3073f538111066-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f3073f538111066-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// if nValue is a negative number</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3073f538111066-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nValue</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f3073f538111066-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-c">// early return an error code</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3073f538111066-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">ERROR_NEGATIVE_NUMBER</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f3073f538111066-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3073f538111066-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Do calculations on nValue here</span></div><div class="crayon-line" id="crayon-555d734f3073f538111066-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3073f538111066-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f3073f538111066-11"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+<p>If nValue is negative, and the function returns ERROR_NEGATIVE_NUMBER. How do you know its an error?</p>
+<p>Because ERROR_NEGATIVE_NUMBER could = 3 right?</p>
+<p>So when calling this function, if you wanted to make sure there was no error you<br />
+would do sometihng like</p>
+<p>if (!DoCalculation(9)) {</p>
+<p>}</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-62652">
+		<div id="div-comment-62652" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9a037aa86228a137f65308d09c1ee5b0?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9a037aa86228a137f65308d09c1ee5b0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">James</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-62652">
+		June 18, 2009 at 10:37 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=62652#respond' onclick='return addComment.moveForm( "comment-62652", "62652", "respond", "73" )' aria-label='Reply to James'> &middot; Reply</a></span>		 
+		</div>
+		<p>sorry, I accidntly posted before I was finnished writing. What I was saying is Wouldn&#8217;t the error codes be the same as correct output?</p>
+<p>So how would know if the output was an error or an answer?</p>
+<p>or are error code usually more obscure, like ERROR_NEGATIVE_NUMBER = E-0f96</p>
+<p>just going off the previous lesson about enums.</p>
+<p>Hope this makes sence, sorry I might be way off!</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-63758">
+		<div id="div-comment-63758" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Quinn</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-63758">
+		July 5, 2009 at 6:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=63758#respond' onclick='return addComment.moveForm( "comment-63758", "63758", "respond", "73" )' aria-label='Reply to Quinn'> &middot; Reply</a></span>		 
+		</div>
+		<p>Actually you&#8217;re pretty accurate, the example is rather ambiguous on this point, but it wasn&#8217;t meant to be usable code. ERROR_NEGATIVE_NUMBER would have to be a value that would not normally be returned by DoCalculation. For example, since DoCalculation does not accept negative numbers, it most likely doesn&#8217;t return negative numbers, therefore in that case ERROR_NEGATIVE_NUMBER could be -1.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-65390">
+		<div id="div-comment-65390" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b6c481d8740f6a67bc5949b9b0d35c95?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b6c481d8740f6a67bc5949b9b0d35c95?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Rubinco Nineski</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-65390">
+		July 31, 2009 at 6:30 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=65390#respond' onclick='return addComment.moveForm( "comment-65390", "65390", "respond", "73" )' aria-label='Reply to Rubinco Nineski'> &middot; Reply</a></span>		 
+		</div>
+		<p>I think that learn from this way of explanation is very directly, whithout hesitating&#8230;<br />
+I read books for C++, but I spend time more than ussual, because no colours , no tabels,and no<br />
+orders of information like in your wwww. Maybe the books must be in electron formats for faster<br />
+learning and training, with colours and pictures..<br />
+THANK YOU&#8230;<br />
+MANY GOOD JOBS&#8230;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-70300">
+		<div id="div-comment-70300" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/cee491fa439cbe7664481dbda7f1b9c1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cee491fa439cbe7664481dbda7f1b9c1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">iammfa</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-70300">
+		October 14, 2009 at 4:36 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=70300#respond' onclick='return addComment.moveForm( "comment-70300", "70300", "respond", "73" )' aria-label='Reply to iammfa'> &middot; Reply</a></span>		 
+		</div>
+		<p>where is my bug in my code:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f30587430702368" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f30587430702368-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-2">2</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-4">4</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-6">6</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-8">8</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-10">10</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-12">12</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-14">14</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f30587430702368-16">16</div><div class="crayon-num" data-line="crayon-555d734f30587430702368-17">17</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f30587430702368-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-2">&nbsp;</div><div class="crayon-line" id="crayon-555d734f30587430702368-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-5"><span class="crayon-h">	</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-6"><span class="crayon-h">	</span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"choose a percent of your mood:"</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-7"><span class="crayon-h">	</span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"1)50%	2)100%"</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-8"><span class="crayon-h">	</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-9"><span class="crayon-h">	</span><span class="crayon-v">cin</span><span class="crayon-o">&gt;&gt;</span><span class="crayon-v">nX</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-10"><span class="crayon-h">	</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-o">=</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-11"><span class="crayon-h">		</span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"your mood is :("</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-12"><span class="crayon-h">	</span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-o">=</span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-13"><span class="crayon-h">		</span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"your mood is :)"</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-14"><span class="crayon-h">	</span><span class="crayon-st">else</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-15"><span class="crayon-h">		</span><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-s">"please, choose 1 or 2"</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f30587430702368-16"><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d734f30587430702368-17"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0026 seconds] -->
+<p></p>
+<p>another thing i can&#8217;t do:<br />
+can i press my choose 1 or 2 without press enter key?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-71369">
+		<div id="div-comment-71369" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fb3063d5bde2047c0009217d4b33e091?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fb3063d5bde2047c0009217d4b33e091?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">collin</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-71369">
+		October 31, 2009 at 5:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=71369#respond' onclick='return addComment.moveForm( "comment-71369", "71369", "respond", "73" )' aria-label='Reply to collin'> &middot; Reply</a></span>		 
+		</div>
+		<p>remove the ; after</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f30482458670473" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f30482458670473-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f30482458670473-1"><span class="crayon-h"> </span><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nx</span><span class="crayon-o">=</span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p>and both if statements should be</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d734f3048d633768846" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d734f3048d633768846-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d734f3048d633768846-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d734f3048d633768846-1"><span class="crayon-h"> </span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d734f3048d633768846-2"><span class="crayon-st">else</span><span class="crayon-h"> </span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-73790">
+		<div id="div-comment-73790" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/134fc3091589daef3a73efad547bce98?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/134fc3091589daef3a73efad547bce98?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.hu.net.et' rel='external nofollow' class='url'>Mesfin  Abika</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-73790">
+		December 7, 2009 at 4:55 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=73790#respond' onclick='return addComment.moveForm( "comment-73790", "73790", "respond", "73" )' aria-label='Reply to Mesfin  Abika'> &middot; Reply</a></span>		 
+		</div>
+		<p>please send for me  c ++ program to print number of days for a given month in GC.<br />
+by using switch statment and c++ program to print roots of qudratic equation</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-89883">
+		<div id="div-comment-89883" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e9e5d8c1351e2496ee81b167137f3197?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e9e5d8c1351e2496ee81b167137f3197?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">isabelambrocio</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-89883">
+		August 8, 2010 at 11:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=89883#respond' onclick='return addComment.moveForm( "comment-89883", "89883", "respond", "73" )' aria-label='Reply to isabelambrocio'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great Site, I have written a page concerning what language a newbie should start with. Check out http://www.6pie.com/c++/?p=5 and learn what the best road is to learning to program in Windows platform.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-94866">
+		<div id="div-comment-94866" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/46556e56b0f63303c952f04d46f88f16?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/46556e56b0f63303c952f04d46f88f16?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Wolf-Bro</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-94866">
+		November 5, 2010 at 8:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=94866#respond' onclick='return addComment.moveForm( "comment-94866", "94866", "respond", "73" )' aria-label='Reply to Wolf-Bro'> &middot; Reply</a></span>		 
+		</div>
+		<p>I have a question. I have used this &#8216;if&#8217; statement and i get something weird.This is the code i have:<br />
+int main ()<br />
+    {<br />
+    cout &lt;&lt; &quot;Please enter a number: \n&quot; &lt;&gt; nA;<br />
+       if ((nA &gt; 0)&amp;&amp;(nA &lt; 9)) {<br />
+                cout &lt;&lt; &quot;You entered &quot; &lt;&lt; nA&lt;&lt; endl;<br />
+        } else {<br />
+        cout &lt;&lt; &quot;You should enter numbers only, not symbols&quot; &lt;&lt; endl;<br />
+        }<br />
+        cin.get();<br />
+        cin.get();</p>
+<p>        return 0;<br />
+    }<br />
+Now, if the user inputs a number it works fine&#8230; but if the user inputs a character then  it crashes. Can you tell me where is the problem with this?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-95422">
+		<div id="div-comment-95422" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6a6767b66d464eee4790f5c20c125b65?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6a6767b66d464eee4790f5c20c125b65?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">AZS007</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-95422">
+		May 7, 2011 at 10:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=95422#respond' onclick='return addComment.moveForm( "comment-95422", "95422", "respond", "73" )' aria-label='Reply to AZS007'> &middot; Reply</a></span>		 
+		</div>
+		<p>i m weak in CP, any ane tell me wht i do for ths, my exm wll be held on 15th MAY, i cant understand the programng espacialy Function typ,</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-95677">
+		<div id="div-comment-95677" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c0e3a8bbef514173993f4d84d9f79a54?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c0e3a8bbef514173993f4d84d9f79a54?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">astronaut13</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-95677">
+		July 7, 2011 at 7:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=95677#respond' onclick='return addComment.moveForm( "comment-95677", "95677", "respond", "73" )' aria-label='Reply to astronaut13'> &middot; Reply</a></span>		 
+		</div>
+		<p>Is it possible for you to set more than one required parameter for the &#8216;if&#8217; statement to pass? Such as - to see what attack a player chose and if they have the ability to use it?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-95754">
+		<div id="div-comment-95754" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://127.0.0.1/' rel='external nofollow' class='url'>zingmars</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-95754">
+		July 19, 2011 at 3:22 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=95754#respond' onclick='return addComment.moveForm( "comment-95754", "95754", "respond", "73" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yes it is, though your example is bad, as it can be done with a single if parameter.<br />
+but here&#8217;s an example -</p>
+<p>bool something (bool a, bool b)<br />
+{ if ( a == true &amp;&amp; b == false )<br />
+ {                   do something();<br />
+                      return true;<br />
+ }<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96181">
+		<div id="div-comment-96181" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fe9253e42ca4c56eb2e62a44ee9274e1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fe9253e42ca4c56eb2e62a44ee9274e1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">george</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96181">
+		October 23, 2011 at 1:19 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96181#respond' onclick='return addComment.moveForm( "comment-96181", "96181", "respond", "73" )' aria-label='Reply to george'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex,</p>
+<p>you gotta fix the first program snippet. The inequality sign should be reversed.</p>
+<p>I suppose these errors are left due to reverting to older site version after the cyber attacks.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96182">
+		<div id="div-comment-96182" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fe9253e42ca4c56eb2e62a44ee9274e1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fe9253e42ca4c56eb2e62a44ee9274e1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">george</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96182">
+		October 23, 2011 at 1:22 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96182#respond' onclick='return addComment.moveForm( "comment-96182", "96182", "respond", "73" )' aria-label='Reply to george'> &middot; Reply</a></span>		 
+		</div>
+		<p>uh, now its correct. May be my mistake</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96274">
+		<div id="div-comment-96274" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">luvanlife</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96274">
+		November 2, 2011 at 12:10 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96274#respond' onclick='return addComment.moveForm( "comment-96274", "96274", "respond", "73" )' aria-label='Reply to luvanlife'> &middot; Reply</a></span>		 
+		</div>
+		<p>hi everyone. I am super new to programming and am trying to write a program for an assignmet but am having a really hard time., i am hoping someone can take a look at what i have to far and maybe steer me in the right direction. i have a test next week and i feel overwhelmed.. ok so the assignmemt is :An Internet service provider has three different subscription packages for its customers:</p>
+<p>Package A: For $9.95 per month 10 hours of access are provided. Additional hours are $2.00 per hour.</p>
+<p>Package B: For $14.95 per month 20 hours of access are provided. Additional hours are $1.00 per hour.</p>
+<p>Package C: For $19.95 per month unlimited access is provided.</p>
+<p>Write a program that calculates a customer’s monthly bill. It should input customer name, which package the customer has purchased, and how many hours were used. It should then create a bill that includes the input information and the total amount due. The bill should be written to a file.</p>
+<p>Input Validation: Be sure the user only selects package A, B, or C. Also, the number of hours used in a month cannot exceed 744.</p>
+<p>21.<br />
+Modify the program in problem 20 so it also displays how much money Package A customers would save if they purchased packages B or C, and how much money package B customers would save if they purchased package C. If there would be no savings, no message should be printed&#8230;&#8230;<br />
+this is what i have so far&#8230;</p>
+<p>#include<br />
+#include<br />
+#include</p>
+<p>using namespace std;<br />
+int main()<br />
+{</p>
+<p>	string name;<br />
+	char package;<br />
+	int hours;<br />
+	const double pack_a = 9.95;<br />
+	const double pack_b = 14.95;<br />
+	const double pack_c = 19.95;<br />
+	float total;</p>
+<p>	cout&lt;&lt;&quot;Enter customer name:&quot;&lt;&gt; name;<br />
+	getline(cin,name);</p>
+<p>	cout&lt;&gt;package;</p>
+<p>	if (!((package==&#8217;A&#8217;) ||  (package== &#8216;B&#8217;) || (package== &#8216;C&#8217;)))</p>
+<p>		cout&lt;&lt;&quot; Invalid, Available packages are A,B or C, only.&quot;&lt;&lt;endl;</p>
+<p>	else<br />
+		cout&lt;&lt;&quot;How many hours were used?&quot;&lt;744)</p>
+<p>		cout&lt;&lt; &quot;invalid, hours can not exceed 744&quot;&lt;&lt;endl;</p>
+<p>	else if<br />
+		(package==&#039;A&#039;)</p>
+<p>		total= (hours-10)*2.00;<br />
+	cout&lt;&lt;total&lt;&lt;endl;</p>
+<p>	if<br />
+		(package==&#039;B&#039;)</p>
+<p>		total=(hours-20)*1.00;</p>
+<p>	system (&quot;pause&quot;);<br />
+	return 0; </p>
+<p>}</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96275">
+		<div id="div-comment-96275" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">luvanlife</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96275">
+		November 2, 2011 at 12:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96275#respond' onclick='return addComment.moveForm( "comment-96275", "96275", "respond", "73" )' aria-label='Reply to luvanlife'> &middot; Reply</a></span>		 
+		</div>
+		<p>i forgot to type #include<br />
+and so forth in the previos post.. i know that much lol</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96276">
+		<div id="div-comment-96276" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b4dedfaf8cc8dec9a3091ec07df4e841?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">luvanlife</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96276">
+		November 2, 2011 at 12:24 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96276#respond' onclick='return addComment.moveForm( "comment-96276", "96276", "respond", "73" )' aria-label='Reply to luvanlife'> &middot; Reply</a></span>		 
+		</div>
+		<p>ok so wrked on it a little more and now this is what i have now im stuck:</p>
+<p>#include<br />
+#include<br />
+#include</p>
+<p>using namespace std;<br />
+int main()<br />
+{</p>
+<p>	string name;<br />
+	char package;<br />
+	int hours;<br />
+	const double pack_a = 9.95;<br />
+	const double pack_b = 14.95;<br />
+	const double pack_c = 19.95;<br />
+	double total;</p>
+<p>	cout&lt;&lt;&quot;Enter customer name:&quot;&lt;&gt; name;<br />
+	getline(cin,name);</p>
+<p>	cout&lt;&gt;package;</p>
+<p>	if (!((package==&#8217;A&#8217;) ||  (package== &#8216;B&#8217;) || (package== &#8216;C&#8217;)))</p>
+<p>		cout&lt;&lt;&quot; Invalid, Available packages are A,B or C, only.&quot;&lt;&lt;endl;</p>
+<p>	else {<br />
+		cout&lt;&lt;&quot;How many hours were used?&quot;&lt;744){</p>
+<p>			cout&lt;&lt; &quot;invalid, hours can not exceed 744&quot;&lt;&lt;endl;<br />
+		}<br />
+		else if<br />
+			(package==&#039;A&#039;){</p>
+<p>				total= (hours-10)*2.00+pack_a;<br />
+				cout&lt;&lt;total&lt;&lt;endl;<br />
+		}<br />
+		else if<br />
+			(package==&#039;B&#039;){</p>
+<p>				total=(hours-20)*1.00+pack_b;<br />
+				cout&lt;&lt;total&lt;&lt;endl;<br />
+		}<br />
+		else if (package==&#039;C&#039;)<br />
+		{ total==pack_c;</p>
+<p>		cout&lt;&lt;total&lt;&lt;endl;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96333">
+		<div id="div-comment-96333" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f2ef881ce40672d839e628e7d682f1a4?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f2ef881ce40672d839e628e7d682f1a4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">sethradio</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96333">
+		November 7, 2011 at 8:20 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96333#respond' onclick='return addComment.moveForm( "comment-96333", "96333", "respond", "73" )' aria-label='Reply to sethradio'> &middot; Reply</a></span>		 
+		</div>
+		<p>How do you check if a char variable equals a certain character?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96893">
+		<div id="div-comment-96893" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3a512acdf4f94008b82f0995d4b5784a?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a512acdf4f94008b82f0995d4b5784a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ericofilho</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-96893">
+		January 31, 2012 at 6:44 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=96893#respond' onclick='return addComment.moveForm( "comment-96893", "96893", "respond", "73" )' aria-label='Reply to ericofilho'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi. I didn´t understand this example  in chapter 6.7</p>
+<p> if (pnPtr)<br />
+    cout &lt;&lt; &quot;pnPtr is pointing to an integer.&quot;;<br />
+else<br />
+    cout &lt;&lt; &quot;pnPtr is a null pointer.&quot;;</p>
+<p>I don´t know what´s the condition for the if statement.</p>
+<p> Thanks in advance.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-98477">
+		<div id="div-comment-98477" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0504cd3af19529077778a0bb71cb7d25?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0504cd3af19529077778a0bb71cb7d25?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">e.chaniotakis</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-98477">
+		April 16, 2013 at 4:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=98477#respond' onclick='return addComment.moveForm( "comment-98477", "98477", "respond", "73" )' aria-label='Reply to e.chaniotakis'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello!<br />
+  I have a problem in setting the bin content of a histogram using the if- statement:<br />
+(Using root so I will skip the unnecessary part here)<br />
+Suppose we have a histogram named : h1, with N bins</p>
+<p>int val;<br />
+for (i=0;iGetNbinsX();i++)<br />
+{<br />
+val[i] = h1-&gt;GetBinContent(i);<br />
+if ( val[i] = 40)<br />
+{<br />
+h1-&gt;SetBinContent(i,0.001);<br />
+}<br />
+cout&lt;&lt;&quot; for bin &quot;&lt;&lt;i&lt;&lt;&quot; Bin Content is &quot;&lt;&lt;val[i]&lt;&lt;endl;<br />
+}</p>
+<p>It just doesn&#039;t change the bin Content.<br />
+What might I be doing wrong?<br />
+Thank you very much for your time,</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-211945">
+		<div id="div-comment-211945" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/143cd5e6128b5e58c1dff4f139bc762c?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/143cd5e6128b5e58c1dff4f139bc762c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alam</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-211945">
+		November 7, 2014 at 3:14 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=211945#respond' onclick='return addComment.moveForm( "comment-211945", "211945", "respond", "73" )' aria-label='Reply to Alam'> &middot; Reply</a></span>		 
+		</div>
+		<p>hello everyone<br />
+i have a problem .it compiles even but never prints either of the code.just prints &#8220;press any key to continue&#8221;.why so?</p>
+<p>#include<br />
+#include  // for sqrt()</p>
+<p>void PrintSqrt(double dValue)<br />
+{<br />
+    using namespace std;<br />
+    if (dValue &gt;= 0.0)<br />
+        cout &lt;&lt; &quot;The square root of &quot; &lt;&lt; dValue &lt;&lt; &quot; is &quot; &lt;&lt; sqrt(dValue) &lt;&lt; endl;<br />
+    else<br />
+        cout &lt;&lt; &quot;Error: &quot; &lt;&lt; dValue &lt;&lt; &quot; is negative&quot; &lt;&lt; endl;<br />
+}<br />
+int main()<br />
+{<br />
+return 0;<br />
+}</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-245526">
+		<div id="div-comment-245526" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/78b35332658343135f5cee5350288672?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/78b35332658343135f5cee5350288672?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">megablocks</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-245526">
+		December 21, 2014 at 7:13 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=245526#respond' onclick='return addComment.moveForm( "comment-245526", "245526", "respond", "73" )' aria-label='Reply to megablocks'> &middot; Reply</a></span>		 
+		</div>
+		<p>You created a function, but never called on it in your main() so nothing is being executed.<br />
+Ex:<br />
+#include<br />
+int main()<br />
+{<br />
+     double myValue = 2.0;<br />
+     PrintSqrt(myValue);<br />
+     return 0;<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-251670">
+		<div id="div-comment-251670" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e958607d857db3818fdd8ea9aeda40ae?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e958607d857db3818fdd8ea9aeda40ae?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.learncpp.com/cpp-tutorial/52-if-statements/' rel='external nofollow' class='url'>Mohamad Arif</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-251670">
+		March 1, 2015 at 1:03 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=251670#respond' onclick='return addComment.moveForm( "comment-251670", "251670", "respond", "73" )' aria-label='Reply to Mohamad Arif'> &middot; Reply</a></span>		 
+		</div>
+		<p>Design a Programme (USING IF) that can calculate year of graduate when user enter their year of birth and year of registeration.The calculation must considered additional years if carried paper is more than 2.</p>
+<p>how to do it design this program ? I not understand. please show me programme for this question.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-251812">
+		<div id="div-comment-251812" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/63af5f9db331754510c69fed44ef4571?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/63af5f9db331754510c69fed44ef4571?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jake</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-251812">
+		March 14, 2015 at 5:28 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=251812#respond' onclick='return addComment.moveForm( "comment-251812", "251812", "respond", "73" )' aria-label='Reply to Jake'> &middot; Reply</a></span>		 
+		</div>
+		<p>&quot;Without the block, the else statement would attach to the nearest unmatched if statement&#8230;&quot;</p>
+<p>Hey (not sure if you still check comments), but shouldn&#8217;t the indentation of your &#8216;else&#8217; statement(?) indicate which &#8216;if&#8217; it belongs to? I understand the use of parentheses to aid in readability, but is that also the case for indentation in this regard?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-252092">
+		<div id="div-comment-252092" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/01f69445ece5ceaa50029c0b17970a04?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/01f69445ece5ceaa50029c0b17970a04?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://Learnc++' rel='external nofollow' class='url'>Emmanuel</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-252092">
+		April 8, 2015 at 7:46 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=252092#respond' onclick='return addComment.moveForm( "comment-252092", "252092", "respond", "73" )' aria-label='Reply to Emmanuel'> &middot; Reply</a></span>		 
+		</div>
+		<p>Write one statement in pseudocode to solve the following. Make use of the variable names as provided.</p>
+<p>Determine the price to copy a set of notes (price) when the price for copying the cover page is R1.80 and the price to copy the inner pages is 55 cents per page. It is printed back to back. The number of pages to copy must be entered (noPages).</p>
+<p>Please help!!!</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-252371">
+		<div id="div-comment-252371" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/dfc3b2964efc6f152b4fcef98c94a4a9?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dfc3b2964efc6f152b4fcef98c94a4a9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Arduino_User</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-252371">
+		May 8, 2015 at 11:49 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=252371#respond' onclick='return addComment.moveForm( "comment-252371", "252371", "respond", "73" )' aria-label='Reply to Arduino_User'> &middot; Reply</a></span>		 
+		</div>
+		<p>Maybe I read your question wrong, as this answer does not need an If statement. But isn&#8217;t it something like this?</p>
+<p><code><br />
+#include &lt;iostream&gt;</p>
+<p>int main()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;using namespace std;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;Enter the number of pages:&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;int noPages;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cin &gt;&gt; noPages;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;The price is: &quot; &lt;&lt; 1.80 + static_cast&lt;float&gt;(noPages)* 0.55&lt;&lt;endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;return 0;<br />
+}<br />
+</code></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-252495">
+		<div id="div-comment-252495" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/78ebc135ad701daddad2d8efa5b591b3?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/78ebc135ad701daddad2d8efa5b591b3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Arnab</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/52-if-statements/#comment-252495">
+		May 17, 2015 at 8:40 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/52-if-statements/?replytocom=252495#respond' onclick='return addComment.moveForm( "comment-252495", "252495", "respond", "73" )' aria-label='Reply to Arnab'> &middot; Reply</a></span>		 
+		</div>
+		<p>I&#8217;m trying to write a code that that takes a no. from the user another no. from the user in the same line &amp; any one of these operators (+ - * / %) beside the second no.&amp; gives the result as output. How do I do this? Note: the user must be able to do this 5 times in a go.</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/52-if-statements/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>one &#43; 3 = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4NzcyN3R5bTdtZjVxZ3o3ZGJwYWozMW04NA==" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432187727" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='73' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="d4f71ba327" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="199"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/52-if-statements\/":73};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/52-if-statements/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'73',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '73' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.799 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 21:55:27 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

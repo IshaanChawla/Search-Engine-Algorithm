@@ -1,0 +1,1361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>3.3 &#8212; Increment/decrement operators, and side effects &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 3.3 &#8212; Increment/decrement operators, and side effects Comments Feed" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"50.144.0.132","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/33-incrementdecrement-operators-and-side-effects\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='3.2 &#8212; Arithmetic operators' href='http://www.learncpp.com/cpp-tutorial/32-arithmetic-operators/' />
+<link rel='next' title='3.4 &#8212; Sizeof, comma, and conditional operators' href='http://www.learncpp.com/cpp-tutorial/34-sizeof-comma-and-conditional-operators/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=57' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="3.3 -- Increment/decrement operators, and side effects" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/" />
+<meta property="og:description" content="Incrementing (adding 1 to) and decrementing (subtracting 1 from) a variable are so common that they have their own operators in C. There are actually two version of each operator -- a prefix versio..." />
+<meta property="article:published_time" content="2007-06-14T04:23:31+00:00" />
+<meta property="article:modified_time" content="2015-05-14T00:25:34+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-57 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-57 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-57">
+						<div class="post-headline">		<h1>3.3 &#8212; Increment/decrement operators, and side effects</h1>
+		</div>		<div class="post-byline">By Alex, on June 13th, 2007</div>		<div class="post-bodycopy clearfix"><p>Incrementing (adding 1 to) and decrementing (subtracting 1 from) a variable are so common that they have their own operators in C.  There are actually two version of each operator -- a prefix version and a postfix version.</p>
+<table border=1 cellspacing=0 cellpadding=3>
+<tr>
+<th>Operator</th>
+<th>Symbol</th>
+<th>Form</th>
+<th>Operation</th>
+</tr>
+<tr>
+<td>Prefix increment (pre-increment)</td>
+<td>++</td>
+<td>++x</td>
+<td>Increment x, then evaluate x</td>
+</tr>
+<tr>
+<td>Prefix decrement (pre-decrement)</td>
+<td>&ndash;&ndash;</td>
+<td>&ndash;&ndash;x</td>
+<td>Decrement x, then evaluate x</td>
+</tr>
+<tr>
+<td>Postfix increment (post-increment)</td>
+<td>++</td>
+<td>x++</td>
+<td>Evaluate x, then increment x</td>
+</tr>
+<tr>
+<td>Postfix decrement (pre-decrement)</td>
+<td>&ndash;&ndash;</td>
+<td>x&ndash;&ndash;</td>
+<td>Evaluate x, then decrement x</td>
+</tr>
+</table>
+<p>The prefix increment/decrement operators are very straightforward.  The value of x is incremented or decremented, and then x is evaluated.  For example:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c57e32031457486" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c57e32031457486-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e32031457486-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c57e32031457486-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e32031457486-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">x</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// x is now equal to 6, and 6 is assigned to y</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0010 seconds] -->
+<p></p>
+<p>The postfix increment/decrement operators are a little more tricky.  The compiler makes a temporary copy of x, increments x, and then evaluates the temporary copy of x.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c57e43710419895" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c57e43710419895-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e43710419895-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c57e43710419895-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e43710419895-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-o">++</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// x is now equal to 6, and 5 is assigned to y</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>In the second line of the above example, x is incremented from 5 to 6, but y is assigned the value of the copy of x, which still has the original value of 5.</p>
+<p>Here is another example showing the difference between the prefix and postfix versions:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c57e4a392009885" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c57e4a392009885-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e4a392009885-2">2</div><div class="crayon-num" data-line="crayon-555d780c57e4a392009885-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e4a392009885-4">4</div><div class="crayon-num" data-line="crayon-555d780c57e4a392009885-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e4a392009885-6">6</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c57e4a392009885-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e4a392009885-2"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c57e4a392009885-3"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-o">--</span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// prefix</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e4a392009885-4"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c57e4a392009885-5"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-o">++</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-o">--</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// postfix</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e4a392009885-6"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0028 seconds] -->
+<p></p>
+<p>This produces the output:</p>
+<pre>
+5 5
+6 4
+6 4
+6 4
+7 3
+</pre>
+<p>On the third line, x and y are incremented/decremented before they are evaluated, so their new values are printed by cout.  On the fifth line, a temporary copy of the original values (x=6, y=4) is sent to cout, and then the original x and y are incremented.  That is why the changes from the postfix operators don&#8217;t show up until the next line.</p>
+<p><strong>Side effects</strong></p>
+<p>A <strong>side effect</strong> is a result of an operator, expression, statement, or function that persists even after the operator, expression, statement, or function has finished being evaluated.</p>
+<p>Side effects can be useful:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c57e51069085513" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c57e51069085513-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c57e51069085513-1"><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p></p>
+<p>The assignment operator has the side effect of changing the value of x permanently.  Even after the statement has finished executing, x will have the value 5.</p>
+<p>Side effects can also be dangerous:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c57e58518299782" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c57e58518299782-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-2">2</div><div class="crayon-num" data-line="crayon-555d780c57e58518299782-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-4">4</div><div class="crayon-num" data-line="crayon-555d780c57e58518299782-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-6">6</div><div class="crayon-num" data-line="crayon-555d780c57e58518299782-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-8">8</div><div class="crayon-num" data-line="crayon-555d780c57e58518299782-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-10">10</div><div class="crayon-num" data-line="crayon-555d780c57e58518299782-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c57e58518299782-12">12</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c57e58518299782-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d780c57e58518299782-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-4"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d780c57e58518299782-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-6"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d780c57e58518299782-7"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c57e58518299782-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-t">value</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">add</span><span class="crayon-sy">(</span><span class="crayon-v">x</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">x</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// call some function named add with the value of x and x pre-incremented</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-10">&nbsp;</div><div class="crayon-line" id="crayon-555d780c57e58518299782-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c57e58518299782-12"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0017 seconds] -->
+<p></p>
+<p>C++ does not define the order in which function parameters are evaluated.  If the left parameter is evaluated first, this becomes a call to add(5, 6), which equals 11.  If the right parameter is evaluated first, this becomes a call to add(6, 6), which equals 12!  Note that this is only a problem because one of the parameters to x has a side effect.</p>
+<p>There are other cases where C++ does not specify the order in which certain things are evaluated, so different compilers will make different assumptions.  Even when C++ does make it clear how things should be evaluated, some compilers implement behaviors involving variables with side-effects incorrectly.  These problems can generally <em>all</em> be avoided by ensuring that any any variable that has a side-effect applied is used no more than once in a given statement.</p>
+<p><em>Rule: Don&#8217;t use a variable that has a side effect applied to it more than once in a given statement.</em><br />
+<em>Rule: Favor pre-increment and pre-decrement over post-increment and post-decrement.  The prefix versions are not only more performant, you&#8217;re less likely to run into strange issues with them.</em></p>
+<table border=0 cellpadding=3>
+<tr><td>
+	<a href="/cpp-tutorial/34-sizeof-comma-and-conditional-operators/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 3.4 -- Sizeof, comma, and conditional operators</a>
+</td></tr>
+<tr><td>
+        <a href="http://www.learncpp.com/#Chapter0" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td></tr>
+<tr><td>
+	<a href="/cpp-tutorial/32-arithmetic-operators" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 3.2 -- Arithmetic operators</a>
+</td></tr>
+</table>
+
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-57" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-57" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-57" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-57" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">26 comments to 3.3 &#8212; Increment/decrement operators, and side effects</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-31323">
+		<div id="div-comment-31323" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">som shekhar</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-31323">
+		October 29, 2008 at 11:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=31323#respond' onclick='return addComment.moveForm( "comment-31323", "31323", "respond", "57" )' aria-label='Reply to som shekhar'> &middot; Reply</a></span>		 
+		</div>
+		<p>you have written the statement for the post fix increment as;</p>
+<p>The postfix increment/decrement operators are a little more tricky.<br />
+The compiler makes a temporary copy of x, increments x,<br />
+and then evaluates the temporary copy of x.</p>
+<p>but compiler should first evaluate the temporary copy of x and then it should increment x.<br />
+please correct me if i am wrong!!</p>
+<p>thanks<br />
+Som Shekhar</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-31561">
+		<div id="div-comment-31561" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-31561">
+		November 3, 2008 at 6:40 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=31561#respond' onclick='return addComment.moveForm( "comment-31561", "31561", "respond", "57" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I believe what I wrote is correct.  If you find something that seems to indicate otherwise, let me know.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-32620">
+		<div id="div-comment-32620" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1dbd27ec5c7a1287ab96da6b8c132397?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1dbd27ec5c7a1287ab96da6b8c132397?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">kULDEEP</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-32620">
+		November 21, 2008 at 12:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=32620#respond' onclick='return addComment.moveForm( "comment-32620", "32620", "respond", "57" )' aria-label='Reply to kULDEEP'> &middot; Reply</a></span>		 
+		</div>
+		<p>CAN YOU EXPLAIN THE BELOW ASSIGMENT OPERATOR, PLEASE:</p>
+<p>INT SUM, CTR;<br />
+SUM=12;<br />
+CTR=4;<br />
+SUM = SUM + (++CTR)</p>
+<p>THE VALUE IS 15 &#8230;..HOW?</p>
+<p>SUM = SUM + (-CTR)</p>
+<p>THE VALUE IS 15 &#8230;..HOW?</p>
+<p>SUM = SUM + (CTR++)<br />
+THE VALUE IS 16 &#8230;..HOW?</p>
+<p>SUM = SUM + (CTR-)<br />
+THE VALUE IS 16 &#8230;..HOW?</p>
+<p>thanx in advance</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-36738">
+		<div id="div-comment-36738" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/32b080fee09a5910fb051bed08206b66?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/32b080fee09a5910fb051bed08206b66?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Peter P</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-36738">
+		January 8, 2009 at 2:04 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=36738#respond' onclick='return addComment.moveForm( "comment-36738", "36738", "respond", "57" )' aria-label='Reply to Peter P'> &middot; Reply</a></span>		 
+		</div>
+		<p>Tried to evaluate the first expression and I get the expected result SUM = 17.</p>
+<p>Have not tried the other exampels but assume I will get the expected results as well. No idea how you end up with your results?!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-59402">
+		<div id="div-comment-59402" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/10dc9f8052d5a4b080c620a4467e54f7?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/10dc9f8052d5a4b080c620a4467e54f7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">csvan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-59402">
+		April 28, 2009 at 5:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=59402#respond' onclick='return addComment.moveForm( "comment-59402", "59402", "respond", "57" )' aria-label='Reply to csvan'> &middot; Reply</a></span>		 
+		</div>
+		<p>At face value this looks strange&#8230;I will go over them in order.</p>
+<p>1. This one should evaluate to 17, like Peter P said. There is no way it can evaluate to 15, since it will become: (SUM = 12 + 5).</p>
+<p>2. again, something is wrong. This one should be (I think), SUM = 12 + (-4) = 8.</p>
+<p>3. This one should be correct, as the postfix ++ will increment CTR AFTER the expression is evaluated (I think).</p>
+<p>4. I have never seen a single - postfixed like this, I dont believe it should even compile.</p>
+<p>Use your compiler to try and compile each statement, and see what happens. I have just written my observations here, I did not compile the code.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-60991">
+		<div id="div-comment-60991" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f743131d6e8d6f7e5bdd5ee0b57482b3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f743131d6e8d6f7e5bdd5ee0b57482b3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Danny</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-60991">
+		May 17, 2009 at 2:51 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=60991#respond' onclick='return addComment.moveForm( "comment-60991", "60991", "respond", "57" )' aria-label='Reply to Danny'> &middot; Reply</a></span>		 
+		</div>
+		<p>It says above that&#8230; &#8220;C++ does not define the order in which function parameters are evaluated.&#8221;<br />
+But in the section &#8220;Precedence and associativity&#8221; it shows that () &#8220;Parenthesis&#8221;, () &#8220;Function calls&#8221;, () &#8220;Implicit assignments&#8221;, and , &#8220;comma&#8221; have an associative of left to right&#8230; what is the difference?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-90637">
+		<div id="div-comment-90637" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/61e0575934c51fb4cb21b69b0fada0b6?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/61e0575934c51fb4cb21b69b0fada0b6?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Dogbiscuit</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-90637">
+		August 20, 2010 at 8:30 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=90637#respond' onclick='return addComment.moveForm( "comment-90637", "90637", "respond", "57" )' aria-label='Reply to Dogbiscuit'> &middot; Reply</a></span>		 
+		</div>
+		<p>No, what he said is that function parameters could be done left to right, or right to left. E.g.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c5b439126266366" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c5b439126266366-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c5b439126266366-1"><span class="crayon-e">add</span><span class="crayon-sy">(</span><span class="crayon-v">a</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">b</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p>It&#8217;s not defined whether you do a + b or b + a (makes no difference in this case, but with increment/decrement operators it could get messy.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-251803">
+		<div id="div-comment-251803" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-251803">
+		March 13, 2015 at 2:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=251803#respond' onclick='return addComment.moveForm( "comment-251803", "251803", "respond", "57" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I can see how this would be confusing.  The comma used inside a function call parameter list to separate the parameters isn&#8217;t the comma operator.  So while the comma operator does have a left to right association, the order that parameters inside a function call are processed could be either direction.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-64515">
+		<div id="div-comment-64515" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3fe0800cf77281281c115ab4634eff6e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3fe0800cf77281281c115ab4634eff6e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">moncef</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-64515">
+		July 17, 2009 at 5:25 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=64515#respond' onclick='return addComment.moveForm( "comment-64515", "64515", "respond", "57" )' aria-label='Reply to moncef'> &middot; Reply</a></span>		 
+		</div>
+		<p>hi Alex!</p>
+<p>I tried to test the precedence of the ++ operator, both prefix and postfix.<br />
+The code i typed in is:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c5b752872085273" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c5b752872085273-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b752872085273-2">2</div><div class="crayon-num" data-line="crayon-555d780c5b752872085273-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b752872085273-4">4</div><div class="crayon-num" data-line="crayon-555d780c5b752872085273-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b752872085273-6">6</div><div class="crayon-num" data-line="crayon-555d780c5b752872085273-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b752872085273-8">8</div><div class="crayon-num" data-line="crayon-555d780c5b752872085273-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b752872085273-10">10</div><div class="crayon-num" data-line="crayon-555d780c5b752872085273-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c5b752872085273-1"><span class="crayon-p">#include &lt;iostream&gt;;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b752872085273-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d780c5b752872085273-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b752872085273-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5b752872085273-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b752872085273-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">++</span><span class="crayon-v">x</span><span class="crayon-o">++</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5b752872085273-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"x= "</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">x</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b752872085273-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"++x++= "</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">y</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5b752872085273-9"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b752872085273-10"><span class="crayon-i">I</span><span class="crayon-h"> </span><span class="crayon-e">have </span><span class="crayon-e">the </span><span class="crayon-e">following </span><span class="crayon-v">error</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d780c5b752872085273-11"><span class="crayon-i">Line</span><span class="crayon-h"> </span><span class="crayon-cn">7</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-v">non</span><span class="crayon-o">-</span><span class="crayon-e">lvalue </span><span class="crayon-v">increment</span><span class="crayon-sy">.</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0020 seconds] -->
+<p>Why the is ++x++ illicit?<br />
+Thanks for the nice tutorial.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-251805">
+		<div id="div-comment-251805" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-251805">
+		March 13, 2015 at 2:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=251805#respond' onclick='return addComment.moveForm( "comment-251805", "251805", "respond", "57" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>++x++ evaluates as ++(x++) due to post-increment having a higher precedence than pre-increment.</p>
+<p>Note that both versions of ++ need to operate on an lvalue (a variable that has an address).  With pre-increment, because the increment is done before the value is evaluated, the value is returned as an lvalue.  However, with post-increment, the value gets evaluated before the increment, so the value is returned as an rvalue.</p>
+<p>So in your expression, x++ is returning an rvalue, and pre-increment can&#8217;t work with an rvalue, so the compiler throws an error.</p>
+<p>Note that if you write the expression as (++x)++, then it does work, because (++x) returns an lvalue that can be operated on by post-increment.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-65222">
+		<div id="div-comment-65222" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/df4daec71c2f259f974fbf2b5ddea1d5?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/df4daec71c2f259f974fbf2b5ddea1d5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://neo.com' rel='external nofollow' class='url'>mehdi</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-65222">
+		July 28, 2009 at 9:24 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=65222#respond' onclick='return addComment.moveForm( "comment-65222", "65222", "respond", "57" )' aria-label='Reply to mehdi'> &middot; Reply</a></span>		 
+		</div>
+		<p>oh no . complecated. need to learn easiest way.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-66149">
+		<div id="div-comment-66149" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">smitha</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-66149">
+		August 12, 2009 at 9:44 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=66149#respond' onclick='return addComment.moveForm( "comment-66149", "66149", "respond", "57" )' aria-label='Reply to smitha'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi, I teach C++ to 12th graders. I encountered this problem in the lab wherein the statement</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c5b605164454880" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c5b605164454880-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b605164454880-2">2</div><div class="crayon-num" data-line="crayon-555d780c5b605164454880-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c5b605164454880-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-sy">,</span><span class="crayon-v">x</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b605164454880-2"><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">++</span><span class="crayon-v">y</span><span class="crayon-sy">)</span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">++</span><span class="crayon-v">y</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5b605164454880-3"><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">x</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p>I would expect the value 13, but my students got 14 as the output. any pointers?<br />
+what is funny is that the following code gives the value 13.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c5b610910285330" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c5b610910285330-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5b610910285330-2">2</div><div class="crayon-num" data-line="crayon-555d780c5b610910285330-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c5b610910285330-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">y</span><span class="crayon-o">=</span><span class="crayon-cn">5</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5b610910285330-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">++</span><span class="crayon-v">y</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">++</span><span class="crayon-v">y</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5b610910285330-3"><span class="crayon-r">cout</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">x</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p>The only difference being in the way x is initialized. I am baffled!!!</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-67888">
+		<div id="div-comment-67888" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/18eceae31f4dff160d32651c55c11396?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/18eceae31f4dff160d32651c55c11396?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">pravin</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-67888">
+		September 7, 2009 at 1:49 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=67888#respond' onclick='return addComment.moveForm( "comment-67888", "67888", "respond", "57" )' aria-label='Reply to pravin'> &middot; Reply</a></span>		 
+		</div>
+		<p>answer to the second code snippet is also = 14</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-68201">
+		<div id="div-comment-68201" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/74bbdf0b930de0881bc97659b777addf?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/74bbdf0b930de0881bc97659b777addf?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">X000X</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-68201">
+		September 12, 2009 at 11:32 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=68201#respond' onclick='return addComment.moveForm( "comment-68201", "68201", "respond", "57" )' aria-label='Reply to X000X'> &middot; Reply</a></span>		 
+		</div>
+		<p>Remember that operator precedence requires that ++ be evaluated before + and =. So what happens is ++y is evaluated twice with y becoming 6 then 7. The addition 7+7 is then performed before finally assigning result 14 to x.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-85750">
+		<div id="div-comment-85750" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6ed6652a200feb2bc140e91cfe90f17f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6ed6652a200feb2bc140e91cfe90f17f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Kush</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-85750">
+		June 1, 2010 at 1:46 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=85750#respond' onclick='return addComment.moveForm( "comment-85750", "85750", "respond", "57" )' aria-label='Reply to Kush'> &middot; Reply</a></span>		 
+		</div>
+		<p>I fear I also got two different answers, using Turbo c IDE.</p>
+<p>Now, the answer might lie in Order of precedence, though i cannot satisfactorily expalin it.</p>
+<p>Here, acc to table Alex gave:</p>
+<p>Pre-increment and Dynamic initialization fell in third box, with evalauation going Right to left.<br />
+Therefore in second scenario, the case might be:<br />
+(Going Left to Right)</p>
+<p>int x ( This evaluates third, giving x=13) = ++y(This evalautes second, giving y=7) + ++y (This evaluates first, giving y=6);</p>
+<p>IN first case, no dyanmic initialization, and hence, x is evaluated pretty much same way.<br />
+x = ++y + ++y;<br />
+Both ++y having higher precedence, than any other operand in statement are evaluated to 7 apeice, giving answer 14.</p>
+<p>Though, I think this can explain it, I would like to have confirmation&#8230;. I will post it out on forums sometime&#8230;  and see if anyone agrees with me, or provides better explanation.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-95539">
+		<div id="div-comment-95539" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/65b5def2c4fc54afd7cae0bbd600c457?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/65b5def2c4fc54afd7cae0bbd600c457?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">technocrat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-95539">
+		June 8, 2011 at 10:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=95539#respond' onclick='return addComment.moveForm( "comment-95539", "95539", "respond", "57" )' aria-label='Reply to technocrat'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello buddy, dont panic, your students r right ,try to understand this-<br />
+int y=5,x;<br />
+x=(++y)+(++y);// x=6+7=13 but when compiler encounter 1st       expresion ++y it increment value of y to 6 now y is 6 nd when it encounter another ++y in statement ++y, value of y becomes 7 now notice that compiler now have or assign value of y to 7, now compiler treats all occurence of y value to 7 in statement before assining value to x,so whether it is<br />
+x=(++y)+(++y);<br />
+x=6+7;//incremented or say highest value of y becomes value of y for compiler before assigning to x nd therefore expression becomes<br />
+x=7+7;<br />
+x=14;<br />
+or consider another ex. for better understanding<br />
+x=(++y)+(++y)+(++y);<br />
+x=6+7+8;//incremented or highest value of y will become value of y before assining to x so it becomes-<br />
+x=8+8+8;<br />
+x=32; hope that u can understand now,thanks.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-95540">
+		<div id="div-comment-95540" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://127.0.0.1/' rel='external nofollow' class='url'>zingmars</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-95540">
+		June 9, 2011 at 7:14 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=95540#respond' onclick='return addComment.moveForm( "comment-95540", "95540", "respond", "57" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s as technorat said.<br />
+consider this expression: x = (a++) + (a++);<br />
+now what happens is it takes the value of a, adds the value of a to it, and then does the incrementing (if a = 5, then x will be 10, and a will be 7 in the end).<br />
+It&#8217;s the same thing when having ++ in front.<br />
+example x = (++a) + (++a);<br />
+It takes a value, increments it, then it sees another ++ in the statement, so it increments &#8216;a&#8217; again, and then it does the adding, meaning that if a was 5, then x will be 14, and a will be 7 in the end.<br />
+Also - you don&#8217;t really need the brackets in this case, as ++ has higher priority than the standard + sign (tho it helps the readability).</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96089">
+		<div id="div-comment-96089" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ad2df550b79ca1bb2ef4431a7d183584?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ad2df550b79ca1bb2ef4431a7d183584?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">nagaraj</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-96089">
+		October 5, 2011 at 12:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=96089#respond' onclick='return addComment.moveForm( "comment-96089", "96089", "respond", "57" )' aria-label='Reply to nagaraj'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi all<br />
+int i=2;<br />
+i=++i * i++ * i++; answer i am geeting is 29<br />
+n=++i+i++*i++; answer i am getting is 27<br />
+printf(&#8220;%d&#8221;,++i+i++*i++); answer i am getting is 36</p>
+<p>how complier is going evalute? please reply me&#8230;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96090">
+		<div id="div-comment-96090" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ad2df550b79ca1bb2ef4431a7d183584?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ad2df550b79ca1bb2ef4431a7d183584?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">nagaraj</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-96090">
+		October 5, 2011 at 12:47 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=96090#respond' onclick='return addComment.moveForm( "comment-96090", "96090", "respond", "57" )' aria-label='Reply to nagaraj'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi all<br />
+int i=2;<br />
+i=++i * i++ * i++; answer i am geeting is 29<br />
+n=++i*i++*i++; answer i am getting is 27<br />
+printf(“%d”,++i*i++*i++); answer i am getting is 36<br />
+ for same expression getting different values..please sort this problem</p>
+<p>how complier is going evalute? please reply me…</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-96113">
+		<div id="div-comment-96113" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://127.0.0.1/' rel='external nofollow' class='url'>zingmars</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-96113">
+		October 8, 2011 at 4:38 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=96113#respond' onclick='return addComment.moveForm( "comment-96113", "96113", "respond", "57" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>printf for some reason seems to evaluate the i++ once it&#8217;s done, so it&#8217;s 3 (you incremented it before using it - ++i) * 3 * 4.<br />
+the second case (n=) simply evaluates the i++, and since the other additions are done only after the statement is done, you get 3*3*3<br />
+the first case is the same as the second one, except it adds +2 gained from the increments (i++) before.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-97045">
+		<div id="div-comment-97045" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/116ee5d26574a26e3041dfe876a458ac?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/116ee5d26574a26e3041dfe876a458ac?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">INNOVISION</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-97045">
+		March 8, 2012 at 8:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=97045#respond' onclick='return addComment.moveForm( "comment-97045", "97045", "respond", "57" )' aria-label='Reply to INNOVISION'> &middot; Reply</a></span>		 
+		</div>
+		<p>int t;<br />
+t= ++t + ++t + t++ + t++;<br />
+printf(&#8220;%d&#8221;,t);<br />
+//result=14 how??</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-97536">
+		<div id="div-comment-97536" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/90b32f800e8ace7457d7e6ad589ba459?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/90b32f800e8ace7457d7e6ad589ba459?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ramadharkumar</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-97536">
+		June 18, 2012 at 10:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=97536#respond' onclick='return addComment.moveForm( "comment-97536", "97536", "respond", "57" )' aria-label='Reply to Ramadharkumar'> &middot; Reply</a></span>		 
+		</div>
+		<p>hey, this code give the output 14.<br />
+int t=1;<br />
+t=++t + ++t + t++ + t++;<br />
+that is<br />
+t=2+3 and in postincrement operator 3+4;<br />
+t=2+3   +  3+4;<br />
+t=3+3   +  4+4;<br />
+t=6  +8;<br />
+t=14;<br />
+if the number of preincrement is greater than post then value of post operator is bigest value of preincrement operator;<br />
+for example:<br />
+t=1;<br />
+t=++t + ++t + ++t + t++ + t++;<br />
+output is 20; BECAUSE<br />
+t=2+3+4    + 4+4;<br />
+t=4+4+4    + 4+4;<br />
+t=20;</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-97715">
+		<div id="div-comment-97715" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8f21eb9fa4914cd33d3fb9ad0df47d3b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8f21eb9fa4914cd33d3fb9ad0df47d3b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ahleyn</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-97715">
+		August 8, 2012 at 4:52 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=97715#respond' onclick='return addComment.moveForm( "comment-97715", "97715", "respond", "57" )' aria-label='Reply to ahleyn'> &middot; Reply</a></span>		 
+		</div>
+		<p>it&#8217;s really confusing.how come t=3+3+4+4?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-98224">
+		<div id="div-comment-98224" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ad15ee6db34e2d9f5dcebe70572b5f77?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ad15ee6db34e2d9f5dcebe70572b5f77?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Paperweight</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-98224">
+		March 8, 2013 at 8:08 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=98224#respond' onclick='return addComment.moveForm( "comment-98224", "98224", "respond", "57" )' aria-label='Reply to Paperweight'> &middot; Reply</a></span>		 
+		</div>
+		<p>Given<br />
+<code>int t = 1;</code><br />
+Since<br />
+<code>cout &lt;&lt; ++t + ++t + t++ + t++;<!--formatted--></code><br />
+outputs 12 (as in 3 + 3 + 3 + 3), but<br />
+<code>t = ++t + ++t + t++ + t++;<br />
+cout &lt;&lt; t;</code><br />
+outputs 14, I think what happens is:<br />
+1. t is declared to be 1.<br />
+1. t is preincremented. t is now 2.<br />
+2. t is preincremented. t is now 3.<br />
+3. t = t + t + t + t is evaluated. from 3 + 3 + 3 + 3, t is now 12.<br />
+4. t is postincremented. t is now 13.<br />
+5. t is postincremented. t is now 14.<br />
+6. t is printed.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-4 clearfix" id="comment-98226">
+		<div id="div-comment-98226" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ad15ee6db34e2d9f5dcebe70572b5f77?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ad15ee6db34e2d9f5dcebe70572b5f77?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Paperweight</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-98226">
+		March 8, 2013 at 8:51 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=98226#respond' onclick='return addComment.moveForm( "comment-98226", "98226", "respond", "57" )' aria-label='Reply to Paperweight'> &middot; Reply</a></span>		 
+		</div>
+		<p>Actually I&#8217;m probably wrong.<br />
+<code><br />
+//But wait! There&#039;s more!</p>
+<p>int t = 1;<br />
+cout &lt;&lt; t++ + t++ + t++ + t++ &lt;&lt; endl;<br />
+cout &lt;&lt; t &lt;&lt; endl &lt;&lt; endl;<br />
+// Should evaluate 1 + 1 + 1 + 1 as 4,<br />
+// then output 4,<br />
+// then increment t four times to 5,<br />
+// then output t as 5.<br />
+// Actually outputs 4 and 5 OK.</p>
+<p>t = 1;<br />
+t = t++ + t++ + t++ + t++;<br />
+cout &lt;&lt; t &lt;&lt; endl &lt;&lt; endl;<br />
+// Should evaluate 1 + 1 + 1 + 1 as 4,<br />
+// then set t to 4,<br />
+// then increment t four times to 8,<br />
+// then output t as 8.<br />
+// Actually outputs 8 OK.</p>
+<p>t = 1;<br />
+cout &lt;&lt; ++t + ++t + ++t + ++t &lt;&lt; endl;<br />
+cout &lt;&lt; t &lt;&lt; endl &lt;&lt; endl;<br />
+// Should increment t four times to 5,<br />
+// then evaluate 5 + 5 + 5 + 5 as 20,<br />
+// then output 20,<br />
+// then output t as 5.<br />
+// Actually outputs 15 and 5 WTF?</p>
+<p>t = 1;<br />
+t = ++t + ++t + ++t + ++t;<br />
+cout &lt;&lt; t &lt;&lt; endl;<br />
+// Should increment t four times to 5,<br />
+// then evaluate 5 + 5 + 5 + 5 as 20,<br />
+// then set t to 20,<br />
+// then output t as 20.<br />
+// Actually outputs 15 WTF?<br />
+</code></p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-5 clearfix" id="comment-251806">
+		<div id="div-comment-251806" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#comment-251806">
+		March 13, 2015 at 3:36 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/?replytocom=251806#respond' onclick='return addComment.moveForm( "comment-251806", "251806", "respond", "57" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Seems like your compiler may not be doing something quite correctly.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d780c5af8c746227424" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d780c5af8c746227424-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d780c5af8c746227424-2">2</div><div class="crayon-num" data-line="crayon-555d780c5af8c746227424-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d780c5af8c746227424-1"><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d780c5af8c746227424-2"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-o">++</span><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d780c5af8c746227424-3"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">t</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+<p>Should evaluate as 20 and 5, and it does in Visual Studio 2008.</p>
+<p>That&#8217;s one of the many problems with including multiple expressions with side effects in a single statement.  Even if the C++ language guarantees that it will evaluate a certain way (and it may not), your compiler may not do it correctly.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>seventeen &#43; seventeen = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4ODk0MHR5bTdtZjVxZ3o3ZGJwYWozMW04MzQ=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432188940" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='57' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e35bde26a8" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="206"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/33-incrementdecrement-operators-and-side-effects\/":57};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/33-incrementdecrement-operators-and-side-effects/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'57',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '57' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.750 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:15:40 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

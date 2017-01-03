@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>My live migration from Wordpress to Ghost without any downtime</title>
+    <meta name="description" content="From a Dreamhost Wordpress blog to a dirt cheap self-hosted EC2 instance. And how I learned to prevent broken URLs and migrate all of the posts and photos." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=30e0f76571" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25699647-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <link rel="canonical" href="http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/" />
+    
+    <meta property="og:site_name" content="'Net Instructions" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="My live migration from Wordpress to Ghost without any downtime" />
+    <meta property="og:description" content="From a Dreamhost Wordpress blog to a dirt cheap self-hosted EC2 instance. And how I learned to prevent broken URLs and migrate all of the posts and photos." />
+    <meta property="og:url" content="http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/" />
+    <meta property="article:published_time" content="2014-12-16T03:41:18.201Z" />
+    <meta property="article:modified_time" content="2014-12-16T03:42:44.290Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="My live migration from Wordpress to Ghost without any downtime" />
+    <meta name="twitter:description" content="From a Dreamhost Wordpress blog to a dirt cheap self-hosted EC2 instance. And how I learned to prevent broken URLs and migrate all of the posts and photos." />
+    <meta name="twitter:url" content="http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "'Net Instructions",
+    "author": {
+        "@type": "Person",
+        "name": "Stephen",
+        "url": "http://www.netinstructions.com/author/stephen",
+        "sameAs": null,
+        "description": null
+    },
+    "headline": "My live migration from Wordpress to Ghost without any downtime",
+    "url": "http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/",
+    "datePublished": "2014-12-16T03:41:18.201Z",
+    "dateModified": "2014-12-16T03:42:44.290Z",
+    "description": "From a Dreamhost Wordpress blog to a dirt cheap self-hosted EC2 instance. And how I learned to prevent broken URLs and migrate all of the posts and photos."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.6" />
+    <link rel="alternate" type="application/rss+xml" title="&#x27;Net Instructions" href="http://www.netinstructions.com/rss/" />
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://www.netinstructions.com/">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://www.netinstructions.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">My live migration from Wordpress to Ghost</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-12-16">16 December 2014</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>A few months ago I heard about the Ghost blogging platform as it picked up some momentum and was being talked about in all the tech circles. My initial thoughts were "Why do we need another blogging platform? What's wrong with WordPress?"</p>
+
+<p>Well, to get to get to the point, there's not a whole lot wrong with WordPress. Sure it's kind of old, but that also means it's a stable, functional, and feature-packed framework. If it doesn't do something out of the box then there's a variety of plugins available that'll do the trick.</p>
+
+<p>What drew me to Ghost were four things that are fundamentally different than WordPress, starting with...</p>
+
+<h4 id="markdown">Markdown!</h4>
+
+<p>I'm sure there's a plugin somewhere that'll let you write your posts in Markdown on Wordpress, but it comes out of the box with Ghost. If you haven't ever composed an article with Markdown before, you may not know what you're missing. I started using it to compose Stackoverflow questions and realized how powerful it was. It's especially useful if I want to write some <code>inline code</code> without worrying about the HTML or using some special WYSIWYG editor. Basically I can express my thoughts faster in Markdown than I can if I was writing in HTML. I also can't stand the superfluous <code>&lt;span&gt;&lt;span&gt;&lt;p&gt;some&lt;/p&gt;&lt;/span&gt;text&lt;/span&gt;</code> that you often get when WYSIWYG editors convert your article to HTML.</p>
+
+<h4 id="responsivedesign">Responsive design</h4>
+
+<p>What does responsive mean? A website is considered "responsive" if all the elements on the page get automatically resized to fit your web browser's viewport. Your web browser's viewport (window size) is going to be different depending on if you're viewing and interacting with the site on a mobile device, a tablet, or a desktop computer. While there's probably some sort of responsive theme for WordPress that'll do this, it's built into the core of Ghost and comes out of the box. More and more people are visiting sites on mobile devices so it's important that your site can offer a pleasant experience.</p>
+
+<h4 id="speed">Speed</h4>
+
+<p>Ghost is fast! How fast? I don't know, but it sure feels zippy creating articles and navigating around the site. I hope to have some benchmarks soon. WordPress often needs some help via plugins like WP Super Cache.</p>
+
+<h4 id="builtonnodejs">Built on NodeJS</h4>
+
+<p>This is more of a bonus than anything in that I have some familiarity with NodeJS. Since I've built websites and services using NodeJS, I should have some comfort digging into the source code or following along with the new feature developments. Making modifications and plugins should be easier as well. I've also set up Amazon EC2 instances to run NodeJS web applications (sitting behind Nginx), and I'm already familiar with NPM (Node's excellent package manager) and some of the helpful NPM packages like Forever that are used to keep this site up. </p>
+
+<h3 id="okaysohowdidyoudoit">Okay, so how did you do it?</h3>
+
+<p>My plan was to get an empty Ghost blog up and running on an Amazon EC2 instance and then import my data over from WordPress. Afterwards I would point the domain name <strong>netinstructions.com</strong> over to the IP address of the EC2 instance by modifying the A record. Then I could safely power down the WordPress instance.</p>
+
+<h2 id="installingghostonanamazonec2instance">Installing Ghost on an Amazon EC2 instance</h2>
+
+<p>A few months ago the <a href="http://aws.amazon.com/blogs/aws/low-cost-burstable-ec2-instances/">t2.micro instances were announced</a>. Theses are super low cost machines that are perfect for running websites. If you plan on using one for the next three years you can order a <em>heavy utilization reserved instance</em>, pay $109 upfront and $1.46 per month ($0.002 per hour). Over three years, that comes out to $161.60 total or <strong>$4.49 per month</strong>. If you're afraid of a 3 year comittment you can do:</p>
+
+<ul>
+<li>1 year commitment and pay $6.44 per month ($51 upfront and $0.003 per hour).</li>
+<li>No commitments with on-demand instance prices and pay $9.50 per month ($0.013 per hour).</li>
+</ul>
+
+<p>I spun up a t2.micro instance with a Ubuntu 14.04 LTS operating system, converted my <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">.pem private key to a .ppk PuTTY key</a>  and used PuTTY to SSH onto the box. There were three things I wanted to install</p>
+
+<pre><code>sudo apt-get update
+sudo apt-get install nginx
+sudo apt-get install nodejs
+sudo apt-get install npm
+</code></pre>
+
+<p>My plan was to have nginx webserver sit in front of the nodeJS webserver and act as a forwarding proxy. There are pros (ability to host more than one website on one EC2 instance) and cons (two webservers to configure and manage) to doing this, but I think the pros outweight the cons. In this configuration a request comes in, nginx looks at the headers and decides which webserver it should be sent to. Perhaps a request came in for <code>netinstructions.com</code> so my ghost blog should handle it. But maybe I want to set up a test blog at <code>test.netinstructions.com</code> or host <code>catsarereallysuperawesome.com</code> here as well. Nginx can inspect those requests and send them to the right place. </p>
+
+<p>Anyways... We have almost everything except the Ghost blogging software itself. We need to download and run that. The <a href="http://support.ghost.org/installing-ghost-linux/">offical guide is here</a> but the TL;DR version is:</p>
+
+<pre><code>$ curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip
+$ unzip -uo ghost.zip -d ghost
+$ cd /ghost
+$ npm install --production
+$ npm start
+</code></pre>
+
+<p>You should see something like</p>
+
+<pre><code>Ghost is running in development...
+Listening on 127.0.0.1:2368
+Url configured as: http://localhost:2368
+Ctrl+C to shut down
+</code></pre>
+
+<p>Find your EC2's public IP address and attempt to visit your site with that IP and the default Ghost port. Do you get something like this? </p>
+
+<p><img src="/content/images/2014/12/ec2-security-group-can-t-connect.png" alt="" /></p>
+
+<p>Well, you need to change your security settings to allow inbound connections to port 2368.</p>
+
+<p><img src="/content/images/2014/12/modify-ec2-security-groups.png" alt="" /></p>
+
+<p>You <em>also</em> need to change the server to <code>0.0.0.0</code>. In <code>config.json</code></p>
+
+<pre><code>// ### Development **(default)**
+development: {
+    url: 'http://localhost:3050',
+    database {
+        // snip
+    },
+    server: {
+        host: '0.0.0.0',
+        port: 2368
+    }
+    paths {
+        // snip
+    }
+},
+</code></pre>
+
+<p>Restart ghost with <code>npm start</code>. You should now be able to run <strong>in development mode</strong> and <strong>directly by IP + Port</strong></p>
+
+<p><img src="/content/images/2014/12/success-direct-by-ip.png" alt="" /></p>
+
+<h2 id="buthowdoirunghostinproductionandbehindnginx">But how do I run Ghost in production and behind Nginx?</h2>
+
+<p>Well, you can delete that firewall rule for port 2368 since incoming requests will be passing through Nginx on port 80, then make sure you allow incoming HTTP requests on port 80. In <code>config.json</code> well be editing the part for production:</p>
+
+<pre><code>production: {
+    url: 'http://54.68.205.33',
+    mail: {},
+    database: { // snip },
+    server: {
+        host: '127.0.0.1',
+        port: '2368'
+    }
+   }
+</code></pre>
+
+<p>I then used <code>forever</code> to start up the process</p>
+
+<pre><code>$ NODE_ENV=production forever start index.js
+</code></pre>
+
+<p>If we tail the <code>forever</code> log (use <code>forever list</code> to find the UID and then <code>tail -20f ~/.forever/UID.log</code>)</p>
+
+<pre><code>Ghost is running...
+Your blog is now available on http://54.68.205.33
+</code></pre>
+
+<p>Okay, now to teach Nginx about it. I created a file in <code>/etc/nginx/sites-available/www.netinstructions.com</code> that looks like this:</p>
+
+<pre><code>server {
+  server_name netinstructions.com www.netinstructions.com;
+  listen 80;
+  listen [::]:80;
+
+  location / {
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header HOST $http_host;
+  proxy_set_header X-NginX-Proxy true;
+
+  proxy_pass http://127.0.0.1:2368;
+  proxy_redirect off;
+  }
+}
+</code></pre>
+
+<p>which essentially tells Nginx to listen on port 80 and forward incoming HTTP requests to 127.0.0.1:2368 which is where our ghost blog is listening.</p>
+
+<p>A convention of Apache and Nginx is to keep two separate directories <code>sites-enabled</code> and <code>sites-available</code> and symlink the sites you want to activate. One advantage of this is you can shut down a misbehaving site by just breaking that symlink. </p>
+
+<p>But we want to <em>activate</em> the site. So I'll do that by creating the symlink and reloading Nginx:</p>
+
+<pre><code>sudo ln -s /etc/nginx/sites-available/www.netinstructions.com /etc/nginx/sites-enabled/
+sudo service nginx reload
+</code></pre>
+
+<p>So the tricky part here is that I can't just go to www.netinstructions.com and see this new Ghost blog. Remember that the DNS is still pointing to my old host? My <code>A</code> record is pointing to a Dreamhost machine with the Wordpress blog.</p>
+
+<pre><code>DNS for testinstructions.com:
+Record Type Value
+       A    75.119.222.60
+www    A    75.119.222.60
+</code></pre>
+
+<p>But my new blog will be hosted at 54.68.205.33 which is the IP address of the EC2 instance. And unfortunatly Nginx doesn't let you define a <code>server_name: 54.68.205.33;</code></p>
+
+<p>There's three options to get around this:</p>
+
+<ol>
+<li>Update your A record to point to the EC2 instance. But this sends all visitors to the not-yet-complete Ghost blog.  </li>
+<li>Add another A record for a subdomain. Maybe <code>www.netinstructions.com</code> points to <code>75.119.222.60</code> but <code>test.netinstructions.com</code> points to <code>54.68.205.33</code>.  </li>
+<li>Modify your HTTP request headers when accessing <code>54.68.205.33</code> in a web browser and add in a value for the <code>Host</code>.</li>
+</ol>
+
+<p>Option 1 is bad if you have frequent traffic going to your existing wordpress blog. Option 2 is not a bad one, but you'll need to change your Ghost <code>config.js</code> file so it knows about the subdomain. I actually went with option 3 and found a <a href="https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj">Chrome extension</a> to modify my headers.</p>
+
+<p><img src="/content/images/2014/12/modify-http-headers.png" alt="" /></p>
+
+<p>Then I was able to go to <code>http://54.68.205.33/admin</code> and walk through the first-time account setup process like creating a username and password.</p>
+
+<h2 id="migratingallthatdatafromwordpress">Migrating all that data from Wordpress...</h2>
+
+<p>The first step is installing the <a href="https://wordpress.org/plugins/ghost/">Ghost WordPress plugin</a> on your WordPress blog. Once it's installed you can navigate to the <strong>Tools</strong> section and click the <strong>export</strong> button. You'll end up with a (potentially large) <code>wp2ghost_export.json</code> file containing all your posts. You might want to save this file somewhere safe as a restore point if anything crazy happens.</p>
+
+<p>The next step is importing that data to your Ghost blog which is probably empty at this point. If it contains a 'Hello World' post or anything else, that should be fine as well, since importing your data is just adding additional posts to your existing Ghost blog.</p>
+
+<p>I headedad over to the top secret URL at <code>http://54.68.205.33/ghost/debug/</code> and imported the .json file. Voila! All my wordpress data was now on the ghost blog.</p>
+
+<p>However, there were some small things to fix. For example, the picture captions in Wordpress didn't translate very well onto the new Ghost blog. In fact, as of right now (12/6/2014) Ghost does not support picture captions out of the box. You would have to <a href="https://ghost.org/forum/using-ghost/2797-image-captions/">jury-rig</a> something up yourself if that is important to you. I just went through the ten or so posts I had and manually cleaned up the image captions. If you have more than that you may want to write a script to go through the .json file to clean it up before importing it onto the Ghost blog.</p>
+
+<h2 id="fixingandpreventingbrokenurlswithredirects">Fixing (and preventing) broken URLs with redirects</h2>
+
+<p>One last thing to worry about are all the URLs out there in the world that link to my site. Google webmaster shows me that there are 229 links out in the world to my site. </p>
+
+<p><img src="/content/images/2014/12/URLs-linked-to-site.png" alt="" /></p>
+
+<p>It would really suck if some visitor found a link to one of my posts (perhaps on someone else's blog or a different website), clicked on it, and was met with a 404 not found page.</p>
+
+<p><img src="/content/images/2014/12/404-not-found-ghost.png" alt="" /></p>
+
+<p>If you consult the <a href="https://trello.com/b/EceUgtCL/ghost-roadmap/">Ghost roadmap</a> it looks like custom permalinks are in the works. Until then we can use Nginx 301 redirects. I wrote a regular expression to translate </p>
+
+<pre><code>http://54.68.205.33/2011/10/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+</code></pre>
+
+<p>into</p>
+
+<pre><code>http://54.68.205.33/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+</code></pre>
+
+<p>Have a look at the rewrite line in <code>/etc/nginx/sites-available/www.netinstructions.com/</code></p>
+
+<pre><code>server {
+  server_name netinstructions.com www.netinstructions.com;
+  listen 80;
+  listen [::]:80;
+
+  rewrite '^/\d{4}/\d{2}/(.*)$' /$1 last;
+
+  location / {
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header HOST $http_host;
+    proxy_set_header X-NginX-Proxy true;
+
+    proxy_pass http://127.0.0.1:2368;
+    proxy_redirect off;
+  }
+}
+</code></pre>
+
+<p>I reloaded Nginx and was on my way. This will take care of any /YYYY/DD/ patterns that Wordpress liked to use but is not yet supported in Ghost. It looks like Wordpress tags are supported in Ghost so I didn't need any special rewrites for that.</p>
+
+<p>If you want an easy way to test this, try the <code>curl</code> command (and don't forget your header if you need it)</p>
+
+<pre><code>$ curl -I -L --header "Host: netinstructions.com" http://54.68.205.33/2011/10/next-steps-for-aspiring-programmers-after-you-know-the-basics/
+
+HTTP/1.1 200 OK
+Server: nginx/1.4.6 (Ubuntu)
+Date: Tue, 09 Dec 2014 04:21:13 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 35681
+Connection: keep-alive
+X-Powered-By: Express
+Cache-Control: public, max-age=0
+ETag: W/"uKAIXdXPOi/Oaw+ZQwcilA=="
+Vary: Accept-Encoding
+</code></pre>
+
+<h2 id="goinglive">Going live</h2>
+
+<p>Once I was satisfied with how the Ghost blog looked it was just a simple matter of updating the A record for my hostname <code>netinstructions.com</code> so that new requests were routed to Nginx on my EC2 instance instead of to my Wordpress blog on Dreamhost.</p>
+
+<p>Does this mean I can shutdown my Wordpress blog? No, as the pictures are still hosted there. For example, the images are linked something like this</p>
+
+<pre><code>http://www.netinstructions.com/wp-content/uploads/2012/05/google-header-animated.gif
+</code></pre>
+
+<p>But on Ghost the images are linked like this</p>
+
+<pre><code>http://www.netinstructions.com/content/images/2014/12/404-not-found-ghost.png
+</code></pre>
+
+<p>Can you guess what the Nginx redirect looks like? In <code>/etc/nginx/sites-available/www.netinstructions.com</code></p>
+
+<pre><code>rewrite '^/wp-content/uploads/(.*)$' /content/images/$1 last;
+</code></pre>
+
+<p>Don't forget to reload Nginx. And now we need to transfer all the files from the Dreamhost machine in the <code>/wp-content/uploads/</code> directory and put them in the <code>/content/images/</code> directory of the EC2 machine. I just used FileZilla for that, but SCP would also work.</p>
+
+<p>The very last step was just to point the domain name to the EC2 machine that's now all ready to handle incoming requests. It was pointing to the Dreamhost machine (which hung out at IP <code>75.119.222.60</code>), but I'll be overwriting that:</p>
+
+<p><img src="/content/images/2014/12/updating-dns-A-record.png" alt="" /></p>
+
+<p>And that's it! A migration to a self-hosted installation of Ghost on a dirt-cheap EC2 instance without any downtime and without breaking any of my URLs out on the web.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/stephen/">Stephen</a></h4>
+
+                    <p>Read <a href="/author/stephen/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=My%20live%20migration%20from%20Wordpress%20to%20Ghost&amp;url=http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://www.netinstructions.com/my-live-migration-from-wordpress-to-ghost/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+            <div class=disqusbox>
+                <div>
+                    <hr />
+                </div>
+                <p><strong>View or post Comments</strong></p>
+            </div>
+            <div id="disqus_thread">
+                <form onsubmit="my.loadDisqus(); return false;" class="formBlock">
+                    <input class="disqusButton" type="submit" value="Load Comments">
+                </form>
+            </div>
+            <script type="text/javascript">
+                var disqus_shortname = 'netinstructions';
+                var disqus_identifier = '';
+
+                var my = my || {};
+                my.loadDisqus = function() {
+                    var dsq = document.createElement('script');
+                    dsq.type = 'text/javascript';
+                    dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                };
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="/how-to-make-a-simple-web-crawler-in-java/">
+        <section class="post">
+            <h2>How to make a simple web crawler in Java</h2>
+            <p>A year or two after I created the dead simple web crawler in Python, I was curious how many&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="/automating-picture-capture-using-webcams-on-linuxubuntu/">
+        <section class="post">
+            <h2>Automating Picture Capture Using Webcams on Linux/Ubuntu</h2>
+            <p>Ever want to turn a laptop into a webcam surveillance monitoring tool, or use a USB webcam to take&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://www.netinstructions.com">&#x27;Net Instructions</a> &copy; 2011-2015</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script src="/public/jquery.min.js?v=30e0f76571"></script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js?v=30e0f76571"></script>
+    <script type="text/javascript" src="/assets/js/index.js?v=30e0f76571"></script>
+
+</body>
+</html>
+

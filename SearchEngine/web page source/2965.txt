@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Function Pointers - Learn C - Free Interactive C Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="description" content="Learn-C.org is a free interactive C tutorial for people who want to learn C, fast."/>
+<meta name="keywords" content="Learn,C,Tutorial,Interactive,Free"/>
+<meta name="google-site-verification" content="cXWj61RCtO3fVP24Y7CO-nX0ba30tgdJYY8GGBactLI"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Function Pointers - Learn C - Free Interactive C Tutorial"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://learn-c.org/"/>
+<meta property="og:image" content="http://learn-c.org/static/img/logos/learn-c.png"/>
+<link rel="stylesheet" href="/static/css/codemirror.css">
+<link rel="stylesheet" href="/static/css/theme/monokai.css">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/learnpython.css"/>
+<script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-static-top" style="margin-bottom: 10px">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href="/" style="padding: 4px 10px"><img src="/static/img/logos/learn-c.png" style="height: 32px;"/></a>
+<div class="social hidden-phone" style="margin-top: 10px; display: inline-block; float: left">
+ 
+<div class="addthis_toolbox addthis_default_style " style="width: 400px; margin-left: 20px">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">
+                    var addthis_config = {"data_track_clickback":true};
+                    var addthis_share = {"url": "http://learn-c.org" };
+                </script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dafdfe6039782b1"></script>
+ 
+ 
+</div>
+<ul class="nav pull-right">
+<li><a href="/about">About</a></li>
+ 
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="span8">
+<ul class="nav nav-pills">
+<li><a href="http://www.learnpython.org">Python</a></li>
+<li><a href="http://www.learnjavaonline.org">Java</a></li>
+<li class="active"><a href="http://www.learn-c.org">C</a></li>
+ 
+<li><a href="http://www.learn-js.org">JavaScript</a></li>
+<li><a href="http://www.learn-php.org">PHP</a></li>
+<li><a href="http://www.learnshell.org">Shell</a></li>
+<li><a href="http://www.learncs.org">C#</a></li>
+ 
+<li><a href="/recruit-coders-jobs">Jobs</a></li>
+</ul>
+</div>
+<div class="span4">
+<ul class="nav nav-pills pull-right">
+<li><a href="/de/"><img src="/static/img/flags/de.png"/></a></li>
+<li class="active"><a href="/en/"><img src="/static/img/flags/en.png"/></a></li>
+<li><a href="/pl/"><img src="/static/img/flags/pl.png"/></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container" id="main">
+<div class="row">
+<div class="span10" style="padding-right: 10px; box-sizing: border-box;">
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    google_ad_slot = "7782329453";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<ul class="breadcrumb" style="margin-top: 10px">
+<li><a href="/en/Welcome">Welcome</a> <span class="divider">/</span></li>
+<li class="active">Function Pointers</li>
+</ul>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn pull-left" href="/en/Pointer_Arithmetics"> <i class="icon-chevron-left"></i> Previous Tutorial</a>
+<a class="btn pull-right" href="/en/Contributing_Tutorials">Next Tutorial <i class="icon-chevron-right"></i></a>
+</div>
+<span id="inner-text">
+<h1>Function Pointers</h1>
+<p>Remember pointers? We used to point to an array of chars then make a string out of them.
+Then things got more interesting when we learned how to control these pointers.
+Now it is time to do something even more interesting with pointers where we point them to functions then call these functions using a pointer.</p>
+<h3>Why point to a function?</h3>
+<p>The first question that may come to your mind is why would we use pointers to call a function when we can simply call a function by its name: <code>function();</code> - that's a great question! Now imagine the <code>sort</code> function where you need to sort an array. Sometimes you want to order array elements in an accending order or decending order. How would you choose? Function pointers!</p>
+<h3>Function Pointer Syntax</h3>
+<pre><code>void (*pf)(int);
+</code></pre>
+<p>I agree with you. This definitely is very complicated, or so you may think. Let's re-read that code and try to understand it point by point. Read it inside-out. <code>*pf</code> is the pointer to a function. <code>void</code> is the return type of that function, and finally <code>int</code> is the argument type of that function. Got it? Good.</p>
+<p>Let's insert pointers into the function pointer and try to read it again:</p>
+<pre><code>char* (*pf)(int*)
+</code></pre>
+<p>Again:
+1. <code>*pf</code> is the function pointer.
+2. <code>char*</code> is the return type of that function.
+3. <code>int*</code> is the type of the argument.</p>
+<p>Ok enough with theory. Let's get our hands dirty with some real code.
+See this example:</p>
+<pre><code>#include &lt;stdio.h&gt;
+void someFunction(int arg)
+{
+    printf("This is someFunction being called and arg is: %d\n", arg);
+    printf("Whoops leaving the function now!\n");
+}
+
+main()
+{
+    void (*pf)(int);
+    pf = &amp;someFunction;
+    printf("We're about to call someFunction() using a pointer!\n");
+    (pf)(5);
+    printf("Wow that was cool. Back to main now!\n\n");
+}
+</code></pre>
+<p>Remember <code>sort()</code> we talked about earlier? We can do the same with it.
+Instead of ordering a set in an accending way we can do the opposite using our own comparison function as follows:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt; //for qsort()
+
+int compare(const void* left, const void* right)
+{
+    return (*(int*)right - *(int*)left);
+    // go back to ref if this seems complicated: http://www.cplusplus.com/reference/cstdlib/qsort/
+}
+main()
+{
+    int (*cmp) (const void* , const void*);
+    cmp = &amp;compare;
+
+    int iarray[] = {1,2,3,4,5,6,7,8,9};
+    qsort(iarray, sizeof(iarray)/sizeof(*iarray), sizeof(*iarray), cmp);
+
+    int c = 0;
+    while (c &lt; sizeof(iarray)/sizeof(*iarray))
+    {
+        printf("%d \t", iarray[c]);
+        c++;
+    }
+}
+</code></pre>
+<p>Let's remember again. Why do we use function pointers?
+1. To allow programmers to use libraries for different usages -&gt; "Flexibility"</p>
+<h2>Exercise</h2>
+<p>Complete the array of pointers to functions and call each function using its pointer from the array. Array of pointers to functions? Yes you can do that!</p>
+</span>
+<button id="start-exercise" class="btn btn-success" onclick="toggleMinimize(true)"><div class="icon-play icon-white" style="padding-right: 10px"></div> Start Exercise</button>
+<script>
+                $(function(){
+                    toggleMinimize();
+                })
+            </script>
+<hr/>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn btn-primary pull-left" href="/en/Pointer_Arithmetics"><i class="icon-chevron-left icon-white"></i> Previous Tutorial</a>
+<a class="btn btn-primary pull-right" href="/en/Contributing_Tutorials">Next Tutorial <i class="icon-chevron-right icon-white"></i></a>
+</div>
+<hr/>
+<div class="hidden-phone">
+ 
+ 
+<iframe src="https://www.skillfeed.com/related_courses?border=yes&search=yes&title=Related Tutorials&head=center&keyword=c%20programming&affiliate_code=67577" width="800" height="255" frameborder="0" style="margin-left: -10px"></iframe>
+ 
+ 
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    // google_ad_slot = "7782329453";
+
+                    /* Learn Python Long Bottom */
+                    google_ad_slot = "7062365450";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<script type="text/javascript" src="https://www.spoj.com/banner.js"></script>
+</div>
+</div>
+<div class="span2 hidden-phone" style="margin-left: 0">
+<div id="google-ad-right">
+ 
+<div style="margin-bottom: 10px">
+<script>
+                        google_ad_client = "ca-pub-3723950136133694";
+                        google_ad_slot = "6624688330";
+                        google_ad_width = 160;
+                        google_ad_height = 600;
+                    </script>
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+</div>
+<div style="margin-bottom: 10px">
+<script type="text/javascript" src="http://ap.lijit.com/www/delivery/fpi.js?z=283190&u=learnpython&width=160&height=600"></script>
+</div>
+<div style="margin-left: 5px;">
+<a href="https://digitalocean.com/"><img src="/static/img/banners/digital-ocean.png"></a>
+</div>
+ 
+ 
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="row">
+<div class="span6">
+<h5 style="line-height: 28px">
+Code Window
+<span style="float: right;">
+<button id="run-button" class="btn btn-success" onclick="execute()"><div class="icon-play icon-white" style="padding-right: 10px"></div>Run</button>
+<button id="reset-button" onclick="reset()" class="btn btn-primary">Reset</button>
+<button id="solution-button" onclick="showSolution()" class="btn btn-primary">Solution</button>
+</span>
+</h5>
+</div>
+<div class="span6">
+<div style="width: 100%; height: 100%">
+<h5 style="line-height: 28px">
+Output Window
+<span style="float: right">
+<button id="expected-output-button" class="btn btn-primary" onclick="showExpected()">Expected Output</button>
+<button id="minimize-button" class="btn" onclick="toggleMinimize()">Minimize Code Window</button>
+</span>
+</h5>
+</div>
+</div>
+</div>  
+<div class="row" id="footer-toggle">
+<div class="span6">
+<textarea id="code" style="width: 100%; height: 210px">    #include &lt;stdio.h&gt;
+
+    void f1(int var)
+    {
+            printf(&#34;this is f1 and var is: %d\n&#34;, var);
+    }
+
+    void f2(int var)
+    {
+            printf(&#34;this is f2 and var is: %d\n&#34;, var);
+    }
+
+    void f3(int var)
+    {
+            printf(&#34;this is f3 and var is: %d\n&#34;, var);
+    }
+
+    int main()
+    {
+                /* define an array full of function pointers 
+                to the above functions, that take an `int` as 
+                their only argument */
+
+
+		int c = 0;
+		while(c &lt; 3)
+		{
+                        /* call the functions using the function pointers
+                        of the array at index `c` with `c` as an argument */
+
+			++c;
+		}
+
+	  return 0;
+    }</textarea>
+</div>
+<div class="span6">
+ 
+<div id="loading" style="">
+Executing, please wait...
+</div>
+<textarea id="output" style="width: 475px; height: 210px"></textarea>
+<div style="background: rgba(255,255,255,0.1); margin-top: -20px; text-align: right; font-size: 10px; color: white; z-index: inherit; position: relative; line-height: 20px; padding-right: 5px;">
+Powered by <a target="_blank" href="http://sphere-engine.com/">Sphere Engine &trade;</a>
+</div>
+</div>
+</div>
+</div>  
+<div class="container">
+<div class="row">
+<div class="span12">
+<div class="pull-right" style="padding-top: 3px">
+<a href="http://www.dmca.com/Protection/Status.aspx?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" title="DMCA"> <img src="/static/img/dmca_protected_sml_120ad.png?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" alt="DMCA.com"/></a>
+</div>
+<div class="copyright">Copyright &copy; Learn-C.org. Read our <a href='/tos'>Terms of Use</a> and <a href='/privacy'>Privacy Policy</a></div>
+</div>
+</div>
+</div>
+</footer>
+<script src="http://s.univide.com/t.js?pid=1&pcid=4bc296c51d653ae5517e33f5057795b0"></script>
+<script src="/static/js/codemirror/codemirror.js"></script>
+<script src="/static/js/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="/static/js/codemirror/mode/clike/clike.js"></script>
+<script src="/static/js/codemirror/mode/python/python.js"></script>
+<script src="/static/js/codemirror/mode/perl/perl.js"></script>
+<script src="/static/js/codemirror/mode/php/php.js"></script>
+<script src="/static/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/static/js/codemirror/mode/ruby/ruby.js"></script>
+<script src="/static/js/codemirror/mode/shell/shell.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22741967-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+    $(function() {
+        $("#sign-in").click(function() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/signin",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        document.location.refresh();
+                    } else {
+                        $("#status").text("E-mail or password combination invalid.")
+                    }
+                }
+            })
+        });
+
+        $("#sign-up").click(function() {
+
+        });
+    });
+</script>
+<script>
+        var domainData = {"container": "#include <stdio.h>\n\nint main() {\n{code}\nreturn 0;\n}\n", "sender": "Learn-C.org <admin@learn-c.org>", "language": "c", "twitter": "@learnc", "namespace": "learn-c.org", "language_uppercase": "C", "container_word": "main()", "styled_domain": "Learn-C.org", "analytics": "UA-22741967-3", "contact_email": "admin@learn-c.org", "copyright": "Copyright &copy; Learn-C.org. ", "logo": "/static/img/logos/learn-c.png", "support_email": "support@learn-c.org", "favicon": "favicon-learn-c.ico", "full_url": "http://learn-c.org", "container_indent": "    ", "default_code": "/* Welcome to the Interactive C Tutorial.\nStart by choosing a chapter and\nwrite your code in this window. */\n\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\");\n    return 0;\n}\n    "};
+        var nextChapter = "/en/Contributing_Tutorials";
+        var previousChapter = "/en/Pointer_Arithmetics";
+        var backChapter = "/en/Welcome";
+        var tutorialData = {"code": "    #include <stdio.h>\n\n    void f1(int var)\n    {\n            printf(\"this is f1 and var is: %d\\n\", var);\n    }\n\n    void f2(int var)\n    {\n            printf(\"this is f2 and var is: %d\\n\", var);\n    }\n\n    void f3(int var)\n    {\n            printf(\"this is f3 and var is: %d\\n\", var);\n    }\n\n    int main()\n    {\n                /* define an array full of function pointers \n                to the above functions, that take an `int` as \n                their only argument */\n\n\n\t\tint c = 0;\n\t\twhile(c < 3)\n\t\t{\n                        /* call the functions using the function pointers\n                        of the array at index `c` with `c` as an argument */\n\n\t\t\t++c;\n\t\t}\n\n\t  return 0;\n    }", "page_title": "Function Pointers", "links": [], "text": "<p>Remember pointers? We used to point to an array of chars then make a string out of them.\nThen things got more interesting when we learned how to control these pointers.\nNow it is time to do something even more interesting with pointers where we point them to functions then call these functions using a pointer.</p>\n<h3>Why point to a function?</h3>\n<p>The first question that may come to your mind is why would we use pointers to call a function when we can simply call a function by its name: <code>function();</code> - that's a great question! Now imagine the <code>sort</code> function where you need to sort an array. Sometimes you want to order array elements in an accending order or decending order. How would you choose? Function pointers!</p>\n<h3>Function Pointer Syntax</h3>\n<pre><code>void (*pf)(int);\n</code></pre>\n<p>I agree with you. This definitely is very complicated, or so you may think. Let's re-read that code and try to understand it point by point. Read it inside-out. <code>*pf</code> is the pointer to a function. <code>void</code> is the return type of that function, and finally <code>int</code> is the argument type of that function. Got it? Good.</p>\n<p>Let's insert pointers into the function pointer and try to read it again:</p>\n<pre><code>char* (*pf)(int*)\n</code></pre>\n<p>Again:\n1. <code>*pf</code> is the function pointer.\n2. <code>char*</code> is the return type of that function.\n3. <code>int*</code> is the type of the argument.</p>\n<p>Ok enough with theory. Let's get our hands dirty with some real code.\nSee this example:</p>\n<pre><code>#include &lt;stdio.h&gt;\nvoid someFunction(int arg)\n{\n    printf(\"This is someFunction being called and arg is: %d\\n\", arg);\n    printf(\"Whoops leaving the function now!\\n\");\n}\n\nmain()\n{\n    void (*pf)(int);\n    pf = &amp;someFunction;\n    printf(\"We're about to call someFunction() using a pointer!\\n\");\n    (pf)(5);\n    printf(\"Wow that was cool. Back to main now!\\n\\n\");\n}\n</code></pre>\n<p>Remember <code>sort()</code> we talked about earlier? We can do the same with it.\nInstead of ordering a set in an accending way we can do the opposite using our own comparison function as follows:</p>\n<pre><code>#include &lt;stdio.h&gt;\n#include &lt;stdlib.h&gt; //for qsort()\n\nint compare(const void* left, const void* right)\n{\n    return (*(int*)right - *(int*)left);\n    // go back to ref if this seems complicated: http://www.cplusplus.com/reference/cstdlib/qsort/\n}\nmain()\n{\n    int (*cmp) (const void* , const void*);\n    cmp = &amp;compare;\n\n    int iarray[] = {1,2,3,4,5,6,7,8,9};\n    qsort(iarray, sizeof(iarray)/sizeof(*iarray), sizeof(*iarray), cmp);\n\n    int c = 0;\n    while (c &lt; sizeof(iarray)/sizeof(*iarray))\n    {\n        printf(\"%d \\t\", iarray[c]);\n        c++;\n    }\n}\n</code></pre>\n<p>Let's remember again. Why do we use function pointers?\n1. To allow programmers to use libraries for different usages -&gt; \"Flexibility\"</p>\n<h2>Exercise</h2>\n<p>Complete the array of pointers to functions and call each function using its pointer from the array. Array of pointers to functions? Yes you can do that!</p>", "solution": "    #include <stdio.h>\n\n    void f1(int var)\n    {\n            printf(\"this is f1 and var is: %d\\n\", var);\n    }\n\n    void f2(int var)\n    {\n            printf(\"this is f2 and var is: %d\\n\", var);\n    }\n\n    void f3(int var)\n    {\n            printf(\"this is f3 and var is: %d\\n\", var);\n    }\n\n    int main()\n    {\n\t\tvoid (*pf[])(int) = {f1, f2, f3};\n\n\t\tint c = 0;\n\t\twhile(c < 3)\n\t\t{\n\t\t\tpf[c](c);\n\t\t\t++c;\n\t\t}\n\n\t\treturn 0;\n    }", "is_tutorial": true, "previous_chapter": "Pointer_Arithmetics", "output": "this is f1 and var is: 0\nthis is f2 and var is: 1\nthis is f3 and var is: 2", "next_chapter": "Contributing_Tutorials", "back_chapter": "Welcome"};
+    </script>
+<script src="/static/js/learnpython.js"></script>
+</body>
+</html>
+

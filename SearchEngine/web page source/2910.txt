@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial – Deleting a Record from a Binary File | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial – Deleting a Record from a Binary File" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,638] -->
+<meta name="description"  content="In this C language tutorial we will build upon a previous C tutorial (Binary File I/O) where we took a quick look add binary file IO. In this tutorial we will" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial – Deleting a Record from a Binary File Comments Feed" href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial – Call by Value or Call by Reference' href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference' />
+<link rel='next' title='C Tutorial – Splitting a Text File into Multiple Files' href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=1302' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-1302">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">
+		C Tutorial – Deleting a Record from a Binary File</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C language tutorial we will build upon a <a href="http://www.codingunit.com/c-tutorial-binary-file-io" title="C Tutorial Binary File IO">previous C tutorial (Binary File I/O)</a> where we took a quick look add binary file IO. In this tutorial we will take a look at how to delete a certain record (found by name) from a binary file and how to read/write a record(s) from or to a binary file. So let&#8217;s start!<span id="more-1302"></span></p>
+<p>First take a look at the following source code (don&#8217;t get overwhelmed we will explain everything below):</p>
+<div id="cl">
+<pre><code>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+struct person {
+    char *name;
+    int code;
+    int number;
+};
+
+int createBinFile(char *fname) {
+	FILE *fp;
+	struct person newrecord;
+
+	// Open for binary writing
+	fp=fopen(fname,"wb");
+	if (!fp) {
+		printf("Unable to open file!");
+		return -1;
+	}
+
+	// Just write three records, so we have
+	// something to play with. Normally you would
+	// do this with a loop and/or user input!
+
+	newrecord.name="aaa bbbb";
+	newrecord.code=12345;
+	newrecord.number=1;
+	fwrite(&#038;newrecord, sizeof(struct person), 1, fp);
+	
+	newrecord.name="cc ddd";
+	newrecord.code=1234578;
+	newrecord.number=2;
+	fwrite(&#038;newrecord, sizeof(struct person), 1, fp);
+
+	newrecord.name="eeee ffffff";
+	newrecord.code=123456;
+	newrecord.number=3;
+	fwrite(&#038;newrecord, sizeof(struct person), 1, fp);
+
+	fclose(fp);
+	return 0;
+}
+
+int readBinFile(char *fname) {
+	FILE *fp;
+	struct person myrecord;
+
+	fp=fopen(fname,"rb");
+	if (!fp) {
+		printf("Unable to open file!");
+		return -1;
+	}
+
+	printf("The following records are in the binary file %s:\n", fname);
+	while (fread(&#038;myrecord,sizeof(struct person),1,fp) != NULL) {
+		printf("%s\n", myrecord.name);
+		printf("%d\n", myrecord.code);
+		printf("%d\n\n", myrecord.number);
+	}
+	fclose(fp);
+	return 0;
+}
+
+int deleteRecordByName(char *fname, char *searchname) {
+	FILE *fp;
+	FILE *fp_tmp;
+	int found=0;
+	struct person myrecord;
+
+	fp=fopen(fname, "rb");
+	if (!fp) {
+		printf("Unable to open file %s", fname);
+		return -1;
+	}
+	fp_tmp=fopen("tmp.bin", "wb");
+	if (!fp_tmp) {
+		printf("Unable to open file temp file.");
+		return -1;
+	}
+	
+	while (fread(&#038;myrecord,sizeof(struct person),1,fp) != NULL) {
+		if (strcmp (searchname, myrecord.name) == 0) {
+			printf("A record with requested name found and deleted.\n\n");
+			found=1;
+		} else {
+			fwrite(&#038;myrecord, sizeof(struct person), 1, fp_tmp);
+		}
+	}
+	if (! found) {
+		printf("No record(s) found with the requested name: %s\n\n", searchname);
+	}
+
+	fclose(fp);
+	fclose(fp_tmp);
+
+	remove(fname);
+	rename("tmp.bin", fname);
+
+	return 0;
+}
+
+int main() {
+	int result, errno;
+
+	// Setup a new file on each run.
+	result = createBinFile("test.bin");
+	if(result == -1) {
+		perror("Error creating bin file!");
+		exit(1);
+	}
+
+	result = readBinFile("test.bin");
+	if(result == -1) {
+		perror("Error reading bin file!");
+		exit(1);
+	}
+
+	result = deleteRecordByName("test.bin", "cc ddd");
+	if(result == -1) {
+		perror("Error deleting record!");
+		exit(1);
+	}
+
+	result = readBinFile("test.bin");
+	if(result == -1) {
+		perror("Error reading bin file!");
+		exit(1);
+	}
+
+	return 0;
+}
+
+</code></pre>
+</div>
+<p>First we include some libraries that we need. Then a structure is created with three members (or fields) called name, code and number. The rest of the program are functions, which are: createBinFile(), readBinFile(), deleteRecordByName() and main(). We will walk through them step by step.</p>
+<h2>createBinFile()</h2>
+<p>The first function we will look at is the createBinFile() function which is used to make a binary file which has the same three records every-time. This way we can created a new file at will. Let&#8217;s look at what we are doing in this function.</p>
+<p>First we see that the function takes one parameter, which is a file-name (fname). Then a file pointer is created (FILE *fp;) and a variable newrecord of the struct type person (struct person newrecord;). A file is opened for writing to a binary file (wb in the fopen statement) and some error handling is done if we can&#8217;t open the file.</p>
+<p>In the following three statements we add some values to the record and record is written to the file. Below you&#8217;ll see an example of such a write block (in the fwrite statement we say: write the content of newrecord with the size of struct person to the open file):</p>
+<div id="cl">
+<pre><code>
+	newrecord.name="aaa bbbb";
+	newrecord.code=12345;
+	newrecord.number=1;
+	fwrite(&#038;newrecord, sizeof(struct person), 1, fp);
+
+</code></pre>
+</div>
+<p>In the fwrite statement we say: write the content of newrecord with the size of struct person to the open file.</p>
+<p>The last two things that are done in the createBinFile() function is to close the file and return zero.</p>
+<h2>readBinFile()</h2>
+<p>In the readBinFile() function we will read all the records in the file (that is given to the function as function parameter fname). <strong>Note:</strong> there is no checking done to see if the given binary file contains valid records that can be read by this function. So if you give some random binary file, the program will crash!</p>
+<p>With all those things said, let&#8217;s take a look what is done in this function. First a file pointer is created and variable myrecord of the struct type person. Then a file is opened (filename is function parameter fname) for reading (some simple error handling is done).</p>
+<p>The while statement will run until there are no more records to read. In the fread statement we say: read a record with the size of struct person from a file pointed by fp. For each record we print each member.</p>
+<p>The last two things that are done in the readBinFile() function is to close the file and return zero.</p>
+<h2>deleteRecordByName()</h2>
+<p>The function deleteRecordByName() needs two function parameters, a filename and a struct member name (or record name). First we make two file pointers (fp and fp_tmp), a integer found and variable myrecord of the struct type person.</p>
+<p>Then two files are opened (and there is also some basic error handling done): one for reading and one for writing. The first file that is opened for reading should be the same file we created in createBinFile() function. The second file (the one that is opened for writing) is used to write records too that are NOT the one we are looking for. The reading and compare is done in the following block:</p>
+<div id="cl">
+<pre><code>
+	while (fread(&#038;myrecord,sizeof(struct person),1,fp) != NULL) {
+		if (strcmp (searchname, myrecord.name) == 0) {
+			printf("A record with requested name found and deleted.\n\n");
+			found=1;
+		} else {
+			fwrite(&#038;myrecord, sizeof(struct person), 1, fp_tmp);
+		}
+	}
+	if (! found) {
+		printf("No record(s) found with the requested name: %s\n\n", searchname);
+	}
+</code></pre>
+</div>
+<p>The while loop will read records until there are no more records in the file. Then a simple test is done to see if the given name (function parameter searchname) matched the record (member) name that just have been read. If the two strings are matching a message is printed on the screen and the variable found is set to 1. If two strings don&#8217;t match the record will be written to the temporary file (pointed to by file pointer fp_tmp and which has the name tmp.bin). If the while loop has ended and there is no match found (found will still be zero) a message is printed that says that there are no records found with that name.</p>
+<p>So at the end of the while loop we have a new file with all the records that didn&#8217;t match our search record. The last steps we then have to do is: closing the files, deleting the old file (that is still containing the records with a certain name) and renaming the temporary file (tmp.bin) to the old file name. This way we have a file without certain records. </p>
+<p><strong>Note:</strong> we could have given a example where everything is read in memory, then the record is removed in memory and the result is then written back over the file. This would be a smart option if the file does not contain large amounts of records. The delete and rename method will also work for a very large file which contains large amounts of records (as long as you have enough disk-space of course).</p>
+<h2>main()</h2>
+<p>In the main() function the other functions we just described are called and for each call some error handling is done (perror is used to print a message in case of an error). First we make the binary file with the three records by calling createBinFile(&#8220;test.bin&#8221;). Then the content of the binary file is read and displayed on the screen by calling readBinFile(&#8220;test.bin&#8221;). Then we want to delete one record with the name &#8220;cc ddd&#8221;, which is in this case the middle record of the three records. This is done by calling deleteRecordByName(&#8220;test.bin&#8221;, &#8220;cc ddd&#8221;). The last thing we do is calling readBinFile(&#8220;test.bin&#8221;) function again, to show the results of the deleteRecordByName() action.</p>
+<p>Output of the program will look like this:</p>
+<div id="cl">
+<pre><code>
+    The following records are in the binary file test.bin:
+    aaa bbbb
+    12345
+    1
+
+    cc ddd
+    1234578
+    2
+
+    eeee ffffff
+    123456
+    3
+
+    A record with requested name found and deleted.
+
+    The following records are in the binary file test.bin:
+    aaa bbbb
+    12345
+    1
+
+    eeee ffffff
+    123456
+    3
+
+</code></pre>
+</div>
+<p>Three records are displayed. Then the second record is &#8220;deleted&#8221;. Last action is displaying the records in test.bin again to show that the record is removed.</p>
+<p>That is all for this tutorial. We hope you enjoyed the tutorial and that it is inspiring you to expand source example, maybe by adding updateRecord or addRecord, and so on. Play with the example, that is the only way to learn!</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial – Deleting a Record from a Binary File http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There is currently one response to &#8220;C Tutorial – Deleting a Record from a Binary File&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-6738">
+
+            			<cite>Rodolfo</cite> on <small>April 19th, 2013</small>:
+			
+			<p>There is a problem in this program. Someone would think that all data is being saved in disk, however the char array pointed by the field name (name is a pointer!) is not being saved. One solution is to declare the structure person with the field name of type array of char with a fixed length&#8230;<br />
+e.g.<br />
+struct person {<br />
+    char name[100];<br />
+    int code;<br />
+    int number;<br />
+};</p>
+<p>The assignments have to change accordingly<br />
+strcpy(newrecord.name, &#8220;aaaa bbbbb  ccccc&#8221;);</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.615 seconds. -->
+</body>
+</html>
+

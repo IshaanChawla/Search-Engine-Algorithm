@@ -1,0 +1,652 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; Searching for Strings in a Text File | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; Searching for Strings in a Text File" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,642] -->
+<meta name="description"  content="In this C language tutorial we will show you how to search for a string in a text files. We will make use of command-line input, fopen or fopen_c and system to" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; Searching for Strings in a Text File Comments Feed" href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Reference  String Operation: strstr()' href='http://www.codingunit.com/c-reference-string-h-string-operation-strstr' />
+<link rel='next' title='Unary and Binary Operator Table' href='http://www.codingunit.com/unary-and-binary-operator-table' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=1038' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-1038">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">
+		C Tutorial &#8211; Searching for Strings in a Text File</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C language tutorial we will show you how to search for a string in a text files. We will make use of command-line input, fopen or fopen_c and system to clear the screen. Make sure that you have read and understand the following tutorial <strong><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" title="C tutorial File I/O using Text Files">C tutorial File I/O using Text Files</a></strong> before you continue this one. Add the end of the tutorial you can download the source code of this tutorial.</p>
+<p>We start this C language tutorial with some include statements. To make use of strings in your program you need to make sure that you include the header file string.h<br />
+<span id="more-1038"></span></p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;string.h&gt;
+
+</code></pre>
+</div>
+<p>Now that we have the right headers files included we can start with our main function:</p>
+<div id="cl">
+<pre><code>
+//Our main function.
+int main(int argc, char *argv[]) {
+	int result, errno;
+
+	if(argc &lt; 3 || argc &gt; 3) {
+		Usage(argv[0]);
+		exit(1);
+	}
+
+	//Use system("cls") on windows
+	//Use system("clear") on Unix/Linux
+	system("cls");
+
+	result = Search_in_File(argv[1], argv[2]);
+	if(result == -1) {
+		perror("Error");
+		printf("Error number = %d\n", errno);
+		exit(1);
+	}
+	return(0);
+}
+
+</code></pre>
+</div>
+<p>Because we want to write a program that can that can be used over and over, we need to make sure that all the variables we need, such as filename and the search-string, can be inputted at the command-line. This why we use int main(int argc, char *argv[]).</p>
+<p>We also want to make sure that we get a proper usage message, if the command-line options are not inputted correctly. This is done in the first if statement. We just say if the command-line parameters are smaller or larger than three, display our usage function and exit the program. (Note: that the first command-line parameter is the program itself.) </p>
+<p>To read more on command-line parsing read the following tutorials: <strong><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" title="First look at command line parsing and function prototyping">C Tutorial – More on Functions</a></strong> and <strong><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" title="Command Line Parameter Parsing">C Tutorial – Command Line Parameter Parsing</a></strong>.</p>
+<p>With the system(“cls”) function on windows and system(“clear”) function on Unix/Linux we can clear our screen, so we can display the results on a fresh screen. The <strong><a href="http://www.codingunit.com/c-reference-stdlib-h-function-system" title="system() function reference">system() function</a></strong> can execute a system specific command.</p>
+<p>The actual work is done in the next statement where we call a second function called Search_in_File that uses our command-line input. The results are captured to do some basic error-handling in the if statement that follows. If everything went alright the program will return 0.</p>
+<p>Now we know that we have to add two functions: Usage() and Search_in_File().<br />
+Let&#8217;s start with the easiest one:</p>
+<div id="cl">
+<pre><code>
+void Usage(char *filename) {
+	printf("Usage: %s &lt;file&gt; &lt;string&gt;\n", filename);
+	printf("%s version 1.0 \nCopyright(c) CodingUnit.com\n", filename);
+}
+
+</code></pre>
+</div>
+<p>When we called the Usage() function in main() we inputted the program name, like so:</p>
+<div id="cl">
+<pre><code>
+Usage(argv[0]);
+
+</code></pre>
+</div>
+<p>So we have to make sure that our Usage() function can accept this parameter. (In this case a char pointer.) The rest of the Usage() function are just some simple print statements.</p>
+<p>The next function we need to make is a little more complex and is the function where the actual work is done, the Search_in_File() function.</p>
+<div id="cl">
+<pre><code>
+int Search_in_File(char *fname, char *str) {
+	FILE *fp;
+	int line_num = 1;
+	int find_result = 0;
+	char temp[512];
+	
+	//gcc users
+	//if((fp = fopen(fname, "r")) == NULL) {
+	//	return(-1);
+	//}
+
+	//Visual Studio users
+	if((fopen_s(&#038;fp, fname, "r")) != NULL) {
+		return(-1);
+	}
+
+	while(fgets(temp, 512, fp) != NULL) {
+		if((strstr(temp, str)) != NULL) {
+			printf("A match found on line: %d\n", line_num);
+			printf("\n%s\n", temp);
+			find_result++;
+		}
+		line_num++;
+	}
+
+	if(find_result == 0) {
+		printf("\nSorry, couldn't find a match.\n");
+	}
+	
+	//Close the file if still open.
+	if(fp) {
+		fclose(fp);
+	}
+   	return(0);
+}
+
+</code></pre>
+</div>
+<p>When we called the function Search_in_File() function in main() we parsed the text file-name and string to search for to our function. So our function needs to except to parameters, in this case some char pointers.</p>
+<p>So let&#8217;s look at what we need to do in our search function: we need to open a file, get the content of the file, compare the content to our string, we need to print the results (good or bad) and we don&#8217;t want to forget to close the file that we&#8217;ve opened.</p>
+<p>OK, let&#8217;s start with opening a text file for reading. As you can see in the source code example we can use fopen() to open a file (or fopen_s() function if we use visual studio, to get rid off the fopen() function deprecated warning. Note that fopen_s can only be used on windows systems!) What we say in the if statement is: open a file (read-only) and parse the result to our file-pointer. If the result is no good, return -1.</p>
+<p>Next the while loop where most of the work is done. With fgets() we get the content of the file, line by line. In the if statement we use the <strong><a href="http://www.codingunit.com/c-reference-string-h-string-operation-strstr" title="strstr function reference">strstr() function</a></strong> to search for our string in the content we fetched from the file. If we found a match we display line-number, line and we increase find_result with one. The while loop will continue until we reach the end of the file.</p>
+<p>The next if statement checks if find_result is still, if is, we display the message that nothing is found.</p>
+<p>Before we exit the Search_in_File function we close the file we&#8217;ve opened in the last if statement.</p>
+<p>And there you have it, a complete source code example to search for a string in a file. Just download the <strong><a href="http://www.codingunit.com/source-code/searchstringinfile.zip" title="source code">source code for this tutorial</a></strong>. We have included a sample text file to search in. </p>
+<p>Just compile the example with your favorite compiler and run the following command:</p>
+<div id="cl">
+<pre><code>
+     searchstringinfile test.txt Ipsum
+
+</code></pre>
+</div>
+<p>That&#8217;s all for this C language tutorial.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; Searching for Strings in a Text File http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 13 responses to &#8220;C Tutorial &#8211; Searching for Strings in a Text File&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-965">
+
+            			<cite>reta</cite> on <small>June 16th, 2010</small>:
+			
+			<p>Thank you very much this is very good tutorial it is help me</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-966">
+
+            			<cite>reta</cite> on <small>June 17th, 2010</small>:
+			
+			<p>hi again<br />
+how can develope this code to search the whole string not part of it<br />
+for example to search &#8220;desktop publishing software&#8221;<br />
+the output must match the whole sentence not only &#8216;desktop&#8221; or &#8220;software&#8221; &#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-967">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>June 17th, 2010</small>:
+			
+			<p>To find a string of multiple words you can do the following (on windows tested):</p>
+<p>c:\project\debug\main.exe test.txt &#8220;simply dummy text&#8221;<br />
+A match found on line: 1<br />
+Lorum Ipsum is simply dummy text of &#8230;&#8230;etc</p>
+<p>So put your string between &#8220;&#8221; , like &#8220;your search text&#8221; and it groups the words as one string.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3350">
+
+            			<cite>SB</cite> on <small>April 5th, 2011</small>:
+			
+			<p>Very good and simple tutorail to quickly understand. good job.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3454">
+
+            			<cite><a href='http://www.pointcalls.com' rel='external nofollow' class='url'>jeeko</a></cite> on <small>May 26th, 2011</small>:
+			
+			<p>useful tutorial</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3840">
+
+            			<cite><a href='http://www.ikiar.ca' rel='external nofollow' class='url'>Greg</a></cite> on <small>October 11th, 2011</small>:
+			
+			<p>Okay, so that is all well and good, but:<br />
+If there is more than one occurrence on the same line, i.e. if the file to be read is a .c file, and a function prototype as follows: int function(int alpha, int omega); &#8230; The code above would simply return one occurrence. Any ideas on a solution for that?<br />
+Thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5559">
+
+            			<cite>Sanjay</cite> on <small>November 22nd, 2012</small>:
+			
+			<p>Is there any way to update the file data in C language eg. In file(Data.txt) is having : aaaa,111,0|bbbb,2222,0|cccc,333,0|</p>
+<p>and if i want to remove the Data like: bbbb,2222,0|</p>
+<p>After removing file should contains only: aaaa,111,0|cccc,333,0|</p>
+<p>Please provide some example to achive this task.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5560">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>November 22nd, 2012</small>:
+			
+			<p>@Sanjay: take a look at our c-tutorial <a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" title="C Tutorial deleting a record from a binary file" rel="nofollow">deleting a record from a binary file (also read and write record)</a> for something similar (although the example is a binary file and not a text file). </p>
+<p>In your case you can do something similar by making a struct (with your needed data types), then loop through all records to find a certain match, change it (go back one record) and write new values (or use a temporary file and do something similar as is done in the delete record from binary example).</p>
+<p>Hope it helps!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6466">
+
+            			<cite>Sören</cite> on <small>February 8th, 2013</small>:
+			
+			<p>Hi there!<br />
+First of all, thanks for the code, it helped me quite a lot.<br />
+I have a question though.. How can i change the code so that i can see the char number too?<br />
+Like: &#8220;Hello World, what a beautiful day&#8221;<br />
+Searching for what should give me: [1][14] (if i counted correctly).</p>
+<p>Thanks.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6550">
+
+            			<cite>only</cite> on <small>February 26th, 2013</small>:
+			
+			<p>thank you veruy much.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6655">
+
+            			<cite>Mary</cite> on <small>March 25th, 2013</small>:
+			
+			<p>This is a great example.  Just curious why 512 was selected for the array size.  Is that the assumed max record length?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9090">
+
+            			<cite>kousik</cite> on <small>November 23rd, 2013</small>:
+			
+			<p>thank you&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9285">
+
+            			<cite>Ahmed</cite> on <small>December 21st, 2013</small>:
+			
+			<p>I like this tutorial but the issue is, i dont understand the d/f b/w file fname and Filename, which of the two represent my TextFile, which contained the word i want search?</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 26 queries. 0.649 seconds. -->
+</body>
+</html>
+

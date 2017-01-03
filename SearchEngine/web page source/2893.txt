@@ -1,0 +1,878 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; More on Pointers | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; More on Pointers" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,622] -->
+<meta name="description"  content="In the previous C programming language tutorial we looked at the fundamentals of pointers. In this C tutorial we will look at some specifics of pointers." />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-more-on-pointers" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; More on Pointers Comments Feed" href="http://www.codingunit.com/c-tutorial-more-on-pointers/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; How to use Pointers' href='http://www.codingunit.com/c-tutorial-how-to-use-pointers' />
+<link rel='next' title='C Tutorial &#8211; strings and string Library Functions' href='http://www.codingunit.com/c-tutorial-strings-and-string-library-functions' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=198' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-198">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">
+		C Tutorial &#8211; More on Pointers</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In the previous <a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" title="How to use pointers in C language">C programming language tutorial we looked at the fundamentals of pointers</a>. In this C tutorial we will look at some specifics of pointers.</p>
+<h2>Initialize a pointer</h2>
+<p>Before you can use a pointer in for instance a printf statement, you have to initialize the pointer.<br />
+The following example will not initialize the pointer:<span id="more-198"></span></p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	int main(void) {
+		int *ptr_p;
+		printf("%d\n",*ptr_p);
+                return 0;
+	}
+
+</code></pre>
+</div>
+<p>In this example we print the value that ptr_p points to. However, we did not initialize the pointer. In this case the pointer contains a random address or 0.</p>
+<p>The result of this program is a segmentation fault, some other run-time error or the random address is printed.<br />
+The meaning of a segmentation fault is that you have used a pointer that points to an invalid address. In most cases, a pointer that is not initialized or a wrong pointer address is the cause of segmentation faults. The next example demonstrates the correct usage of pointers:</p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	int main(void)	{
+		int x;
+		int *ptr_p;
+		x = 5;
+                ptr_p = &amp;x;
+		printf("%d\n", *ptr_p);
+                return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> If you forget to place * (in front of the pointer) in the printf statement, you will print the address of integer x. (Try it!).</p>
+<h2>Pointers as function arguments</h2>
+<p>The <a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" title="C Tutorial Call by Value or Call by Reference">C language is a &#8220;call by value&#8221; language</a>, which means that the called function is given a copy of its arguments, and doesn&#8217;t know their addresses. (For example myfunction(x) call is given, the value of x is passed, not its address). This makes it impossible to change the value of x from the inside of the function (myfunction).</p>
+<p><strong>Note:</strong> With an array this is not a problem. If x is an array (char x[10]) then x is is an address anyway.</p>
+<p>Take a look at the following example, which will illustrate the problem:</p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	void swapping(int c, int d) {
+		int tmp;
+		tmp = c;
+		c = d;
+		d = tmp;
+		printf("In function: %d %d\n", c , d);
+	}
+
+	int main(void) {
+		int a,b;
+
+		a=5;
+		b=10;
+		printf("input: %d %d\n", a, b);
+		swapping(a,b);
+		printf("output: %d %d\n", a, b);
+                return 0;
+	}
+
+</code></pre>
+</div>
+<p>In the example the values of the parameters are swapped in the function swapping. But when the function returns nothing will happen. The result is that the values are not swapped. (<strong>Try it!</strong>).</p>
+<p>Pointers can be used to get around the &#8220;call by value&#8221; restriction. In the next example we will use pointers to correct the problem:</p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	void swapping(int *ptr_c, int *ptr_d) {
+		int tmp;
+
+		tmp = *ptr_c;
+		*ptr_c = *ptr_d;
+		*ptr_d = tmp;
+		printf("In function: %d %d\n", *ptr_c , *ptr_d);
+	}
+
+	int main(void) {
+		int a,b;
+
+		a=5;
+		b=10;
+		printf("input: %d %d\n", a, b);
+		swapping(&amp;a,&amp;b);
+		printf("output: %d %d\n", a, b);
+                return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> Don&#8217;t forget to replace &#8220;swapping(a,b);&#8221; for swapping(&amp;a,&amp;b);&#8221;. </p>
+<h2>Pointing to the same address</h2>
+<p>There is no limit on the number of pointers that can point to the same address.</p>
+<div id="cl">
+<pre><code>
+
+	#include&lt;stdio.h&gt;
+
+	int main() {
+		int a;
+		int *ptr_b , *ptr_c, *ptr_d;
+
+		ptr_b = &amp;a;
+		ptr_c = &amp;a;
+		ptr_d = ptr_b;
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> The variable a now had four names: a, *ptr_b, *ptr_c and *ptr_d .</p>
+<h2>Pointers and arrays</h2>
+<p>The C language allows pointer addition and subtraction. Let&#8217;s take a look at this example:</p>
+<div id="cl">char array[10];</p>
+<pre><code>
+char *ptr_toarray = &amp;array[0];
+
+</code></pre>
+</div>
+<p>In this example we declare an array with ten elements. Then we declare that the pointer *ptr_toarray is the same as array[0] (the same as the first element of the array). Now we could do the following (<strong>note the placing of the parentheses</strong>): </p>
+<div id="cl">
+<pre><code>
+*(ptr_toarray + 2);
+
+</code></pre>
+</div>
+<p>This is the same as array[2]. So you can see, the C language allows arithmetic&#8217;s. But remember to place the parentheses very carefully. ( *(ptr_toarray + 2); is something different then *(ptr_toarray) + 2; ).</p>
+<h2>Pointers and common errors</h2>
+<p>In this paragraph we will talk about some common errors that can occur with pointers.</p>
+<p><strong>1) Pointers that are not initialized</strong><br />
+If a pointer is not initialized, a pointer will point to a random memory location. For example:</p>
+<div id="cl">
+<pre><code>
+     int *A;
+     *A = 5;
+
+</code></pre>
+</div>
+<p>When we declare pointer A, it will point to a random memory address. The pointer could point to memory of program code space, system stack etc, etc. (We don&#8217;t know). Then we say *A = 5; the program will try to write the value five at the random location A is pointing to. The program may crash right away, run for an hour and crash, corrupt data or nothing will happen. The result cannot be predicted. So always initialize pointers.</p>
+<p><strong>2) Invalid pointer reference</strong><br />
+We have two pointers, A and B. A is initialized and B is not. If we say &#8220;A=B;&#8221;, pointer A points<br />
+to a random memory address (remember B is not initialized). Now any reference to *p is now an invalid pointer reference.</p>
+<p><strong>3) NULL pointers: run-time error and segmentation fault </strong><br />
+The NULL pointer has a reserved value in the C and C++ language (very often the value zero but not necessarily). It indicates that it refers to nothing. A NULL pointer should not be confused with an uninitialized pointer. Because it refers to nothing, an attempt to dereference a NULL pointer can cause a run-time error (or often in C programs a segmentation fault).</p>
+<p>That&#8217;s all for this tutorial. </p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-more-on-pointers/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; More on Pointers http://www.codingunit.com/c-tutorial-more-on-pointers" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 32 responses to &#8220;C Tutorial &#8211; More on Pointers&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-3732">
+
+            			<cite>anand</cite> on <small>August 24th, 2011</small>:
+			
+			<p>ohh its great..  !!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3735">
+
+            			<cite>Ranjan Kaliya</cite> on <small>August 26th, 2011</small>:
+			
+			<p>excellent man..you Rock!!<br />
+this was really very very easy to understand the concept of pointers..<br />
+good explanation. <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3847">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>Ankit Srivastava</a></cite> on <small>October 13th, 2011</small>:
+			
+			<p>it is so useful for the beginners.<br />
+Good</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3858">
+
+            			<cite>Keith Thompson</cite> on <small>October 16th, 2011</small>:
+			
+			<p>The correct declaration for the main function in C is &#8220;int main(void)&#8221;, *not*, &#8220;void main()&#8221;.  gcc warns about this for good reason.  (Compilers might accept &#8220;void main()&#8221;, but they&#8217;re not required to; the behavior is undefined.)</p>
+<p>Please fix.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3859">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>October 16th, 2011</small>:
+			
+			<p>@Keith Thompson: You are right. Made the changes on this page.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4094">
+
+            			<cite>Casey</cite> on <small>November 8th, 2011</small>:
+			
+			<p>A great Resource for intro to C.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5085">
+
+            			<cite>ajay malik</cite> on <small>July 14th, 2012</small>:
+			
+			<p>best undertanding  for pointer</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5105">
+
+            			<cite>sairam</cite> on <small>July 22nd, 2012</small>:
+			
+			<p>char *ptr_toarray = &amp;array[0];</p>
+<p>can any one tell why &amp; is there before array[0] ?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5130">
+
+            			<cite>Hemant love</cite> on <small>July 27th, 2012</small>:
+			
+			<p>nice</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5167">
+
+            			<cite><a href='http://NUL' rel='external nofollow' class='url'>SYED MEHER ALI SHAH</a></cite> on <small>August 9th, 2012</small>:
+			
+			<p>loved your tutorial &#8230;.! <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5211">
+
+            			<cite><a href='https://dl.dropbox.com/u/91864815/My%20site/index.html' rel='external nofollow' class='url'>maaz sheikh</a></cite> on <small>August 19th, 2012</small>:
+			
+			<p>nice work ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5235">
+
+            			<cite>sat</cite> on <small>August 28th, 2012</small>:
+			
+			<p>@sairam :</p>
+<p>Just consider &#8216;*&#8217; equivalent to &#8216;value present at address&#8217; and &#8216;&amp;&#8217; equivalent to &#8216;address of&#8217; &#8230;u&#8217;d get the answer</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5421">
+
+            			<cite><a href='http://www.codingunit.com/c-tutorial-how-to-use-pointers' rel='external nofollow' class='url'>arti</a></cite> on <small>October 15th, 2012</small>:
+			
+			<p>thank u sir&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5544">
+
+            			<cite>preet</cite> on <small>November 20th, 2012</small>:
+			
+			<p>thanku sirjii u really helped me a lotttt</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5981">
+
+            			<cite>Ranga</cite> on <small>January 9th, 2013</small>:
+			
+			<p>Suprb.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6178">
+
+            			<cite><a href='http://www.codingunit.com/c-tutorial-more-on-pointers' rel='external nofollow' class='url'>Giri</a></cite> on <small>January 17th, 2013</small>:
+			
+			<p>its nice and understandable&#8230; but i want more</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6409">
+
+            			<cite>sahu</cite> on <small>February 1st, 2013</small>:
+			
+			<p>thnks&#8230;vry well explanation of pointers<br />
+ plz also provide TUTORIAL ON =&gt;&gt;<br />
+&#8220;POINTERS WITH ARRAY&#8221; and &#8220;POINTER WITH STRINGS&#8221;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6419">
+
+            			<cite>Bill</cite> on <small>February 2nd, 2013</small>:
+			
+			<p>This was especially useful because you explained all the little details that make functions/pointers/variables work.  I.e., using &#8216;*&#8217; and &#8216;&amp;&#8217; where needed.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6427">
+
+            			<cite>uko</cite> on <small>February 3rd, 2013</small>:
+			
+			<p>excellent, excellent ,excellent.<br />
+you demystified pointers for my c exams tommorow.<br />
+a very big thnk you.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6473">
+
+            			<cite>roya</cite> on <small>February 8th, 2013</small>:
+			
+			<p>like!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6531">
+
+            			<cite>RIT</cite> on <small>February 22nd, 2013</small>:
+			
+			<p>I am confused in the swapping example..</p>
+<p>when u write swapping(&amp;a,&amp;b) in the main fun, it means swapping(address of a, address of b);<br />
+so, the address of a and b are the arguments which will be sent to the swapping function.<br />
+Now, the swapping function is called<br />
+void swapping(int *ptr_c, int *ptr_d)</p>
+<p>The address of a is assigned to *ptr_c and address of b is assigned to *ptr_d.<br />
+How is that possible?????????????</p>
+<p>In other examples you have shown that first assign the address of the variable to the pointer variable and deference it later.<br />
+ for exaple:    x = 5;<br />
+                ptr_p = &amp;x;<br />
+		printf(&#8220;%d\n&#8221;, *ptr_p);</p>
+<p>why don&#8217;t you do the same thing while passing the address of a and b to the swapping function and then deference the pointer later.<br />
+you are passing the address of a to *ptr_c and address of b to *ptr_d<br />
+shouldn&#8217;t it be address of a to ptr_c and address of b to ptr_d and then deference later on.</p>
+<p>Would it possible for you to explain this.</p>
+<p>Thanks in advance!<br />
+RIT</p>
+<p>p.s. your tutorials are very good. thanks for putting it for free.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6613">
+
+            			<cite>Pelzmaster</cite> on <small>March 17th, 2013</small>:
+			
+			<p>@RIT<br />
+He is not dereferencing the pointers in void swapping(int *ptr_c, int *ptr_d), he is defining them. For example look at the first example:<br />
+	#include</p>
+<p>	int main(void) {<br />
+		int *ptr_p;              &lt;= in this line he is defining the pointer, like he does in the funktion<br />
+		printf(&quot;%d\n&quot;,*ptr_p);<br />
+                return 0;<br />
+	}</p>
+<p>Correct me, if i&#039;m not right.</p>
+<p>Pelzmaster</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6620">
+
+            			<cite>anjali</cite> on <small>March 18th, 2013</small>:
+			
+			<p>it is really good.it is very useful to recollect pointers concept<br />
+thank u very much..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6745">
+
+            			<cite>Badrajith</cite> on <small>April 22nd, 2013</small>:
+			
+			<p>Your explanation for arithmetic operations is not working in VC++ Express 2012. Correct solution should be *(ptr_toarray) + 2;. For *(ptr_toarray + 2) VC++ shows the memory address (maybe 2 added to the address) of the *(ptr_toarray).</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6937">
+
+            			<cite>Getahun</cite> on <small>May 25th, 2013</small>:
+			
+			<p>it is very nice way of explaination for beginners,i realy like it.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7010">
+
+            			<cite>sahil</cite> on <small>June 1st, 2013</small>:
+			
+			<p>great job!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7052">
+
+            			<cite>Mano</cite> on <small>June 8th, 2013</small>:
+			
+			<p>thankx boss&#8230;&#8230;&#8230;.!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7195">
+
+            			<cite>vivek</cite> on <small>June 29th, 2013</small>:
+			
+			<p>@badrajith</p>
+<p>*(ptr)+2=*ptr+2&#8230;&#8230;it will give u the value at taht address +2<br />
+whilst *(ptr+2) will give u some location (+2 to the previous location)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7215">
+
+            			<cite>Chance</cite> on <small>July 2nd, 2013</small>:
+			
+			<p>Awesome!! Thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7912">
+
+            			<cite>durva</cite> on <small>September 10th, 2013</small>:
+			
+			<p>superbbbbbb&#8230;&#8230;tanks a lot sir</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8029">
+
+            			<cite>Arjun</cite> on <small>October 1st, 2013</small>:
+			
+			<p>Oh man that&#8217;s gr8 yaar..<br />
+we rock<br />
+teacher shocked&#8230;. :-!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9052">
+
+            			<cite>mahesh</cite> on <small>November 13th, 2013</small>:
+			
+			<p>this is very nice tutorial for beginner.</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.694 seconds. -->
+</body>
+</html>
+

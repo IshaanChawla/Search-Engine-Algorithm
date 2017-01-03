@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Linked lists - Learn C - Free Interactive C Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="description" content="Learn-C.org is a free interactive C tutorial for people who want to learn C, fast."/>
+<meta name="keywords" content="Learn,C,Tutorial,Interactive,Free"/>
+<meta name="google-site-verification" content="cXWj61RCtO3fVP24Y7CO-nX0ba30tgdJYY8GGBactLI"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Linked lists - Learn C - Free Interactive C Tutorial"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://learn-c.org/"/>
+<meta property="og:image" content="http://learn-c.org/static/img/logos/learn-c.png"/>
+<link rel="stylesheet" href="/static/css/codemirror.css">
+<link rel="stylesheet" href="/static/css/theme/monokai.css">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/learnpython.css"/>
+<script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-static-top" style="margin-bottom: 10px">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href="/" style="padding: 4px 10px"><img src="/static/img/logos/learn-c.png" style="height: 32px;"/></a>
+<div class="social hidden-phone" style="margin-top: 10px; display: inline-block; float: left">
+ 
+<div class="addthis_toolbox addthis_default_style " style="width: 400px; margin-left: 20px">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">
+                    var addthis_config = {"data_track_clickback":true};
+                    var addthis_share = {"url": "http://learn-c.org" };
+                </script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dafdfe6039782b1"></script>
+ 
+ 
+</div>
+<ul class="nav pull-right">
+<li><a href="/about">About</a></li>
+ 
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="span8">
+<ul class="nav nav-pills">
+<li><a href="http://www.learnpython.org">Python</a></li>
+<li><a href="http://www.learnjavaonline.org">Java</a></li>
+<li class="active"><a href="http://www.learn-c.org">C</a></li>
+ 
+<li><a href="http://www.learn-js.org">JavaScript</a></li>
+<li><a href="http://www.learn-php.org">PHP</a></li>
+<li><a href="http://www.learnshell.org">Shell</a></li>
+<li><a href="http://www.learncs.org">C#</a></li>
+ 
+<li><a href="/recruit-coders-jobs">Jobs</a></li>
+</ul>
+</div>
+<div class="span4">
+<ul class="nav nav-pills pull-right">
+<li><a href="/de/"><img src="/static/img/flags/de.png"/></a></li>
+<li class="active"><a href="/en/"><img src="/static/img/flags/en.png"/></a></li>
+<li><a href="/pl/"><img src="/static/img/flags/pl.png"/></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container" id="main">
+<div class="row">
+<div class="span10" style="padding-right: 10px; box-sizing: border-box;">
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    google_ad_slot = "7782329453";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<ul class="breadcrumb" style="margin-top: 10px">
+<li><a href="/en/Welcome">Welcome</a> <span class="divider">/</span></li>
+<li class="active">Linked lists</li>
+</ul>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn pull-left" href="/en/Recursion"> <i class="icon-chevron-left"></i> Previous Tutorial</a>
+<a class="btn pull-right" href="/en/Binary_trees">Next Tutorial <i class="icon-chevron-right"></i></a>
+</div>
+<span id="inner-text">
+<h1>Linked lists</h1>
+<h3>Introduction</h3>
+<p>Linked lists are the best and simplest example of a dynamic data structure that uses pointers for its implementation.
+However, understanding pointers is crucial to understanding how linked lists work, so if you've skipped the pointers
+tutorial, you should go back and redo it. You must also be familiar with dynamic memory allocation and structures.</p>
+<p>Essentially, linked lists function as an array that can grow and shrink as needed, from any point in the array.</p>
+<p>Linked lists have a few advantages over arrays:</p>
+<ol>
+<li>Items can be added or removed from the middle of the list</li>
+<li>There is no need to define an initial size</li>
+</ol>
+<p>However, linked lists also have a few disadvantages:</p>
+<ol>
+<li>There is no "random" access - it is impossible to reach the nth item in the array without first iterating over
+all items up until that item. This means we have to start from the beginning of the list and count how many times
+we advance in the list until we get to the desired item.</li>
+<li>Dynamic memory allocation and pointers are required, which complicates the code and increases the risk of
+memory leaks and segment faults.</li>
+<li>Linked lists have a much larger overhead over arrays, since linked list items are dynamically allocated (which
+is less efficient in memory usage) and each item in the list also must store an additional pointer.</li>
+</ol>
+<h3>What is a linked list?</h3>
+<p>A linked list is a set of dynamically allocated nodes, arranged in such a way that each node contains one value
+and one pointer. The pointer always points to the next member of the list. If the pointer is NULL, then it is
+the last node in the list.</p>
+<p>A linked list is held using a local pointer variable which points to the first item of the list. If that pointer
+is also NULL, then the list is considered to be empty.</p>
+<pre><code>    ------------------------------              ------------------------------
+    |              |             |            \ |              |             |
+    |     DATA     |     NEXT    |--------------|     DATA     |     NEXT    |
+    |              |             |            / |              |             |
+    ------------------------------              ------------------------------
+</code></pre>
+<p>Let's define a linked list node:</p>
+<pre><code>typedef struct node {
+    int val;
+    struct node * next;
+} node_t;
+</code></pre>
+<p>Notice that we are defining the struct in a recursive manner, which is possible in C. Let's name our node type <code>node_t</code>.</p>
+<p>Now we can use the nodes. Let's create a local variable which points to the first item of the list (called <code>head</code>).</p>
+<pre><code>node_t * head = NULL;
+head = malloc(sizeof(node_t));
+if (head == NULL) {
+    return 1;
+}
+
+head-&gt;val = 1;
+head-&gt;next = NULL;
+</code></pre>
+<p>We've just created the first variable in the list. We must set the value, and the next item to be empty, if we want
+to finish populating the list. Notice that we should always check if malloc returned a NULL value or not.</p>
+<p>To add a variable to the end of the list, we can just continue advancing to the next pointer:</p>
+<pre><code>node_t * head = NULL;
+head = malloc(sizeof(node_t));
+head-&gt;val = 1;
+head-&gt;next = malloc(sizeof(node_t));
+head-&gt;next-&gt;val = 2;
+head-&gt;next-&gt;next = NULL;
+</code></pre>
+<p>This can go on and on, but what we should actually do is advance to the last item of the list, until the <code>next</code> variable
+will be <code>NULL</code>.</p>
+<h3>Iterating over a list</h3>
+<p>Let's build a function that prints out all the items of a list. To do this, we need to use a <code>current</code> pointer
+that will keep track of the node we are currently printing. After printing the value of the node, we set the <code>current</code>
+pointer to the next node, and print again, until we've reached the end of the list (the next node is NULL).</p>
+<pre><code>void print_list(node_t * head) {
+    node_t * current = head;
+
+    while (current != NULL) {
+        printf("%d\n", current-&gt;val);
+        current = current-&gt;next;
+    }
+}
+</code></pre>
+<h3>Adding an item to the end of the list</h3>
+<p>To iterate over all the members of the linked list, we use a pointer called <code>current</code>. We set it to start from the head
+and then in each step, we advance the pointer to the next item in the list, until we reach the last item.</p>
+<pre><code>void push(node_t * head, int val) {
+    node_t * current = head;
+    while (current-&gt;next != NULL) {
+        current = current-&gt;next;
+    }
+
+    /* now we can add a new variable */
+    current-&gt;next = malloc(sizeof(node_t));
+    current-&gt;next-&gt;val = val;
+    current-&gt;next-&gt;next = NULL;
+}
+</code></pre>
+<p>The best use cases for linked lists are stacks and queues, which we will now implement:</p>
+<h3>Adding an item to the beginning of the list (pushing to the list)</h3>
+<p>To add to the beginning of the list, we will need to do the following:</p>
+<ol>
+<li>Create a new item and set its value</li>
+<li>Link the new item to point to the head of the list</li>
+<li>Set the head of the list to be our new item</li>
+</ol>
+<p>This will effectively create a new head to the list with a new value, and keep the rest of the list linked to it.</p>
+<p>Since we use a function to do this operation, we want to be able to modify the head variable. To do this, we must
+pass a pointer to the pointer variable (a double pointer) so we will be able to modify the pointer itself.</p>
+<pre><code>void push(node_t ** head, int val) {
+    node_t * new_node;
+    new_node = malloc(sizeof(node_t));
+
+    new_node-&gt;val = val;
+    new_node-&gt;next = *head;
+    *head = new_node;
+}
+</code></pre>
+<h3>Removing the first item (popping from the list)</h3>
+<p>To pop a variable, we will need to reverse this action:</p>
+<ol>
+<li>Take the next item that the head points to and save it</li>
+<li>Free the head item</li>
+<li>Set the head to be the next item that we've stored on the side</li>
+</ol>
+<p>Here is the code:</p>
+<pre><code>int pop(node_t ** head) {
+    int retval = -1;
+    node_t * next_node = NULL;
+
+    if (*head == NULL) {
+        return -1;
+    }
+
+    next_node = (*head)-&gt;next;
+    retval = (*head)-&gt;val;
+    free(*head);
+    *head = next_node;
+
+    return retval;
+}
+</code></pre>
+<h3>Removing the last item of the list</h3>
+<p>Removing the last item from a list is very similar to adding it to the end of the list, but with one big exception -
+since we have to change one item before the last item, we actually have to look two items ahead and see if the next
+item is the last one in the list:</p>
+<pre><code>int remove_last(node_t * head) {
+    int retval = 0;
+    /* if there is only one item in the list, remove it */
+    if (head-&gt;next == NULL) {
+        head-&gt;val
+        free(head);
+        head = NULL;
+        return retval;
+    }
+
+    node_t * current = head;
+
+    while (current-&gt;next-&gt;next != NULL) {
+        current = current-&gt;next;
+    }
+}
+</code></pre>
+<h3>Removing a specific item</h3>
+<p>To remove a specific item from the list, either by its index from the beginning of the list or by its value, we will
+need to go over all the items, continuously looking ahead to find out if we've reached the node before the item
+we wish to remove. This is because we need to change the location to where the previous node points to as well.</p>
+<p>Here is the algorithm:</p>
+<ol>
+<li>Iterate to the node before the node we wish to delete</li>
+<li>Save the node we wish to delete in a temporary pointer</li>
+<li>Set the previous node's next pointer to point to the node after the node we wish to delete</li>
+<li>Delete the node using the temporary pointer</li>
+</ol>
+<p>There are a few edge cases we need to take care of, so make sure you understand the code.</p>
+<pre><code>int remove_by_index(node_t ** head, int n) {
+    int i = 0;
+    int retval = -1;
+    node_t * current = *head;
+    node_t * temp_node = NULL;
+
+    if (n == 0) {
+        return pop(head);
+    }
+
+    for (int i = 0; i &lt; n-1; i++) {
+        if (current-&gt;next == NULL) {
+            return -1;
+        }
+        current = current-&gt;next;
+    }
+
+    temp_node = current-&gt;next;
+    retval = temp_node-&gt;val;
+    current-&gt;next = temp_node-&gt;next;
+    free(temp_node);
+
+    return retval;
+
+}
+</code></pre>
+<h2>Exercise</h2>
+<p>You must implement the function <code>remove_by_value</code> which receives a double pointer to the head and removes the first
+item in the list which has the value <code>val</code>.</p>
+</span>
+<button id="start-exercise" class="btn btn-success" onclick="toggleMinimize(true)"><div class="icon-play icon-white" style="padding-right: 10px"></div> Start Exercise</button>
+<script>
+                $(function(){
+                    toggleMinimize();
+                })
+            </script>
+<hr/>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn btn-primary pull-left" href="/en/Recursion"><i class="icon-chevron-left icon-white"></i> Previous Tutorial</a>
+<a class="btn btn-primary pull-right" href="/en/Binary_trees">Next Tutorial <i class="icon-chevron-right icon-white"></i></a>
+</div>
+<hr/>
+<div class="hidden-phone">
+ 
+ 
+<iframe src="https://www.skillfeed.com/related_courses?border=yes&search=yes&title=Related Tutorials&head=center&keyword=c%20programming&affiliate_code=67577" width="800" height="255" frameborder="0" style="margin-left: -10px"></iframe>
+ 
+ 
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    // google_ad_slot = "7782329453";
+
+                    /* Learn Python Long Bottom */
+                    google_ad_slot = "7062365450";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<script type="text/javascript" src="https://www.spoj.com/banner.js"></script>
+</div>
+</div>
+<div class="span2 hidden-phone" style="margin-left: 0">
+<div id="google-ad-right">
+ 
+<div style="margin-bottom: 10px">
+<script>
+                        google_ad_client = "ca-pub-3723950136133694";
+                        google_ad_slot = "6624688330";
+                        google_ad_width = 160;
+                        google_ad_height = 600;
+                    </script>
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+</div>
+<div style="margin-bottom: 10px">
+<script type="text/javascript" src="http://ap.lijit.com/www/delivery/fpi.js?z=283190&u=learnpython&width=160&height=600"></script>
+</div>
+<div style="margin-left: 5px;">
+<a href="https://digitalocean.com/"><img src="/static/img/banners/digital-ocean.png"></a>
+</div>
+ 
+ 
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="row">
+<div class="span6">
+<h5 style="line-height: 28px">
+Code Window
+<span style="float: right;">
+<button id="run-button" class="btn btn-success" onclick="execute()"><div class="icon-play icon-white" style="padding-right: 10px"></div>Run</button>
+<button id="reset-button" onclick="reset()" class="btn btn-primary">Reset</button>
+<button id="solution-button" onclick="showSolution()" class="btn btn-primary">Solution</button>
+</span>
+</h5>
+</div>
+<div class="span6">
+<div style="width: 100%; height: 100%">
+<h5 style="line-height: 28px">
+Output Window
+<span style="float: right">
+<button id="expected-output-button" class="btn btn-primary" onclick="showExpected()">Expected Output</button>
+<button id="minimize-button" class="btn" onclick="toggleMinimize()">Minimize Code Window</button>
+</span>
+</h5>
+</div>
+</div>
+</div>  
+<div class="row" id="footer-toggle">
+<div class="span6">
+<textarea id="code" style="width: 100%; height: 210px">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct node {
+    int val;
+    struct node * next;
+} node_t;
+
+void print_list(node_t * head) {
+    node_t * current = head;
+
+    while (current != NULL) {
+        printf(&#34;%d\n&#34;, current-&gt;val);
+        current = current-&gt;next;
+    }
+}
+
+int pop(node_t ** head) {
+    int retval = -1;
+    node_t * next_node = NULL;
+
+    if (*head == NULL) {
+        return -1;
+    }
+
+    next_node = (*head)-&gt;next;
+    retval = (*head)-&gt;val;
+    free(*head);
+    *head = next_node;
+
+    return retval;
+}
+
+int remove_by_value(node_t ** head, int val) {
+    /* TODO: fill in your code here */
+}
+
+int main() {
+
+    node_t * test_list = malloc(sizeof(node_t));
+    test_list-&gt;val = 1;
+    test_list-&gt;next = malloc(sizeof(node_t));
+    test_list-&gt;next-&gt;val = 2;
+    test_list-&gt;next-&gt;next = malloc(sizeof(node_t));
+    test_list-&gt;next-&gt;next-&gt;val = 3;
+    test_list-&gt;next-&gt;next-&gt;next = malloc(sizeof(node_t));
+    test_list-&gt;next-&gt;next-&gt;next-&gt;val = 4;
+    test_list-&gt;next-&gt;next-&gt;next-&gt;next = NULL;
+
+    remove_by_value(&amp;test_list, 3);
+
+    print_list(test_list);
+}</textarea>
+</div>
+<div class="span6">
+ 
+<div id="loading" style="">
+Executing, please wait...
+</div>
+<textarea id="output" style="width: 475px; height: 210px"></textarea>
+<div style="background: rgba(255,255,255,0.1); margin-top: -20px; text-align: right; font-size: 10px; color: white; z-index: inherit; position: relative; line-height: 20px; padding-right: 5px;">
+Powered by <a target="_blank" href="http://sphere-engine.com/">Sphere Engine &trade;</a>
+</div>
+</div>
+</div>
+</div>  
+<div class="container">
+<div class="row">
+<div class="span12">
+<div class="pull-right" style="padding-top: 3px">
+<a href="http://www.dmca.com/Protection/Status.aspx?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" title="DMCA"> <img src="/static/img/dmca_protected_sml_120ad.png?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" alt="DMCA.com"/></a>
+</div>
+<div class="copyright">Copyright &copy; Learn-C.org. Read our <a href='/tos'>Terms of Use</a> and <a href='/privacy'>Privacy Policy</a></div>
+</div>
+</div>
+</div>
+</footer>
+<script src="http://s.univide.com/t.js?pid=1&pcid=7a563adcab1c8abae2a022f00e43bb20"></script>
+<script src="/static/js/codemirror/codemirror.js"></script>
+<script src="/static/js/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="/static/js/codemirror/mode/clike/clike.js"></script>
+<script src="/static/js/codemirror/mode/python/python.js"></script>
+<script src="/static/js/codemirror/mode/perl/perl.js"></script>
+<script src="/static/js/codemirror/mode/php/php.js"></script>
+<script src="/static/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/static/js/codemirror/mode/ruby/ruby.js"></script>
+<script src="/static/js/codemirror/mode/shell/shell.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22741967-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+    $(function() {
+        $("#sign-in").click(function() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/signin",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        document.location.refresh();
+                    } else {
+                        $("#status").text("E-mail or password combination invalid.")
+                    }
+                }
+            })
+        });
+
+        $("#sign-up").click(function() {
+
+        });
+    });
+</script>
+<script>
+        var domainData = {"container": "#include <stdio.h>\n\nint main() {\n{code}\nreturn 0;\n}\n", "sender": "Learn-C.org <admin@learn-c.org>", "language": "c", "twitter": "@learnc", "namespace": "learn-c.org", "language_uppercase": "C", "container_word": "main()", "styled_domain": "Learn-C.org", "analytics": "UA-22741967-3", "contact_email": "admin@learn-c.org", "copyright": "Copyright &copy; Learn-C.org. ", "logo": "/static/img/logos/learn-c.png", "support_email": "support@learn-c.org", "favicon": "favicon-learn-c.ico", "full_url": "http://learn-c.org", "container_indent": "    ", "default_code": "/* Welcome to the Interactive C Tutorial.\nStart by choosing a chapter and\nwrite your code in this window. */\n\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\");\n    return 0;\n}\n    "};
+        var nextChapter = "/en/Binary_trees";
+        var previousChapter = "/en/Recursion";
+        var backChapter = "/en/Welcome";
+        var tutorialData = {"code": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct node {\n    int val;\n    struct node * next;\n} node_t;\n\nvoid print_list(node_t * head) {\n    node_t * current = head;\n\n    while (current != NULL) {\n        printf(\"%d\\n\", current->val);\n        current = current->next;\n    }\n}\n\nint pop(node_t ** head) {\n    int retval = -1;\n    node_t * next_node = NULL;\n\n    if (*head == NULL) {\n        return -1;\n    }\n\n    next_node = (*head)->next;\n    retval = (*head)->val;\n    free(*head);\n    *head = next_node;\n\n    return retval;\n}\n\nint remove_by_value(node_t ** head, int val) {\n    /* TODO: fill in your code here */\n}\n\nint main() {\n\n    node_t * test_list = malloc(sizeof(node_t));\n    test_list->val = 1;\n    test_list->next = malloc(sizeof(node_t));\n    test_list->next->val = 2;\n    test_list->next->next = malloc(sizeof(node_t));\n    test_list->next->next->val = 3;\n    test_list->next->next->next = malloc(sizeof(node_t));\n    test_list->next->next->next->val = 4;\n    test_list->next->next->next->next = NULL;\n\n    remove_by_value(&test_list, 3);\n\n    print_list(test_list);\n}", "page_title": "Linked lists", "links": [], "text": "<h3>Introduction</h3>\n<p>Linked lists are the best and simplest example of a dynamic data structure that uses pointers for its implementation.\nHowever, understanding pointers is crucial to understanding how linked lists work, so if you've skipped the pointers\ntutorial, you should go back and redo it. You must also be familiar with dynamic memory allocation and structures.</p>\n<p>Essentially, linked lists function as an array that can grow and shrink as needed, from any point in the array.</p>\n<p>Linked lists have a few advantages over arrays:</p>\n<ol>\n<li>Items can be added or removed from the middle of the list</li>\n<li>There is no need to define an initial size</li>\n</ol>\n<p>However, linked lists also have a few disadvantages:</p>\n<ol>\n<li>There is no \"random\" access - it is impossible to reach the nth item in the array without first iterating over\nall items up until that item. This means we have to start from the beginning of the list and count how many times\nwe advance in the list until we get to the desired item.</li>\n<li>Dynamic memory allocation and pointers are required, which complicates the code and increases the risk of\nmemory leaks and segment faults.</li>\n<li>Linked lists have a much larger overhead over arrays, since linked list items are dynamically allocated (which\nis less efficient in memory usage) and each item in the list also must store an additional pointer.</li>\n</ol>\n<h3>What is a linked list?</h3>\n<p>A linked list is a set of dynamically allocated nodes, arranged in such a way that each node contains one value\nand one pointer. The pointer always points to the next member of the list. If the pointer is NULL, then it is\nthe last node in the list.</p>\n<p>A linked list is held using a local pointer variable which points to the first item of the list. If that pointer\nis also NULL, then the list is considered to be empty.</p>\n<pre><code>    ------------------------------              ------------------------------\n    |              |             |            \\ |              |             |\n    |     DATA     |     NEXT    |--------------|     DATA     |     NEXT    |\n    |              |             |            / |              |             |\n    ------------------------------              ------------------------------\n</code></pre>\n<p>Let's define a linked list node:</p>\n<pre><code>typedef struct node {\n    int val;\n    struct node * next;\n} node_t;\n</code></pre>\n<p>Notice that we are defining the struct in a recursive manner, which is possible in C. Let's name our node type <code>node_t</code>.</p>\n<p>Now we can use the nodes. Let's create a local variable which points to the first item of the list (called <code>head</code>).</p>\n<pre><code>node_t * head = NULL;\nhead = malloc(sizeof(node_t));\nif (head == NULL) {\n    return 1;\n}\n\nhead-&gt;val = 1;\nhead-&gt;next = NULL;\n</code></pre>\n<p>We've just created the first variable in the list. We must set the value, and the next item to be empty, if we want\nto finish populating the list. Notice that we should always check if malloc returned a NULL value or not.</p>\n<p>To add a variable to the end of the list, we can just continue advancing to the next pointer:</p>\n<pre><code>node_t * head = NULL;\nhead = malloc(sizeof(node_t));\nhead-&gt;val = 1;\nhead-&gt;next = malloc(sizeof(node_t));\nhead-&gt;next-&gt;val = 2;\nhead-&gt;next-&gt;next = NULL;\n</code></pre>\n<p>This can go on and on, but what we should actually do is advance to the last item of the list, until the <code>next</code> variable\nwill be <code>NULL</code>.</p>\n<h3>Iterating over a list</h3>\n<p>Let's build a function that prints out all the items of a list. To do this, we need to use a <code>current</code> pointer\nthat will keep track of the node we are currently printing. After printing the value of the node, we set the <code>current</code>\npointer to the next node, and print again, until we've reached the end of the list (the next node is NULL).</p>\n<pre><code>void print_list(node_t * head) {\n    node_t * current = head;\n\n    while (current != NULL) {\n        printf(\"%d\\n\", current-&gt;val);\n        current = current-&gt;next;\n    }\n}\n</code></pre>\n<h3>Adding an item to the end of the list</h3>\n<p>To iterate over all the members of the linked list, we use a pointer called <code>current</code>. We set it to start from the head\nand then in each step, we advance the pointer to the next item in the list, until we reach the last item.</p>\n<pre><code>void push(node_t * head, int val) {\n    node_t * current = head;\n    while (current-&gt;next != NULL) {\n        current = current-&gt;next;\n    }\n\n    /* now we can add a new variable */\n    current-&gt;next = malloc(sizeof(node_t));\n    current-&gt;next-&gt;val = val;\n    current-&gt;next-&gt;next = NULL;\n}\n</code></pre>\n<p>The best use cases for linked lists are stacks and queues, which we will now implement:</p>\n<h3>Adding an item to the beginning of the list (pushing to the list)</h3>\n<p>To add to the beginning of the list, we will need to do the following:</p>\n<ol>\n<li>Create a new item and set its value</li>\n<li>Link the new item to point to the head of the list</li>\n<li>Set the head of the list to be our new item</li>\n</ol>\n<p>This will effectively create a new head to the list with a new value, and keep the rest of the list linked to it.</p>\n<p>Since we use a function to do this operation, we want to be able to modify the head variable. To do this, we must\npass a pointer to the pointer variable (a double pointer) so we will be able to modify the pointer itself.</p>\n<pre><code>void push(node_t ** head, int val) {\n    node_t * new_node;\n    new_node = malloc(sizeof(node_t));\n\n    new_node-&gt;val = val;\n    new_node-&gt;next = *head;\n    *head = new_node;\n}\n</code></pre>\n<h3>Removing the first item (popping from the list)</h3>\n<p>To pop a variable, we will need to reverse this action:</p>\n<ol>\n<li>Take the next item that the head points to and save it</li>\n<li>Free the head item</li>\n<li>Set the head to be the next item that we've stored on the side</li>\n</ol>\n<p>Here is the code:</p>\n<pre><code>int pop(node_t ** head) {\n    int retval = -1;\n    node_t * next_node = NULL;\n\n    if (*head == NULL) {\n        return -1;\n    }\n\n    next_node = (*head)-&gt;next;\n    retval = (*head)-&gt;val;\n    free(*head);\n    *head = next_node;\n\n    return retval;\n}\n</code></pre>\n<h3>Removing the last item of the list</h3>\n<p>Removing the last item from a list is very similar to adding it to the end of the list, but with one big exception -\nsince we have to change one item before the last item, we actually have to look two items ahead and see if the next\nitem is the last one in the list:</p>\n<pre><code>int remove_last(node_t * head) {\n    int retval = 0;\n    /* if there is only one item in the list, remove it */\n    if (head-&gt;next == NULL) {\n        head-&gt;val\n        free(head);\n        head = NULL;\n        return retval;\n    }\n\n    node_t * current = head;\n\n    while (current-&gt;next-&gt;next != NULL) {\n        current = current-&gt;next;\n    }\n}\n</code></pre>\n<h3>Removing a specific item</h3>\n<p>To remove a specific item from the list, either by its index from the beginning of the list or by its value, we will\nneed to go over all the items, continuously looking ahead to find out if we've reached the node before the item\nwe wish to remove. This is because we need to change the location to where the previous node points to as well.</p>\n<p>Here is the algorithm:</p>\n<ol>\n<li>Iterate to the node before the node we wish to delete</li>\n<li>Save the node we wish to delete in a temporary pointer</li>\n<li>Set the previous node's next pointer to point to the node after the node we wish to delete</li>\n<li>Delete the node using the temporary pointer</li>\n</ol>\n<p>There are a few edge cases we need to take care of, so make sure you understand the code.</p>\n<pre><code>int remove_by_index(node_t ** head, int n) {\n    int i = 0;\n    int retval = -1;\n    node_t * current = *head;\n    node_t * temp_node = NULL;\n\n    if (n == 0) {\n        return pop(head);\n    }\n\n    for (int i = 0; i &lt; n-1; i++) {\n        if (current-&gt;next == NULL) {\n            return -1;\n        }\n        current = current-&gt;next;\n    }\n\n    temp_node = current-&gt;next;\n    retval = temp_node-&gt;val;\n    current-&gt;next = temp_node-&gt;next;\n    free(temp_node);\n\n    return retval;\n\n}\n</code></pre>\n<h2>Exercise</h2>\n<p>You must implement the function <code>remove_by_value</code> which receives a double pointer to the head and removes the first\nitem in the list which has the value <code>val</code>.</p>", "solution": "#include <stdio.h>\n#include <stdlib.h>\n\ntypedef struct node {\n    int val;\n    struct node * next;\n} node_t;\n\nvoid print_list(node_t * head) {\n    node_t * current = head;\n\n    while (current != NULL) {\n        printf(\"%d\\n\", current->val);\n        current = current->next;\n    }\n}\n\nint pop(node_t ** head) {\n    int retval = -1;\n    node_t * next_node = NULL;\n\n    if (*head == NULL) {\n        return -1;\n    }\n\n    next_node = (*head)->next;\n    retval = (*head)->val;\n    free(*head);\n    *head = next_node;\n\n    return retval;\n}\n\nint remove_by_value(node_t ** head, int val) {\n    int i = 0;\n    int retval = -1;\n    node_t * current = *head;\n    node_t * temp_node = NULL;\n\n\n    if ((*head)->val == val) {\n        return pop(head);\n    }\n\n    while (current->next->val != val) {\n        if (current->next == NULL) {\n            return -1;\n        }\n        current = current->next;\n    }\n\n    temp_node = current->next;\n    retval = temp_node->val;\n    current->next = temp_node->next;\n    free(temp_node);\n\n    return retval;\n\n}\n\nint main() {\n\n    node_t * test_list = malloc(sizeof(node_t));\n    test_list->val = 1;\n    test_list->next = malloc(sizeof(node_t));\n    test_list->next->val = 2;\n    test_list->next->next = malloc(sizeof(node_t));\n    test_list->next->next->val = 3;\n    test_list->next->next->next = malloc(sizeof(node_t));\n    test_list->next->next->next->val = 4;\n    test_list->next->next->next->next = NULL;\n\n    remove_by_value(&test_list, 3);\n\n    print_list(test_list);\n}", "is_tutorial": true, "previous_chapter": "Recursion", "output": "1\n2\n4", "next_chapter": "Binary_trees", "back_chapter": "Welcome"};
+    </script>
+<script src="/static/js/learnpython.js"></script>
+</body>
+</html>
+

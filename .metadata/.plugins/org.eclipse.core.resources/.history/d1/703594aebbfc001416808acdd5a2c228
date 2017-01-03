@@ -1,0 +1,47 @@
+import java.io.*;
+public class Files 
+{
+	public static void main(String[] args)
+	{
+		String newpath = new String("./new.txt");
+		String block = new String("acdf 1001");
+		try
+		{
+			BufferedReader br = new BufferedReader(new FileReader(newpath));
+			String line = new String();
+			StringBuilder sb = new StringBuilder();
+			int z = 0,num = 0;
+			while((line = br.readLine()) != null)
+			{
+				int i = 0,y = 0;
+				while(line.charAt(i) != ' ')
+					i++;
+				y = Integer.parseInt(line.substring(i+1));
+				if(y<23 && z == 0)
+				{
+					z=1;
+					sb.append("\n" + block);
+				}
+				if(num != 0)
+					sb.append("\n" + line);
+				else
+				{
+					num = 1;
+					sb.append(line);
+				}
+			}
+			if(z == 0)
+				sb.append("\n" + block);
+			br.close();
+			PrintWriter out = new PrintWriter(newpath);
+			out.print(sb);
+			out.close();
+
+		 }
+		 catch(Exception e)
+		 {
+			 System.out.println(e);
+		 };
+	}
+	
+}

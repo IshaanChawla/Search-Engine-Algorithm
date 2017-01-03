@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Register a New User</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Register a New User with PHP and MySql</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing User Authentication tutorial. The first 
+  part is here: <a href="php14p1.html">User Authentication</a> along with all 
+  the files you need. </i></p>
+<p>&nbsp;</p>
+<p>If the user is new to the site, and wants to sign up, you can add a link to 
+  a &quot;sign up&quot; page. Open up your <b>signup.php</b> page, and you'll 
+  see some code already there. We'll now walk you through what it all does.</p>
+<p>When you open up the code for the <b>signup.php</b> page, you'll see quite 
+  a lot of it is code that you've already met. It starts with the function that 
+  checks for dangerous SQL characters. Then we check that the form has been POSTED. 
+  The next lines are these:</p>
+<P class="indent_big">$uname = $_POST['username'];<br>
+  $pword = $_POST['password'];</P>
+<p class="indent_big">$uname = htmlspecialchars($uname);<br>
+  $pword = htmlspecialchars($pword);</p>
+<p>We're just getting the username and password from the form, like we did before, 
+  and then checking it for unwanted tags. The next thing you need to do, though, 
+  is test that the username and password are of the correct length. You don't 
+  want a malicious user trying to inject megabytes of text!</p>
+<P class="indent_small">$uLength = strlen($uname);<br>
+  $pLength = strlen($pword);</P>
+<p class="indent_small">if ($uLength &gt;= 10 &amp;&amp; $uLength &lt;= 20) {</p>
+<p class="indent_big">$errorMessage = &quot;&quot;;</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">$errorMessage = $errorMessage . &quot;Username must be between 
+  10 and 20 characters&quot; . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_small">}</p>
+<p class="indent_small">if ($pLength &gt;= 8 &amp;&amp; $pLength &lt;= 16) {</p>
+<p class="indent_big">$errorMessage = &quot;&quot;;</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">$errorMessage = $errorMessage . &quot;Password must be between 
+  8 and 16 characters&quot; . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_small">}</p>
+<p>What we're doing here is using the inbuilt function <b>strlen</b>( ) to get 
+  the length of the string. We then use if .. else statements to check that the 
+  username and password are between certain values. If they are ok, the variable 
+  called <b>$errorMessage</b> is left blank. If they are not ok, we add some text 
+  for the error message.</p>
+<p>Before checking the username and password against the database, we can check 
+  to see if the error message is blank:</p>
+<p class="TextIndent3">if ($errorMessage == &quot;&quot;) {</p>
+<p class="TextIndent3">}</p>
+<p>If it's blank, then everything is ok. In which case the rest of the code is 
+  executed. If it's not OK, then the user will see the text of the error message 
+  displayed.</p>
+<p>Inside of the if statement for the error message check, we just set up the 
+  database code like we did before:</p>
+<P class="indent_big">$user_name = &quot;root&quot;;<br>
+  $pass_word = &quot;&quot;;<br>
+  $database = &quot;login&quot;;<br>
+  $server = &quot;127.0.0.1&quot;;</P>
+<p class="indent_big">$db_handle = mysql_connect($server, $user_name, $pass_word);<br>
+  $db_found = mysql_select_db($database, $db_handle);</p>
+<p class="indent_big">if ($db_found) {</p>
+<p class="indent_big">}</p>
+<p>We're just checking that the database can be found. If it is, then we need 
+  to check if the username has already been taken:</p>
+<P class="indent_big">$SQL = &quot;SELECT * FROM login WHERE L1 = $uname&quot;;<br>
+  $result = mysql_query($SQL);<br>
+  $num_rows = mysql_num_rows($result);</P>
+<p class="indent_big">if ($num_rows &gt; 0) {</p>
+<p class="indent_bigger">$errorMessage = &quot;Username already taken&quot;;</p>
+<p class="indent_big">} <br>
+  else {</p>
+<p><span class="indent_big">}</span></p>
+<P>The code attempts to select all the records from the table where a match with 
+  the username is found. (L1 is the name of the username field in the table.) 
+  If any records are returned, then the variable called <b>$num_rows</b> will 
+  be greater than zero. We check the value of <b>$num_rows</b> in an if ... else 
+  statement. </P>
+<p>If the username has already been taken, then we can add something to the error 
+  message variable. (But there are security considerations to bear in mind here. 
+  Do you really want to tell a malicious user that a username has already been 
+  taken? If it's for a forum, then it's ok: the malicious user can simply read 
+  usernames from forum posts. But in that case, perhaps we shouldn't be using 
+  a username to log people in?)</p>
+<p>If the value in the variable $num_rows is still zero, then we can go ahead 
+  and add the user to the database:</p>
+<p class="TextIndent3">$SQL = &quot;INSERT INTO login (L1, L2) VALUES ($uname, 
+  $pword)&quot;;</p>
+<p class="TextIndent3">$result = mysql_query($SQL);</p>
+<p class="TextIndent3">mysql_close($db_handle);</p>
+<p>Here, we use the SQL command INSERT INTO to add a new record to the database.</p>
+<p>After the user has been added to the database, we can then set the session 
+  variable:</p>
+<p class="indent_big">session_start();<br>
+  $_SESSION['login'] = &quot;1&quot;;</p>
+<P>The session variable called <b>login</b> will be set to 1. This means that 
+  the user can then start using the site straight away. In fact, we redirect them 
+  to a different page on the site:</P>
+<P class="indent_big">header (&quot;Location: page1.php&quot;);</P>
+<P>Our new user is now a member!<br>
+</P>
+<p>In the final part of this User Authentication walkthrough, we'll take a look 
+  at some other things you'll need to consider.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php14p4.html">&lt;-- Back One Page</a> | <a href="php14p6.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

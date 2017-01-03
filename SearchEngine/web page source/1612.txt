@@ -1,0 +1,1366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>7.13 &#8212; Command line arguments &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 7.13 &#8212; Command line arguments Comments Feed" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"122.199.199.21","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/713-command-line-arguments\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='12.6 &#8212; Pure virtual functions, abstract base classes, and interface classes' href='http://www.learncpp.com/cpp-tutorial/126-pure-virtual-functions-abstract-base-classes-and-interface-classes/' />
+<link rel='next' title='7.14 &#8212; Ellipses (and why to avoid them)' href='http://www.learncpp.com/cpp-tutorial/714-ellipses-and-why-to-avoid-them/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=185' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="7.13 -- Command line arguments" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/" />
+<meta property="og:description" content="As you learned in the introduction to development lesson, when you compile and link your program, the compiler produces an executable file. When a program is run, execution starts at the top of the..." />
+<meta property="article:published_time" content="2008-02-16T00:06:03+00:00" />
+<meta property="article:modified_time" content="2008-02-16T00:06:03+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-185 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-185 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-185">
+						<div class="post-headline">		<h1>7.13 &#8212; Command line arguments</h1>
+		</div>		<div class="post-byline">By Alex, on February 15th, 2008</div>		<div class="post-bodycopy clearfix"><p>As you learned in the <a href="http://www.learncpp.com/cpp-tutorial/04-introduction-to-development/">introduction to development</a> lesson, when you compile and link your program, the compiler produces an executable file.  When a program is run, execution starts at the top of the function called main().  Up to this point, we&#8217;ve declared main like this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c98d743312087" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c98d743312087-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c98d743312087-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>Notice that this version of main() takes no parameters.  However, many programs need some kind of input to work with.  For example, let&#8217;s say you were writing a program called WordCount to count the number of words in a text file.  What text file should be read and processed?  The user has to have some way of telling the program which file to open.  To do this, you might take this approach:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c99d295038410" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c99d295038410-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c99d295038410-2">2</div><div class="crayon-num" data-line="crayon-555d77051c99d295038410-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c99d295038410-4">4</div><div class="crayon-num" data-line="crayon-555d77051c99d295038410-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c99d295038410-6">6</div><div class="crayon-num" data-line="crayon-555d77051c99d295038410-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c99d295038410-8">8</div><div class="crayon-num" data-line="crayon-555d77051c99d295038410-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c99d295038410-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c99d295038410-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d77051c99d295038410-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c99d295038410-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Please enter a filename: "</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051c99d295038410-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">strFilename</span><span class="crayon-sy">[</span><span class="crayon-cn">255</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c99d295038410-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">strFilename</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051c99d295038410-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c99d295038410-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// open file and process it</span></div><div class="crayon-line" id="crayon-555d77051c99d295038410-9"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0012 seconds] -->
+<p></p>
+<p>However, there is a major problem with this approach.  Every time the program is run, the program will wait for the user to enter input.  That means execution of the program can not be automated very easily.  For example, if you wanted to run this program on 500 files every week, the program would stop and wait for you to enter a new filename each and every time it was run.  And you&#8217;d have to do so by hand.</p>
+<p><strong>Command line arguments</strong></p>
+<p>For programs that have minimal and/or optional inputs, command line arguments offer a great way to make programs more modular.  <strong>Command line arguments</strong> are optional string arguments that a user can give to a program upon execution.  These arguments are passed by the operating system to the program, and the program can use them as input.</p>
+<p>Programs are normally run by invoking them by name.  On the command line, to run a program, you can simply type in its name.  For example, to run the executable file &#8220;WordCount&#8221; that is located in the root directory of the C: drive on a Windows machine, you could type:</p>
+<pre>
+C:\&gt;WordCount
+</pre>
+<p>In order to pass command line arguments to WordCount, we simply list the command line arguments after the executable name:</p>
+<pre>
+C:\&gt;WordCount Myfile.txt
+</pre>
+<p>Now when WordCount is executed, Myfile.txt will be provided as a command line argument.  A program can have multiple command line arguments, separated by spaces:</p>
+<pre>
+C:\&gt;WordCount Myfile.txt Myotherfile.txt
+</pre>
+<p>This also works for other command line operating systems, such as Linux (though your prompt and directory structure will undoubtedly vary).</p>
+<p>If you are running your program from an IDE, the IDE should provide a way to enter command line arguments.  For example, in Microsoft Visual Studio 2005, right click on your project in the solution explorer, then choose properties.  Open the &#8220;Configuration Properties&#8221; tree element, and choose &#8220;Debugging&#8221;.  In the right pane, there is a line called &#8220;Command Arguments&#8221;.  You can enter your command line arguments there for testing, and they will be automatically passed to your program when you run it.</p>
+<p>Now that you know how to provide command line arguments to a program, the next step is to access them from within our C++ program.  To do that, we use a different form of main() than we&#8217;ve seen before.  This new form of main() takes two arguments (named argc and argv by convention) as follows:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c9a7415769790" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c9a7415769790-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c9a7415769790-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>You will sometimes also see it written as:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c9ae704055526" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c9ae704055526-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c9ae704055526-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-o">*</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>Even though these are essentially the same, we prefer the first representation because it&#8217;s intuitively easier to understand.</p>
+<p><strong>argc</strong> is an integer parameter containing a count of the number of arguments passed to the program (think: argc = <b>arg</b>ument <b>c</b>ount).  argc will always be at least 1, because the first argument is always the name of the program itself!  Each command line argument the user provides will cause argc to increase by 1.</p>
+<p><strong>argv</strong> is where the actual arguments themselves are stored.  Although the declaration of argv looks intimidating, argv is really just an array of C-style strings.  The length of this array is argc.</p>
+<p>Let&#8217;s write a short program to print the value of all the command line parameters:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c9b4988820161" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-2">2</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-4">4</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-6">6</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-8">8</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-10">10</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-12">12</div><div class="crayon-num" data-line="crayon-555d77051c9b4988820161-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9b4988820161-14">14</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c9b4988820161-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-2">&nbsp;</div><div class="crayon-line" id="crayon-555d77051c9b4988820161-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d77051c9b4988820161-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-6">&nbsp;</div><div class="crayon-line" id="crayon-555d77051c9b4988820161-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"There are "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" arguments:"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-8">&nbsp;</div><div class="crayon-line" id="crayon-555d77051c9b4988820161-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Loop through each argument and print its number and value</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-o">++</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d77051c9b4988820161-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-v">nArg</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-12">&nbsp;</div><div class="crayon-line" id="crayon-555d77051c9b4988820161-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9b4988820161-14"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p>Now, when we invoke this program with the command line arguments &#8220;Myfile.txt&#8221; and &#8220;100&#8221;, the output will be as follows:</p>
+<pre>
+There are 3 arguments:
+0 C:\WordCount
+1 Myfile.txt
+2 100
+</pre>
+<p>Argument 0 is always the name of the current program being run.  Argument 1 and 2 in this case are the two command line parameters we passed in.</p>
+<p>Back to our previous example, let&#8217;s go ahead and partially write WordCount so it uses command line arguments instead of asking the user for input:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051c9bc859734032" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-2">2</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-4">4</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-6">6</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-8">8</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-10">10</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-12">12</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051c9bc859734032-14">14</div><div class="crayon-num" data-line="crayon-555d77051c9bc859734032-15">15</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051c9bc859734032-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If the user didn't provide a filename command line argument,</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// print an error and exit.</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Usage: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" &lt;Filename&gt;"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pFilename</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-13">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d77051c9bc859734032-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// open file and process it</span></div><div class="crayon-line" id="crayon-555d77051c9bc859734032-15"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0023 seconds] -->
+<p></p>
+<p>Now, when WordCount is run, it will not require any user interaction.  This means we can have a batch file, script, or even another program run WordCount many times in a row (with different command line arguments) in an automated manner.</p>
+<p>Those of you studying computer science in school (or planning on taking programming classes) may find that your professors ask you to use command line arguments to provide inputs to the program rather than using cin.  Running each student&#8217;s program (when there are 50 or 100 students) and having to type in the same filenames or inputs to test whether the program works makes for slow grading and is tedious to boot.  By using command line arguments, professors and TAs can automate the process of running the student&#8217;s programs on a preselected set of inputs, using another program to compare whether the output matches known correct output.  This can speed up the overall grading process immensely.</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/714-ellipses-and-why-to-avoid-them/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 7.14 -- Ellipses (and why to avoid them)</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter7" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/712-handling-errors-assert-cerr-exit-and-exceptions/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 7.12 -- Handling errors (assert, cerr, exit, and exceptions)</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-185" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-185" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-185" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-185" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">27 comments to 7.13 &#8212; Command line arguments</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-9268">
+		<div id="div-comment-9268" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bcb59be1dff7298745807f7fb4cfb4fa?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bcb59be1dff7298745807f7fb4cfb4fa?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">programmer in training</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-9268">
+		March 10, 2008 at 10:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=9268#respond' onclick='return addComment.moveForm( "comment-9268", "9268", "respond", "185" )' aria-label='Reply to programmer in training'> &middot; Reply</a></span>		 
+		</div>
+		<p>I though the final example is suppose to be main(int argc, char *argc) instead of just int main()??</p>
+<p>[ It is indeed.  -Alex ]</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-10208">
+		<div id="div-comment-10208" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/23f9b75b33374354c329342151f24de3?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/23f9b75b33374354c329342151f24de3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">kingyo</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-10208">
+		March 23, 2008 at 12:47 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=10208#respond' onclick='return addComment.moveForm( "comment-10208", "10208", "respond", "185" )' aria-label='Reply to kingyo'> &middot; Reply</a></span>		 
+		</div>
+		<p>Really nice job, helped me a lot&#8230;<br />
+Thank you!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-16975">
+		<div id="div-comment-16975" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8a342e14d1b6100cd6a8e1b1b834c4b4?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8a342e14d1b6100cd6a8e1b1b834c4b4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Doug</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-16975">
+		May 19, 2008 at 4:21 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=16975#respond' onclick='return addComment.moveForm( "comment-16975", "16975", "respond", "185" )' aria-label='Reply to Doug'> &middot; Reply</a></span>		 
+		</div>
+		<p>You have a GREAT site! I am using Visual Studio 2008 and it has been working great up until now.  If I use the built in &#8220;_tmain&#8221; declaration, I get 4 addresses printed. But when I use your declaration, it works perfect. What is the difference in the declarations?</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7705206de037426692" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7705206de037426692-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-2">2</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-4">4</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-6">6</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-8">8</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-10">10</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705206de037426692-12">12</div><div class="crayon-num" data-line="crayon-555d7705206de037426692-13">13</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7705206de037426692-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">_tmain</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">_TCHAR</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-2"><span class="crayon-c">//int main(int argc, char *argv[])&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-3"><span class="crayon-sy">{</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-5"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"There are "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" arguments:"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-7"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Loop through each argument and print its number and value&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-o">++</span><span class="crayon-sy">)</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nArg</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-v">nArg</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-11"><span class="crayon-h">&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705206de037426692-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp; </span></div><div class="crayon-line" id="crayon-555d7705206de037426692-13"><span class="crayon-sy">}</span><span class="crayon-h">&nbsp;&nbsp;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0029 seconds] -->
+<p></p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-17915">
+		<div id="div-comment-17915" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-17915">
+		May 30, 2008 at 4:36 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=17915#respond' onclick='return addComment.moveForm( "comment-17915", "17915", "respond", "185" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I think this has something to do with the way your program is doing character encoding.  TCHAR is a macro that can resolve to either char or wchar_t depending on whether or not you are using wide characters.  If you are using wide characters (wchar_t), then trying to use cout to print them will print addresses instead of values because it doesn&#8217;t know how to handle them.  My guess is that _tmain() is converting your command line parameters to wide character strings, but main() isn&#8217;t.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-66471">
+		<div id="div-comment-66471" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/40a4b0df164b54012f6cfaa38c06e2ea?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/40a4b0df164b54012f6cfaa38c06e2ea?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">baldo</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-66471">
+		August 17, 2009 at 6:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=66471#respond' onclick='return addComment.moveForm( "comment-66471", "66471", "respond", "185" )' aria-label='Reply to baldo'> &middot; Reply</a></span>		 
+		</div>
+		<p>In Visual Studio, _tmain is a macro that expands to wmain according and _TCHAR expands to wchar_t.<br />
+The problem is that you are using &#8216;cout&#8217; (which works with single wide strings) with a double wide string.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051fec7026018337" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051fec7026018337-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fec7026018337-2">2</div><div class="crayon-num" data-line="crayon-555d77051fec7026018337-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051fec7026018337-1"><span class="crayon-c">// This should work </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fec7026018337-2"><span class="crayon-v">wcout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d77051fec7026018337-3"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-20646">
+		<div id="div-comment-20646" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/660f8246af0d3ca1f15b111bb3c6e428?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/660f8246af0d3ca1f15b111bb3c6e428?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Astro</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-20646">
+		July 10, 2008 at 8:22 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=20646#respond' onclick='return addComment.moveForm( "comment-20646", "20646", "respond", "185" )' aria-label='Reply to Astro'> &middot; Reply</a></span>		 
+		</div>
+		<p>Should &quot;char *pFilename = argv[1];&quot; in the example above be &quot;char *pFilename = &amp;argv[1];&quot; ???? </p>
+<p>Am I confusing myself here? </p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-20692">
+		<div id="div-comment-20692" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-20692">
+		July 10, 2008 at 6:10 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=20692#respond' onclick='return addComment.moveForm( "comment-20692", "20692", "respond", "185" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>argv is of type char *argv[], which is essentially a pointer to a pointer.</p>
+<p>When we use the array index operator [] on a pointer/array, there is an implicit dereference that happens.  If argv is of type char *argv[], then argv[1] is of type char*, which is what we&#8217;ve declared pFilename as.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-30358">
+		<div id="div-comment-30358" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/535cb2aa30d291c59d7b9d64caefe213?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/535cb2aa30d291c59d7b9d64caefe213?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ben</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-30358">
+		October 20, 2008 at 6:14 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=30358#respond' onclick='return addComment.moveForm( "comment-30358", "30358", "respond", "185" )' aria-label='Reply to Ben'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;char *argv&#8221; is a pointer to a char.<br />
+But what is &#8220;char *argv[]&#8221;? Pointer to a pointer? Or do you mean pointer to C-style string?</p>
+<p>I assumed that in the case of a &#8220;Command line arguments&#8221;, the size of &#8220;*argv[]&#8221; was dynamically defined by the argument &#8220;argc&#8221;. </p>
+<p>However this program compiles but crashes when executed:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7705204b5703502982" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7705204b5703502982-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705204b5703502982-2">2</div><div class="crayon-num" data-line="crayon-555d7705204b5703502982-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705204b5703502982-4">4</div><div class="crayon-num" data-line="crayon-555d7705204b5703502982-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7705204b5703502982-6">6</div><div class="crayon-num" data-line="crayon-555d7705204b5703502982-7">7</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7705204b5703502982-1"><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-cn">4</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705204b5703502982-2"><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">4</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">++</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7705204b5703502982-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705204b5703502982-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">chTemp</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">97</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7705204b5703502982-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">*</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-v">iii</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">chTemp</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7705204b5703502982-6"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7705204b5703502982-7"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0017 seconds] -->
+<p></p>
+<p>I feel I&#8217;m getting confused.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-4 clearfix" id="comment-30906">
+		<div id="div-comment-30906" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5dec31c8034ffbeae08c44454fc730b2?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5dec31c8034ffbeae08c44454fc730b2?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">dogthinker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-30906">
+		October 24, 2008 at 8:31 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=30906#respond' onclick='return addComment.moveForm( "comment-30906", "30906", "respond", "185" )' aria-label='Reply to dogthinker'> &middot; Reply</a></span>		 
+		</div>
+		<p>Ben, your program is crashing when you are trying to use a non-constant variable to define the size of an array, which is not allowed.</p>
+<p>I think the size of the arrays here are being implicitly defined by the input (the command line parameters.) The argc parameter is simply passing us the size of the array of C-style strings - not defining them.</p>
+<p>If you want code to help you imagine what is happening, running a program with the following input:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77052039c945053161" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77052039c945053161-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77052039c945053161-1"><span class="crayon-v">C</span><span class="crayon-o">:</span><span class="crayon-e">WordCount </span><span class="crayon-v">Myfile</span><span class="crayon-sy">.</span><span class="crayon-e">txt </span><span class="crayon-v">Myotherfile</span><span class="crayon-sy">.</span><span class="crayon-v">txt</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+<p>Would give us a value for *argv[] analgous to if you used the following code:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7705203a6429548612" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7705203a6429548612-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7705203a6429548612-1"><span class="crayon-t">char</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-s">"C:&gt;WordCount"</span><span class="crayon-sy">,</span><span class="crayon-s">"Myfile.txt"</span><span class="crayon-sy">,</span><span class="crayon-s">"Myotherfile.txt"</span><span class="crayon-sy">}</span><span class="crayon-sy">;</span><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-4 clearfix" id="comment-30958">
+		<div id="div-comment-30958" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-30958">
+		October 25, 2008 at 9:41 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=30958#respond' onclick='return addComment.moveForm( "comment-30958", "30958", "respond", "185" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>char *argv[] is indeed a pointer to a pointer.  However, thinking about it like that will only lead to confusion.  Instead, think of it as an array of strings.</p>
+<p>Now, consider what an &#8220;array of strings&#8221; really is.  A string is an array of characters, so an &#8220;array of strings&#8221; is really an &#8220;array of (array of characters)&#8221;.  An array is really just a pointer, so an &#8220;array of (array of characters)&#8221; is really just a &#8220;pointer to a pointer to characters&#8221;.  And that&#8217;s exactly how argv is defined.</p>
+<p>Now, the thing to note here is that argv comes prepopulated -- that is, each string in argv[] is already pointing to its appropriate command line argument.  The size of the argv array is argc, as you state.</p>
+<p>Now, to your program.  You declare an array of 4 strings called pchTest, which is fine.  However, like all C++ basic data types, pchTest is not initialized by default.  So while pchTest points to an array of 4 strings, each of the strings is pointing to garbage memory.</p>
+<p>This is why your program crashes when you try and write a value into them -- you&#8217;re dereferencing a garbage address.</p>
+<p>Probably the best way to fix this is to dynamically allocate the strings when you need them:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d770520256444545547" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d770520256444545547-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520256444545547-2">2</div><div class="crayon-num" data-line="crayon-555d770520256444545547-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520256444545547-4">4</div><div class="crayon-num" data-line="crayon-555d770520256444545547-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520256444545547-6">6</div><div class="crayon-num" data-line="crayon-555d770520256444545547-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520256444545547-8">8</div><div class="crayon-num" data-line="crayon-555d770520256444545547-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d770520256444545547-1"><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-cn">4</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520256444545547-2"><span class="crayon-st">for</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">4</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-o">++</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d770520256444545547-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520256444545547-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">chTemp</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">97</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">iii</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d770520256444545547-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-v">iii</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// allocate string with room for 1 char</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520256444545547-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">*</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-v">iii</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">chTemp</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d770520256444545547-7"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-v">iii</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520256444545547-8"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">delete </span><span class="crayon-v">pchTest</span><span class="crayon-sy">[</span><span class="crayon-v">iii</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// deallocate string</span></div><div class="crayon-line" id="crayon-555d770520256444545547-9"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0025 seconds] -->
+<p></p>
+<p>However, that said, I think you&#8217;re best off avoiding trying to create your own arrays of strings using this method altogether.  There are much cleaner, safer, and understandable ways of doing the same thing using classes, which will be covered shortly.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-30247">
+		<div id="div-comment-30247" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/cd3804484b7118898b290c754d2fee9d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cd3804484b7118898b290c754d2fee9d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.google.com' rel='external nofollow' class='url'>mohammad</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-30247">
+		October 18, 2008 at 7:32 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=30247#respond' onclick='return addComment.moveForm( "comment-30247", "30247", "respond", "185" )' aria-label='Reply to mohammad'> &middot; Reply</a></span>		 
+		</div>
+		<p>isn&#8217;t it easier to put inputs in a file and then read then from the file instead of using command line argumens?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-30955">
+		<div id="div-comment-30955" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-30955">
+		October 25, 2008 at 9:09 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=30955#respond' onclick='return addComment.moveForm( "comment-30955", "30955", "respond", "185" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It depends on what your program is doing and how it&#8217;s run.  If your program is a standalone program that does lots of text processing, then sure, a file input would be perfect for that.</p>
+<p>However, consider the case where you&#8217;re writing a program you expect to be called by other programs.  Are you going to make them all write files before they call you?  What if two programs call you at the same time?</p>
+<p>Generally, my feeling is that you should use command line parameters if you can, and file inputs only when necessary.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-35493">
+		<div id="div-comment-35493" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/32b9b11c218385a2ff74f9fc63afdad3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/32b9b11c218385a2ff74f9fc63afdad3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Pathik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-35493">
+		December 23, 2008 at 7:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=35493#respond' onclick='return addComment.moveForm( "comment-35493", "35493", "respond", "185" )' aria-label='Reply to Pathik'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;Each command line argument the user provides will will cause argc to increase by 1.&#8221;</p>
+<p>There are 2 &#8216;will&#8217;.</p>
+<p>[ Fixed.  Thanks!  -Alex ]</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-62256">
+		<div id="div-comment-62256" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/4cc8705eaca47244f6f52aca4371b31a?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4cc8705eaca47244f6f52aca4371b31a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Mohamad</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-62256">
+		June 11, 2009 at 12:21 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=62256#respond' onclick='return addComment.moveForm( "comment-62256", "62256", "respond", "185" )' aria-label='Reply to Mohamad'> &middot; Reply</a></span>		 
+		</div>
+		<p>I am  confused as to how to pass command line arguments to main using CODE::BLOCKS any instructions?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-62257">
+		<div id="div-comment-62257" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/4cc8705eaca47244f6f52aca4371b31a?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4cc8705eaca47244f6f52aca4371b31a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Mohamad</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-62257">
+		June 11, 2009 at 12:36 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=62257#respond' onclick='return addComment.moveForm( "comment-62257", "62257", "respond", "185" )' aria-label='Reply to Mohamad'> &middot; Reply</a></span>		 
+		</div>
+		<p>Nevermind I figured it out&#8230; all I had to do was go to the command line in Vista Start mean (which looks like a search instead of the run box you get in Windows XP) and type in the path to the file and the argument.  Thanks for all the good lessons.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-63810">
+		<div id="div-comment-63810" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Quinn</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-63810">
+		July 6, 2009 at 5:21 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=63810#respond' onclick='return addComment.moveForm( "comment-63810", "63810", "respond", "185" )' aria-label='Reply to Quinn'> &middot; Reply</a></span>		 
+		</div>
+		<p>You can set arguments automatically in Code::Blocks using the <b>Project -&gt; Set programs&#8217; arguments</b> menu option. Then when you build/run or just run it the program will always run with your selected arguments.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-62453">
+		<div id="div-comment-62453" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bc32884833a8f419eb0d0a8f4921dfc1?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bc32884833a8f419eb0d0a8f4921dfc1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Kurt</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-62453">
+		June 15, 2009 at 12:07 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=62453#respond' onclick='return addComment.moveForm( "comment-62453", "62453", "respond", "185" )' aria-label='Reply to Kurt'> &middot; Reply</a></span>		 
+		</div>
+		<p>In the last example isn&#8217;t there a off by 1 error?</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d770520043839027564" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d770520043839027564-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520043839027564-2">2</div><div class="crayon-num" data-line="crayon-555d770520043839027564-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d770520043839027564-4">4</div><div class="crayon-num" data-line="crayon-555d770520043839027564-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d770520043839027564-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520043839027564-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d770520043839027564-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Usage: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" &lt;Filename&gt;"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d770520043839027564-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d770520043839027564-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0012 seconds] -->
+<p></p>
+<p>When there is a command line argument, argc = 1  then (argc &lt;= 1) is the same as  1 &lt;=1 what translates to true so the program exits.<br />
+It should be like this no?</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77052004e309204105" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77052004e309204105-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77052004e309204105-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-63813">
+		<div id="div-comment-63813" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b7049051adbf6ef4625b968315004896?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Quinn</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-63813">
+		July 6, 2009 at 5:27 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=63813#respond' onclick='return addComment.moveForm( "comment-63813", "63813", "respond", "185" )' aria-label='Reply to Quinn'> &middot; Reply</a></span>		 
+		</div>
+		<p>Actually, argc always evaluates to at least one, even without any other command-line arguments. If it were just (argc &lt; 1) then you&#8217;d end up with that if statement never evaluating to true, and the program most likely crashing due to trying to load up something that wasn&#8217;t there if the user tried not giving any arguments.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-76919">
+		<div id="div-comment-76919" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/333c2743d4bff040ecbd50821e7fcf3e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/333c2743d4bff040ecbd50821e7fcf3e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">dzmat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-76919">
+		January 22, 2010 at 1:27 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=76919#respond' onclick='return addComment.moveForm( "comment-76919", "76919", "respond", "185" )' aria-label='Reply to dzmat'> &middot; Reply</a></span>		 
+		</div>
+		<p>Even when there is no command line arguments passed to program, argc=1, because argv[0] is a name of executable and is always present.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-91239">
+		<div id="div-comment-91239" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5133cc6b13b0cd962b29f8fdec45bcb9?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5133cc6b13b0cd962b29f8fdec45bcb9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-91239">
+		September 1, 2010 at 1:29 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=91239#respond' onclick='return addComment.moveForm( "comment-91239", "91239", "respond", "185" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Do you want to include:</p>
+<p>#include </p>
+<p>in the code that people copy to their clipboard so that errors don&#8217;t occur?<br />
+E.g.<br />
+ g++ j35.cpp -g -o xxx<br />
+j35.cpp: In function ‘int main(int, char**)’:<br />
+j35.cpp:8: error: ‘cout’ was not declared in this scope<br />
+j35.cpp:8: error: ‘endl’ was not declared in this scope<br />
+j35.cpp:9: error: ‘exit’ was not declared in this scope</p>
+<p>That is:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77051fda6389371196" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77051fda6389371196-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-2">2</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-4">4</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-6">6</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-8">8</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-10">10</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-12">12</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-14">14</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-16">16</div><div class="crayon-num" data-line="crayon-555d77051fda6389371196-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77051fda6389371196-18">18</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77051fda6389371196-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">argc</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-sy">]</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If the user didn't provide a filename command line argument,</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// print an error and exit.</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">argc</span><span class="crayon-h"> </span><span class="crayon-o">&lt;=</span><span class="crayon-h"> </span><span class="crayon-cn">1</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Usage: "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">0</span><span class="crayon-sy">]</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" &lt;Filename&gt;"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-12">&nbsp;</div><div class="crayon-line" id="crayon-555d77051fda6389371196-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pFilename</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">argv</span><span class="crayon-sy">[</span><span class="crayon-cn">1</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-14">&nbsp;</div><div class="crayon-line" id="crayon-555d77051fda6389371196-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// open file and process it</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-16"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d77051fda6389371196-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d77051fda6389371196-18"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0026 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-95691">
+		<div id="div-comment-95691" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/287e685c290e9c5c3628aa93c9bef739?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/287e685c290e9c5c3628aa93c9bef739?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">AUASP</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-95691">
+		July 11, 2011 at 6:09 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=95691#respond' onclick='return addComment.moveForm( "comment-95691", "95691", "respond", "185" )' aria-label='Reply to AUASP'> &middot; Reply</a></span>		 
+		</div>
+		<p>Double quotes(&#8220;) are not taken as command line arguments.<br />
+Only way to inclde double quotes is preceeding quotes with &#8216;\&#8217;.Eg. \&#8221;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-96961">
+		<div id="div-comment-96961" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9c41ff921c54f3e69ed21d9bb6d935c1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9c41ff921c54f3e69ed21d9bb6d935c1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">yiangom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-96961">
+		February 17, 2012 at 5:51 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=96961#respond' onclick='return addComment.moveForm( "comment-96961", "96961", "respond", "185" )' aria-label='Reply to yiangom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Excellent way of explaining things, thank you very much.<br />
+I would like to ask you something, as I am not sure what the advantage of using command line arguments instead of user input is.<br />
+You are saying: &#8221; For example, if you wanted to run this program on 500 files every week, the program would stop and wait for you to enter a new filename each and every time it was run. &#8221; If you use command line arguments, you would have to put 500 filenames as arguments, right?<br />
+C:\\&gt;WordCount Myfile1.txt &#8230;&#8230; Myfile500.txt</p>
+<p>How is this better than the user inputing the filenames?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-97781">
+		<div id="div-comment-97781" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/aaf9a0f24465da1c34abfc6c93773fae?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/aaf9a0f24465da1c34abfc6c93773fae?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">lukecui</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-97781">
+		September 3, 2012 at 6:39 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=97781#respond' onclick='return addComment.moveForm( "comment-97781", "97781", "respond", "185" )' aria-label='Reply to lukecui'> &middot; Reply</a></span>		 
+		</div>
+		<p>it&#8217;s a grate site, i also found something about this example used with _tmain, please check http://stackoverflow.com/questions/1113981/visual-c-argv-question</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-115342">
+		<div id="div-comment-115342" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2b4021df046e044bfe4a2676af345d90?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2b4021df046e044bfe4a2676af345d90?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">momalok</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-115342">
+		December 28, 2013 at 5:58 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=115342#respond' onclick='return addComment.moveForm( "comment-115342", "115342", "respond", "185" )' aria-label='Reply to momalok'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex.<br />
+Firstly great site!<br />
+But im having a few problems on passing command line arguments. I have copied and pasted various examples and tried running my program (microsoft visual studio express 2010), but it does not allow the user to enter any program name or filename, and immediately just exits with error code File not found.<br />
+When i add command line arguments through properties debugging in visual studio, it works fine for one program, but not for more than one for some reason.<br />
+If i need to add more arguments to the program, then do i need to add one to argc each time, so that if (argc &lt; 3) for 3 arguments etc?<br />
+and also do i need to modify the following line because surely each additional argument points to the next array element?<br />
+ifstream myfile(argv[1]);<br />
+In conclusion i am pretty confused!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-131410">
+		<div id="div-comment-131410" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3cdc8b653fb693282cba8b376d990c03?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3cdc8b653fb693282cba8b376d990c03?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Suresh</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-131410">
+		March 23, 2014 at 11:49 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=131410#respond' onclick='return addComment.moveForm( "comment-131410", "131410", "respond", "185" )' aria-label='Reply to Suresh'> &middot; Reply</a></span>		 
+		</div>
+		<p>I am trying to find a word using the command line (./wordsearch two &lt; samplefile.txt).<br />
+Please let me know if the above code can get me these results. My results should display<br />
+&quot;word two found in the file&quot;<br />
+or<br />
+&quot;word two found in the second line&quot;</p>
+<p>*** Is it possible to find two words using the above command line</p>
+<p>samplefile.txt  contains<br />
+~~~~~~~~~~~~~~<br />
+one<br />
+two<br />
+three</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-251094">
+		<div id="div-comment-251094" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/613058fda7385491432edff35ce429fa?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/613058fda7385491432edff35ce429fa?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Eagle0101</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-251094">
+		January 7, 2015 at 5:02 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=251094#respond' onclick='return addComment.moveForm( "comment-251094", "251094", "respond", "185" )' aria-label='Reply to Eagle0101'> &middot; Reply</a></span>		 
+		</div>
+		<p>My program crash when i use<br />
+int main(int argc, char* argv[])</p>
+<p>using this line here<br />
+cout &lt;&lt; &quot;There are &quot; &lt;&lt; argc &lt;&lt; &quot; arguments:&quot; &lt;&lt; endl;</p>
+<p>it showing me the 4 bytes of argc (bunch of random numbers)</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-251997">
+		<div id="div-comment-251997" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bd8fa5f06885713a71a2aa6aba0262a0?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bd8fa5f06885713a71a2aa6aba0262a0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Claudio Teles</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/713-command-line-arguments/#comment-251997">
+		March 31, 2015 at 9:32 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/713-command-line-arguments/?replytocom=251997#respond' onclick='return addComment.moveForm( "comment-251997", "251997", "respond", "185" )' aria-label='Reply to Claudio Teles'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi i&#8217;m using Microsoft Visual Studio 2013 and I don&#8217;t see any options to use &quot;Command Arguments&quot; under “Configuration Properties” only &quot;debug&quot; and &quot;release&quot;.</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/713-command-line-arguments/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>five &#215; two = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4ODY3N3R5bTdtZjVxZ3o3ZGJwYWozMW04MTA=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432188677" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='185' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="bc4fc1eea9" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="85"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/713-command-line-arguments\/":185};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/713-command-line-arguments/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'185',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '185' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.953 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:11:17 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

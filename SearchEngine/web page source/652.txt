@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie ie8"> <![endif]-->
+<!--[if IE 9]><html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
+<head>
+<!-- Basic -->
+<meta charset="utf-8">
+<title>Java - Multithreading</title>
+<meta name="description" content="Java Multithreading Learning Java in simple and easy steps : A beginner's tutorial containing complete knowledge of Java Syntax Object Oriented Language, Methods, Overriding, Inheritance, Polymorphism, Interfaces, Packages, Collections, Networking, Multithreading, Generics, Multimedia, Serialization, GUI." />
+<meta name="keywords" content="Java, Tutorials, Learning, Beginners, Basics, Object Oriented Language, Methods, Overriding, Inheritance, Polymorphism, Interfaces, Packages, Collections, Networking, Multithreading, Generics, Multimedia, Serialization, GUI." />
+<base href="http://www.tutorialspoint.com/" />
+<link rel="shortcut icon" href="http://cdn.tutorialspoint.com/favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+<meta name="author" content="tutorialspoint.com">
+<meta property="fb:app_id" content="471319149685276" />
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/script-min-v1.js"></script>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/style-min-v1.css">
+<!-- Head Libs -->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie8.css">
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie9.css">
+<![endif]-->
+<!-- Front Page related changes -->
+<style>
+div.feature-box div.feature-box-icon, .col-md-3 .course-box, li.heading, footer div.footer-ribon, div.footer-copyright { background: #eb4847 url(/images/pattern.png) repeat center center !important; }
+header nav ul.nav-main li a:hover, header nav ul.nav-main li.dropdown:hover a.dropdown-toggle { background: #eb4847;} 
+header nav ul.nav-main li.dropdown:hover > ul{ border:2px solid #eb4847}
+header nav ul.nav-main ul.dropdown-menu > li > a:hover, #mainMenu > li:hover, header nav.mega-menu ul.nav-main .mega-menu-content ul.sub-menu li:hover{ background: #eb4847 !important;}
+img.mobile-apps { border: 1px solid #eb4847 !important; }
+footer i.icon, footer ul.list.icons li i { color: #eb4847 !important; }
+button.btn-responsive-nav, header div.search button.btn-default { background: #eb4847 !important;}
+.social-icons-top { display:none; }
+</style>
+</head>
+<script>
+$(document).ready(function() {
+  $('input[name="q"]').keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<body onload="prettyPrint()">
+<div class="wrapLoader">
+   <div class="imgLoader">
+      <img  src="http://cdn.tutorialspoint.com/images/loading-cg.gif" alt="" width="70" height="70" />
+   </div>
+</div>
+<div id="divGoogle"></div>
+<div class="body">
+<header>
+   <div class="container">			
+      <h1 class="logo">
+      <a href="index.htm" title="tutorialspoint">
+      <img alt="tutorialspoint" src="/java/images/logo.png">
+      </a>
+      </h1>			
+      <div class="search" id="searchBar">
+         <form method="get" id="searchform" name="searchform" action="http://www.google.com/search" target="_blank">
+            <input type="hidden" name="sitesearch" value="www.tutorialspoint.com">
+            <div class="input-group">
+               <input type="text" class="form-control search" name="q" id="q" autocomplete="off" placeholder="Search your tutorials..." onfocus="if (this.value == 'Search your tutorials...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search your tutorials...';}">
+               <input value="FORID:11" name="cof" type="hidden">
+               <input type="hidden" name="ie" value="ISO-8859-1">
+               <span class="input-group-btn"> <button class="btn btn-default" type="submit" onclick="javascript:void(0);"><i class="icon icon-search"></i></button> </span>
+            </div>
+         </form>
+      </div>
+      <nav>
+         <ul class="nav nav-pills nav-top">
+            <li><a  id="free-training-icon" href="absoluteclasses.htm"><img src="http://cdn.tutorialspoint.com/images/free-training.jpg" style="width:100px; position:absolute;left:-158px; top:-7px; z-index:99;" title="Free Online Training"></a></li>
+            <li> <a href="shared-tutorials.php"><i class="icon icon-user"></i> &nbsp;Shared</a> </li>
+            <li> <a href="shorttutorials"><i class="icon icon-file-text-o"></i> &nbsp;Articles</a> </li>
+            <li>
+            <div class="social-icons social-icons-top">
+               <ul class="social-icons">
+               <li class="facebook"><a href="http://www.facebook.com/tutorialspointindia" target="_blank" title="Facebook">Facebook</a></li>
+               <li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" title="Twitter">Twitter</a></li>
+               <li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+               <li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" title="tutorialspoint @ Linkedin">Linkedin</a></li>
+               </ul>
+            </div>
+            </li>
+         </ul>
+      </nav>
+         <!-- search code here  --> 
+      <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull"> <i class="icon icon-bars"></i> </button>
+   </div>
+   <div class="navbar nav-main">
+      <div class="container">
+         <nav class="nav-main mega-menu">
+            <ul class="nav nav-pills nav-main" id="mainMenu">
+               <li class="dropdown"> <a class="dropdown" href="index.htm"><i class="icon icon-home"></i> Home</a> </li>   
+               <li class="dropdown"><a class="dropdown-toggle tut-lib" href="tutorialslibrary.htm"> Tutorials Library </a>
+      <ul class="dropdown-menu" id="submenu">
+         <li>
+            <div class="mega-menu-content">
+              <div class="row">
+                 <div class="col-md-6">
+                    <ul class="sub-menu">
+                     <li><a href="academic_tutorials.htm">Academic</a></li>
+                     <li><a href="big_data_tutorials.htm">Big Data</a></li>
+                     <li><a href="database_tutorials.htm">Databases</a></li>
+                     <li><a href="java_technology_tutorials.htm">Java Technologies</a></li>
+                     <li><a href="mainframe_tutorials.htm">Mainframe</a></li>
+                     <li><a href="management_tutorials.htm">Management</a></li>
+                     <li><a href="microsoft_technologies_tutorials.htm">Microsoft Technologies</a></li>
+                     <li><a href="questions_and_answers.htm">Questions and Answers</a></li>
+                     <li><a href="misc_tutorials.htm">Miscellaneous</a></li>
+                   </ul>
+                 </div>
+                 <div class="col-md-6">
+                  <ul class="sub-menu">
+                     <li><a href="mobile_development_tutorials.htm">Mobile Development</a></li>
+                     <li><a href="computer_programming_tutorials.htm">Programming</a></li>
+                     <li><a href="scripting_lnaguage_tutorials.htm">Scripts</a></li>
+                     <li><a href="software_quality_tutorials.htm">Software Quality</a></li>
+                     <li><a href="telecom_tutorials.htm">Telecom</a></li>
+                     <li><a href="web_development_tutorials.htm">Web Development</a></li>
+                     <li><a href="xml_technologies_tutorials.htm">XML Technologies</a></li>
+                     <li><a href="multi_language_tutorials.htm">Multi Language Tutorials</a></li>
+                  </ul>
+                 </div>
+              </div>
+            </div>
+         </li>
+       </ul>
+               </li>
+               <li class="dropdown"><a class="dropdown" href="codingground.htm"><i class="fa-code"></i> Coding Ground</a> </li>
+                  <li class="dropdown"> 							
+                     <a class="dropdown-toggle tut-plus" href="absoluteclasses.htm">Absolute Classes</a>                     <ul class="dropdown-menu" id="submenu1">
+                                                <li class="current-menu-ancestor current-menu-parent active dropdown-submenu" style="border-bottom:none;">
+                        <li style="border-bottom:none;"><a href="absoluteclasses/userlogin.htm"><i class="fa-sign-in"></i>&nbsp;Login</a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px" class="stickyhide">&nbsp;</li>
+                        <li><a href="absoluteclasses/usersignup.htm"><i class="fa-pencil-square-o"></i>&nbsp;Sign Up&nbsp;</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/upcomingclasses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> Upcoming Classes </a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/allcourses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> All Courses </a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/testimonials.htm" style="border-bottom:none;"><i class="fa-check check"></i> Testimonial</a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/help.htm" style="border-bottom:none;"><i class="fa-question book-head"></i> Help/FAQ</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/contact_abc.htm" style="border-bottom:none;"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                                             
+                     </ul>
+                  </li>
+            </ul>
+         </nav>
+      </div>
+   </div>	
+</header>
+<div style="clear:both;"></div>
+<div role="main" class="main">
+<div class="container">
+<div class="row">
+<div class="col-md-2">
+<aside class="sidebar">
+  <div class="mini-logo">
+<img src="/java/images/java-mini-logo.jpg" alt="Java Tutorial" />
+</div>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Tutorial</li>
+<li><a target="_top" href="/java/index.htm">Java - Home</a></li>
+<li><a target="_top" href="/java/java_overview.htm">Java - Overview</a></li>
+<li><a target="_top" href="/java/java_environment_setup.htm">Java - Environment Setup</a></li>
+<li><a target="_top" href="/java/java_basic_syntax.htm">Java - Basic Syntax</a></li>
+<li><a target="_top" href="/java/java_object_classes.htm">Java - Object &amp; Classes</a></li>
+<li><a target="_top" href="/java/java_basic_datatypes.htm">Java - Basic Datatypes</a></li>
+<li><a target="_top" href="/java/java_variable_types.htm">Java - Variable Types</a></li>
+<li><a target="_top" href="/java/java_modifier_types.htm">Java - Modifier Types</a></li>
+<li><a target="_top" href="/java/java_basic_operators.htm">Java - Basic Operators</a></li>
+<li><a target="_top" href="/java/java_loop_control.htm">Java - Loop Control</a></li>
+<li><a target="_top" href="/java/java_decision_making.htm">Java - Decision Making</a></li>
+<li><a target="_top" href="/java/java_numbers.htm">Java - Numbers</a></li>
+<li><a target="_top" href="/java/java_characters.htm">Java - Characters</a></li>
+<li><a target="_top" href="/java/java_strings.htm">Java - Strings</a></li>
+<li><a target="_top" href="/java/java_arrays.htm">Java - Arrays</a></li>
+<li><a target="_top" href="/java/java_date_time.htm">Java - Date &amp; Time</a></li>
+<li><a target="_top" href="/java/java_regular_expressions.htm">Java - Regular Expressions</a></li>
+<li><a target="_top" href="/java/java_methods.htm">Java - Methods</a></li>
+<li><a target="_top" href="/java/java_files_io.htm">Java - Files and I/O</a></li>
+<li><a target="_top" href="/java/java_exceptions.htm">Java - Exceptions</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Object Oriented</li>
+<li><a target="_top" href="/java/java_inheritance.htm">Java - Inheritance</a></li>
+<li><a target="_top" href="/java/java_overriding.htm">Java - Overriding</a></li>
+<li><a target="_top" href="/java/java_polymorphism.htm">Java - Polymorphism</a></li>
+<li><a target="_top" href="/java/java_abstraction.htm">Java - Abstraction</a></li>
+<li><a target="_top" href="/java/java_encapsulation.htm">Java - Encapsulation</a></li>
+<li><a target="_top" href="/java/java_interfaces.htm">Java - Interfaces</a></li>
+<li><a target="_top" href="/java/java_packages.htm">Java - Packages</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Advanced</li>
+<li><a target="_top" href="/java/java_data_structures.htm">Java - Data Structures</a></li>
+<li><a target="_top" href="/java/java_collections.htm">Java - Collections</a></li>
+<li><a target="_top" href="/java/java_generics.htm">Java - Generics</a></li>
+<li><a target="_top" href="/java/java_serialization.htm">Java - Serialization</a></li>
+<li><a target="_top" href="/java/java_networking.htm">Java - Networking</a></li>
+<li><a target="_top" href="/java/java_sending_email.htm">Java - Sending Email</a></li>
+<li><a target="_top" href="/java/java_multithreading.htm">Java - Multithreading</a></li>
+<li><a target="_top" href="/java/java_applet_basics.htm">Java - Applet Basics</a></li>
+<li><a target="_top" href="/java/java_documentation.htm">Java - Documentation</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Useful Resources</li>
+<li><a target="_top" href="/java/java_questions_answers.htm">Java - Questions and Answers</a></li>
+<li><a target="_top" href="/java/java_quick_guide.htm">Java - Quick Guide</a></li>
+<li><a target="_top" href="/java/java_useful_resources.htm">Java - Useful Resources</a></li>
+<li><a target="_top" href="/java/java_discussion.htm">Java - Discussion</a></li>
+<li><a target="_top" href="/javaexamples/index.htm">Java - Examples</a></li>
+</ul>
+<ul class="nav nav-list primary push-bottom left-menu special">
+<li class="sreading">Selected Reading</li>
+<li><a target="_top" href="/developers_best_practices/index.htm">Developer's Best Practices</a></li>
+<li><a target="_top" href="/questions_and_answers.htm">Questions and Answers</a></li>
+<li><a target="_top" href="/effective_resume_writing.htm">Effective Resume Writing</a></li>
+<li><a target="_top" href="/computer_glossary.htm">Computer Glossary</a></li>
+<li><a target="_top" href="/computer_whoiswho.htm">Who is Who</a></li>
+</ul>
+</aside>
+</div>
+<!-- PRINTING STARTS HERE -->
+<div class="row">
+<div class="content">
+<div class="col-md-7 middle-col">
+<h1>Java - Multithreading</h1>
+<div class="topgooglead">
+<hr />
+<div style="padding-bottom:5px;padding-left:10px;">Advertisements</div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "image";
+google_ad_channel = "";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script>
+</div>
+<hr />
+<div class="pre-btn">
+<a href="/java/java_sending_email.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="nxt-btn">
+<a href="/java/java_applet_basics.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<div class="clearer"></div>
+<hr />
+<p>Java is a<i>multithreaded programming language</i> which means we can develop multithreaded program using Java. A multithreaded program contains two or more parts that can run concurrently and each part  can handle different task at the same time making optimal use of the available resources specially when your computer has multiple CPUs.</p>
+<p>By definition multitasking is when multiple processes share common processing resources such as a CPU. Multithreading extends the idea of multitasking into applications where you can subdivide specific operations within a single application into individual threads. Each of the threads can run in parallel. The OS divides processing time not only among different applications, but also among each thread within an application.</p>
+<p>Multithreading enables you to write in a way where multiple activities can proceed concurrently in the same program.</p>
+<h2>Life Cycle of a Thread:</h2>
+<p>A thread goes through various stages in its life cycle. For example, a thread is born, started, runs, and then dies. Following diagram shows complete life cycle of a thread.</p>
+<center>
+<img src="/java/images/java_thread.jpg" alt="Java Thread" />
+</center>
+<p>Above-mentioned stages are explained here:</p>
+<ul class="list">
+<li><p><b>New:</b> A new thread begins its life cycle in the new state. It remains in this state until the program starts the thread. It is also referred to as a born thread.</p></li>
+<li><p><b>Runnable:</b> After a newly born thread is started, the thread becomes runnable. A thread in this state is considered to be executing its task.</p></li>
+<li><p><b>Waiting:</b> Sometimes, a thread transitions to the waiting state while the thread waits for another thread to perform a task.A thread transitions back to the runnable state only when another thread signals the waiting thread to continue executing.</p></li>
+<li><p><b>Timed waiting:</b> A runnable thread can enter the timed waiting state for a specified interval of time. A thread in this state transitions back to the runnable state when that time interval expires or when the event it is waiting for occurs.</p></li>
+<li><p><b>Terminated: </b> A runnable thread enters the terminated state when it completes its task or otherwise terminates.</p></li>
+</ul>
+<h2>Thread Priorities:</h2>
+<p>Every Java thread has a priority that helps the operating system determine the order in which threads are scheduled.</p>
+<p>Java thread priorities are in the range between MIN_PRIORITY (a constant of 1) and MAX_PRIORITY (a constant of 10). By default, every thread is given priority NORM_PRIORITY (a constant of 5).</p>
+<p>Threads with higher priority are more important to a program and should be allocated processor time before lower-priority threads. However, thread priorities cannot guarantee the order in which threads execute and very much platform dependentant.</p>
+<h2>Create Thread by Implementing Runnable Interface:</h2>
+<p>If your class is intended to be executed as a thread then you can achieve this by implementing <b>Runnable</b> interface. You will need to follow three basic steps:</p>
+
+<h3>Step 1:</h3>
+<p>As a first step you need to implement a  run() method provided by  <b>Runnable</b> interface. This method provides entry point for the thread and you will put you complete business logic inside this method. Following is simple syntax of run() method:</p>
+<pre class="prettyprint notranslate">
+public void run( )
+</pre>
+<h3>Step 2:</h3>
+<p>At second step you will instantiate a <b>Thread</b> object using the following constructor:</p>
+<pre class="prettyprint notranslate">
+Thread(Runnable threadObj, String threadName);
+</pre>
+<p>Where, <i>threadObj</i> is an instance of a class that implements the <b>Runnable</b> interface and <b>threadName</b> is the name given to the new thread.</p>
+<h3>Step 3</h3>
+<p>Once Thread object is created, you can start it by calling <b>start( )</b> method, which executes a call to run( ) method.  Following is simple syntax of start() method:</p>
+<pre class="prettyprint notranslate">
+void start( );
+</pre>
+<h2>Example:</h2>
+<p>Here is an example that creates a new thread and starts it running:</p>
+<pre class="prettyprint notranslate tryit">
+class RunnableDemo implements Runnable {
+   private Thread t;
+   private String threadName;
+   
+   RunnableDemo( String name){
+       threadName = name;
+       System.out.println("Creating " +  threadName );
+   }
+   public void run() {
+      System.out.println("Running " +  threadName );
+      try {
+         for(int i = 4; i &gt; 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
+            // Let the thread sleep for a while.
+            Thread.sleep(50);
+         }
+     } catch (InterruptedException e) {
+         System.out.println("Thread " +  threadName + " interrupted.");
+     }
+     System.out.println("Thread " +  threadName + " exiting.");
+   }
+   
+   public void start ()
+   {
+      System.out.println("Starting " +  threadName );
+      if (t == null)
+      {
+         t = new Thread (this, threadName);
+         t.start ();
+      }
+   }
+
+}
+
+public class TestThread {
+   public static void main(String args[]) {
+   
+      RunnableDemo R1 = new RunnableDemo( "Thread-1");
+      R1.start();
+      
+      RunnableDemo R2 = new RunnableDemo( "Thread-2");
+      R2.start();
+   }   
+}
+</pre>
+<p>This would produce the following result:</p>
+<pre class="prettyprint notranslate">
+Creating Thread-1
+Starting Thread-1
+Creating Thread-2
+Starting Thread-2
+Running Thread-1
+Thread: Thread-1, 4
+Running Thread-2
+Thread: Thread-2, 4
+Thread: Thread-1, 3
+Thread: Thread-2, 3
+Thread: Thread-1, 2
+Thread: Thread-2, 2
+Thread: Thread-1, 1
+Thread: Thread-2, 1
+Thread Thread-1 exiting.
+Thread Thread-2 exiting.
+</pre>
+<h2>Create Thread by Extending Thread Class:</h2>
+<p>The second way to create a thread is to create a new class that extends <b>Thread</b> class using the following two simple steps. This approach provides more flexibility in handling multiple threads created using available methods in Thread class.</p>
+<h3>Step 1</h3>
+<p>You will need to override <b>run( )</b> method available in Thread class. This method provides entry point for the thread and you will put you complete business logic inside this method. Following is simple syntax of run() method:</p>
+<pre class="prettyprint notranslate">
+public void run( )
+</pre>
+<h3>Step 2</h3>
+<p>Once Thread object is created, you can start it by calling <b>start( )</b> method, which executes a call to run( ) method.  Following is simple syntax of start() method:</p>
+<pre class="prettyprint notranslate">
+void start( );
+</pre>
+<h2>Example:</h2>
+<p>Here is the preceding program rewritten to extend Thread:</p>
+<pre class="prettyprint notranslate tryit">
+class ThreadDemo extends Thread {
+   private Thread t;
+   private String threadName;
+   
+   ThreadDemo( String name){
+       threadName = name;
+       System.out.println("Creating " +  threadName );
+   }
+   public void run() {
+      System.out.println("Running " +  threadName );
+      try {
+         for(int i = 4; i &gt; 0; i--) {
+            System.out.println("Thread: " + threadName + ", " + i);
+            // Let the thread sleep for a while.
+            Thread.sleep(50);
+         }
+     } catch (InterruptedException e) {
+         System.out.println("Thread " +  threadName + " interrupted.");
+     }
+     System.out.println("Thread " +  threadName + " exiting.");
+   }
+   
+   public void start ()
+   {
+      System.out.println("Starting " +  threadName );
+      if (t == null)
+      {
+         t = new Thread (this, threadName);
+         t.start ();
+      }
+   }
+
+}
+
+public class TestThread {
+   public static void main(String args[]) {
+   
+      ThreadDemo T1 = new ThreadDemo( "Thread-1");
+      T1.start();
+      
+      ThreadDemo T2 = new ThreadDemo( "Thread-2");
+      T2.start();
+   }   
+}
+</pre>
+<p>This would produce the following result:</p>
+<pre class="prettyprint notranslate">
+Creating Thread-1
+Starting Thread-1
+Creating Thread-2
+Starting Thread-2
+Running Thread-1
+Thread: Thread-1, 4
+Running Thread-2
+Thread: Thread-2, 4
+Thread: Thread-1, 3
+Thread: Thread-2, 3
+Thread: Thread-1, 2
+Thread: Thread-2, 2
+Thread: Thread-1, 1
+Thread: Thread-2, 1
+Thread Thread-1 exiting.
+Thread Thread-2 exiting.
+</pre>
+<h2>Thread Methods:</h2>
+<p>Following is the list of important methods available in the Thread class.</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public void start()</b>
+<p>Starts the thread in a separate path of execution, then invokes the run() method on this Thread object.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public void run()</b>
+<p>If this Thread object was instantiated using a separate Runnable target, the run() method is invoked on that Runnable</p> object.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public final void setName(String name)</b>
+<p>Changes the name of the Thread object. There is also a getName() method for retrieving the name.</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public final void setPriority(int priority)</b>
+<p>Sets the priority of this Thread object. The possible values are between 1 and 10.</p>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>public final void setDaemon(boolean on)</b>
+<p>A parameter of true denotes this Thread as a daemon thread.</p>
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>public final void join(long millisec)</b>
+<p>The current thread invokes this method on a second thread, causing the current thread to block until the
+second thread terminates or the specified number of milliseconds passes.</p>
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td><b>public void interrupt()</b>
+<p>Interrupts this thread, causing it to continue execution if it was blocked for any reason.</p>
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td><b>public final boolean isAlive()</b>
+<p>Returns true if the thread is alive, which is any time after the thread has been started but before it runs to completion.</p>
+</td>
+</tr>
+</table>
+<p>The previous methods are invoked on a particular Thread object. The following methods in the Thread class are static. Invoking one of the static methods performs the operation on the currently running thread.</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public static void yield()</b>
+<p>Causes the currently running thread to yield to any other threads of the same priority that are waiting to be scheduled.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public static void sleep(long millisec)</b>
+<p>Causes the currently running thread to block for at least the specified number of milliseconds.</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public static boolean holdsLock(Object x)</b>
+<p>Returns true if the current thread holds the lock on the given Object.</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public static Thread currentThread()</b>
+<p>Returns a reference to the currently running thread, which is the thread that invokes this method.</p>
+</td>
+</tr>
+<tr><td>5</td><td><b>public static void dumpStack()</b>
+<p>Prints the stack trace for the currently running thread, which is useful when debugging a multithreaded
+application.</p>
+</td>
+</tr>
+</table>
+<h2>Example:</h2>
+<p>The following ThreadClassDemo program demonstrates some of these methods of the Thread class. Consider a class <b>DisplayMessage</b> which implements <b>Runnable</b>:</p>
+<pre class="prettyprint notranslate">
+// File Name : DisplayMessage.java
+// Create a thread to implement Runnable
+public class DisplayMessage implements Runnable
+{
+   private String message;
+   public DisplayMessage(String message)
+   {
+      this.message = message;
+   }
+   public void run()
+   {
+      while(true)
+      {
+         System.out.println(message);
+      }
+   }
+}
+</pre>
+<p>Following is another class which extends Thread class:</p>
+<pre class="prettyprint notranslate">
+// File Name : GuessANumber.java
+// Create a thread to extentd Thread
+public class GuessANumber extends Thread
+{
+   private int number;
+   public GuessANumber(int number)
+   {
+      this.number = number;
+   }
+   public void run()
+   {
+      int counter = 0;
+      int guess = 0;
+      do
+      {
+          guess = (int) (Math.random() * 100 + 1);
+          System.out.println(this.getName()
+                       + " guesses " + guess);
+          counter++;
+      }while(guess != number);
+      System.out.println("** Correct! " + this.getName()
+                       + " in " + counter + " guesses.**");
+   }
+}
+</pre>
+<p>Following is the main program which makes use of above defined classes:</p>
+<pre class="prettyprint notranslate tryit">
+// File Name : ThreadClassDemo.java
+public class ThreadClassDemo
+{
+   public static void main(String [] args)
+   {
+      Runnable hello = new DisplayMessage("Hello");
+      Thread thread1 = new Thread(hello);
+      thread1.setDaemon(true);
+      thread1.setName("hello");
+      System.out.println("Starting hello thread...");
+      thread1.start();
+      
+      Runnable bye = new DisplayMessage("Goodbye");
+      Thread thread2 = new Thread(bye);
+      thread2.setPriority(Thread.MIN_PRIORITY);
+      thread2.setDaemon(true);
+      System.out.println("Starting goodbye thread...");
+      thread2.start();
+
+      System.out.println("Starting thread3...");
+      Thread thread3 = new GuessANumber(27);
+      thread3.start();
+      try
+      {
+         thread3.join();
+      }catch(InterruptedException e)
+      {
+         System.out.println("Thread interrupted.");
+      }
+      System.out.println("Starting thread4...");
+      Thread thread4 = new GuessANumber(75);
+      
+	  thread4.start();
+      System.out.println("main() is ending...");
+   }
+}
+</pre>
+<p>This would produce the following result. You can try this example again and again and you would get different result every time.</p>
+<pre class="prettyprint notranslate">
+Starting hello thread...
+Starting goodbye thread...
+Hello
+Hello
+Hello
+Hello
+Hello
+Hello
+Goodbye
+Goodbye
+Goodbye
+Goodbye
+Goodbye
+.......
+</pre>
+<h2>Major Java Multithreading Concepts:</h2>
+<p>While doing Multithreading programming in Java, you would need to have the following concepts very handy:</p>
+<ul class="list">
+<li><p><a href="/java/java_thread_synchronization.htm">What is thread synchronization?</a></p></li>
+<li><p><a href="/java/java_thread_communication.htm">Handling threads inter communication</a></p></li>
+<li><p><a href="/java/java_thread_deadlock.htm">Handling thread deadlock</a></p></li>
+<li><p><a href="/java/java_thread_control.htm">Major thread operations</a></p></li>
+</ul>
+<hr />
+<div class="pre-btn">
+<a href="/java/java_sending_email.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="print-btn center">
+<a href="/cgi-bin/printpage.cgi" target="_blank"><i class="icon icon-print big-font"></i> Print</a>
+</div>
+<div class="pdf-btn">
+<a href="/java/pdf/java_multithreading.pdf" title="Java - Multithreading" target="_blank"><i class="icon icon-file-pdf-o big-font"></i> PDF</a>
+</div>
+<div class="nxt-btn">
+<a href="/java/java_applet_basics.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<hr />
+<!-- PRINTING ENDS HERE -->
+<div class="bottomgooglead">
+<div class="bottomadtag">Advertisements</div>
+<script type="text/javascript"><!--
+var width = 580;
+var height = 400;
+var format = "580x400_as";
+if( window.innerWidth < 468 ){
+   width = 300;
+   height = 250;
+   format = "300x250_as";
+}
+google_ad_client = "pub-7133395778201029";
+google_ad_width = width;
+google_ad_height = height;
+google_ad_format = format;
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-3" id="rightbar">
+<!-- AddThis Button BEGIN -->
+<!--
+<div class="simple-ad">
+<div class="addthis_sharing_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f661ec623a400f0"></script>
+</div>
+-->
+<!-- AddThis Button END -->
+<!--
+<div class="google-ad" style="position:relative; left:20px;">Advertisements</div>
+-->
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 600;
+google_ad_format = "300x600_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2537027957187252";
+/* Right Side Ad */
+google_ad_slot = "right_side_ad";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="inner">
+<div class="container">
+<div class="row">
+<div class="footer-ribon">
+<span>Extras</span>
+</div>
+<div class="col-md-2">
+<h4>Mobile First</h4>
+<ul class="list icons list-unstyled">
+<li><a id="iphone" href="https://itunes.apple.com/om/app/tutorials-point/id914891263?mt=8" target="_blank" rel="nofollow"><img alt="tutorialspoint iPhone App" src="http://cdn.tutorialspoint.com/images/apple_store.jpg" class="mobile-apps"/></a></li>
+<li><a id="android" href="https://play.google.com/store/apps/details?id=com.tutorialspoint.onlineviewer" target="_blank" rel="nofollow"><img alt="tutorialspoint Android app" src="http://cdn.tutorialspoint.com/images/google_play.jpg" class="mobile-apps"/></a></li>
+<li><a id="microsoft" href="http://www.windowsphone.com/s?appid=91249671-7184-4ad6-8a5f-d11847946b09" target="_blank" rel="nofollow"><img alt="tutorialspoint Windows app" src="http://cdn.tutorialspoint.com/images/windows_store.jpg" class="mobile-apps"/></a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>About us</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="/about/index.htm">Company</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_team.htm">Team</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_careers.htm">Careers</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_privacy.htm">Privacy Policy</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_terms_of_use.htm">Terms of use</a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>Extra Links</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="forums/index.php">Forums</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shorttutorials/">Articles</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shared-tutorials.php">Shared</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="seo_tools.htm">Seo Tools</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="about/contact_us.htm">Contact</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<div class="contact-details">
+<h4>Contact Us</h4>
+<ul class="contact">
+<li><p><i class="icon icon-map-marker"></i> <strong>Address:</strong> 388-A , Road no 22, Jubilee Hills, Hyderabad Telangana, INDIA-500033</p></li>
+<li><p><i class="icon icon-envelope"></i> <strong>Email:</strong> <a href="about/contact_us.htm">Click Here</a></p></li>
+<li><p><i class="icon icon-dribbble"></i> <strong>Website:</strong> <a href="http://www.tutorialspoint.com">www.tutorialspoint.com</a></p></li>
+</ul>
+</div>
+<div class="social-icons">
+<ul class="social-icons">
+<li class="facebook"><a href="https://www.facebook.com/tutorialspointindia" target="_blank" data-placement="bottom" title="tutorialspoint @ Facebook">Facebook</a></li>
+<li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+<li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Twitter">Twitter</a></li>
+<li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Linkedin">Linkedin</a></li>
+<li class="rss"><a href="http://feeds.feedburner.com/SharedTutorials" target="_blank" data-placement="bottom" title="tutorialspoint RSS">RSS</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-copyright">
+<div class="container">
+<div class="row">
+<div class="col-md-1">
+<a href="index.htm" class="logo">
+<img alt="Tutorials Point" class="img-responsive" src="http://cdn.tutorialspoint.com/scripts/img/logo-footer.png">
+</a>
+</div>
+<div class="col-md-6">
+<p>&copy; Copyright 2015. All Rights Reserved.</p>
+</div>
+<div class="col-md-4">
+<nav id="sub-menu">
+<ul>
+<li><a href="/about/tutorials_writing.htm">Write for us</a></li>
+<li><a href="/about/faq.htm">FAQ's</a></li>
+<li><a href="/about/about_helping.htm">Helping</a></li>
+<li><a href="/about/contact_us.htm">Contact</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<!-- Libs -->
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/custom-min.js"></script>
+<script src="http://www.google-analytics.com/urchin.js">
+</script>
+<script type="text/javascript">
+_uacct = "UA-232293-6";
+urchinTracker();
+$('.pg-icon').click(function(){
+   $('.wrapLoader').show();
+});
+</script>
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/jquery.colorbox-min.js"></script>
+<script type="text/javascript">
+   var tryit = new $.TryIt('java/try_java.php');
+   tryit.compile();
+</script>
+<style>
+pre.prettyprint.tryit {
+    background: #eee url('java/images/try-it.jpg') top right no-repeat !important;
+}
+</style></div>
+</body>
+</html>
+

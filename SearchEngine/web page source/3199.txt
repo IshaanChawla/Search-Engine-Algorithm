@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xml:lang="en">
+<head>
+<link rel="stylesheet" type="text/css" 
+href="http://www.tizag.com/css/default.css" />
+
+<title>HTML - PHP Form Example</title>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1" />
+</head>
+<body>
+<table class="outter" width="100%" align="center"> 
+	<tr><td class="banner" colspan="3" align="center"><a href="../">
+	<img src="http://www.tizag.com/pics/tizagSugar.jpg" alt="Tizag Tutorials" /></a>
+	</td></tr>
+</table>
+<table class="outter" width="779" align="center"> 
+	<tr valign="top">
+		<td class="menu">
+			<table class="menu"><tr><td>
+			<div id="menu">
+			<a href="http://www.tizag.com/" >Home</a>
+			<hr/>
+			<a href="http://www.tizag.com/htmlT/" >HTML Tutorial</a>
+			<a href="http://www.tizag.com/cssT/" >CSS Tutorial</a>
+			<br /><b>Scripting</b>
+			<a href="http://www.tizag.com/javascriptT/" >Javascript Tutorial</a>
+			<a href="http://www.tizag.com/phpT/" >PHP Tutorial</a>
+			<a href="http://www.tizag.com/perlT/" >PERL Tutorial</a>
+			<a href="http://www.tizag.com/ajaxTutorial/" >Ajax Tutorial</a>
+			<a href="http://www.tizag.com/aspTutorial/" >ASP Tutorial</a>
+			<a href="http://www.tizag.com/vbscriptTutorial/" >VBScript Tutorial</a>
+			
+			<br /><b>Databases</b>
+			<a href="http://www.tizag.com/sqlTutorial/" >SQL Tutorial</a>
+			<a href="http://www.tizag.com/mysqlTutorial/" >MySQL Tutorial</a>
+			<br /><b>Miscellaneous</b>
+			<a href="http://www.tizag.com/xmlTutorial/" >XML Tutorial</a>
+			<a href="http://www.tizag.com/webhost/" >Web Host Guide</a>
+<a href="http://www.tizag.com/flashTutorial/" >Flash Tutorial</a>
+			<hr />
+			<b>PHP - HTML Form Example</b>
+			<a href="http://www.tizag.com/phpT/examples/formex.php" >Form Building</a>
+			<a href="http://www.tizag.com/phpT/examples/formvar.php" >HTML Variables</a>
+			<a href="http://www.tizag.com/phpT/examples/formfinale.php" >Form Display</a>
+			<hr />
+			<a href="http://www.tizag.com/about/contact.php" >Contact Us</a> 
+			</div>
+			</td></tr></table>
+		</td>
+	
+		<td width="529">
+			<table class="main" cellpadding="8">
+			
+			<tr><td class="mainIn"><h1>PHP HTML Form Example</h1>
+<p>Use this example as a form walkthrough.  We will briefly build an HTML form, and call the form data using PHP.  
+PHP offers several methods for achieving this goal, so feel free to substitute alternative methods as you follow along. Our example 
+will show you a method using a single .php file, combining both PHP and HTML in one simple text file, to retrieve the data and display the results. Below is a quick review of 
+bullets, check boxes, text fields, and input fields and using them to build a form to retrieve some personal information about our user.</p>
+<h1>Building the HTML Form</h1>
+<p>Step 1 is to build the form document to retrieve user date. If you already experienced using HTML forms, this should be review, however, if not we recommend a brief visit through the 
+Tizag <a href="http://www.tizag.com/htmlT/forms.php">HTML Forms Tutorial</a>. The code below shows a simple html form document set up to retrieve some 
+personal knowledge about our user.</p>
+<h1>Input Fields</h1>
+<p>Input fields are the simplest forms to grasp. As mentioned in the Forms Tutorial, just be sure to place the name attribute 
+within the tags and specify a name for the field. Also be aware that for our form's action we have placed the $PHP_SELF super global 
+to send our form to itself. We will be integrating more PHP code into our form as we continue on so be sure to save the file with a .php extension.</p>
+<h2 class="specialT">Code:</h2>
+<div id="code">
+&lt;html&gt; <br />
+&lt;head&gt; <br />
+&lt;title&gt;Personal INFO&lt;/title&gt; <br />
+&lt;/head&gt; <br />
+&lt;body&gt; <br />
+&lt;form method="post" action="&lt;?php echo $PHP_SELF;?&gt;"&gt;<br />
+First Name:&lt;input type="text" size="12" maxlength="12" <em class="attn">name="Fname"</em>&gt;:&lt;br /&gt;<br />
+Last Name:&lt;input type="text" size="12" maxlength="36" <em class="attn">name="Lname"</em>&gt;:&lt;br /&gt;<br />
+</div>
+<h1>Radios and Checkboxes</h1>
+<p>The catch with radio buttons lies with the <i>value</i> attribute. The text you place under the value attribute will be displayed 
+by the browser when the variable is called with PHP.</p>
+<p>Check boxes require the use of an array. PHP will automatically place the checked boxes into an array if you place [] brackets at the 
+end of each name.</p>
+<h2 class="specialT">Code:</h2>
+<div id="code">
+...<br />
+Gender::&lt;br /&gt;<br />
+Male:&lt;input type="radio" value="Male" name="gender"&gt;:&lt;br /&gt;<br />
+Female:&lt;input type="radio" value="Female" name="gender"&gt;:&lt;br /&gt;<br />
+Please choose type of residence::&lt;br /&gt;<br />
+Steak:&lt;input type="checkbox" value="Steak" name="food[]"&gt;:&lt;br /&gt;<br />
+Pizza:&lt;input type="checkbox" value="Pizza" name="food[]"&gt;:&lt;br /&gt;<br />
+Chicken:&lt;input type="checkbox" value="Chicken" name="food[]"&gt;:&lt;br /&gt;<br />
+</div>
+<h1>Textareas</h1>
+<p>In reality, textareas are oversized input fields.  Treat them the same way, just be aware of the <i>wrap</i> attribute and 
+how each type of wrap will turn out.  PHP relys on this attribute to display the textarea.</p>
+<h2 class="specialT">Code:</h2>
+<div id="code">
+...<br />
+&lt;textarea rows="5" cols="20" name="quote" wrap="physical"&gt;Enter your favorite quote!&lt;/textarea&gt;:&lt;br /&gt;
+</div>
+<h1>Drop Down Lists & Selection Lists</h1>
+<p>These two forms act very similar to the already discussed radio and checkbox selections.  To name a selection form, place the <i>name</i> 
+attribute within the select tags at the beginning of the form, and then place the appropriate value to fit each option.</p>
+<h2 class="specialT">Code:</h2>
+<div id="code">
+...<br />
+Select a Level of Education:&lt;br /&gt;<br />
+&lt;select name="education"&gt;<br />
+&lt;option value="Jr.High"&gt;Jr.High&lt;/option&gt;<br />
+&lt;option value="HighSchool"&gt;HighSchool&lt;/option&gt;<br />
+&lt;option value="College"&gt;College&lt;/option&gt;&lt;/select&gt;:&lt;br /&gt;<br />
+Select your favorite time of day::&lt;br /&gt;<br />
+&lt;select name="TofD" size="3"&gt;<br />
+&lt;option value="Morning"&gt;Morning&lt;/option&gt;<br />
+&lt;option value="Day"&gt;Day&lt;/option&gt;<br />
+&lt;option value="Night"&gt;Night&lt;/option&gt;&lt;/select&gt;:&lt;br /&gt;
+</div>
+<p>Be sure to check through your code to double check for bugs or errors especially look at each <i>name</i> attribute to be sure your 
+names are all correct.  As far as names go, you can copy the ones shown or simply make up your own, just be sure you remember what they are. Your 
+form should be similar to the one shown here.</p>
+<h2 class="specialT">Display:</h2>
+<div id="examp">
+<form method="post" action=""> <br />
+First Name:<input type="text" size="12" maxlength="12" name="Fname"> <br />
+Last Name:<input type="text" size="12" maxlength="36" name="Lname"> <br />
+Gender:<br />
+Male:<input type="radio" value="Male" name="gender"><br />
+Female:<input type="radio" value="Female" name="gender"><br />
+Favorite Food:<br />
+Steak:<input type="checkbox" value="Steak" name="food[]"><br />
+Pizza:<input type="checkbox" value="Pizza" name="food[]"><br />
+Chicken:<input type="checkbox" value="Chicken" name="food[]"><br />
+<textarea rows="5" name="quote" cols="20" wrap="physical">Enter your favorite quote!</textarea><br />
+Select a Level of Education:<br />
+<select name="education"><br />
+<option value="Jr.High">Jr.High</option><br />
+<option value="HighSchool">HighSchool</option><br />
+<option value="College">College</option></select><br />
+Select your favorite time of day:<br />
+<select name="TofD" size="3"><br />
+<option value="Morning">Morning</option><br />
+<option value="Day">Day</option><br />
+<option value="Night">Night</option></select>
+</div>
+<ul id="nav">
+<li class="cont"><a href="http://www.tizag.com/phpT/examples/formvar.php">Continue</a></li>
+</ul><br /><br /><br />
+<script type="text/javascript"><!--
+google_ad_client = "pub-5687395037463963";
+google_alternate_ad_url = "http://www.tizag.com/about/alt_ad.html";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "image";
+google_ad_channel ="3373712574";
+google_color_border = "013B63";
+google_color_bg = "88AEC5";
+google_color_link = "013B63";
+google_color_url = "013B63";
+google_color_text = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</td></tr>
+			</table>
+		</td>
+		<td width="100">
+		<table class="rightCol">
+			<tr><td>
+			<div id="rightMenu">
+			<b>Web Reference</b><br />
+			<a class="menu"href="http://www.tizag.com/htmlT/reference/htmlreference.php">HTML Reference</a>
+			<a class="menu"href="http://www.tizag.com/cssT/reference.php">CSS Reference</a>
+			<a class="menu"href="http://www.tizag.com/cssT/liveExampleCss/">CSS Examples</a>
+			<hr />
+			<b>Support Tizag</b><br />
+			<a class="menu"href="http://www.tizag.com/about/linkus.php">Link to Tizag</a>
+			<hr />
+			<a href="http://www.google.com" target="_blank">Google</a>
+			
+			</div>
+			</td></tr>
+		</table>
+		<hr/>
+		<table class="rightCol">
+			<tr><td>
+			
+				
+				
+			<script type="text/javascript"><!--
+			google_ad_client = "pub-5396533251015167";
+			/* Example_Skyscraper_120x600 */
+			google_ad_slot = "4171882985";
+			google_ad_width = 120;
+			google_ad_height = 600;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+			</td></tr>
+		</table>
+		<table class="rightCol">
+			<tr><td>
+			
+			
+						</td></tr>
+		</table>
+		
+		</td>
+	</tr>
+	<tr>
+	<td colspan="3">
+		<p align="Center" class="copyright"><a href="http://www.tizag.com/about/copy.php">Copyright</a> 2003-2007 Erack Network. <a href="http://www.tizag.com/about/advertise.php">Advertising Information</a> 
+				<br />Site design by <a href="http://www.epearl.net/">Seattle Web Design</a></p>
+	</td></tr>
+
+</table>
+

@@ -1,0 +1,1738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>9.11 &#8212; The copy constructor and overloading the assignment operator &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 9.11 &#8212; The copy constructor and overloading the assignment operator Comments Feed" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"203.199.156.161","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/911-the-copy-constructor-and-overloading-the-assignment-operator\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='9.10 &#8212; Overloading typecasts' href='http://www.learncpp.com/cpp-tutorial/910-overloading-typecasts/' />
+<link rel='next' title='9.12 &#8212; Shallow vs. deep copying' href='http://www.learncpp.com/cpp-tutorial/912-shallow-vs-deep-copying/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=150' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="9.11 -- The copy constructor and overloading the assignment operator" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/" />
+<meta property="og:description" content="Although using the assignment operator is fairly straightforward, correctly implementing an overloaded assignment operator can be a little more tricky than you might anticipate. There are two prima..." />
+<meta property="article:published_time" content="2007-11-04T16:52:55+00:00" />
+<meta property="article:modified_time" content="2015-04-03T19:34:28+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-150 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-150 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-150">
+						<div class="post-headline">		<h1>9.11 &#8212; The copy constructor and overloading the assignment operator</h1>
+		</div>		<div class="post-byline">By Alex, on November 4th, 2007</div>		<div class="post-bodycopy clearfix"><p>Although using the assignment operator is fairly straightforward, correctly implementing an overloaded assignment operator can be a little more tricky than you might anticipate.  There are two primary reasons for this.  First, there are some cases where the assignment operator isn&#8217;t called when you might expect it to be.  Second, there are some issues in dealing with dynamically allocated memory (which we will cover in the next lesson).  </p>
+<p>The <strong>assignment operator</strong> is used to copy the values from one object to another <em>already existing object</em>.  The key words here are &#8220;already existing&#8221;.  Consider the following example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b4f433604851" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b4f433604851-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b4f433604851-2">2</div><div class="crayon-num" data-line="crayon-555d7379d7b4f433604851-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b4f433604851-1"><span class="crayon-e">Cents </span><span class="crayon-e">cMark</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// calls Cents constructor</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b4f433604851-2"><span class="crayon-e">Cents </span><span class="crayon-v">cNancy</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// calls Cents default constructor</span></div><div class="crayon-line" id="crayon-555d7379d7b4f433604851-3"><span class="crayon-v">cNancy</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cMark</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// calls Cents assignment operator</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>In this case, cNancy has already been created by the time the assignment is executed.  Consequently, the Cents assignment operator is called.  The assignment operator must be overloaded as a member function.</p>
+<p>What happens if the object being copied into does not already exist?  To understand what happens in that case, we need to talk about the copy constructor.</p>
+<p><strong>The copy constructor</strong></p>
+<p>Consider the following example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b60889981720" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b60889981720-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b60889981720-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b60889981720-1"><span class="crayon-e">Cents </span><span class="crayon-e">cMark</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// calls Cents constructor</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b60889981720-2"><span class="crayon-e">Cents </span><span class="crayon-v">cNancy</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cMark</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// calls Cents copy constructor!</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>Because the second statement uses an equals symbol in it, you might expect that it calls the assignment operator.  However, it doesn&#8217;t!  It actually calls a special type of constructor called a copy constructor.  A <strong>copy constructor</strong> is a special constructor that initializes a <em>new object</em> from an existing object.</p>
+<p>The purpose of the copy constructor and the assignment operator are almost equivalent -- both copy one object to another.  However, the assignment operator copies to existing objects, and the copy constructor copies to newly created objects.</p>
+<p>The difference between the copy constructor and the assignment operator causes a lot of confusion for new programmers, but it&#8217;s really not all that difficult.  Summarizing:</p>
+<ul>
+<li>If a new object has to be created before the copying can occur, the copy constructor is used.
+<li>If a new object does not have to be created before the copying can occur, the assignment operator is used.
+</ul>
+<p>There are three general cases where the copy constructor is called instead of the assignment operator:</p>
+<ol>
+<li>When instantiating one object and initializing it with values from another object (as in the example above).
+<li>When passing an object by value.
+<li>When an object is returned from a function by value.
+</ol>
+<p>In each of these cases, a new variable needs to be created before the values can be copied -- hence the use of the copy constructor.</p>
+<p>Because the copy constructor and assignment operator essentially do the same job (they are just called in different cases), the code needed to implement them is almost identical.</p>
+<p><strong>An overloaded assignment operator and copy constructor example</strong></p>
+<p>Now that you understand the difference between the copy constructor and assignment operator, let&#8217;s see how they are implemented.  For simple classes such as our Cents class, it is very straightforward.</p>
+<p>Here is a simplified version of our Cents class:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b69657410249" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b69657410249-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b69657410249-2">2</div><div class="crayon-num" data-line="crayon-555d7379d7b69657410249-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b69657410249-4">4</div><div class="crayon-num" data-line="crayon-555d7379d7b69657410249-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b69657410249-6">6</div><div class="crayon-num" data-line="crayon-555d7379d7b69657410249-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b69657410249-8">8</div><div class="crayon-num" data-line="crayon-555d7379d7b69657410249-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b69657410249-10">10</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b69657410249-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b69657410249-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379d7b69657410249-3"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b69657410249-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b69657410249-5"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b69657410249-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379d7b69657410249-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b69657410249-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b69657410249-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b69657410249-10"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+<p>First, let&#8217;s add the copy constructor.  Thinking about this logically, because it is a constructor, it needs to be named Cents.  Because it needs to copy an existing object, it needs to take a Cents object as a parameter.  And finally, because it is a constructor, it doesn&#8217;t have a return type.  Putting all of these things together, here is our Cents class with a copy constructor.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b70207312584" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-2">2</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-4">4</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-6">6</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-8">8</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-10">10</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-12">12</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-14">14</div><div class="crayon-num" data-line="crayon-555d7379d7b70207312584-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b70207312584-16">16</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b70207312584-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-3"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-5"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-10">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b70207312584-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Copy constructor</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cSource</span><span class="crayon-sy">.</span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b70207312584-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b70207312584-16"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0017 seconds] -->
+<p></p>
+<p>A copy constructor looks just like a normal constructor that takes a parameter of the class type.  However, there are two things which are worth explicitly mentioning.  First, because our copy constructor is a member of Cents, and our parameter is a Cents, we can directly access the internal private data of our parameter.  Second, the parameter MUST be passed by reference, and not by value.  Can you figure out why?</p>
+<p>The answer lies above in the list that shows the cases where a copy constructor is called.  A copy constructor is called when a parameter is passed by value.  If we pass our cSource parameter by value, it would need to call the copy constructor to do so.  But calling the copy constructor again would mean the parameter is passed by value again, requiring another call to the copy constructor.  This would result in an infinite recursion (well, until the stack memory ran out and the program crashed).  Fortunately, modern C++ compilers will produce an error if you try to do this:</p>
+<pre>
+C:\Test.cpp(431) : error C2652: 'Cents' : illegal copy constructor: first parameter must not be a 'Cents'
+</pre>
+<p>The first parameter in this case must be a reference to a Cents!</p>
+<p>Now let&#8217;s overload the assignment operator.  Following the same logic, the prototype and implementation are fairly straightforward:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b78550779342" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-2">2</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-4">4</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-6">6</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-8">8</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-10">10</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-12">12</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-14">14</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-16">16</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-18">18</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-20">20</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-22">22</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-24">24</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-26">26</div><div class="crayon-num" data-line="crayon-555d7379d7b78550779342-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b78550779342-28">28</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b78550779342-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-3"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-5"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-o">=</span><span class="crayon-cn">0</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-10">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b78550779342-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Copy constructor</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cSource</span><span class="crayon-sy">.</span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-16">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b78550779342-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Cents</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-t">operator</span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-18">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b78550779342-19"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-20">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b78550779342-21"><span class="crayon-v">Cents</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-o">::</span><span class="crayon-t">operator</span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-22"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// do the copy</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cSource</span><span class="crayon-sy">.</span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-25">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// return the existing object</span></div><div class="crayon-line" id="crayon-555d7379d7b78550779342-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-r">this</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b78550779342-28"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0032 seconds] -->
+<p></p>
+<p>A couple of things to note here: First, the line that does the copying is exactly identical to the one in the copy constructor.  This is typical.  In order to reduce duplicate code, the portion of the code that does the actual copying could be moved to a private member function that the copy constructor and overloaded assignment operator both call.  Second, we&#8217;re returning *this so we can chain multiple assigments together:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b7f765838106" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b7f765838106-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b7f765838106-1"><span class="crayon-v">cMark</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cNancy</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cFred</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cJoe</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// assign cJoe to everyone</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>If you need a refresher on chaining, we cover that in the section on <a href="http://www.learncpp.com/cpp-tutorial/93-overloading-the-io-operators/">overloading the I/O operators</a>.</p>
+<p>Finally, note that it is possible in C++ to do a self-assignment:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b86351322620" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b86351322620-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b86351322620-1"><span class="crayon-v">cMark</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cMark</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// valid assignment</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p></p>
+<p>In these cases, the assignment operator doesn&#8217;t need to do anything (and if the class uses dynamic memory, it can be dangerous if it does).  It is a good idea to do a check for self-assignment at the top of an overloaded assignment operator.  Here is an example of how to do that:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379d7b8c560244035" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-2">2</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-4">4</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-6">6</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-8">8</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-10">10</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379d7b8c560244035-12">12</div><div class="crayon-num" data-line="crayon-555d7379d7b8c560244035-13">13</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379d7b8c560244035-1"><span class="crayon-v">Cents</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-o">::</span><span class="crayon-t">operator</span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// check for self-assignment by comparing the address of the</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// implicit object and the parameter</span></div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-r">this</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-v">&amp;cSource</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-r">this</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// do the copy</span></div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">cSource</span><span class="crayon-sy">.</span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-10">&nbsp;</div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// return the existing object</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379d7b8c560244035-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-r">this</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379d7b8c560244035-13"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0016 seconds] -->
+<p></p>
+<p>Note that there is no need to check for self-assignment in a copy-constructor.  This is because the copy constructor is only called when new objects are being constructed, and there is no way to assign a newly created object to itself in a way that calls to copy constructor.</p>
+<p><strong>Default memberwise copying</strong></p>
+<p>Just like other constructors, C++ will provide a <strong>default copy constructor</strong> if you do not provide one yourself.  However, unlike other operators, C++ will provide a <strong>default assignment operator </strong> if you do not provide one yourself!</p>
+<p>Because C++ does not know much about your class, the default copy constructor and default assignment operators it provides are very simple.  They use a copying method known as a memberwise copy (also known as a shallow copy).   We will talk more about shallow and deep copying in the next lesson.</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/912-shallow-vs-deep-copying/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 9.12 -- Shallow vs. deep copying</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter9" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/910-overloading-typecasts/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 9.10 -- Overloading typecasts</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-150" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-150" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-150" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-150" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">38 comments to 9.11 &#8212; The copy constructor and overloading the assignment operator</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-3161">
+		<div id="div-comment-3161" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/61a6f2d151eba84c33c7525903867761?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/61a6f2d151eba84c33c7525903867761?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jinendra</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-3161">
+		November 21, 2007 at 9:53 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=3161#respond' onclick='return addComment.moveForm( "comment-3161", "3161", "respond", "150" )' aria-label='Reply to jinendra'> &middot; Reply</a></span>		 
+		</div>
+		<p>Why cant we overload assignment operator using a friend function.<br />
+The operators (), [], -&gt; and = can be overloaded only as class members; all other overloaded operators can (also) be implemented as friends</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-alex bypostauthor odd alt thread-odd thread-alt depth-1 clearfix" id="comment-3180">
+		<div id="div-comment-3180" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-3180">
+		November 22, 2007 at 10:41 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=3180#respond' onclick='return addComment.moveForm( "comment-3180", "3180", "respond", "150" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>The answer to this is addressed pretty well by Narue here:<br />
+<a href="http://www.daniweb.com/forums/thread41344.html" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://www.daniweb.com/forums/thread41344.html', 'http://www.daniweb.com/forums/thread41344.html']);" rel="nofollow">http://www.daniweb.com/forums/thread41344.html</a></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-8773">
+		<div id="div-comment-8773" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b409bf7cf6650704ed10f7325402977d?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b409bf7cf6650704ed10f7325402977d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">PRABHAKAR</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-8773">
+		March 2, 2008 at 5:25 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=8773#respond' onclick='return addComment.moveForm( "comment-8773", "8773", "respond", "150" )' aria-label='Reply to PRABHAKAR'> &middot; Reply</a></span>		 
+		</div>
+		<p>dear alex, my query may look funny. but i dare to put up. in the code on lines                          26  // return the existing object<br />
+27    return *this; but u have not declared any<br />
+object which can be termed as &#8216;existing object&#8217;.<br />
+OR u mean to the class as object? please make me aware of my shortcoming in mt understanding. thanks prabhakar</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-8786">
+		<div id="div-comment-8786" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-8786">
+		March 2, 2008 at 11:47 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=8786#respond' onclick='return addComment.moveForm( "comment-8786", "8786", "respond", "150" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Prabhakar, all non-static member functions must have an instance of the class that they are currently working with.  For example, when you do this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379dbb07085845375" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379dbb07085845375-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379dbb07085845375-1"><span class="crayon-e">Cents </span><span class="crayon-e">cCents</span><span class="crayon-sy">(</span><span class="crayon-cn">15</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+<p>This will call the Cents constructor, with the cCents object as the implicit object.  Inside the constructor, you can refer to the cCents object directly via the <i>this</i> pointer.  When I say &#8220;existing object&#8221;, I mean the implicit object the function is currently working with.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-11144">
+		<div id="div-comment-11144" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-11144">
+		April 7, 2008 at 7:01 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=11144#respond' onclick='return addComment.moveForm( "comment-11144", "11144", "respond", "150" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello again Alex -</p>
+<p>I am having trouble grasping when and where to use *this. I will go back and re-read that chapter, but it occurs to me that it might help me (and others) if you had a symbolic diagram of the stack so I could clearly see what&#8217;s going on when *this is returned by a function.</p>
+<p>Thanks - this website is a great intro to C++.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-11192">
+		<div id="div-comment-11192" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-11192">
+		April 7, 2008 at 8:14 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=11192#respond' onclick='return addComment.moveForm( "comment-11192", "11192", "respond", "150" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>â€œreturn *thisâ€? simply returns the object that the member function is working with to the caller.</p>
+<p>Thus, if you called:</p>
+<p>foo.someMemberFunction();</p>
+<p>and someMemberFunction() returned *this, someMemberFunction() would return foo.</p>
+<p>The hardest thing for most people seems to be just understanding what the this pointer is doing in the first place. The actual return mechanics are the same as with any other return value.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-95001">
+		<div id="div-comment-95001" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9e78582c659380d5075f8dd5836012d9?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9e78582c659380d5075f8dd5836012d9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">mslade</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-95001">
+		December 4, 2010 at 7:41 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=95001#respond' onclick='return addComment.moveForm( "comment-95001", "95001", "respond", "150" )' aria-label='Reply to mslade'> &middot; Reply</a></span>		 
+		</div>
+		<p>This confused me for a bit, too, so I&#8217;ll offer my understanding that it might help someone else.</p>
+<p>Returning *this will dereference the &#8220;this&#8221; pointer, and instead return the actual object itself.  What I got tripped up on is why it wasn&#8217;t thus creating a copy of this and returning that.  The answer is because this function returns a Cents&amp; (reference).  As a result, the object is not copied and instead the capturing value gets the proper object.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-26098">
+		<div id="div-comment-26098" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3d155e4850141019eb10e3d92549308e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3d155e4850141019eb10e3d92549308e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">saravanan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-26098">
+		September 3, 2008 at 6:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=26098#respond' onclick='return addComment.moveForm( "comment-26098", "26098", "respond", "150" )' aria-label='Reply to saravanan'> &middot; Reply</a></span>		 
+		</div>
+		<p>
+class sar<br />
+{<br />
+public:<br />
+	char ini;<br />
+	char* name;<br />
+	int age;<br />
+	sar(int i,char* n):age(i),name(n)<br />
+	{<br />
+	}<br />
+	sar(sar&amp; s)<br />
+	{<br />
+		*this = s;<br />
+	}<br />
+	sar&amp; operator=(sar&amp; s)<br />
+	{<br />
+		return *this;<br />
+	}</p>
+<p>};</p>
+<p>int main()<br />
+{<br />
+sar *s = new sar(3,&quot;dd&quot;);<br />
+sar s1(*s);<br />
+delete [] s;<br />
+s = NULL;<br />
+cout&lt;&lt;s1.nmae;//prints successfully &quot;dd&quot;!! ..which i thought throw exception.<br />
+}</p>
+<p> alex sir, in above snippet the *s is created in heap, and s1 is created in stack,while creating s1 , by the copy constructor , i am copying the valeus of s object to s1.</p>
+<p>so in debugger in s memory location name is there with adress &#8220;abxxx&#8221;,<br />
+and also s1&#8217;s name&#8217;s address also pointed to the same.(as by the copy constructed ).</p>
+<p>then i deleted s , so the name is heap disappered in the address inside the s object layout in heap memory,-&gt; the same address get displayed in debugger for s1&#8217;s name , but value is there in same address.</p>
+<p>and i think while deleting s address, name got exhausted and s1&#8217;s name also deleted, but that not happened and i successfully displayed the s1&#8217;s name!!!!</p>
+<p>please clarify</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-27031">
+		<div id="div-comment-27031" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-27031">
+		September 10, 2008 at 10:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=27031#respond' onclick='return addComment.moveForm( "comment-27031", "27031", "respond", "150" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>When I copied your program into Visual Studio and ran it, it crashed.  This is what I would expect.  When you do a *this = s, you&#8217;re doing a shallow copy of the members of the class, which means s1.name = s.name.  When you delete s, s1.name will point to garbage, and when you try and access it, you&#8217;re accessing unallocated memory.</p>
+<p>As far as I know, there&#8217;s nothing in the C++ spec that says what compilers have to do with the memory that&#8217;s deleted -- so I&#8217;m guessing in your case the compiler deallocated the memory but didn&#8217;t clear it.  When you printed s1.name, you actually accessed deallocated memory, but for whatever reason with your combination of compiler/OS it didn&#8217;t flag this as a violation and halt the process.  This can be a cause of intermittent crashes.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-56963">
+		<div id="div-comment-56963" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0183daeccdd0487da019c5177a5ec7e1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0183daeccdd0487da019c5177a5ec7e1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Joris</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-56963">
+		April 9, 2009 at 11:12 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=56963#respond' onclick='return addComment.moveForm( "comment-56963", "56963", "respond", "150" )' aria-label='Reply to Joris'> &middot; Reply</a></span>		 
+		</div>
+		<p>No the reason it crashes is not that the string is deleted, s1.name will not be pointing to garbage, it will continue to point to the correct string.</p>
+<p>The code is likely to crash, but that&#8217;s simply because:<br />
+- You should use delete instead of delete[]; just a typo I assume<br />
+- You are deferencing a uninitialised variable s1.name.<br />
+It wasn&#8217;t copied as your copy constructor only calls the assignment operator, and the assignment operator simply returns without any copying, this s1.name was never initialised.</p>
+<p>Assuming this code instead:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379db89c938792736" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379db89c938792736-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-2">2</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-4">4</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-6">6</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-8">8</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-10">10</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-12">12</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-14">14</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-16">16</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-18">18</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-20">20</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-22">22</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-24">24</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-26">26</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-28">28</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db89c938792736-30">30</div><div class="crayon-num" data-line="crayon-555d7379db89c938792736-31">31</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379db89c938792736-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">sar</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-3"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">ini</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">name</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-6"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">age</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-8"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">sar</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">i</span><span class="crayon-sy">,</span><span class="crayon-t">char</span><span class="crayon-o">*</span><span class="crayon-h"> </span><span class="crayon-v">n</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-e">age</span><span class="crayon-sy">(</span><span class="crayon-v">i</span><span class="crayon-sy">)</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-e">name</span><span class="crayon-sy">(</span><span class="crayon-v">n</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-9"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-10"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-12"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">sar</span><span class="crayon-sy">(</span><span class="crayon-v">sar</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">s</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-13"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">*</span><span class="crayon-r">this</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">s</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-15"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-16">&nbsp;</div><div class="crayon-line" id="crayon-555d7379db89c938792736-17"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">sar</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-t">operator</span><span class="crayon-o">=</span><span class="crayon-sy">(</span><span class="crayon-v">sar</span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">s</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-18"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">name</span><span class="crayon-o">=</span><span class="crayon-v">s</span><span class="crayon-sy">.</span><span class="crayon-v">name</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-r">this</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-21"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-22"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-24"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-25"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-26"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">sar</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">s</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">sar</span><span class="crayon-sy">(</span><span class="crayon-cn">3</span><span class="crayon-sy">,</span><span class="crayon-s">"dd"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-27"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-e">sar </span><span class="crayon-e">s1</span><span class="crayon-sy">(</span><span class="crayon-o">*</span><span class="crayon-v">s</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-28"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-i">delete</span><span class="crayon-h"> </span><span class="crayon-v">s</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-29"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">s</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-t">NULL</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db89c938792736-30"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">s1</span><span class="crayon-sy">.</span><span class="crayon-v">nmae</span><span class="crayon-sy">;</span><span class="crayon-c">//prints successfully "dd"!! ..which i thought throw exception.</span></div><div class="crayon-line" id="crayon-555d7379db89c938792736-31"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0040 seconds] -->
+<p></p>
+<p>This is guarenteed to print &#8220;dd&#8221;.<br />
+You seem to be assuming the string &#8220;dd&#8221; would be deleted. It won&#8217;t - the program would probably crash if it tried, as that&#8217;s just wrong (it has never been created by &#8216;new&#8217; so it must not be deleted)</p>
+<p>&#8220;dd&#8221; is an implied pointer to an array of three characters str={&#8216;d&#8217;,&#8217;d&#8217;,&#8221;};<br />
+First it&#8217;s assigned to s.name. Then (in my version of the code, not in your original version) it&#8217;s copied over to s1.name. Then you delete s, but this will not change  this pointer, then you print it; no problem at all.</p>
+<p>The fact that your original code returned &#8220;dd&#8221; was, luck/bad luck, depending on the compiler or so; there&#8217;s no reasonable reason why it would have print &#8220;dd&#8221; at all;</p>
+<p>This shows an important point - even if code is broken it can appear to work as you intended. The effect that you saw that unchanged code suddenly stopped working, is a sign you are most likely reading uninitialised variables.</p>
+<p>Hope that makes it a bit more clear.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-27535">
+		<div id="div-comment-27535" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3d155e4850141019eb10e3d92549308e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3d155e4850141019eb10e3d92549308e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">saravanan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-27535">
+		September 16, 2008 at 5:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=27535#respond' onclick='return addComment.moveForm( "comment-27535", "27535", "respond", "150" )' aria-label='Reply to saravanan'> &middot; Reply</a></span>		 
+		</div>
+		<p>thank you Alex,<br />
+but today i ran the same code and i got the exception as you said,<br />
+i am queered , this code ran successfully at that time.<br />
+what may be the reason for this behavior?.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-67399">
+		<div id="div-comment-67399" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e38aa6f74451c7b40a18a78358e5d12b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e38aa6f74451c7b40a18a78358e5d12b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www1bpt.bridgeport.edu/~liyang' rel='external nofollow' class='url'>Li Yang</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-67399">
+		August 29, 2009 at 1:43 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=67399#respond' onclick='return addComment.moveForm( "comment-67399", "67399", "respond", "150" )' aria-label='Reply to Li Yang'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex, Joris and Saravanan,</p>
+<p>This site is really helpful!</p>
+<p>I&#8217;ve tried both versions and neither one work due to a typo of nmae. I corrected the typo and both ran without crash. Here is the details.</p>
+<p>1. OS: Windows Vista Home.</p>
+<p>2. Compiler: The compiler I used is Microsoft Visual C++ 2008 Express Edition. It&#8217;s a free download trial version from Microsoft and will expire in 14 days. Any one who knows of a good free compiler and editor please recommend to me. Thank you in advance!</p>
+<p>3. Outputs: I&#8217;ve tried many times and the outputs appear to be stable. As Alex pointed out the output of the original version is garbage. Both statements &#8220;delete [] s;&#8221; and &#8220;delete s;&#8221; seem to produce the same garbage output from time to time. Joris&#8217; version does display &#8220;dd&#8221; as expected because of the name=s.name; statement explicitly assigns &#8220;dd&#8221; to name.</p>
+<p>4. Modifications: I modified the last statement from Joris&#8217; version as follow</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379db7c5358237434" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379db7c5358237434-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db7c5358237434-2">2</div><div class="crayon-num" data-line="crayon-555d7379db7c5358237434-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db7c5358237434-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379db7c5358237434-1"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"s1.ini&nbsp;&nbsp;= "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">s1</span><span class="crayon-sy">.</span><span class="crayon-v">ini</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db7c5358237434-2"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"s1.name = "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">s1</span><span class="crayon-sy">.</span><span class="crayon-v">name</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-c">//prints successfully "dd"!! ..which i thought throw exception.</span></div><div class="crayon-line" id="crayon-555d7379db7c5358237434-3"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"s1.age&nbsp;&nbsp;= "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">s1</span><span class="crayon-sy">.</span><span class="crayon-v">age</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db7c5358237434-4"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+<p>The content displayed for s1.ini is always the symbol like a rotated &#8220;8&#8221;<br />
+The s1.name is always &#8220;dd&#8221; of course.<br />
+The s1.age is a random 7 digit integer eg 3141816 or 1568088.</p>
+<p>Can anybody explain the results and the following questions?<br />
+The &#8220;sar s1(*s);&#8221; statement explicitly calls the copy constructor. Why is the assignment operator instead of the copy constructor actually executed? When will the copy constructor get called and when assignment operator? Can we force a specific function at our choice to run?</p>
+<p>Thank you very much for your generous contributions!<br />
+Lee</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-71037">
+		<div id="div-comment-71037" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/542890cc0e9e903412eb950ddf4a00f8?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/542890cc0e9e903412eb950ddf4a00f8?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://NA' rel='external nofollow' class='url'>Manas</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-71037">
+		October 25, 2009 at 9:52 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=71037#respond' onclick='return addComment.moveForm( "comment-71037", "71037", "respond", "150" )' aria-label='Reply to Manas'> &middot; Reply</a></span>		 
+		</div>
+		<p>I want to take 1 pointer in my class which will point to some integer at run time. After that i will create one object and after that i will try to create one another object from the previous one with copy constructor. I was trying the following code but some how unable to access that or confuse in writing that code.<br />
+class Myclass<br />
+{<br />
+int * ptr ;<br />
+int i ;<br />
+Myclass()<br />
+{<br />
+ptr =new int ;<br />
+*ptr =20;<br />
+i=30;<br />
+}<br />
+Myclass (const Myclass &amp;a)<br />
+{<br />
+ this-&gt;i= a.i ;<br />
+ //But confuse in how to initialize the value which will be point by the pointer i am trying this way<br />
+ *p =*(a.p)//Please tell whether this is correct or not<br />
+}<br />
+};</p>
+<p>void main()<br />
+{<br />
+Myclass M;<br />
+Myclass M1 =M ;<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-73678">
+		<div id="div-comment-73678" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1a1651e30766acc4d0e9979bc6668643?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1a1651e30766acc4d0e9979bc6668643?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jason</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-73678">
+		December 5, 2009 at 4:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=73678#respond' onclick='return addComment.moveForm( "comment-73678", "73678", "respond", "150" )' aria-label='Reply to Jason'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi, Alex,</p>
+<p>  Actually, many compilers (e.g g++) avoid calling copy constructor when returning an object from function by so called NRV (named-return-value) optimization.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7379db6a4152671824" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db6a4152671824-2">2</div><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db6a4152671824-4">4</div><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db6a4152671824-6">6</div><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db6a4152671824-8">8</div><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7379db6a4152671824-10">10</div><div class="crayon-num" data-line="crayon-555d7379db6a4152671824-11">11</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7379db6a4152671824-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">A</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db6a4152671824-2"><span class="crayon-i">A</span><span class="crayon-h"> </span><span class="crayon-e">f</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d7379db6a4152671824-3"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db6a4152671824-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-i">A</span><span class="crayon-h"> </span><span class="crayon-v">a</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7379db6a4152671824-5"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">a</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db6a4152671824-6"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7379db6a4152671824-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db6a4152671824-8"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7379db6a4152671824-9"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7379db6a4152671824-10"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-i">A</span><span class="crayon-h"> </span><span class="crayon-v">aa</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">f</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h">&nbsp;&nbsp; </span><span class="crayon-c">// the normal constructor is called, no copy constructor</span></div><div class="crayon-line" id="crayon-555d7379db6a4152671824-11"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+<p>  However MS visual 2010 call the copy constructor when building debug version program, but won&#8217;t call it when building release version. This is a disater for developper, who may see two results during development.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-90426">
+		<div id="div-comment-90426" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5b36ef90a2ba76061d64373b9227172a?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5b36ef90a2ba76061d64373b9227172a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.gmail.com' rel='external nofollow' class='url'>yuvrazbhatia21</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-90426">
+		August 16, 2010 at 9:26 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=90426#respond' onclick='return addComment.moveForm( "comment-90426", "90426", "respond", "150" )' aria-label='Reply to yuvrazbhatia21'> &middot; Reply</a></span>		 
+		</div>
+		<p>welcom niit</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-90729">
+		<div id="div-comment-90729" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Sanjeev</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-90729">
+		August 22, 2010 at 11:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=90729#respond' onclick='return addComment.moveForm( "comment-90729", "90729", "respond", "150" )' aria-label='Reply to Sanjeev'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi,<br />
+For the class A can I have copy constructor like A(const A*) instead of A(const A&amp;). What will be the difference. Can anybody please explain?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-97473">
+		<div id="div-comment-97473" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">HYA</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97473">
+		June 6, 2012 at 5:21 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97473#respond' onclick='return addComment.moveForm( "comment-97473", "97473", "respond", "150" )' aria-label='Reply to HYA'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Sanjeev<br />
+In that case you have to write any object intialization like this  A a, aa1 = &amp;a; &#8230; which is a bit confusing &#8230;but you can implement both copy contructors as<br />
+ class Aclass<br />
+{<br />
+	int i ;<br />
+public:<br />
+	Aclass(){	i=37;	}</p>
+<p>	Aclass (const Aclass* a){<br />
+		this-&gt;i= a-&gt;i ;<br />
+		cout&lt;i= a.i ;<br />
+		cout&lt;&lt;&quot;Copy contructor with reference called&quot;;<br />
+	}<br />
+	int Geti() {return i;}<br />
+};</p>
+<p>int _tmain(int argc, _TCHAR* argv[])<br />
+{<br />
+	Aclass aa;<br />
+	Aclass aa1 = &amp;aa ;<br />
+	Aclass aa2 = aa;</p>
+<p>	cout &lt;&lt; aa1.Geti();<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-97474">
+		<div id="div-comment-97474" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">HYA</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97474">
+		June 6, 2012 at 5:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97474#respond' onclick='return addComment.moveForm( "comment-97474", "97474", "respond", "150" )' aria-label='Reply to HYA'> &middot; Reply</a></span>		 
+		</div>
+		<p>class Aclass<br />
+{<br />
+	int i ;<br />
+public:<br />
+	Aclass(){	i=37;	}</p>
+<p>	Aclass (const Aclass* a){<br />
+		this-&gt;i= a-&gt;i ;<br />
+		cout&lt;i= a.i ;<br />
+		cout&lt;&lt;&quot;Copy contructor with reference called&quot;;<br />
+	}<br />
+	int Geti() {return i;}<br />
+};</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-95934">
+		<div id="div-comment-95934" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2629a48b5393da30be89794978a605e5?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2629a48b5393da30be89794978a605e5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">subbaiahtp</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-95934">
+		August 25, 2011 at 2:40 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=95934#respond' onclick='return addComment.moveForm( "comment-95934", "95934", "respond", "150" )' aria-label='Reply to subbaiahtp'> &middot; Reply</a></span>		 
+		</div>
+		<p>class A<br />
+{</p>
+<p>private:</p>
+<p>char *fname;<br />
+int age;</p>
+<p>};</p>
+<p>class B<br />
+{<br />
+private:<br />
+A aobj;<br />
+char *lname;<br />
+int marks;<br />
+};</p>
+<p>Please let me know the B&#8217;s copy constructor implementation?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-95941">
+		<div id="div-comment-95941" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e119617ea14ccdffc76d741a0ac7675e?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e119617ea14ccdffc76d741a0ac7675e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">subrat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-95941">
+		August 26, 2011 at 10:36 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=95941#respond' onclick='return addComment.moveForm( "comment-95941", "95941", "respond", "150" )' aria-label='Reply to subrat'> &middot; Reply</a></span>		 
+		</div>
+		<p>class A {<br />
+private:<br />
+	char *fname;<br />
+    int age;<br />
+public:<br />
+	/*A() {<br />
+		std::cout&lt;&lt;&quot;zero ctr A\n&quot;&lt;fname = new char[strlen(fname)+1];<br />
+		this-&gt;age=age;<br />
+	  std::cout&lt;&lt;&quot;1 cstr--a&#8230;.&quot;&lt;&lt;this&lt;&lt;std::endl;<br />
+	}<br />
+	A(const A&amp; val){<br />
+		age=val.age;<br />
+		fname = new char[strlen(val.fname)+1];<br />
+		strcpy(fname, val.fname);<br />
+		std::cout&lt;&lt;&quot;Cpy Cstr--A&#8230;.&quot;&lt;&lt;this&lt;&lt;std::endl;<br />
+	}</p>
+<p>	~A(){<br />
+		delete[] fname;<br />
+		std::cout&lt;&lt;&quot;Destr--A&#8230;&quot;&lt;&lt;this&lt;lname=new char[strlen(lname)+1];<br />
+		  this-&gt;marks= marks;<br />
+		  std::cout&lt;&lt;&quot;constrr B&#8230;&#8230;.&quot;&lt;&lt;this&lt;&lt;std::endl;<br />
+	  }<br />
+	  B(const B&amp; val):aobj(val.aobj) {<br />
+		lname=new char[strlen(val.lname)+1];<br />
+		strcpy(lname, val.lname);<br />
+		marks= val.marks;<br />
+		std::cout&lt;&lt;&quot;copy Cstr--B::::&quot;&lt;&lt;this&lt;&lt;std::endl;</p>
+<p>	}</p>
+<p>	~B(){<br />
+		delete[] lname;<br />
+		std::cout&lt;&lt;&quot;Destr--B:::::&quot;&lt;&lt;this&lt;&lt;std::endl;<br />
+	}<br />
+};</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-95982">
+		<div id="div-comment-95982" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2629a48b5393da30be89794978a605e5?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2629a48b5393da30be89794978a605e5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">subbaiahtp</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-95982">
+		September 5, 2011 at 9:44 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=95982#respond' onclick='return addComment.moveForm( "comment-95982", "95982", "respond", "150" )' aria-label='Reply to subbaiahtp'> &middot; Reply</a></span>		 
+		</div>
+		<p>Thanks subrat <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":-)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-96906">
+		<div id="div-comment-96906" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/35333278c4a4fd22f7b5dec509cb0484?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/35333278c4a4fd22f7b5dec509cb0484?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">saurabh</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-96906">
+		February 5, 2012 at 4:23 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=96906#respond' onclick='return addComment.moveForm( "comment-96906", "96906", "respond", "150" )' aria-label='Reply to saurabh'> &middot; Reply</a></span>		 
+		</div>
+		<p>Here is answer to  why dont we use pass by pointer in copy constructor  so see following scenario<br />
+class ABC<br />
+{<br />
+public:<br />
+  ABC(){} /*Simple Constructor*/<br />
+  ABC(ABC * b) { }/*Copy Constructor*/<br />
+};<br />
+int main(int argc, char* argv[]){<br />
+  ABC * d1 = NULL;<br />
+  ABC    d2 = d1; /*Calling Copy constructor*/<br />
+  return 0;<br />
+}<br />
+See above example , if we take pointer type object in copy constructor<br />
+two flaws are here<br />
+1) We can assign NULL value to simple object of that class<br />
+2) see this line  ABC    d2 = d1;<br />
+here d2 is ABC type while d1 is ABC* type means as per rule we are violating basic rules by allowing to assign simple type with pointer type.<br />
+If there is any pointer type member variable in side ABC class means DEEP Copy scenario like int * m_iVal; then it will crash out during calling copy constructor by passing NULL object, so stop such mistake at design time we do use const reference object of same class type in copy constructor as a parameter.Hoping this will clear you.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-96973">
+		<div id="div-comment-96973" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8dc2a0391c5dd275f2a11b19514eac59?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8dc2a0391c5dd275f2a11b19514eac59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rohitnitp</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-96973">
+		February 19, 2012 at 10:37 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=96973#respond' onclick='return addComment.moveForm( "comment-96973", "96973", "respond", "150" )' aria-label='Reply to rohitnitp'> &middot; Reply</a></span>		 
+		</div>
+		<p>how it come while defining copy constructor you used object of the same class to access private data member which belongs to that object only..since now this object as it is already created how can we access private data directly to anywhere else even if it copy constructor of the same class..it will violate the idea of data encapsulation and data hiding..i tried to access m_nCents via GetLength() at that point but compiler has given me error..why is it so,please explain..</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-97190">
+		<div id="div-comment-97190" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/04ee1f974da1ef49e12666d567e0703e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/04ee1f974da1ef49e12666d567e0703e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">dmanniteaux</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97190">
+		March 31, 2012 at 3:26 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97190#respond' onclick='return addComment.moveForm( "comment-97190", "97190", "respond", "150" )' aria-label='Reply to dmanniteaux'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,</p>
+<p>Can you explain further why in the code:</p>
+<p>Cents&amp; operator= (const Cents &amp;cSource);</p>
+<p>We require operator= to be passed by reference?  </p>
+<p>I am assuming it&#8217;s similar to the explanation of &#8221; .. Second, the parameter MUST be passed by reference, and not by value. Can you figure out why?&#8221; for the copy constructor part but it would be helpful if you could go into the same detail with this case as well so I can understand <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>Thanks!!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-97240">
+		<div id="div-comment-97240" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/05f8448ca5f6edd4e622f5f320f7ccbf?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/05f8448ca5f6edd4e622f5f320f7ccbf?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">wgrant</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97240">
+		April 10, 2012 at 5:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97240#respond' onclick='return addComment.moveForm( "comment-97240", "97240", "respond", "150" )' aria-label='Reply to wgrant'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey Alex,</p>
+<p>I&#8217;m trying to work out how the chaining works in </p>
+<p>cMark = cNancy = cFred = cJoe</p>
+<p>I don&#8217;t see how cJoe is ever correctly returned as the object by *this to enable assigning cJoe to any of the other objects.</p>
+<p>Could you please do a step-by-step of how this is done?<br />
+Thanks in advance,<br />
+Will</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-97241">
+		<div id="div-comment-97241" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/05f8448ca5f6edd4e622f5f320f7ccbf?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/05f8448ca5f6edd4e622f5f320f7ccbf?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">wgrant</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97241">
+		April 10, 2012 at 6:06 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97241#respond' onclick='return addComment.moveForm( "comment-97241", "97241", "respond", "150" )' aria-label='Reply to wgrant'> &middot; Reply</a></span>		 
+		</div>
+		<p>Haha nevermind. I think I got it.</p>
+<p>cMark = cNancy = cFred = cJoe<br />
+cMark = cNancy = (cFred = cJoe) //cFred now holds cJoe<br />
+cMark = (cNancy = cFred) //cNancy now holds cJoe via cFred<br />
+(cMark = cNancy) // cMark now holds cJoe via cNancy via cFred</p>
+<p>I was held up by the *this pointer returning the object on the left side of the assignment operator. I originally thought we had to return cJoe in all cases to assign cJoe to everyone. But returning the operator that was acted upon is correct since it now holds the desired values -- which will be propagated down to every object.</p>
+<p>Will</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-97506">
+		<div id="div-comment-97506" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">HYA</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97506">
+		June 13, 2012 at 2:16 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97506#respond' onclick='return addComment.moveForm( "comment-97506", "97506", "respond", "150" )' aria-label='Reply to HYA'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex<br />
+Can I ask one question, as you wrote<br />
+Cents cMark(5); // calls Cents constructor<br />
+ Cents cNancy; // calls Cents default constructor<br />
+which constructor is called when I write  as<br />
+ Cents cJacob();<br />
+or what happen in this case &#8230;</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-97553">
+		<div id="div-comment-97553" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c05d4c811de83529bf55378c805afe90?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">HYA</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97553">
+		June 26, 2012 at 2:27 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97553#respond' onclick='return addComment.moveForm( "comment-97553", "97553", "respond", "150" )' aria-label='Reply to HYA'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex<br />
+I have one more question, what is used, like Copy constructor or Assignment Operator in the case<br />
+            Cents coin = Cent(10);<br />
+like to know about this statement.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-97694">
+		<div id="div-comment-97694" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">UncaAlby</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97694">
+		August 2, 2012 at 2:21 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97694#respond' onclick='return addComment.moveForm( "comment-97694", "97694", "respond", "150" )' aria-label='Reply to UncaAlby'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex, you mentioned that the Copy Constructor and the Assignment Operator Overload could both call the same function to perform the actual copy from the new object to the object copied to. Obviously that is a good idea from the perspective of not duplicating code.</p>
+<p>What are your thoughts on instead using the operator=() function in the copy constructor?</p>
+<p>E.g.:</p>
+<p>// assignment operator overload<br />
+Type &amp;operator=(const Type &amp; newObj) {<br />
+  if (this != &amp;newObj) {<br />
+    this-&gt;member = newObj.member;<br />
+    // etc. etc. etc.<br />
+  }<br />
+  return *this;<br />
+}</p>
+<p>// copy constructor<br />
+Type(const Type &amp; newObj) {<br />
+  this-&gt;operator=(newObj);<br />
+}</p>
+<p>I&#8217;ve tried it, and it seems to work, but I don&#8217;t if there might be something about it to bite me on the backside.</p>
+<p>Cheers!</p>
+<p>UncaAlby</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-97695">
+		<div id="div-comment-97695" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">UncaAlby</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97695">
+		August 2, 2012 at 2:30 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97695#respond' onclick='return addComment.moveForm( "comment-97695", "97695", "respond", "150" )' aria-label='Reply to UncaAlby'> &middot; Reply</a></span>		 
+		</div>
+		<p>Nevermind -- I did some more research, and consensus appears to be that, due to certain members getting default values anyway, doing it this way is a bad idea.</p>
+<p>So, just have the copy constructor and the operator= both call the same copy private method.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-97696">
+		<div id="div-comment-97696" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7a3afd15f61214cb8ddde5ae52bfc910?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">UncaAlby</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-97696">
+		August 2, 2012 at 2:45 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=97696#respond' onclick='return addComment.moveForm( "comment-97696", "97696", "respond", "150" )' aria-label='Reply to UncaAlby'> &middot; Reply</a></span>		 
+		</div>
+		<p>adding to that -- since the operator=() only is used when the destination object already exists, you might need to be careful with a deep copy that needs to allocate memory for certain members.</p>
+<p>That is, if you have members that allocate memory in the constructors, you&#8217;ll have to free that memory in the operator=() method before you perform the deep copy that will re-allocate new memory for the copy. Otherwise, you can get a memory leak.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-98043">
+		<div id="div-comment-98043" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c7ac33cc46f1557db67bdf854ca86365?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c7ac33cc46f1557db67bdf854ca86365?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">tunvir rahman tusher</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-98043">
+		December 24, 2012 at 6:36 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=98043#respond' onclick='return addComment.moveForm( "comment-98043", "98043", "respond", "150" )' aria-label='Reply to tunvir rahman tusher'> &middot; Reply</a></span>		 
+		</div>
+		<p>why my copy constructor is not calling when i am assigning t=t1+t2????</p>
+<p>///////////////////////<br />
+#include<br />
+using namespace std;<br />
+class test<br />
+{<br />
+      int x,y;<br />
+      public:<br />
+             test(){x=0;y=0;}<br />
+             test(int i,int j){x=i;y=j;}<br />
+             test(test &amp;ob){cout&lt;x+ob.x;<br />
+     t.y=this-&gt;y+ob.y;<br />
+     return t;<br />
+}<br />
+int main()<br />
+{<br />
+    test t,t1(1,2),t2(3,4);<br />
+    int x,y;<br />
+    t=t1+t2;/////i can&#8217;t understand why test(test &amp;ob) is not calling??<br />
+    t.get(x,y);<br />
+    t=t1;<br />
+    //test tx=t1;/////but this call copy constructor???<br />
+    t.get(x,y);<br />
+    cout&lt;&lt;y;<br />
+    getchar();<br />
+}<br />
+///////////////////////</p>
+<p>thanks in advance</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-100627">
+		<div id="div-comment-100627" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/152a5421cf53ae414b7ad5eedae2985f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/152a5421cf53ae414b7ad5eedae2985f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">1krishna23</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-100627">
+		July 8, 2013 at 10:03 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=100627#respond' onclick='return addComment.moveForm( "comment-100627", "100627", "respond", "150" )' aria-label='Reply to 1krishna23'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello,<br />
+Class A<br />
+{<br />
+	Private:<br />
+	Char name [10];<br />
+	Public:<br />
+	A (const A &amp;obj);<br />
+};<br />
+For this copy constructor is<br />
+A::A (const A &amp;obj)<br />
+{<br />
+Strcpy (name, obj.name);<br />
+}</p>
+<p>Class B {<br />
+	Private:<br />
+	Char name 1[10], name2, name3, name4…and so on …name1000;<br />
+	Public:<br />
+	B (const B &amp;obj);<br />
+}<br />
+How can i Write a copy constructor for the class B with 1000 name as char variable,instead of declaring all variables in Class A</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-102064">
+		<div id="div-comment-102064" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/07744f25d938360195d8686b875c4591?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/07744f25d938360195d8686b875c4591?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">aaishaa</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-102064">
+		August 4, 2013 at 8:42 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=102064#respond' onclick='return addComment.moveForm( "comment-102064", "102064", "respond", "150" )' aria-label='Reply to aaishaa'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello,</p>
+<p>As you mentioned copy constructor is called when destination is NOT and already created object. However, in case of return value, If i save the function return value in an &#8220;already existing&#8221; object, i still calls copy constructor. Can you please clarify this?</p>
+<p>#include<br />
+using namespace std;<br />
+class Cents<br />
+{<br />
+public:<br />
+	 int m_nCents;<br />
+    Cents(int nCents=0)<br />
+    {<br />
+        m_nCents = nCents;<br />
+    }</p>
+<p>	Cents(const Cents &amp;cSource)<br />
+    {<br />
+        m_nCents = cSource.m_nCents;<br />
+		cout &lt;&lt; &quot;in copy Constructor&quot;;<br />
+    }</p>
+<p>	Cents returnObjectByVal()<br />
+	{<br />
+	Cents temp;<br />
+	temp.m_nCents=100;<br />
+	return temp;<br />
+	}<br />
+};</p>
+<p>int main()<br />
+{</p>
+<p>Cents obj1;<br />
+Cents obj2;<br />
+obj2= obj1.returnObjectByVal(); // COPY CONSTRUCTOR IS CALLED HERE, HOWEVER, IT SHOULDN&#039;T AS OBJ2 IS aLREADY CREATED<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-142565">
+		<div id="div-comment-142565" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/12b159434afe3584a9f31694c79a7f33?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/12b159434afe3584a9f31694c79a7f33?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">panqnik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-142565">
+		May 13, 2014 at 10:11 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=142565#respond' onclick='return addComment.moveForm( "comment-142565", "142565", "respond", "150" )' aria-label='Reply to panqnik'> &middot; Reply</a></span>		 
+		</div>
+		<p>I&#8217;ve written an article about copy constructor (and meaning of copy of object), you can read it on my blog, here:</p>
+<p>http://blog.szulak.org/dev/copy-constructor-and-copy-assignment/</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251022">
+		<div id="div-comment-251022" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6b5a2422fa86340b447110bdd0652ec3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6b5a2422fa86340b447110bdd0652ec3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">senjes</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-251022">
+		December 30, 2014 at 11:14 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=251022#respond' onclick='return addComment.moveForm( "comment-251022", "251022", "respond", "150" )' aria-label='Reply to senjes'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,<br />
+Nice explanation for copy constructor.</p>
+<p>There is something which needs to be changed in the copy constructor example.<br />
+ // Copy constructor<br />
+    Cents(const Cents &amp;cSource)<br />
+    {<br />
+        m_nCents = cSource.m_nCents;<br />
+    }</p>
+<p>I am ok with accessing m_nCents in the copy cons.. since it belongs to the current object which is calling it. But the source object&#8217;s m_nCents can&#8217;t be accessed right as it is private. So in this case either the m_nCents needs to be public or there should have been a  method provided for setting the same.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-251126">
+		<div id="div-comment-251126" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/27e7e5f1eac8ca29ba7989aca7a00abf?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/27e7e5f1eac8ca29ba7989aca7a00abf?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">abrar</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-251126">
+		January 10, 2015 at 8:32 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=251126#respond' onclick='return addComment.moveForm( "comment-251126", "251126", "respond", "150" )' aria-label='Reply to abrar'> &middot; Reply</a></span>		 
+		</div>
+		<p>copy constructor can call three types<br />
+1.when define an object it is initialize with an existing object<br />
+2.when an onject is pass value in a function<br />
+3.when an object return from a function ;<br />
+can any one give an example for third one</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-252101">
+		<div id="div-comment-252101" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2df03f8fdcf1485fc187d3a476f3e632?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2df03f8fdcf1485fc187d3a476f3e632?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Marko</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#comment-252101">
+		April 8, 2015 at 1:33 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/?replytocom=252101#respond' onclick='return addComment.moveForm( "comment-252101", "252101", "respond", "150" )' aria-label='Reply to Marko'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,</p>
+<p>I want to thank you for this brilliant tutorial.<br />
+It is helping me a lot, I have c/java background and this is all what I needed.<br />
+It is going into my head like it already was there, don&#8217;t really have a sense that I am learning something new, I am reading this easier than a note I would have to write to myself.&nbsp;&nbsp;<br />
+Unfortunatly I dont have a money, cause I am still studying :(, but if I get a job, I will deffinitly remembre to this, and pay my debt to society (you :)).</p>
+<p>ty::ItIsProbablyObviouslyThatIAmNotNativeEnglishWriter(LOVE YOU)</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>18 &#8722; seven = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4Nzc3MHR5bTdtZjVxZ3o3ZGJwYWozMW04MTE=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432187770" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='150' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="a754fd00c3" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="109"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/911-the-copy-constructor-and-overloading-the-assignment-operator\/":150};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/911-the-copy-constructor-and-overloading-the-assignment-operator/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'150',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '150' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.816 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 21:56:10 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

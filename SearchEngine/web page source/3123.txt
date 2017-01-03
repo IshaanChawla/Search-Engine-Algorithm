@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+
+  <title>PHP: Safe Mode - Manual </title>
+
+ <link rel="shortcut icon" href="http://php.net/favicon.ico">
+ <link rel="search" type="application/opensearchdescription+xml" href="http://php.net/phpnetimprovedsearch.src" title="Add PHP.net search">
+ <link rel="alternate" type="application/atom+xml" href="http://php.net/releases/feed.php" title="PHP Release feed">
+ <link rel="alternate" type="application/atom+xml" href="http://php.net/feed.atom" title="PHP: Hypertext Preprocessor">
+
+ <link rel="canonical" href="http://php.net/manual/en/features.safe-mode.php">
+ <link rel="shorturl" href="http://php.net/safe-mode">
+ <link rel="alternate" href="http://php.net/safe-mode" hreflang="x-default">
+
+ <link rel="contents" href="http://php.net/manual/en/index.php">
+ <link rel="index" href="http://php.net/manual/en/features.php">
+ <link rel="prev" href="http://php.net/manual/en/features.persistent-connections.php">
+ <link rel="next" href="http://php.net/manual/en/ini.sect.safe-mode.php">
+
+ <link rel="alternate" href="http://php.net/manual/en/features.safe-mode.php" hreflang="en">
+ <link rel="alternate" href="http://php.net/manual/pt_BR/features.safe-mode.php" hreflang="pt_BR">
+ <link rel="alternate" href="http://php.net/manual/zh/features.safe-mode.php" hreflang="zh">
+ <link rel="alternate" href="http://php.net/manual/fr/features.safe-mode.php" hreflang="fr">
+ <link rel="alternate" href="http://php.net/manual/de/features.safe-mode.php" hreflang="de">
+ <link rel="alternate" href="http://php.net/manual/ja/features.safe-mode.php" hreflang="ja">
+ <link rel="alternate" href="http://php.net/manual/kr/features.safe-mode.php" hreflang="kr">
+ <link rel="alternate" href="http://php.net/manual/ro/features.safe-mode.php" hreflang="ro">
+ <link rel="alternate" href="http://php.net/manual/ru/features.safe-mode.php" hreflang="ru">
+ <link rel="alternate" href="http://php.net/manual/es/features.safe-mode.php" hreflang="es">
+ <link rel="alternate" href="http://php.net/manual/tr/features.safe-mode.php" hreflang="tr">
+
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1421837618&amp;f=/fonts/Fira/fira.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1421837618&amp;f=/fonts/Font-Awesome/css/fontello.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1429291204&amp;f=/styles/theme-base.css" media="screen">
+<link rel="stylesheet" type="text/css" href="http://php.net/cached.php?t=1429259403&amp;f=/styles/theme-medium.css" media="screen">
+
+ <!--[if lte IE 7]>
+ <link rel="stylesheet" type="text/css" href="http://php.net/styles/workarounds.ie7.css" media="screen">
+ <![endif]-->
+
+ <!--[if lte IE 8]>
+ <script type="text/javascript">
+  window.brokenIE = true;
+ </script>
+ <![endif]-->
+
+ <!--[if lte IE 9]>
+ <link rel="stylesheet" type="text/css" href="http://php.net/styles/workarounds.ie9.css" media="screen">
+ <![endif]-->
+
+ <!--[if IE]>
+ <script type="text/javascript" src="http://php.net/js/ext/html5.js"></script>
+ <![endif]-->
+
+ <base href="http://php.net/manual/en/features.safe-mode.php">
+
+</head>
+<body class="docs ">
+
+<nav id="head-nav" class="navbar navbar-fixed-top">
+  <div class="navbar-inner clearfix">
+    <a href="/" class="brand"><img src="/images/logo.php" width="48" height="24" alt="php"></a>
+    <div id="mainmenu-toggle-overlay"></div>
+    <input type="checkbox" id="mainmenu-toggle">
+    <ul class="nav">
+      <li class=""><a href="/downloads">Downloads</a></li>
+      <li class="active"><a href="/docs.php">Documentation</a></li>
+      <li class=""><a href="/get-involved" >Get Involved</a></li>
+      <li class=""><a href="/support">Help</a></li>
+    </ul>
+    <form class="navbar-search" id="topsearch" action="/search.php">
+      <input type="hidden" name="show" value="quickref">
+      <input type="search" name="pattern" class="search-query" placeholder="Search" accesskey="s">
+    </form>
+  </div>
+  <div id="flash-message"></div>
+</nav>
+<div class="headsup"><a href='/index.php#id2015-05-14-3'>PHP 5.6.9 is available</a></div>
+<nav id="trick"><div><dl>
+<dt><a href='/manual/en/getting-started.php'>Getting Started</a></dt>
+	<dd><a href='/manual/en/introduction.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/tutorial.php'>A simple tutorial</a></dd>
+<dt><a href='/manual/en/langref.php'>Language Reference</a></dt>
+	<dd><a href='/manual/en/language.basic-syntax.php'>Basic syntax</a></dd>
+	<dd><a href='/manual/en/language.types.php'>Types</a></dd>
+	<dd><a href='/manual/en/language.variables.php'>Variables</a></dd>
+	<dd><a href='/manual/en/language.constants.php'>Constants</a></dd>
+	<dd><a href='/manual/en/language.expressions.php'>Expressions</a></dd>
+	<dd><a href='/manual/en/language.operators.php'>Operators</a></dd>
+	<dd><a href='/manual/en/language.control-structures.php'>Control Structures</a></dd>
+	<dd><a href='/manual/en/language.functions.php'>Functions</a></dd>
+	<dd><a href='/manual/en/language.oop5.php'>Classes and Objects</a></dd>
+	<dd><a href='/manual/en/language.namespaces.php'>Namespaces</a></dd>
+	<dd><a href='/manual/en/language.exceptions.php'>Exceptions</a></dd>
+	<dd><a href='/manual/en/language.generators.php'>Generators</a></dd>
+	<dd><a href='/manual/en/language.references.php'>References Explained</a></dd>
+	<dd><a href='/manual/en/reserved.variables.php'>Predefined Variables</a></dd>
+	<dd><a href='/manual/en/reserved.exceptions.php'>Predefined Exceptions</a></dd>
+	<dd><a href='/manual/en/reserved.interfaces.php'>Predefined Interfaces and Classes</a></dd>
+	<dd><a href='/manual/en/context.php'>Context options and parameters</a></dd>
+	<dd><a href='/manual/en/wrappers.php'>Supported Protocols and Wrappers</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/security.php'>Security</a></dt>
+	<dd><a href='/manual/en/security.intro.php'>Introduction</a></dd>
+	<dd><a href='/manual/en/security.general.php'>General considerations</a></dd>
+	<dd><a href='/manual/en/security.cgi-bin.php'>Installed as CGI binary</a></dd>
+	<dd><a href='/manual/en/security.apache.php'>Installed as an Apache module</a></dd>
+	<dd><a href='/manual/en/security.filesystem.php'>Filesystem Security</a></dd>
+	<dd><a href='/manual/en/security.database.php'>Database Security</a></dd>
+	<dd><a href='/manual/en/security.errors.php'>Error Reporting</a></dd>
+	<dd><a href='/manual/en/security.globals.php'>Using Register Globals</a></dd>
+	<dd><a href='/manual/en/security.variables.php'>User Submitted Data</a></dd>
+	<dd><a href='/manual/en/security.magicquotes.php'>Magic Quotes</a></dd>
+	<dd><a href='/manual/en/security.hiding.php'>Hiding PHP</a></dd>
+	<dd><a href='/manual/en/security.current.php'>Keeping Current</a></dd>
+<dt><a href='/manual/en/features.php'>Features</a></dt>
+	<dd><a href='/manual/en/features.http-auth.php'>HTTP authentication with PHP</a></dd>
+	<dd><a href='/manual/en/features.cookies.php'>Cookies</a></dd>
+	<dd><a href='/manual/en/features.sessions.php'>Sessions</a></dd>
+	<dd><a href='/manual/en/features.xforms.php'>Dealing with XForms</a></dd>
+	<dd><a href='/manual/en/features.file-upload.php'>Handling file uploads</a></dd>
+	<dd><a href='/manual/en/features.remote-files.php'>Using remote files</a></dd>
+	<dd><a href='/manual/en/features.connection-handling.php'>Connection handling</a></dd>
+	<dd><a href='/manual/en/features.persistent-connections.php'>Persistent Database Connections</a></dd>
+	<dd><a href='/manual/en/features.safe-mode.php'>Safe Mode</a></dd>
+	<dd><a href='/manual/en/features.commandline.php'>Command line usage</a></dd>
+	<dd><a href='/manual/en/features.gc.php'>Garbage Collection</a></dd>
+	<dd><a href='/manual/en/features.dtrace.php'>DTrace Dynamic Tracing</a></dd>
+</dl>
+<dl>
+<dt><a href='/manual/en/funcref.php'>Function Reference</a></dt>
+	<dd><a href='/manual/en/refs.basic.php.php'>Affecting PHP's Behaviour</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.audio.php'>Audio Formats Manipulation</a></dd>
+	<dd><a href='/manual/en/refs.remote.auth.php'>Authentication Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.cmdline.php'>Command Line Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.compression.php'>Compression and Archive Extensions</a></dd>
+	<dd><a href='/manual/en/refs.creditcard.php'>Credit Card Processing</a></dd>
+	<dd><a href='/manual/en/refs.crypto.php'>Cryptography Extensions</a></dd>
+	<dd><a href='/manual/en/refs.database.php'>Database Extensions</a></dd>
+	<dd><a href='/manual/en/refs.calendar.php'>Date and Time Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.file.php'>File System Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.international.php'>Human Language and Character Encoding Support</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.image.php'>Image Processing and Generation</a></dd>
+	<dd><a href='/manual/en/refs.remote.mail.php'>Mail Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.math.php'>Mathematical Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.nontext.php'>Non-Text MIME Output</a></dd>
+	<dd><a href='/manual/en/refs.fileprocess.process.php'>Process Control Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.other.php'>Other Basic Extensions</a></dd>
+	<dd><a href='/manual/en/refs.remote.other.php'>Other Services</a></dd>
+	<dd><a href='/manual/en/refs.search.php'>Search Engine Extensions</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.server.php'>Server Specific Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.session.php'>Session Extensions</a></dd>
+	<dd><a href='/manual/en/refs.basic.text.php'>Text Processing</a></dd>
+	<dd><a href='/manual/en/refs.basic.vartype.php'>Variable and Type Related Extensions</a></dd>
+	<dd><a href='/manual/en/refs.webservice.php'>Web Services</a></dd>
+	<dd><a href='/manual/en/refs.utilspec.windows.php'>Windows Only Extensions</a></dd>
+	<dd><a href='/manual/en/refs.xml.php'>XML Manipulation</a></dd>
+</dl>
+<dl>
+<dt>Keyboard Shortcuts</dt><dt>?</dt>
+<dd>This help</dd>
+<dt>j</dt>
+<dd>Next menu item</dd>
+<dt>k</dt>
+<dd>Previous menu item</dd>
+<dt>g p</dt>
+<dd>Previous man page</dd>
+<dt>g n</dt>
+<dd>Next man page</dd>
+<dt>G</dt>
+<dd>Scroll to bottom</dd>
+<dt>g g</dt>
+<dd>Scroll to top</dd>
+<dt>g h</dt>
+<dd>Goto homepage</dd>
+<dt>g s</dt>
+<dd>Goto search<br>(current page)</dd>
+<dt>/</dt>
+<dd>Focus search box</dd>
+</dl></div></nav>
+<div id="goto">
+    <div class="search">
+         <div class="text"></div>
+         <div class="results"><ul></ul></div>
+   </div>
+</div>
+
+  <div id="breadcrumbs" class="clearfix">
+    <div id="breadcrumbs-inner">
+          <div class="next">
+        <a href="ini.sect.safe-mode.php">
+          Security and Safe Mode &raquo;
+        </a>
+      </div>
+              <div class="prev">
+        <a href="features.persistent-connections.php">
+          &laquo; Persistent Database Connections        </a>
+      </div>
+          <ul>
+            <li><a href='index.php'>PHP Manual</a></li>      <li><a href='features.php'>Features</a></li>      </ul>
+    </div>
+  </div>
+
+
+
+
+<div id="layout" class="clearfix">
+  <section id="layout-content">
+  <div class="page-tools">
+    <div class="change-language">
+      <form action="/manual/change.php" method="get" id="changelang" name="changelang">
+        <fieldset>
+          <label for="changelang-langs">Change language:</label>
+          <select onchange="document.changelang.submit()" name="page" id="changelang-langs">
+            <option value='en/features.safe-mode.php' selected="selected">English</option>
+            <option value='pt_BR/features.safe-mode.php'>Brazilian Portuguese</option>
+            <option value='zh/features.safe-mode.php'>Chinese (Simplified)</option>
+            <option value='fr/features.safe-mode.php'>French</option>
+            <option value='de/features.safe-mode.php'>German</option>
+            <option value='ja/features.safe-mode.php'>Japanese</option>
+            <option value='kr/features.safe-mode.php'>Korean</option>
+            <option value='ro/features.safe-mode.php'>Romanian</option>
+            <option value='ru/features.safe-mode.php'>Russian</option>
+            <option value='es/features.safe-mode.php'>Spanish</option>
+            <option value='tr/features.safe-mode.php'>Turkish</option>
+            <option value="help-translate.php">Other</option>
+          </select>
+        </fieldset>
+      </form>
+    </div>
+    <div class="edit-bug">
+      <a href="https://edit.php.net/?project=PHP&amp;perm=en/features.safe-mode.php">Edit</a>
+      <a href="https://bugs.php.net/report.php?bug_type=Documentation+problem&amp;manpage=features.safe-mode">Report a Bug</a>
+    </div>
+  </div><div id="features.safe-mode" class="chapter">
+  <h1>Safe Mode</h1>
+<h2>Table of Contents</h2><ul class="chunklist chunklist_chapter"><li><a href="ini.sect.safe-mode.php">Security and Safe Mode</a></li><li><a href="features.safe-mode.functions.php">Functions restricted/disabled by safe mode</a></li></ul>
+
+
+  <p class="para">
+   The PHP safe mode is an attempt to solve the shared-server security
+   problem. It is architecturally incorrect to try to solve this
+   problem at the PHP level, but since the alternatives at the web
+   server and OS levels aren&#039;t very realistic, many people,
+   especially ISP&#039;s, use safe mode for now. 
+  </p>
+  
+  <div class="warning"><strong class="warning">Warning</strong><p class="simpara">This feature has been
+<em class="emphasis">DEPRECATED</em> as of PHP 5.3.0 and <em class="emphasis">REMOVED</em>
+as of PHP 5.4.0.</p></div>
+
+  <p class="para">
+   <table class="doctable table">
+    <caption><strong>Changelog for <em>safe mode</em></strong></caption>
+    
+     <thead>
+      <tr>
+       <th>Version</th>
+       <th>Description</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>5.4.0</td>
+       <td>
+        Removed from PHP, and generates a fatal <strong><code>E_CORE_ERROR</code></strong>
+        level error when enabled.
+       </td>
+      </tr>
+
+      <tr>
+       <td>5.3.0</td>
+       <td>
+        Deprecated, and <strong><code>E_DEPRECATED</code></strong> errors were added.
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+
+  
+
+  
+
+ </div>
+
+<section id="usernotes">
+ <div class="head">
+  <span class="action"><a href="/manual/add-note.php?sect=features.safe-mode&amp;redirect=http://php.net/manual/en/features.safe-mode.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></span>
+  <h3 class="title">User Contributed Notes <span class="count">13 notes</span></h3>
+ </div><div id="allnotes">
+  <div class="note" id="54858">  <div class="votes">
+    <div id="Vu54858">
+    <a href="/manual/vote-note.php?id=54858&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd54858">
+    <a href="/manual/vote-note.php?id=54858&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V54858" title="66% like this...">
+    13
+    </div>
+  </div>
+  <a href="#54858" class="name">
+  <strong class="user"><em>jo at durchholz dot org</em></strong></a><a class="genanchor" href="#54858"> &para;</a><div class="date" title="2005-07-18 01:18"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom54858">
+<div class="phpcode"><code><span class="html">
+Note that safe mode is largely useless. Most ISPs that offer Perl also offer other scripting languages (mostly Perl), and these other languages don't have the equivalent of PHP.<br />In other words, if PHP's safe mode won't allow vandals into your web presence, they will simply use Perl.<br />Also, safe mode prevents scripts from creating and using directories (because they will be owned by the WWW server, not by the user who uploaded the PHP script). So it's not only useless, it's also a hindrance.<br />The only realistic option is to bugger the Apache folks until they run all scripts as the user who's responsible for a given virtualhost or directory.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="30151">  <div class="votes">
+    <div id="Vu30151">
+    <a href="/manual/vote-note.php?id=30151&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd30151">
+    <a href="/manual/vote-note.php?id=30151&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V30151" title="51% like this...">
+    1
+    </div>
+  </div>
+  <a href="#30151" class="name">
+  <strong class="user"><em>info at phpcoding dot net</em></strong></a><a class="genanchor" href="#30151"> &para;</a><div class="date" title="2003-03-08 06:44"><strong>12 years ago</strong></div>
+  <div class="text" id="Hcom30151">
+<div class="phpcode"><code><span class="html">
+readfile() seems not always to take care of the safe_mode setting.<br />When the file you want to read with readfile() resides in the same directory as the script itself, it doesn`t matter who the owner of the file is, readfile() will work.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="58344">  <div class="votes">
+    <div id="Vu58344">
+    <a href="/manual/vote-note.php?id=58344&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd58344">
+    <a href="/manual/vote-note.php?id=58344&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V58344" title="41% like this...">
+    -2
+    </div>
+  </div>
+  <a href="#58344" class="name">
+  <strong class="user"><em>martin at example dot com</em></strong></a><a class="genanchor" href="#58344"> &para;</a><div class="date" title="2005-11-01 04:07"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom58344">
+<div class="phpcode"><code><span class="html">
+On the note of php security <br /><br />have a look at: <a href="http://www.suphp.org/Home.html" rel="nofollow" target="_blank">http://www.suphp.org/Home.html</a><br /><br /> suPHP is a tool for executing PHP scripts with the permissions of their owners. It consists of an Apache module (mod_suphp) and a setuid root binary (suphp) that is called by the Apache module to change the uid of the process executing the PHP interpreter.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="28867">  <div class="votes">
+    <div id="Vu28867">
+    <a href="/manual/vote-note.php?id=28867&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd28867">
+    <a href="/manual/vote-note.php?id=28867&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V28867" title="38% like this...">
+    -3
+    </div>
+  </div>
+  <a href="#28867" class="name">
+  <strong class="user"><em>gtg782a at mail dot gatech dot edu</em></strong></a><a class="genanchor" href="#28867"> &para;</a><div class="date" title="2003-01-26 09:14"><strong>12 years ago</strong></div>
+  <div class="text" id="Hcom28867">
+<div class="phpcode"><code><span class="html">
+zebz: The user would not be able to create a directory outside the namespace where he/she would be able to modify its contents. One can't create a directory that becomes apache-owned unless one owns the parent directory.<br /><br />Another security risk: since files created by apache are owned by apache, a user could call the fputs function and output PHP code to a newly-created file with a .php extension, thus creating an apache-owned PHP script on the server. Executing that apache-owned script would allow the script to work with files in the apache user's namespace, such as logs. A solution would be to force PHP-created files to be owned by the same owner/group as the script that created them. Using open_basedir would be a likely workaround to prevent ascension into uncontrolled areas.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="15399">  <div class="votes">
+    <div id="Vu15399">
+    <a href="/manual/vote-note.php?id=15399&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd15399">
+    <a href="/manual/vote-note.php?id=15399&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V15399" title="38% like this...">
+    -3
+    </div>
+  </div>
+  <a href="#15399" class="name">
+  <strong class="user"><em>jedi at tstonramp dot com</em></strong></a><a class="genanchor" href="#15399"> &para;</a><div class="date" title="2001-09-07 07:17"><strong>13 years ago</strong></div>
+  <div class="text" id="Hcom15399">
+<div class="phpcode"><code><span class="html">
+Many filesystem-related functions are not appropriately restricted when Safe Mode is activated on an NT server it seems.&nbsp; I would assume that this is due to the filesystem not making use of UID.
+<br />
+<br />In all of my scripts, no matter WHO owns the script (file Ownership-wise) or WHO owns the directory/file in question; both UIDs display
+<br />
+<br />(getmyuid() and fileowner()) as UID = 0
+<br />
+<br />This has the rather nasty side effect of Safe Mode allowing multiple filesystem operations because it believes the script owner and file/dir owner are one and the same.
+<br />
+<br />While this can be worked around by the judicious application of proper filesystem privileges, it's still a "dud" that many of Safe Mode's securities are simply not there with an NT implementation.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="21085">  <div class="votes">
+    <div id="Vu21085">
+    <a href="/manual/vote-note.php?id=21085&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd21085">
+    <a href="/manual/vote-note.php?id=21085&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V21085" title="36% like this...">
+    -3
+    </div>
+  </div>
+  <a href="#21085" class="name">
+  <strong class="user"><em>zebz at ihaveenoughspam_hotmail dot com</em></strong></a><a class="genanchor" href="#21085"> &para;</a><div class="date" title="2002-04-28 08:42"><strong>13 years ago</strong></div>
+  <div class="text" id="Hcom21085">
+<div class="phpcode"><code><span class="html">
+All the filesystem-related functions (unlink, fopen, unlink, etc) seems to be restricted the same way in safe mode, at least on PHP 4.2. If the file UID is different *but* the directory (where the file is located) UID is the same, it will work.<br /><br />So creating a directory in safe mode is usually a bad idea since the UID will be different from the script (it will be the apache UID) so it won't be possible to do anything with the files created on this directory.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="18484">  <div class="votes">
+    <div id="Vu18484">
+    <a href="/manual/vote-note.php?id=18484&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd18484">
+    <a href="/manual/vote-note.php?id=18484&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V18484" title="33% like this...">
+    -3
+    </div>
+  </div>
+  <a href="#18484" class="name">
+  <strong class="user"><em>devik at cdi dot cz</em></strong></a><a class="genanchor" href="#18484"> &para;</a><div class="date" title="2002-01-24 04:45"><strong>13 years ago</strong></div>
+  <div class="text" id="Hcom18484">
+<div class="phpcode"><code><span class="html">
+Just to note, I created patch which allows VirtualHost to set User under which all (PHP too) runs. It is more secure than safe_mode. See luxik.cdi.cz/~devik/apache/ if you are interested</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="45917">  <div class="votes">
+    <div id="Vu45917">
+    <a href="/manual/vote-note.php?id=45917&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd45917">
+    <a href="/manual/vote-note.php?id=45917&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V45917" title="33% like this...">
+    -5
+    </div>
+  </div>
+  <a href="#45917" class="name">
+  <strong class="user"><em>bertrand dot gorge at epistema dot com</em></strong></a><a class="genanchor" href="#45917"> &para;</a><div class="date" title="2004-09-23 05:58"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom45917">
+<div class="phpcode"><code><span class="html">
+Beware that when in safe mode, mkdir creates folders with apache's UID, though the files you create in them are of your script's UID (usually the same as your FTP uid).<br /><br />What this means is that if you create a folder, you won't be able to remove it, nor to remove any of the files you've created in it (because those operations require the UID to be the same).<br /><br />Ideally mkdir should create the folder with the script's UID, but this has already been discussed and will not be fixed in the near future. <br /><br />In the meantime, I would advice NOT to user mkdir in safe mode, as you may end up with folders you can't remove/use.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="69670">  <div class="votes">
+    <div id="Vu69670">
+    <a href="/manual/vote-note.php?id=69670&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd69670">
+    <a href="/manual/vote-note.php?id=69670&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V69670" title="33% like this...">
+    -6
+    </div>
+  </div>
+  <a href="#69670" class="name"><strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#69670"> &para;</a><div class="date" title="2006-09-14 10:18"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom69670">
+<div class="phpcode"><code><span class="html">
+Each IIS server in Windows runs as a User so it does have a UID file ACLs can be applied via a Group (GID) or User.&nbsp; The trick is to configure each website to run as a distinct user instead of the default of System.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="52495">  <div class="votes">
+    <div id="Vu52495">
+    <a href="/manual/vote-note.php?id=52495&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd52495">
+    <a href="/manual/vote-note.php?id=52495&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V52495" title="34% like this...">
+    -7
+    </div>
+  </div>
+  <a href="#52495" class="name"><strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#52495"> &para;</a><div class="date" title="2005-05-03 09:37"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom52495">
+<div class="phpcode"><code><span class="html">
+To separate distinct open_basedir use : instead of on , or ; on unix machines.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="45263">  <div class="votes">
+    <div id="Vu45263">
+    <a href="/manual/vote-note.php?id=45263&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd45263">
+    <a href="/manual/vote-note.php?id=45263&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V45263" title="35% like this...">
+    -8
+    </div>
+  </div>
+  <a href="#45263" class="name">
+  <strong class="user"><em>Russ</em></strong></a><a class="genanchor" href="#45263"> &para;</a><div class="date" title="2004-08-31 08:52"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom45263">
+<div class="phpcode"><code><span class="html">
+Sometimes you're stuck on a system you don't run and you can't control the setting of safe mode.&nbsp; If your script needs to run on different hosts (some with safe mode, some without it), you can code around it with something like:<br /><br /><span class="default">&lt;?php <br /></span><span class="comment">// Check for safe mode<br /></span><span class="keyword">if( </span><span class="default">ini_get</span><span class="keyword">(</span><span class="string">'safe_mode'</span><span class="keyword">) ){<br />&nbsp; &nbsp; </span><span class="comment">// Do it the safe mode way<br /></span><span class="keyword">}else{<br />&nbsp; &nbsp; </span><span class="comment">// Do it the regular way<br /></span><span class="keyword">}<br /><br /></span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="52387">  <div class="votes">
+    <div id="Vu52387">
+    <a href="/manual/vote-note.php?id=52387&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd52387">
+    <a href="/manual/vote-note.php?id=52387&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V52387" title="22% like this...">
+    -10
+    </div>
+  </div>
+  <a href="#52387" class="name">
+  <strong class="user"><em>plyrvt at mail dot ru</em></strong></a><a class="genanchor" href="#52387"> &para;</a><div class="date" title="2005-04-29 03:14"><strong>10 years ago</strong></div>
+  <div class="text" id="Hcom52387">
+<div class="phpcode"><code><span class="html">
+[In reply to jedi at tstonramp dot com]<br />Safe mode is used "since the alternatives at the web server and OS levels aren't very realistic". Manual says about UNIX OS level and UNIX web-servers by design (Apache). It's not realistic for unix-like server, but for NT (IIS) each virtual host can run from different user account, so there is no need in Safe Mode restrictions at all, if proper NTFS rights are set.</span>
+</code></div>
+  </div>
+ </div>
+  <div class="note" id="40870">  <div class="votes">
+    <div id="Vu40870">
+    <a href="/manual/vote-note.php?id=40870&amp;page=features.safe-mode&amp;vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd40870">
+    <a href="/manual/vote-note.php?id=40870&amp;page=features.safe-mode&amp;vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V40870" title="25% like this...">
+    -12
+    </div>
+  </div>
+  <a href="#40870" class="name">
+  <strong class="user"><em>daniel dot gaddis at tlc dot state dot tx dot us</em></strong></a><a class="genanchor" href="#40870"> &para;</a><div class="date" title="2004-03-17 11:03"><strong>11 years ago</strong></div>
+  <div class="text" id="Hcom40870">
+<div class="phpcode"><code><span class="html">
+on windows if multiple directories are wanted for safe_mode_exec_dir and open_basedir be sure to separate the paths with a semi colon and double quote the whole path string. For example:<br /><br />safe_mode = On<br />safe_mode_exec_dir = "F:\WWW\HTML;F:\batfiles\batch"<br />open_basedir = "F:\WWW\HTML;F:\batfiles\batch"</span>
+</code></div>
+  </div>
+ </div></div>
+
+ <div class="foot"><a href="/manual/add-note.php?sect=features.safe-mode&amp;redirect=http://php.net/manual/en/features.safe-mode.php"><img src='/images/notes-add@2x.png' alt='add a note' width='12' height='12'> <small>add a note</small></a></div>
+</section>    </section><!-- layout-content -->
+        <aside class='layout-menu'>
+    
+        <ul class='parent-menu-list'>
+                                    <li>
+                <a href="features.php">Features</a>
+    
+                                    <ul class='child-menu-list'>
+    
+                          
+                        <li class="">
+                            <a href="features.http-auth.php" title="HTTP authentication with PHP">HTTP authentication with PHP</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.cookies.php" title="Cookies">Cookies</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.sessions.php" title="Sessions">Sessions</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.xforms.php" title="Dealing with XForms">Dealing with XForms</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.file-upload.php" title="Handling file uploads">Handling file uploads</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.remote-files.php" title="Using remote files">Using remote files</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.connection-handling.php" title="Connection handling">Connection handling</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.persistent-connections.php" title="Persistent Database Connections">Persistent Database Connections</a>
+                        </li>
+                          
+                        <li class="current">
+                            <a href="features.safe-mode.php" title="Safe Mode">Safe Mode</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.commandline.php" title="Command line usage">Command line usage</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.gc.php" title="Garbage Collection">Garbage Collection</a>
+                        </li>
+                          
+                        <li class="">
+                            <a href="features.dtrace.php" title="DTrace Dynamic Tracing">DTrace Dynamic Tracing</a>
+                        </li>
+                            
+                    </ul>
+                    
+            </li>
+                        
+                    </ul>
+    </aside>
+
+
+  </div><!-- layout -->
+         
+  <footer>
+    <div class="container footer-content">
+      <div class="row-fluid">
+      <ul class="footmenu">
+        <li><a href="/copyright.php">Copyright &copy; 2001-2015 The PHP Group</a></li>
+        <li><a href="/my.php">My PHP.net</a></li>
+        <li><a href="/contact.php">Contact</a></li>
+        <li><a href="/sites.php">Other PHP.net sites</a></li>
+        <li><a href="/mirrors.php">Mirror sites</a></li>
+        <li><a href="/privacy.php">Privacy policy</a></li>
+      </ul>
+      </div>
+    </div>
+  </footer>
+
+    
+ <!-- External and third party libraries. -->
+ <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/modernizr.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/hogan-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/typeahead.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/ext/mousetrap.min.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1421837618&amp;f=/js/search.js"></script>
+<script type="text/javascript" src="http://php.net/cached.php?t=1430413803&amp;f=/js/common.js"></script>
+
+<a id="toTop" href="javascript:;"><span id="toTopHover"></span><img width="40" height="40" alt="To Top" src="/images/to-top@2x.png"></a>
+
+</body>
+</html>
+
+

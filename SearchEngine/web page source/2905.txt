@@ -1,0 +1,1030 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>How to make a Calendar in C | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="How to make a Calendar in C" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,614] -->
+<meta name="description"  content="In the C tutorial 'How to use Time and Date in C' some people asked questions in the comment section about determining dates and day of the week. That’s why w" />
+
+<meta name="keywords"  content="c tutorials,programming,c language,cplusplus,c++,source code,php,python,date,time,calendar,gregorian calendar,leap years" />
+
+<link rel="canonical" href="http://www.codingunit.com/how-to-make-a-calendar-in-c" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; How to make a Calendar in C Comments Feed" href="http://www.codingunit.com/how-to-make-a-calendar-in-c/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='PHP Tutorial – Functions Parameters and Return Values' href='http://www.codingunit.com/php-tutorial-functions-parameters-and-return-values' />
+<link rel='next' title='PHP Tutorial – Form Handling' href='http://www.codingunit.com/php-tutorial-form-handling' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=983' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-983">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">
+		How to make a Calendar in C</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In the C tutorial “<strong><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" title="How to use Time and Date in C">How to use Time and Date in C</a></strong>” some people asked questions in the comment section about determining dates and day of the week. That’s why we created this tutorial to show you what things you have to lookout for, such as leap years.<span id="more-983"></span></p>
+<h2>Gregorian Calendar and Leap Years</h2>
+<p>The Gregorian calendar is the internationally accepted calendar.  In the Gregorian calendar there are leap years. If you take a period of four hundred years, there are 303 normal years and 97 leap years. Most people think that every fourth year is a leap year, but strictly speaking this isn’t true.</p>
+<h2>How to determine which leap years</h2>
+<p>If a year is divisible by 4, then it is a leap year. But if that year is divisible by 100, then it is not a leap year. However, if the year is also divisible by 400, then it is a leap year. So we can construct the following statement:</p>
+<div id="cl">
+<pre><code>
+if(year% 4 == FALSE &#038;&#038; year%100 != FALSE || year%400 == FALSE)
+{
+	// It is a leap year and February has 29 days.
+}
+else
+{
+	// It is not a leap year, so February has 28 days.
+}
+
+</code></pre>
+</div>
+<h2>Complete Calendar Source-code Example</h2>
+<p>Below you’ll find the complete calendar example. The example asks the user to enter a year, for instance 2010.</p>
+<div id="cl">
+<pre><code>
+// This calendar example is provided by:
+// http://www.codingunit.com Programming Tutorials
+
+#include&lt;stdio.h&gt;
+
+#define TRUE    1
+#define FALSE   0
+
+int days_in_month[]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+char *months[]=
+{
+	" ",
+	"\n\n\nJanuary",
+	"\n\n\nFebruary",
+	"\n\n\nMarch",
+	"\n\n\nApril",
+	"\n\n\nMay",
+	"\n\n\nJune",
+	"\n\n\nJuly",
+	"\n\n\nAugust",
+	"\n\n\nSeptember",
+	"\n\n\nOctober",
+	"\n\n\nNovember",
+	"\n\n\nDecember"
+};
+
+
+int inputyear(void)
+{
+	int year;
+	
+	printf("Please enter a year (example: 1999) : ");
+	scanf("%d", &#038;year);
+	return year;
+}
+
+int determinedaycode(int year)
+{
+	int daycode;
+	int d1, d2, d3;
+	
+	d1 = (year - 1.)/ 4.0;
+	d2 = (year - 1.)/ 100.;
+	d3 = (year - 1.)/ 400.;
+	daycode = (year + d1 - d2 + d3) %7;
+	return daycode;
+}
+
+
+int determineleapyear(int year)
+{
+	if(year% 4 == FALSE &#038;&#038; year%100 != FALSE || year%400 == FALSE)
+	{
+		days_in_month[2] = 29;
+		return TRUE;
+	}
+	else
+	{
+		days_in_month[2] = 28;
+		return FALSE;
+	}
+}
+
+void calendar(int year, int daycode)
+{
+	int month, day;
+	for ( month = 1; month &lt;= 12; month++ )
+	{
+		printf("%s", months[month]);
+		printf("\n\nSun  Mon  Tue  Wed  Thu  Fri  Sat\n" );
+		
+		// Correct the position for the first date
+		for ( day = 1; day &lt;= 1 + daycode * 5; day++ )
+		{
+			printf(" ");
+		}
+		
+		// Print all the dates for one month
+		for ( day = 1; day &lt;= days_in_month[month]; day++ )
+		{
+			printf("%2d", day );
+			
+			// Is day before Sat? Else start next line Sun.
+			if ( ( day + daycode ) % 7 &gt; 0 )
+				printf("   " );
+			else
+				printf("\n " );
+		}
+			// Set position for next month
+			daycode = ( daycode + days_in_month[month] ) % 7;
+	}
+}
+
+int main(void)
+{
+	int year, daycode, leapyear;
+	
+	year = inputyear();
+	daycode = determinedaycode(year);
+	determineleapyear(year);
+	calendar(year, daycode);
+	printf("\n");
+}
+
+</code></pre>
+</div>
+<p><strong><a href="http://www.codingunit.com/source-code/calendar.c" title="Calendar C Source Code">Download here the source code of this calendar example.</a></strong></p>
+<p>First we make two arrays; one with the number of days for a given month and one with all the month names. Note: in both arrays the first position is empty on purpose, we want to use 1 to 12 to keep things simple.</p>
+<p>The first function inputyear() is used to get the user input. We ask the user to input a year. Note: that there is no input checking or error handling is performed to keep things simple.)</p>
+<p>The next function determinedaycode() is used to get the day number of the first day in that year, so we can print the date on the correct position. (So it is only used for output purposes.)</p>
+<p>The next function determineleapyear() is used to determine if input of the user is a leap year. If so, the number if days in February is changed to 29.</p>
+<p>The last function calendar() is used to print each month onto the screen. The first <strong><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" title="C Tutorial for loop, while loop, break and continue">for loop</a></strong> is used to loop through all months.  We then print the month’s name and all the days of the week. We then use the daycode to position the prompt under the right weekday. Then we print all the dates for one month. The last thing we do is to set the position of the prompt on the right weekday.</p>
+<p>That’s all for this C programming tutorial. We hope that you now better understand how to determine days-names or date in a year, month or week and that you can use the calendar example to create your own date/days-names functions.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/how-to-make-a-calendar-in-c/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=How to make a Calendar in C http://www.codingunit.com/how-to-make-a-calendar-in-c" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 32 responses to &#8220;How to make a Calendar in C&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-1323">
+
+            			<cite>Frederik</cite> on <small>July 8th, 2010</small>:
+			
+			<p>-The- internationally recognized calendar is the -ISO- calendar, which is different from the Gregorian calendar in several ways.<br />
+1) it defines year 0 (the year before year 1 in the Gregorian calendar is year -1)<br />
+2) it defines the first day of the week to be Monday (the Gregorian calendar does define a week at all)<br />
+3) the first week of the year is the week which contains the first Thursday of the year. (the Gregorian calendar doesn&#8217;t define this as it doesn&#8217;t define what a week is).</p>
+<p>The calendar implemented in this program is the standard US calendar, which is not the Gregorian calendar, but a calendar derived from it/extending it.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1930">
+
+            			<cite>tamanna</cite> on <small>November 7th, 2010</small>:
+			
+			<p>can yu please specify wat exactly is a day code..<br />
+n wat are the calculations been done to determine it.?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3218">
+
+            			<cite>nisa</cite> on <small>January 27th, 2011</small>:
+			
+			<p>can you please explain on how to get the day code?<br />
+the formula confusing me&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3336">
+
+            			<cite>yasin warraich,awais,naser,shuja,ahsan</cite> on <small>March 25th, 2011</small>:
+			
+			<p>codingunit is great website.we love members of coding unit.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3537">
+
+            			<cite>Kevin Olson</cite> on <small>June 15th, 2011</small>:
+			
+			<p>How do I put the months side by side. </p>
+<p>Like this:</p>
+<p>            Janunary                                   February<br />
+Sun  Mon  Tue  Wed  Thu  Fri  Sat         Sun  Mon  Tue  Wed  Thu  Fri  Sat</p>
+<p>             March                                      April<br />
+Sun  Mon  Tue  Wed  Thu  Fri  Sat         Sun  Mon  Tue  Wed  Thu  Fri  Sat</p>
+<p>I&#8217;m trying to do this since last month but I simply can&#8217;t figure it out. Can anyone help me?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3538">
+
+            			<cite>Kevin Olson</cite> on <small>June 15th, 2011</small>:
+			
+			<p>On my last post the months (February and April) should been a few spaces foward like the week day</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3574">
+
+            			<cite>Denis</cite> on <small>July 8th, 2011</small>:
+			
+			<p>Am trying to develop a program to output the date on requesting for a 30 days leave  and when the leave will end. But it is not working out. some one to help me out.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3577">
+
+            			<cite><a href='http://lloydsplace.com' rel='external nofollow' class='url'>Lloyd</a></cite> on <small>July 12th, 2011</small>:
+			
+			<p>This code:</p>
+<p>int determinedaycode(int year)<br />
+{<br />
+	int daycode;<br />
+	int d1, d2, d3;</p>
+<p>	d1 = (year &#8211; 1.)/ 4.0;<br />
+	d2 = (year &#8211; 1.)/ 100.;<br />
+	d3 = (year &#8211; 1.)/ 400.;<br />
+	daycode = (year + d1 &#8211; d2 + d3) %7;<br />
+	return daycode;<br />
+}<br />
+compiled with PellesC generates a wrong daycode. The floats are causing it. If the decimals are removed it works fine and the code works fine as is compiled with MinGW.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3631">
+
+            			<cite>Amiya</cite> on <small>July 30th, 2011</small>:
+			
+			<p>This is a very nice program..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3685">
+
+            			<cite>mehedi</cite> on <small>August 12th, 2011</small>:
+			
+			<p>this code show only whole cal of 12 months but beside this i want, it will show the specipic day when i input date &amp; month &#8212;how can i do it???? plz help</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3791">
+
+            			<cite>Shashi Nitave</cite> on <small>September 25th, 2011</small>:
+			
+			<p>This program is difficult,but understand very easily.So thanks.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3831">
+
+            			<cite>Assasin23</cite> on <small>October 7th, 2011</small>:
+			
+			<p>it is a big help for my project. tnx</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4304">
+
+            			<cite>Lali</cite> on <small>November 30th, 2011</small>:
+			
+			<p>how do i get a specific day in the calendar, example: u ask the users to enter a date and the outputs that specified date, example: 02/11/2011.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4436">
+
+            			<cite>gowtham</cite> on <small>January 27th, 2012</small>:
+			
+			<p>sir,i need output of this program</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4458">
+
+            			<cite>nandini</cite> on <small>February 3rd, 2012</small>:
+			
+			<p>I want to implement in c# where the year,month and date are entered in individual textboxs by the user and the corresponding day has to be displayed in another textbox. how can i do it???? plz help me&#8230;. i have tried but am facing prob in coding it.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4472">
+
+            			<cite>josh</cite> on <small>February 8th, 2012</small>:
+			
+			<p>Argh!! my head&#8217;s gonna blow!! can&#8217;t understand a thing..I&#8217;m noob&#8230; T_T</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4473">
+
+            			<cite>josh</cite> on <small>February 8th, 2012</small>:
+			
+			<p>I have a program, then you ask the user to input the month, day, year(MM/DD/YYYY), then if the user inputs the number of the month(1-12), the program will output the month in words(Jan to Dec), and if he inputs the day(1-7), the program will output in words(Mon to Sun), and if he inputs the year, the program will output if it is a leap year or not. Can someone help me with the codes? I can&#8217;t make mine work.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4679">
+
+            			<cite>ville</cite> on <small>April 13th, 2012</small>:
+			
+			<p>Thanks!<br />
+Very good example <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4968">
+
+            			<cite>sandeep kosta</cite> on <small>June 11th, 2012</small>:
+			
+			<p>hey admin thanks for making this article so useful&#8230;&#8230;..<br />
+but bro one place i m stucked on one thing&#8230;..how did u determine the daycode&#8230;&#8230;its completely beyond me to understand&#8230;.plz sort my problme out&#8230;&#8230;.expecting ur answer&#8230;&#8230;.thank u so much&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4969">
+
+            			<cite>OnceMore</cite> on <small>June 11th, 2012</small>:
+			
+			<p>@sandeep kosta<br />
+As stated in the text of this tutorial: </p>
+<blockquote><p>&#8220;The next function determinedaycode() is used to get the day number of the first day in that year, so we can print the date on the correct position. (So it is only used for output purposes.)&#8221;</p></blockquote>
+<p> and later on in the text: </p>
+<blockquote><p>&#8220;We then use the daycode to position the prompt under the right weekday. Then we print all the dates for one month. The last thing we do is to set the position of the prompt on the right weekday.&#8221;</p></blockquote>
+<p>So for example for 2002 this is 2, so the printing is started on Tuesday.<br />
+In the year 2012 this first day is on Sunday, so the output of determinedaycode() will be 0 (zero).</p>
+<p>Hope this helps!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5189">
+
+            			<cite>vikas</cite> on <small>August 15th, 2012</small>:
+			
+			<p>CALENDER PROGRAM:: use the following Simple source code of calender program and reply me in the my email id: <a href="mailto:vikas.sidhi@gmail.com">vikas.sidhi@gmail.com</a><br />
+This code is written by self me I am student of MCA(Master of Computer Application) II year.</p>
+<p>#include<br />
+#include<br />
+void main()<br />
+{<br />
+	int dd,mm,yy,ndd,dn,yr,rs,i,x,y,z,w,u,td,k,j,tm=0;<br />
+	int mnth[12]={3,0,3,2,3,2,3,3,2,3,2,3};<br />
+	char c;<br />
+	clrscr();<br />
+	do<br />
+	{<br />
+	printf(&#8220;\n Enter the any Date(dd/mm/yyyy):&#8221;);<br />
+	scanf(&#8220;%d/%d/%d&#8221;,&amp;dd,&amp;mm,&amp;yy);<br />
+	if(yy30200)<br />
+		printf(&#8220;\n :INVALID DATE:&#8221;);<br />
+	else<br />
+	{<br />
+		if(mm12)<br />
+			printf(&#8220;\n :INVALID DATE:&#8221;);<br />
+		else<br />
+		{<br />
+			 if(mm==1||mm==3||mm==5||mm==7||mm==8||mm==10||mm==12)<br />
+				if(dd31)<br />
+					printf(&#8220;\n INVALID DATE:&#8221;);<br />
+				else<br />
+					goto agn;<br />
+			 else if(mm==4||mm==6||mm==9||mm==11)<br />
+				if(dd30)<br />
+					printf(&#8220;\n INVALID DATE:&#8221;);<br />
+				else<br />
+					goto agn;<br />
+			else if(mm==2 &amp;&amp; (yy%400==0||(yy%100!=0 &amp;&amp; yy%4==0)))<br />
+				if(dd29)<br />
+					printf(&#8220;\n INVALID DATE:&#8221;);<br />
+				else<br />
+					goto agn;<br />
+			 else if(mm==2 &amp;&amp; !(yy%400==0 || (yy%100!=0 &amp;&amp; yy%4==0)))<br />
+				if(dd28)<br />
+					printf(&#8220;\n INVALID DATE:&#8221;);<br />
+				else<br />
+					goto agn;</p>
+<p>		       else<br />
+		       {</p>
+<p>	agn:<br />
+	yr=yy-1;</p>
+<p>	ndd=01;<br />
+	if(yy%400==0||(yy%100!=0 &amp;&amp; yy%4==0))<br />
+	{<br />
+		mnth[1]=1;<br />
+	}<br />
+	else<br />
+		mnth[1]=0;<br />
+	tm=0;<br />
+	for(i=0;i&lt;=mm-2;i++)<br />
+		tm=tm+mnth[i];<br />
+		x=yr%400;<br />
+		y=x/100;<br />
+		z=x%100;<br />
+		w=z/4;<br />
+		u=z%4;</p>
+<p>		td=y*5+w*5+u;<br />
+		rs=(td+tm+ndd)%7;<br />
+	printf(&quot;\n&quot;);<br />
+			printf(&quot;\t**This Software Is Developed By: VIKAS TIWARI**\n\n&quot;);<br />
+		if(mm==1)<br />
+			printf(&quot;\t\tJanuary\t%d\n&quot;,yy);<br />
+		if(mm==2)<br />
+			printf(&quot;\t\tFebuary\t%d\n&quot;,yy);<br />
+		if(mm==3)<br />
+			printf(&quot;\t\tMarch\t%d\n&quot;,yy);<br />
+		if(mm==4)<br />
+			printf(&quot;\t\tApril\t%d\n&quot;,yy);<br />
+		if(mm==5)<br />
+			printf(&quot;\t\tMay\t%d\n&quot;,yy);<br />
+		if(mm==6)<br />
+			printf(&quot;\t\tJune\t%d\n&quot;,yy);<br />
+		if(mm==7)<br />
+			printf(&quot;\t\tJuly\t%d\n&quot;,yy);<br />
+		if(mm==8)<br />
+			printf(&quot;\t\tAugust\t%d\n&quot;,yy);<br />
+		if(mm==9)<br />
+			printf(&quot;\t\tSeptember\t%d\n&quot;,yy);<br />
+		if(mm==10)<br />
+			printf(&quot;\t\tOctoober\t%d\n&quot;,yy);<br />
+		if(mm==11)<br />
+			printf(&quot;\t\tNovember\t%d\n&quot;,yy);<br />
+		if(mm==12)<br />
+			printf(&quot;\t\tDecember\t%d\n&quot;,yy);<br />
+		printf(&quot;\n Mon \tTue \tWed \tThu \tFri \tSat \tSun\n&quot;);</p>
+<p>	if(mm==1||mm==3||mm==5||mm==7||mm==8||mm==10||mm==12)<br />
+		dn=31;<br />
+	if(mm==4||mm==6||mm==9||mm==11)<br />
+		dn=30;<br />
+	if(mm==2 &amp;&amp; (yy%400==0||(yy%100!=0 &amp;&amp; yy%4==0)))<br />
+		dn=29;<br />
+	if(mm==2 &amp;&amp; !(yy%400==0||(yy%100!=0 &amp;&amp; yy%4==0)))<br />
+		dn=28;</p>
+<p>	if(rs==0)<br />
+		{<br />
+		printf(&quot;\t\t\t\t\t\t&quot;);<br />
+		j=6;<br />
+		}<br />
+	if(rs==1)<br />
+	{<br />
+		j=0;<br />
+	 }<br />
+	if(rs==2)<br />
+	{<br />
+		printf(&quot;\t&quot;);<br />
+		j=8;<br />
+	 }<br />
+	if(rs==3)<br />
+	{<br />
+		printf(&quot;\t\t&quot;);<br />
+		j=9;<br />
+	 }<br />
+	if(rs==4)<br />
+	{<br />
+		printf(&quot;\t\t\t&quot;);<br />
+		j=10;<br />
+	 }<br />
+	if(rs==5)<br />
+	{<br />
+		printf(&quot;\t\t\t\t&quot;);<br />
+		j=11;<br />
+	 }<br />
+	if(rs==6)<br />
+	{<br />
+		printf(&quot;\t\t\t\t\t&quot;);<br />
+		j=12;<br />
+	 }<br />
+	for(k=1;k30200)<br />
+		  yy=30200;<br />
+		goto agn;<br />
+	}<br />
+	if(c==80)<br />
+	{        clrscr();<br />
+		yy=yy-1;</p>
+<p>		if(yy&lt;1)<br />
+		    yy=1;<br />
+		goto agn;<br />
+	}<br />
+	if(c==75)<br />
+	{      clrscr();<br />
+		&#8211;mm;<br />
+		if(mm&lt;1)<br />
+		{<br />
+			mm=12;<br />
+			yy=yy-1;<br />
+			if(yy12)<br />
+		{<br />
+			mm=1;<br />
+			yy++;<br />
+			if(yy&gt;30200)<br />
+			    yy=30200;<br />
+		}<br />
+		goto agn;</p>
+<p>	}</p>
+<p>		}<br />
+	      }<br />
+	} /*First  else statemen  */</p>
+<p>		printf(&#8220;\n Do You Want to Continue&#8230;..(y/n):&#8221;);<br />
+		fflush(stdin);<br />
+		c=getche();</p>
+<p>    }<br />
+    while(c==&#8217;y&#8217; || c==&#8217;Y&#8217;);</p>
+<p>getch();<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5214">
+
+            			<cite>sravya</cite> on <small>August 20th, 2012</small>:
+			
+			<p>is there any extra  things that  we  can add  to calender so that it will replace the present day calender</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5250">
+
+            			<cite>santhu</cite> on <small>September 3rd, 2012</small>:
+			
+			<p>Thanks for developing these type of programs in languages so usefull for professional students / learners.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5483">
+
+            			<cite>sudhir reddy</cite> on <small>November 9th, 2012</small>:
+			
+			<p>It is very good code. I worked on it. It really help to me on daycode. Thank you very much!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6814">
+
+            			<cite>ankit</cite> on <small>May 7th, 2013</small>:
+			
+			<p>genious baby</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7060">
+
+            			<cite>Tushar Shukla</cite> on <small>June 9th, 2013</small>:
+			
+			<p>I want a program for my project that will count the number of days by inputting two distinct dates. Example: 1st date= 15/05/2013; 2nd date= 26/11/2013. the difference of days between these two dates is required.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7847">
+
+            			<cite>M Arslan</cite> on <small>August 22nd, 2013</small>:
+			
+			<p>This code:<br />
+for ( gun = 1; gun &lt;= 1 + d * 5; gun++ )<br />
+      {<br />
+         printf(&quot; &quot;);<br />
+      }</p>
+<p>What does part of the this code task ? I can&#039;t understand. Can you help that issue ??</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7955">
+
+            			<cite>arvind sahu</cite> on <small>September 18th, 2013</small>:
+			
+			<p>This program is difficult,but understand very easily.So thanks.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9043">
+
+            			<cite>sajjad ahmad</cite> on <small>November 12th, 2013</small>:
+			
+			<p>This site is really good for first time users I mean start users.The way it explains and codes is very basic and easy to understand.Thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9407">
+
+            			<cite>Sagar</cite> on <small>January 26th, 2014</small>:
+			
+			<p>How can i start week from any day let say from friday</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9621">
+
+            			<cite>santhosh</cite> on <small>February 14th, 2014</small>:
+			
+			<p>hai,<br />
+      I,need some reference from u. if we put today as a input(like 14/2/2014) how to get next day as output(15/2/2014) using for loop</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-10136">
+
+            			<cite>Shreya</cite> on <small>March 28th, 2014</small>:
+			
+			<p>hi,<br />
+Actually i need a help from you.<br />
+I am making a signup page and i want to add the calender to that for the DOB column, but i want to print an error if the age preceeds 18 year from now..<br />
+can any one help that how i can do this?</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 26 queries. 0.541 seconds. -->
+</body>
+</html>
+

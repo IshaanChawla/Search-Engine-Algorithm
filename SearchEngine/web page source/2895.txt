@@ -1,0 +1,2159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,672] -->
+<meta name="description"  content="In this C programming language tutorial we take another look at the printf function. We will look at how to use format specifiers to print formatted output onto" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output Comments Feed" href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; strings and string Library Functions' href='http://www.codingunit.com/c-tutorial-strings-and-string-library-functions' />
+<link rel='next' title='C Tutorial &#8211; structures, unions, typedef' href='http://www.codingunit.com/c-tutorial-structures-unions-typedef' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=207' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-207">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">
+		C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C programming language tutorial we take another look at the printf function. We will look at how to use format specifiers to print formatted output onto the screen. The topics covered are; a little printf background, format specifiers and conversions, formatting of different types and format conversions of strings.<span id="more-207"></span></p>
+<h2>printf Background</h2>
+<p>The printf function is not part of the C language, because there is no input or output defined in C language itself. The printf function is just a useful function from the standard library of functions that are accessible by C programs. The behavior of printf is defined in the ANSI standard. If the compiler that you&#8217;re using conforms to this standard then all the features and properties should be available to you.</p>
+<h2>Format Specifiers</h2>
+<p>There are many format specifiers defined in C. Take a look at the following list:</p>
+<table border="1" cellspacing="0" cellpadding="2" width="188">
+<colgroup>
+<col width="82"></col>
+<col width="98"></col>
+</colgroup>
+<tbody>
+<tr>
+<td width="82">%i or %d</td>
+<td width="98">int</td>
+</tr>
+<tr>
+<td width="82">%c</td>
+<td width="98">char</td>
+</tr>
+<tr>
+<td width="82">%f</td>
+<td width="98">float (see also the note below)</td>
+</tr>
+<tr>
+<td width="82">%s</td>
+<td width="98">string</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note:</strong> %f stands for float, but C language has also a thing called &#8220;default argument promotions&#8221;.<br />
+Default argument promotions happen in variadic functions. Variadic functions are functions (e.g. printf) which take a variable number of arguments. When a variadic function is called, after lvalue-to-rvalue, array-to-pointer, and function-to-pointer conversions, each argument that is a part of the variable argument list undergoes additional conversions known as <strong>default argument promotions</strong>: </p>
+<ul>
+<li> float arguments are converted to double as in floating-point promotion</li>
+<li> bool, char, short, and unscoped enumerations are converted to int or wider integer types as in integer promotion</li>
+</ul>
+<p>So for example, float parameters are converted to doubles, and char&#8217;s are converted to int&#8217;s. If you actually needed to pass, for example, a char instead of an int, the function would have to convert it back.</p>
+<p>That&#8217;s enough on that side step of variadic function and &#8220;default argument promotions&#8221;. </p>
+<p>Let us take a look at an example of printf formatted output (that why you here, isn&#8217;t it?):</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	main()
+	{
+		int a,b;
+		float c,d;
+
+		a = 15;
+		b = a / 2;
+		printf("%d\n",b);
+		printf("%3d\n",b);
+		printf("%03d\n",b);
+
+		c = 15.3;
+		d = c / 3;
+		printf("%3.2f\n",d);
+	}
+
+</code></pre>
+</div>
+<p>Output of the source above:</p>
+<div id="cl">
+<pre><code>
+7
+   7
+007
+5.10
+
+</code></pre>
+</div>
+<p>As you can see in the first printf statement we print a decimal. In the second printf statement we print the same decimal, but we use a width (%3d) to say that we want three digits (positions) reserved for the output.<br />
+The result is that two &#8220;space characters&#8221; are placed before printing the character. In the third printf statement we say almost the same as the previous one. Print the output with a width of three digits, but fill the space with 0.</p>
+<p>In the fourth printf statement we want to print a float. In this printf statement we want to print three position before the decimal point (called width) and two positions behind the decimal point (called precision).</p>
+<p>The \n used in the printf statements is called an escape sequence. In this case it represents a newline character. After printing something to the screen you usually want to print something on the next line. If there is no \n then a next printf command will print the string on the same line. Commonly used escape sequences are:</p>
+<ul>
+<li>\n (newline)</li>
+<li>\t (tab)</li>
+<li>\v (vertical tab)</li>
+<li>\f (new page)</li>
+<li>\b (backspace)</li>
+<li>\r (carriage return)</li>
+<li>\n (newline)</li>
+</ul>
+<p>Let&#8217;s take another look at a printf formatted output in a more application like example:</p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+
+main()
+{
+	int Fahrenheit;
+
+	for (Fahrenheit = 0; Fahrenheit &lt;= 300; Fahrenheit = Fahrenheit + 20)
+		printf("%3d %06.3f\n", Fahrenheit, (5.0/9.0)*(Fahrenheit-32));
+}
+
+</code></pre>
+</div>
+<p>Output of the source above:</p>
+<div id="cl">
+<pre><code>
+  0 -17.778
+ 20 -6.667
+ 40 04.444
+ 60 15.556
+ 80 26.667
+100 37.778
+120 48.889
+140 60.000
+160 71.111
+180 82.222
+200 93.333
+220 104.444
+240 115.556
+260 126.667
+280 137.778
+300 148.889
+
+</code></pre>
+</div>
+<p>As you can see we print the Fahrenheit temperature with a width of 3 positions. The Celsius temperature is printed with a width of 6 positions and a precision of 3 positions after the decimal point. Let&#8217;s recap:</p>
+<ul>
+<li>%d		(print as a decimal integer)</li>
+<li>%6d     (print as a decimal integer with a width of at least 6 wide)</li>
+<li>%f		(print as a floating point)</li>
+<li>%4f		(print as a floating point with a width of at least 4 wide)</li>
+<li>%.4f	(print as a floating point with a precision of four characters after the decimal point)</li>
+<li>%3.2f	(print as a floating point at least 3 wide and a precision of 2)</li>
+</ul>
+<h2>Formatting other Types</h2>
+<p>Until now we only used integers and floats, but there are more types you can use. Take a look at the following example:</p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+
+main()
+{
+	printf("The color: %s\n", "blue");
+	printf("First number: %d\n", 12345);
+	printf("Second number: %04d\n", 25);
+	printf("Third number: %i\n", 1234);
+	printf("Float number: %3.2f\n", 3.14159);
+	printf("Hexadecimal: %x\n", 255);
+	printf("Octal: %o\n", 255);
+	printf("Unsigned value: %u\n", 150);
+	printf("Just print the percentage sign %%\n", 10);
+}
+
+</code></pre>
+</div>
+<p>Output of the source example:</p>
+<div id="cl">
+<pre><code>
+The color: blue
+First number: 12345
+Second number: 0025
+Third number: 1234
+Float number: 3.14
+Hexadecimal: ff
+Octal: 377
+Unsigned value: 150
+Just print the percentage sign %
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> In the last printf statement only the percentage sign is printed. </p>
+<p>The number 10 in this statement doesn&#8217;t matter; it&#8217;s not used in the output.  So if you want to print a percentage number you would use something like this: printf(&#8220;%2d%%\n&#8221;, 10); (The output will be 10%)</p>
+<h2>Formatting Strings</h2>
+<p>By now you have seen most of the format conversion possible, but there is one type that is a little different<br />
+and that are string format conversions. Take a look at the following example:</p>
+<div id="cl">
+<pre><code>
+#include&lt;stdio.h&gt;
+
+main()
+{
+	printf(":%s:\n", "Hello, world!");
+	printf(":%15s:\n", "Hello, world!");
+	printf(":%.10s:\n", "Hello, world!");
+	printf(":%-10s:\n", "Hello, world!");
+	printf(":%-15s:\n", "Hello, world!");
+	printf(":%.15s:\n", "Hello, world!");
+	printf(":%15.10s:\n", "Hello, world!");
+	printf(":%-15.10s:\n", "Hello, world!");
+}
+
+</code></pre>
+</div>
+<p>The output of the example above:</p>
+<div id="cl">
+<pre><code>
+:Hello, world!:
+:  Hello, world!:
+:Hello, wor:
+:Hello, world!:
+:Hello, world!  :
+:Hello, world!:
+:     Hello, wor:
+:Hello, wor     :
+
+</code></pre>
+</div>
+<p>As you can see, the string format conversion reacts very different from number format conversions.</p>
+<ul>
+<li>The printf(&#8220;:%s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string (nothing special happens.)</li>
+<li>The printf(&#8220;:%15s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but print 15 characters. If the string is smaller the &#8220;empty&#8221; positions will be filled with &#8220;whitespace.&#8221;</li>
+<li>The printf(&#8220;:%.10s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but print only 10 characters of the string.</li>
+<li>The printf(&#8220;:%-10s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but prints at least 10 characters. If the string is smaller &#8220;whitespace&#8221; is added at the end. (See next example.)</li>
+<li>The printf(&#8220;:%-15s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but prints at least 15 characters. The string in this case is shorter than the defined 15 character, thus &#8220;whitespace&#8221; is added at the end (defined by the minus sign.)</li>
+<li>The printf(&#8220;:%.15s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but print only 15 characters of the string. In this case the string is shorter than 15, thus the whole string is printed.</li>
+<li>The printf(&#8220;:%15.10s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but print 15 characters.<br />
+If the string is smaller the &#8220;empty&#8221; positions will be filled with &#8220;whitespace.&#8221; But it will only print a maximum of 10 characters, thus only part of new string (old string plus the whitespace positions) is printed.</li>
+<li>The printf(&#8220;:%-15.10s:\n&#8221;, &#8220;Hello, world!&#8221;); statement prints the string, but it does the exact same thing as the previous statement, accept the &#8220;whitespace&#8221; is added at the end.</li>
+</ul>
+<p><strong>A little warning!</strong><br />
+The printf function uses its first argument to determine how many arguments will follow and of what types they are. If you don&#8217;t use enough arguments or if they are of the wrong type than printf will get confuses, with as a result wrong answers.</p>
+<p>That&#8217;s all for this C tutorial. Just make some examples of your own, they are easy to make. This is the only way to learn and see how the format conversions reacts.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 145 responses to &#8220;C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-180">
+
+            			<cite>Joe</cite> on <small>November 11th, 2009</small>:
+			
+			<p>this tutorial is very good!!!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-183">
+
+            			<cite>Rohit Rajpoot</cite> on <small>November 28th, 2009</small>:
+			
+			<p>Yes&#8230;.<br />
+This tutorial is really very helpful!!!!<br />
+I like this&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-193">
+
+            			<cite>Deepak</cite> on <small>December 9th, 2009</small>:
+			
+			<p>This tutorial made my job easy<br />
+Thanks a lot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-194">
+
+            			<cite>kaustav</cite> on <small>December 13th, 2009</small>:
+			
+			<p>beautiful tutorial. thanx.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-396">
+
+            			<cite>Aaditya kumar</cite> on <small>January 23rd, 2010</small>:
+			
+			<p>i get confuse in formatting,this description is enough to show how these are working and helpful in formatting even digit or string.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-599">
+
+            			<cite>Matt</cite> on <small>February 3rd, 2010</small>:
+			
+			<p>I think you have an error near the bottom of the tutorial when summarizing string formatting&#8230;</p>
+<p>&#8216;The printf(“:%10s:\n”, “Hello, world!”); statement prints the string, but print 15 characters. If the string is smaller the “empty” positions will be filled with “whitespace.” &#8216;</p>
+<p>This should say:</p>
+<p>&#8216;The printf(“:%15s:\n”, “Hello, world!”); statement prints the string, but print 15 characters. If the string is smaller the “empty” positions will be filled with “whitespace.” &#8216;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-610">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>February 3rd, 2010</small>:
+			
+			<p>Thx, I have corrected the typo!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-826">
+
+            			<cite>Armando</cite> on <small>February 12th, 2010</small>:
+			
+			<p>I have a problem when printing large floating point numbers.</p>
+<p>I tried the following solution but it doesn&#8217;t work.</p>
+<p>#include &lt;stdio.h&gt;<br />
+main()<br />
+{<br />
+  int i;<br />
+  double arr[3] =<br />
+    {12345678.000, 98765345.333, 456793332.300};<br />
+  for (i = 0; i &lt; 3; i++)<br />
+    printf (&quot;%g\n&quot;, arr[i]);<br />
+}</p>
+<p>The output is this:<br />
+1.23457e+07<br />
+9.87653e+07<br />
+4.56793e+08</p>
+<p>What I need is this:<br />
+12345678<br />
+98765345.333<br />
+456793332.3</p>
+<p>Could anyone help me?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-829">
+
+            			<cite><a href='http://www.social-graphics.com' rel='external nofollow' class='url'>Social Media Graphics</a></cite> on <small>February 12th, 2010</small>:
+			
+			<p>@Armando &#8211; just change printf (&#8220;%g\n&#8221;, arr[i]); to printf (&#8220;%f\n&#8221;, arr[i]);</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-837">
+
+            			<cite>Armando</cite> on <small>February 17th, 2010</small>:
+			
+			<p>@Social Media Graphics thanks for your suggestion.</p>
+<p>But what I really need is to print the decimal significant if any, otherwise only the integer part.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-864">
+
+            			<cite>cheeloon</cite> on <small>March 4th, 2010</small>:
+			
+			<p>Very good and detail explanation. Thx alot.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-887">
+
+            			<cite>Joe</cite> on <small>March 12th, 2010</small>:
+			
+			<p>if i have 1294300000000000.000001,<br />
+how do i get 0.000001?<br />
+i only want the decimal places&#8230;.<br />
+does anybody know?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-919">
+
+            			<cite>prashanth</cite> on <small>April 7th, 2010</small>:
+			
+			<p>your tutorial was very helpful to me&#8230;&#8230;..thank a  lot&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-921">
+
+            			<cite>David</cite> on <small>April 8th, 2010</small>:
+			
+			<p>Joe: to get the decimal part of a float (or double), try this:</p>
+<p>float x=1294300000000000.000001;</p>
+<p>float decimal = x &#8211; (int)x;</p>
+<p>the conversion to an int should truncate the decimal off.  However, I should warn that decimal might not be exactly .000001 here because that is actually impossible to represent in binary, because it is in fact in binary a repeating &#8220;decimal.&#8221;  You might also get nicer results using larger data types like doubles and longs.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1318">
+
+            			<cite>Shashika</cite> on <small>July 7th, 2010</small>:
+			
+			<p>Thanks For Your Very Helpful Tutorial</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1336">
+
+            			<cite>selva</cite> on <small>July 8th, 2010</small>:
+			
+			<p>thank u &#8230;.. superb explanation &#8230;. it made me clear in formatting strings&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1586">
+
+            			<cite>pramit</cite> on <small>July 17th, 2010</small>:
+			
+			<p>answer to armando problem on 12 th feb.</p>
+<p>  just write<br />
+   printf(&#8220;%.8g\n&#8221;,arr[i]);<br />
+   printf(&#8220;%.11g\n&#8221;,arr[i]);<br />
+   printf(&#8220;%.10g\n&#8221;,arr[i]);</p>
+<p>   note:u have to write  like above,but not in loop bcoz this only serve ur requirement.</p>
+<p>    waiting for ur another problem.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1782">
+
+            			<cite>Tushar Srivastava</cite> on <small>July 31st, 2010</small>:
+			
+			<p>Good stuff for beginners but you should include some examples of %U format specifier with its explanation. Best of Luck</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1812">
+
+            			<cite>Holo</cite> on <small>August 19th, 2010</small>:
+			
+			<p>Very good exmples &#8211; I am using this in awk<br />
+but How do I print 10,123,456 &#8211; comma after each thousand. I saw some where else to use &#8220;%&#8217;d&#8221; but that is causing problem. ANy ideas.<br />
+Thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1818">
+
+            			<cite>Matt Bates</cite> on <small>August 24th, 2010</small>:
+			
+			<p>i am trying to print two strings that are stored in char arrays. I can&#8217;t get them onto the same line. </p>
+<p>char firstName[50];</p>
+<p>char lastName[50];</p>
+<p>printf(&#8220;Your name is %s&#8221;, firstName, lastName);</p>
+<p>it prints out:</p>
+<p>Your name is &#8216;firstName&#8217;<br />
+ &#8216;lastName&#8217;</p>
+<p>how do i get them onto the same line??? In other words, how to I add to the printf function?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1821">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>August 25th, 2010</small>:
+			
+			<p>@ Matt Bates &#8211; The source code you have given should only print &#8216;firstName&#8217;, because you only use one %s in your printf statement. So I don&#8217;t know why it&#8217;s also printing &#8216;lastName&#8217; (maybe an extra printf statement that you&#8217;ve not put in your example.) But below you&#8217;ll find an example that should do what you want:</p>
+<p>#include<stdio .h><br />
+void main() {<br />
+	char *firstName;<br />
+	char *lastName;</p>
+<p>	firstName = &#8220;John&#8221;;<br />
+	lastName = &#8220;Doe&#8221;;<br />
+	printf(&#8220;Your name is %s %s&#8221;, firstName, lastName);<br />
+}</p>
+<p>Good luck!</stdio></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1847">
+
+            			<cite>tallen387</cite> on <small>September 23rd, 2010</small>:
+			
+			<p>How do you print a number in binary format (similar to %o, %d, %x)?</p>
+<p>Thanks!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1850">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>September 24th, 2010</small>:
+			
+			<p>There is no format (similar to %d) to print a integer in binary format, you have to build it yourself, a int2bin if you will.<br />
+Something like this will do:<br />
+<code>#include&lt;stdio.h&gt;</p>
+<p>void bin(int i) {<br />
+    int a=0;<br />
+    if(i!=0) {<br />
+         a=i;<br />
+         bin(i&gt;&gt;1);<br />
+         printf(" %d ", a&#038;0x01);<br />
+    }<br />
+}</p>
+<p>int main() {<br />
+     int b=13;<br />
+     bin(b);<br />
+     return 0;<br />
+} </code></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1936">
+
+            			<cite>sankar v</cite> on <small>November 11th, 2010</small>:
+			
+			<p>thanks a lot. i have exam today and this helped me a lot. i had no idea about the printf thing</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1959">
+
+            			<cite>Aggie</cite> on <small>December 5th, 2010</small>:
+			
+			<p>thanks! Helped me pick it up quickly, better than wikipedia</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-2659">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>tanushri</a></cite> on <small>December 14th, 2010</small>:
+			
+			<p>i like information abt printf</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3203">
+
+            			<cite>Deon Joubert</cite> on <small>January 19th, 2011</small>:
+			
+			<p>You could also use the &#8220;itoa&#8221; function (from stdlib.h) with a radix of 2 to do the conversion from an integer to a string that represents the binary value of the integer.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3204">
+
+            			<cite>Deon Joubert</cite> on <small>January 19th, 2011</small>:
+			
+			<p>@tallen387<br />
+My previous comment is for you</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3214">
+
+            			<cite>aaron</cite> on <small>January 24th, 2011</small>:
+			
+			<p>Hello,</p>
+<p>I need to print 10 numbers with one number per line and then beside each number display the running total of digits in the numbers.</p>
+<p>example:</p>
+<p>num digits<br />
+3     1<br />
+78    3<br />
+890   6<br />
+1000  10<br />
+etc..</p>
+<p>I know a couple of methods to do this and they work. But I am asked to use the &#8220;%n conversion specifier&#8221; or the &#8216;n&#8217; format specifier(not even sure what it is actually known as). I guess this would be within the printf as I print out the numbers. But I have tried to search around to find out how this conversion specifier works but have figured out barely anything. I am lost as to how this method would work in counting and displaying the running total of digits.</p>
+<p>If somebody could point me in the right direction I would greatly appreciate it.</p>
+<p>Thank you.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3268">
+
+            			<cite>nancy</cite> on <small>March 1st, 2011</small>:
+			
+			<p>vry useful tutorial</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3332">
+
+            			<cite>sha</cite> on <small>March 25th, 2011</small>:
+			
+			<p>Great Tutorial. very informative&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3363">
+
+            			<cite>Faisal</cite> on <small>April 13th, 2011</small>:
+			
+			<p>Really helpful and informative tutorial. I hope every one likes it.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3388">
+
+            			<cite>Orel</cite> on <small>May 6th, 2011</small>:
+			
+			<p>Best c printf tutorial so far.. <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /> great job!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3393">
+
+            			<cite>aayush</cite> on <small>May 9th, 2011</small>:
+			
+			<p>awesome man!!!!!!!! nice tut..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3394">
+
+            			<cite>Pisio</cite> on <small>May 11th, 2011</small>:
+			
+			<p>Hi all,<br />
+I need to print a floating number (for example 1009.23) without the decimal point (in this case 100923), just to put it in a formatted positional output.<br />
+Can I use printf in some way to do this?<br />
+Thank you!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3432">
+
+            			<cite>ranjitha g</cite> on <small>May 20th, 2011</small>:
+			
+			<p>awesome&#8230;this tut helped me lot.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3459">
+
+            			<cite>Rahul Singh Chouhan</cite> on <small>May 27th, 2011</small>:
+			
+			<p>i need to know how to print bits or bytes character value in c</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3506">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>praga</a></cite> on <small>June 7th, 2011</small>:
+			
+			<p>hi dude s this is praga &#8230;.i need to know exactly whats the reason that we enclose the words to be displayed&#8230;.meant the words in printf to be enclosed in double quotes</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3507">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>praga</a></cite> on <small>June 7th, 2011</small>:
+			
+			<p>this tut is gr8</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3531">
+
+            			<cite><a href='http://www.edaboard.com/thread215470.html#post912465' rel='external nofollow' class='url'>Printf() function for debugging process</a></cite> on <small>June 13th, 2011</small>:
+			
+			<p>[&#8230;] Have you checked out Keil&#039;s User Guide:  Cx51 User&#039;s Guide &#8211; printf()  A couple of good tutorials:  C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output  Secrets of &#8220;printf&#8221;  The Keil compiler sends printf() output to STDOUT, which I [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3542">
+
+            			<cite>Anchal</cite> on <small>June 16th, 2011</small>:
+			
+			<p>nice explanation given!!!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3557">
+
+            			<cite>sahtihi</cite> on <small>June 29th, 2011</small>:
+			
+			<p>Very clear and detailed explanation is given</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3563">
+
+            			<cite>Ganesh Auti,Pune</cite> on <small>July 4th, 2011</small>:
+			
+			<p>very nice tut&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3568">
+
+            			<cite>Aravind</cite> on <small>July 5th, 2011</small>:
+			
+			<p>Simple stuff but helps a lot in real life programming.<br />
+Thanks for the information.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3579">
+
+            			<cite>Brindha</cite> on <small>July 15th, 2011</small>:
+			
+			<p>Excellent explanations&#8230;.<br />
+It helps a lot..<br />
+Thank u&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3587">
+
+            			<cite>shirin k</cite> on <small>July 17th, 2011</small>:
+			
+			<p>nice tutorial&#8230;more about the format specifiers</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3590">
+
+            			<cite>Rajesh Joshi</cite> on <small>July 18th, 2011</small>:
+			
+			<p>One of best information uploaded!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3632">
+
+            			<cite>smit</cite> on <small>July 30th, 2011</small>:
+			
+			<p>This a realy useful site for student</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3654">
+
+            			<cite><a href='http://www.google.com' rel='external nofollow' class='url'>navneeth</a></cite> on <small>August 4th, 2011</small>:
+			
+			<p>THANKS FOR THE INFORMATION.THIS WAS REALLY USEFUL TO ME</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3733">
+
+            			<cite>jesen</cite> on <small>August 26th, 2011</small>:
+			
+			<p>Could you help me please<br />
+I need show a message as a BOLD .<br />
+But I don&#8217;t know how to do this&#8230;<br />
+Please help..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3752">
+
+            			<cite>thita nayak</cite> on <small>September 6th, 2011</small>:
+			
+			<p>thanx c tutorial&#8230;&#8230;&#8230;..u help me alot&#8230;&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3769">
+
+            			<cite><a href='http://techdiscus.blogspot.com' rel='external nofollow' class='url'>Arivoli</a></cite> on <small>September 15th, 2011</small>:
+			
+			<p>Your examples give me a clear idea about this topic..<br />
+Thanks a lot&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3777">
+
+            			<cite>kaviraj</cite> on <small>September 19th, 2011</small>:
+			
+			<p>best c-tutorials website&#8230;. I ever visit&#8230;<br />
+Facebook.com/kaviraj.kalsi</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3792">
+
+            			<cite>avinash</cite> on <small>September 26th, 2011</small>:
+			
+			<p>print the value of variable without using format specifier in c</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3829">
+
+            			<cite>dheeraj</cite> on <small>October 7th, 2011</small>:
+			
+			<p>thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3835">
+
+            			<cite>Abd</cite> on <small>October 9th, 2011</small>:
+			
+			<p>Thsnks. Helped me figure out the specifier for double!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3871">
+
+            			<cite>amrutanshu</cite> on <small>October 18th, 2011</small>:
+			
+			<p>awesome man&#8230;.it rocks&#8230;^</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4107">
+
+            			<cite><a href='http://www.penzfolyam.hu' rel='external nofollow' class='url'>Csaba</a></cite> on <small>November 8th, 2011</small>:
+			
+			<p>Just what I needed, with great examples! Thank you!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4232">
+
+            			<cite>Usman Akram Punjab University Lahore</cite> on <small>November 19th, 2011</small>:
+			
+			<p>This website helps me a lot. thanx</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4233">
+
+            			<cite>sunny</cite> on <small>November 19th, 2011</small>:
+			
+			<p>this is wat i want thanks&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4272">
+
+            			<cite>Neeba</cite> on <small>November 24th, 2011</small>:
+			
+			<p>good one.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4382">
+
+            			<cite>Prash</cite> on <small>December 31st, 2011</small>:
+			
+			<p>anybody suggest me plz ??</p>
+<p>is there any difference between ++a and a++</p>
+<p>and when we assign a=2 then what what will return by above ++a and a++ !!!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4383">
+
+            			<cite>Prash</cite> on <small>December 31st, 2011</small>:
+			
+			<p>anybody suggest output  ????</p>
+<p>int main()</p>
+<p>{</p>
+<p>int i=2;</p>
+<p>for(;i&lt;4;)<br />
+printf(&quot;%d %d &quot;, i++,++i)</p>
+<p>return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4389">
+
+            			<cite>Naveed</cite> on <small>January 3rd, 2012</small>:
+			
+			<p>very nice&#8230;&#8230;.<br />
+thanks.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4412">
+
+            			<cite>Anurag Dake</cite> on <small>January 12th, 2012</small>:
+			
+			<p>#include<br />
+int main()<br />
+{<br />
+  float f=43.20;<br />
+  printf(&#8220;%e\n&#8221;,f);<br />
+  printf(&#8220;%f\n&#8221;,f);<br />
+  printf(&#8220;%g\n&#8221;,f);<br />
+  return 0;<br />
+}</p>
+<p>What are the significance of %e,%g in the above program?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4413">
+
+            			<cite>Anurag Dake</cite> on <small>January 12th, 2012</small>:
+			
+			<p>@Prash<br />
+The o/p will vary compiler to compiler</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4428">
+
+            			<cite>Rahul</cite> on <small>January 19th, 2012</small>:
+			
+			<p>{<br />
+char c[]=&#8221;GATE2011&#8243;;<br />
+char *p=c;<br />
+printf(&#8220;%s&#8221;,p+p[3]-p[1]);<br />
+}</p>
+<p>o/p is 2011<br />
+please explain how the o/p is coming 2011?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4438">
+
+            			<cite>vidya</cite> on <small>January 29th, 2012</small>:
+			
+			<p>thanx for the tutorial&#8230;helped me a lot in understanding string format conversions with all the width and precisions</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4447">
+
+            			<cite>Ragavi</cite> on <small>January 31st, 2012</small>:
+			
+			<p>How to print values of variables without using format specifier pl help me</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4475">
+
+            			<cite>Dario</cite> on <small>February 9th, 2012</small>:
+			
+			<p>Very very useful information. Very complete and simple. The best &#8220;printf&#8221; tutorial so far. Is there some similar tutorial about &#8220;scanf&#8221;?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4494">
+
+            			<cite>smith</cite> on <small>February 17th, 2012</small>:
+			
+			<p>float B=9876.54321;<br />
+	printf(&#8220;\n\t%12.5G&#8221;,B);<br />
+why the out put is not     9876.54321?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4495">
+
+            			<cite>Cad</cite> on <small>February 17th, 2012</small>:
+			
+			<p>@smith : This is because of the specifier G. The specifier G outputs the shorter of %E or %f. But the precision value is interpreted differently in &#8220;G&#8221; format than in &#8220;f&#8221; format. The precision for &#8220;f&#8221; specifies the number of digits after the decimal point. The precision for &#8220;G&#8221; specifies the maximum number of significant digits printed.</p>
+<p>Try the three specifiers by printing the value, for example:</p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>int main {<br />
+  float B=9876.54321;<br />
+  printf(&#8220;%12.5G\n&#8221;, B);<br />
+  printf(&#8220;%12.5f\n&#8221;, B);<br />
+  printf(&#8220;%12.5E\n&#8221;, B);<br />
+}</p>
+<p>Good Luck!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4511">
+
+            			<cite>sendsmsdad</cite> on <small>February 22nd, 2012</small>:
+			
+			<p>Bravo!<br />
+Well done tutorial this!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4538">
+
+            			<cite>Saloni Rastogi</cite> on <small>March 4th, 2012</small>:
+			
+			<p>i benefitted from this information<br />
+its great !! made my work easier .</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4551">
+
+            			<cite>Arj</cite> on <small>March 11th, 2012</small>:
+			
+			<p>Hi, . Any way to represent floating point numbers in C ?. .<br />
+Like for 24bit<br />
+-256.327 *10^0 </p>
+<p>a)binary representation is<br />
+1 .1000000000101000  000100</p>
+<p>b)for octal<br />
+1 .1000000000101001  0000011</p>
+<p>so how could one print this kind of  output ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4584">
+
+            			<cite><a href='http://yahoo.com' rel='external nofollow' class='url'>neha</a></cite> on <small>March 20th, 2012</small>:
+			
+			<p>realy very helpfull..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4704">
+
+            			<cite>simon</cite> on <small>April 17th, 2012</small>:
+			
+			<p>well written. will mind sending more notes on c programming</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4726">
+
+            			<cite>kirti</cite> on <small>April 20th, 2012</small>:
+			
+			<p>nice..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4804">
+
+            			<cite>Pulaha</cite> on <small>May 4th, 2012</small>:
+			
+			<p>very nice ..thx a lot for this site owner&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4880">
+
+            			<cite>raj verma</cite> on <small>May 19th, 2012</small>:
+			
+			<p>this tutorial is really very good<br />
+and very useful for the beginners,&#8230;&#8230;&#8230;&#8230;&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4943">
+
+            			<cite>Vipin Patel</cite> on <small>June 5th, 2012</small>:
+			
+			<p>thanks a lot,</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4965">
+
+            			<cite>Jackouille</cite> on <small>June 10th, 2012</small>:
+			
+			<p>Very nice but I have a complicated display to put: I got the two first digits of an IP address (in float) and I would like to display it but with always the . (dot) in 4th position and the correct value for the second octet.<br />
+Currently it gives me:<br />
+25.000 instead of 25.0<br />
+138.350 instead of 138.35 and dot are not aligned.</p>
+<p>Do you have a magic way to proceed only with format specifier because I can only provide a format, not add new values?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5037">
+
+            			<cite>ayush</cite> on <small>June 26th, 2012</small>:
+			
+			<p>very helpful in understandind concept of format specifier</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5061">
+
+            			<cite>Bhavanishankar</cite> on <small>July 5th, 2012</small>:
+			
+			<p>Its very usefull to all &amp; it is very good&#8230;nice tutorial..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5063">
+
+            			<cite>shalini</cite> on <small>July 5th, 2012</small>:
+			
+			<p>Q))<br />
+char c=&#8221;gate2011&#8243;;<br />
+char*p=c;<br />
+printf(&#8220;%s&#8221;,p+p[3]-p[1]);</p>
+<p>what wil be the output of the following code fragment??</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5064">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>July 6th, 2012</small>:
+			
+			<p>@shalini &#8211; First of it should be char c[] = &#8220;gate2011&#8243;; otherwise you&#8217;ll get something like &#8211; warning: initialization makes integer from pointer without a cast. But if you run the code the output will be 2011.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5081">
+
+            			<cite>sarir</cite> on <small>July 13th, 2012</small>:
+			
+			<p>char *c=&#8221;gate2011&#8243;<br />
+&#8230;..<br />
+&#8230;<br />
+will give output 2011 becoz<br />
+Going through each line in turn:</p>
+<p> char c[] = &#8220;gate2011&#8243;;<br />
+Let&#8217;s assume that array c is located at memory address 200.</p>
+<p> char *p = c;<br />
+p is now a pointer to c. It therefore points to memory address 200. The actual content of p is &#8220;200&#8221;, indicating the memory address.</p>
+<p>  printf(&#8220;%s&#8221;, p + p[3] &#8211; p[1]);<br />
+The value of p is 200 when we treat it like a pointer. However, we can also treat it like an array. p[3] gets the value of the 4th item in the string, which is &#8220;e&#8221;. C stores characters as their ASCII value. The ASCII value of &#8220;e&#8221; is 101.</p>
+<p>Next, we get the value of p[1]. p[1] == &#8220;a&#8221;, which has an ASCII value of 97. Substituting these into the function:</p>
+<p>  printf(&#8220;%s&#8221;, 200 + 101 &#8211; 97);<br />
+That evaluates to:</p>
+<p>  printf(&#8220;%s&#8221;, 204);<br />
+At memory address 204, we have the string &#8220;2011&#8221;. Therefore, the program prints &#8220;2011&#8221;.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5082">
+
+            			<cite>David Blaine Fullerton</cite> on <small>July 13th, 2012</small>:
+			
+			<p>Why don&#8217;t you put some // example 1 //   at end where it is easier to see along with matching that when you print it out.</p>
+<p>Because it takes longer the way it is listed.  You have 6 / 7 things, hard to tell which line.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5132">
+
+            			<cite>venu nishad</cite> on <small>July 29th, 2012</small>:
+			
+			<p>this tutorial is very useful thanks for help&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5161">
+
+            			<cite>harisha</cite> on <small>August 8th, 2012</small>:
+			
+			<p>thank U for this helpfu tutorial.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5197">
+
+            			<cite>sukesh</cite> on <small>August 16th, 2012</small>:
+			
+			<p>its really very helpful to me. so, thanks a lot.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5206">
+
+            			<cite>jeff</cite> on <small>August 19th, 2012</small>:
+			
+			<p>Thanks this really help me to flashback <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5248">
+
+            			<cite>sangeetha</cite> on <small>September 2nd, 2012</small>:
+			
+			<p>thank u so much it used to my studies thanks a lot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5275">
+
+            			<cite>Rishi</cite> on <small>September 10th, 2012</small>:
+			
+			<p>This website rox !!!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5301">
+
+            			<cite>arist</cite> on <small>September 16th, 2012</small>:
+			
+			<p>How to printf the \n itself ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5302">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>September 16th, 2012</small>:
+			
+			<p>@Arist: If you want to print the \n itself, then you need to escape the \ by adding another \ (the slash is escape character). So you will get \\n. Take a look at the following source example:</p>
+<p>#include&lt;stdio.h&gt;<br />
+int main() {<br />
+	printf(&#8220;\\n&#8221;);<br />
+	printf(&#8220;\n\&#8221; \&#8221;&#8221;);<br />
+	return 0;<br />
+}</p>
+<p>The first printf statement will print \n and the second printf statement will print &#8221; &#8221; (so we escaped the &#8221; characters).</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5342">
+
+            			<cite>maddy</cite> on <small>September 27th, 2012</small>:
+			
+			<p>really this is very helpful for knowing the concept of c-programming.<br />
+apart from all there are many confusing concept which make a great trouble in<br />
+programming with c-language.<br />
+but slowly by help of this tutorial all get clear.<br />
+thnx to all.. .. ..2n41</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5381">
+
+            			<cite>chris</cite> on <small>October 3rd, 2012</small>:
+			
+			<p>Thank you for this useful information</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5472">
+
+            			<cite>dim</cite> on <small>November 5th, 2012</small>:
+			
+			<p>using only printf how to print 12.450<br />
+like 012.45 using 3 numbers before decimal point it&#8217;s can be 002.45 depend how many numbers before it&#8217;s should be<br />
+&#8220;%3.2Lf&#8221; but i need also zeros if needed</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5496">
+
+            			<cite>Fahad</cite> on <small>November 12th, 2012</small>:
+			
+			<p>@Rahul</p>
+<p>In ur pgm code, p[3] = &#8216;E&#8217; and p[1] = &#8216;A&#8217;.<br />
+And &#8216;E&#8217; &#8211; &#8216;A&#8217; = 4 (diff. of their ascii values)<br />
+and p + 4 = p[4] (add. of p + 4 int places),<br />
+So printf(“%s”,p+p[3]-p[1]);<br />
+ is equivalent to<br />
+ printf(“%s”,p[4]);<br />
+and the string at p[4] is &#8220;2011&#8221;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5549">
+
+            			<cite>loganaayahee</cite> on <small>November 21st, 2012</small>:
+			
+			<p>Armando  problem solution</p>
+<p>printf(&#8220;%8.lf\n&#8221;, arr[0]);<br />
+printf(&#8220;%9.3lf\n&#8221;, arr[1]);<br />
+printf(&#8220;%12.1lf\n&#8221;,arr[2]);</p>
+<p>Thank you for your problem</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5569">
+
+            			<cite>jasleen</cite> on <small>November 25th, 2012</small>:
+			
+			<p>Very nicely explained <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5582">
+
+            			<cite>Suraj Rana</cite> on <small>November 27th, 2012</small>:
+			
+			<p>Thanx a lot.This really helped me with my exam preparations.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5610">
+
+            			<cite>janardhan</cite> on <small>December 5th, 2012</small>:
+			
+			<p>thank u sir ,it is useful .</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5612">
+
+            			<cite>Haris</cite> on <small>December 5th, 2012</small>:
+			
+			<p>Thanks a lot. They are very helpful for us.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5976">
+
+            			<cite>jason</cite> on <small>January 9th, 2013</small>:
+			
+			<p>very useful, concise and complete!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6191">
+
+            			<cite>Subbu</cite> on <small>January 18th, 2013</small>:
+			
+			<p>Crisp &amp; Clear explanation..!! Thanxx</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6482">
+
+            			<cite><a href='http://codethrower.com/?p=29' rel='external nofollow' class='url'>Printf Formats | Code Thrower</a></cite> on <small>February 10th, 2013</small>:
+			
+			<p>[&#8230;] In C, printf is a powerful function with many formats. I found a very good tutorial here. [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6665">
+
+            			<cite><a href='http://microembebidos.wordpress.com/2013/02/09/tutorial-pinguino-capitulo-7-usb-cdc-emulacion-de-puerto-serie/' rel='external nofollow' class='url'>Tutorial Pinguino &#8211; Capitulo 7. USB-CDC Emulación de Puerto Serie | Blog MicroEmbebidos (PIC,MSP430,LPC,RTOS)</a></cite> on <small>March 31st, 2013</small>:
+			
+			<p>[&#8230;] este enlace pueden encontrar diversos ejemplos con el printf para conocer como formatear variables y las prueben [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6670">
+
+            			<cite>Ayesha</cite> on <small>April 1st, 2013</small>:
+			
+			<p>relli gud tutorial&#8230; thnx a lot..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6687">
+
+            			<cite>neeraj</cite> on <small>April 8th, 2013</small>:
+			
+			<p>its gud&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6689">
+
+            			<cite>Sadam Hussain</cite> on <small>April 8th, 2013</small>:
+			
+			<p>This is very helpful&#8230; I like it very much, I hope this will be benificial for everyone&#8230;&#8230;&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6724">
+
+            			<cite>Steve</cite> on <small>April 14th, 2013</small>:
+			
+			<p>I need to print out a float containing a GPS coordinate in decimal values, which is -3.6 (ie: -123.123456)<br />
+The last digit(6) is critical since I am measuring down to within 3 meters, and require accurate logging and terminal data parsing.</p>
+<p>Is there any way to print the value as well as parsing the float into a string while keeping the precision?</p>
+<p>	float f2= -80.123456;<br />
+	sprintf(op, &#8220;string %3.6f&#8221;, f2);<br />
+	printf(op);</p>
+<p>returns:   string -80.123459</p>
+<p>&#8212;  OR  &#8212;</p>
+<p>Is there another way I can parse the value from a string to a decimal and keep the precision?</p>
+<p>	char read[10] = &#8220;-80.123456&#8243;;<br />
+	float lon = (1000000 * (float)atoi(read));<br />
+	printf(&#8220;lf %3.6f\n&#8221;, lon);</p>
+<p>returns:  lf -80000000.000000</p>
+<p>I am willing to split the char value into 3 integers, (high=&#8221;-80&#8243;, mid=&#8221;123&#8243;, low=&#8221;456&#8243;) but not sure how to parse it in to parts while maintaining precision. (value range &#8220;123.123456&#8221; to &#8220;-101.123456&#8243; read as a string)</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6726">
+
+            			<cite>Amy</cite> on <small>April 15th, 2013</small>:
+			
+			<p>I need to print something in the format 0.144231E-03 or 0.88913E+03 etc so 0.number with scientific notation. </p>
+<p>Any ideas? Normal scientific notation (e.g. 5.1498587E+03 or 1.2039404-03 etc is no good, I can&#8217;t use if for what I need to do)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6891">
+
+            			<cite>weethomas</cite> on <small>May 21st, 2013</small>:
+			
+			<p>@Steve,</p>
+<p>I hope you realize that unless your GPS is accurate to 3 meters, you are not going to actually have 3 meters of accuracy, regardless of how many decimal points it reports.</p>
+<p>Regarding your storage issue. Single precision floats have at most 6 to 9 decimal digits of precision. When converting to a string, you are essentially generating a decimal representation of that float. This means that you are guaranteed that a number with 6 decimal digits can be converted back and forth between a float and it&#8217;s string representation (which is decimal). However, any more than that really depends on the number (ie some 7, 8, and 9 digit decimals can be converted exactly while others won&#8217;t).</p>
+<p>So, in your case, you have an 8 digit decimal number that you first convert to float, then back to decimal (in string form). You should expect that at most, the first 6 digits will match. </p>
+<p>In you second example, you used atoi which converts an ascii string to an integer. Integers are whole numbers. They don&#8217;t have decimal points. So, the output is exactly what you should have gotten. Try atof.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7004">
+
+            			<cite>Prateek</cite> on <small>May 31st, 2013</small>:
+			
+			<p>Thanks. Helped me to quickly revise format specifiers <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7056">
+
+            			<cite>karan</cite> on <small>June 8th, 2013</small>:
+			
+			<p>tis is so cool!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7066">
+
+            			<cite>Kunal</cite> on <small>June 10th, 2013</small>:
+			
+			<p>great efforts..thanks a lot.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7087">
+
+            			<cite><a href='http://careerdrudge.com/?p=149' rel='external nofollow' class='url'>What is the role of C? What are the various features of C Language. - CareerDrudge</a></cite> on <small>June 15th, 2013</small>:
+			
+			<p>[&#8230;] Format Specifiers &amp; Escape Sequence [&#8230;]</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7567">
+
+            			<cite>Anushree</cite> on <small>July 26th, 2013</small>:
+			
+			<p>could any one tell me why in the syntax of printf and scanf 3 dots(&#8230;) are used&#8230;&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7839">
+
+            			<cite>biswajit</cite> on <small>August 19th, 2013</small>:
+			
+			<p>thx&#8230;bt i cnt understand the meaning of  %d</p>
+<p>&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7911">
+
+            			<cite>Lilian</cite> on <small>September 10th, 2013</small>:
+			
+			<p>#Ok Men, very good!!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7913">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>Sumithra</a></cite> on <small>September 11th, 2013</small>:
+			
+			<p>What will Happen If We skip &amp; in Scanf Function??<br />
+ What is %h, %u Specifiers?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7985">
+
+            			<cite>sailakshmi</cite> on <small>September 26th, 2013</small>:
+			
+			<p>i want some examples on using character set in formatted input and output</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7989">
+
+            			<cite>mehwish</cite> on <small>September 26th, 2013</small>:
+			
+			<p>Plz i need some programs regarding Format specifier&#8230;can yew guys help me in that&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8051">
+
+            			<cite>Amey Chaware</cite> on <small>October 2nd, 2013</small>:
+			
+			<p>This article solved all my doubts, thank you so much. The string part is also very clearly explained.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8052">
+
+            			<cite>ekta</cite> on <small>October 2nd, 2013</small>:
+			
+			<p>printf(&#8220;%f%f&#8221;)<br />
+this statement give error,<br />
+printf(&#8220;%d%c&#8221;)<br />
+this one give output as a garbage value<br />
+why?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8061">
+
+            			<cite>Steven Nguyen</cite> on <small>October 3rd, 2013</small>:
+			
+			<p>How to print large number in the format ###,###,###?</p>
+<p>Thankx!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8166">
+
+            			<cite>sonu verma</cite> on <small>October 7th, 2013</small>:
+			
+			<p>int 5<br />
+Printf(&#8220;%d&#8221;+46,i)<br />
+What will be the output and how</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8854">
+
+            			<cite>scotty</cite> on <small>October 22nd, 2013</small>:
+			
+			<p>@sonu verma:<br />
+Does this compile at all?!<br />
+What do you want to reach with this?<br />
+You add a constant to a format string!<br />
+The application may crash or you get garbage. It depends what is stored 46 later after &#8220;%d&#8221; in the memory&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9004">
+
+            			<cite>sen</cite> on <small>October 31st, 2013</small>:
+			
+			<p>what is the use of %p in c</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9014">
+
+            			<cite>ozee</cite> on <small>November 2nd, 2013</small>:
+			
+			<p>sir how to make  the marksheet using only the printf statement with width specifiers</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9060">
+
+            			<cite>raj</cite> on <small>November 15th, 2013</small>:
+			
+			<p>%s is use for read string<br />
+%c is for character<br />
+but what is use of %LF ??..<br />
+pls rply&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9105">
+
+            			<cite>fong</cite> on <small>November 25th, 2013</small>:
+			
+			<p>what is %g stands for?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9213">
+
+            			<cite>ragavi</cite> on <small>December 11th, 2013</small>:
+			
+			<p>It is very useful for me</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9260">
+
+            			<cite>harish</cite> on <small>December 17th, 2013</small>:
+			
+			<p>really help full..thnx</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9274">
+
+            			<cite>M.S. SANDHYA</cite> on <small>December 19th, 2013</small>:
+			
+			<p>how this will be executed?<br />
+n=13224;<br />
+printf(&#8220;%d&#8221;,printf(&#8220;%d&#8221;,printf(&#8220;%d&#8221;,n)));</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9279">
+
+            			<cite><a href='http://dictinfo.com' rel='external nofollow' class='url'>Joel Korhonen</a></cite> on <small>December 20th, 2013</small>:
+			
+			<p>fong: %g means:</p>
+<p>Use the shortest representation: %e or %f</p>
+<p>i.e. scientific (mantissa/exponent) vs. float representation</p>
+<p>M.S. SANDHYA:</p>
+<p>I assume that&#8217;s e.g. &#8220;int n=13224;&#8221;, otherwise it won&#8217;t compile. It&#8217;s executed according to normal parenthesis rules. The innermost printf is parsed first producing the string 13224 which is printed out. The result is then also passed to the middle printf which actually prints (right after the previous result 13224) the length (number of digits) of the innermost string i.e. 5. Then the outermost printf prints the length of this string (i.e. length of &#8220;5&#8221;), namely 1. Therefore the result is 1322451.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9419">
+
+            			<cite>Giridhar</cite> on <small>January 29th, 2014</small>:
+			
+			<p>Helpful&#8230;&#8230;&#8230;..thanks&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9714">
+
+            			<cite>Klaus</cite> on <small>February 20th, 2014</small>:
+			
+			<p>Stupid question:</p>
+<p>Is there a way to format an integer including the sign in the positive case, i.e.</p>
+<p>1 =&gt; &#8220;+1&#8243;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9770">
+
+            			<cite>Aayushi Mishra</cite> on <small>February 28th, 2014</small>:
+			
+			<p>printf(&#8220;%d%d%d&#8221;);<br />
+will give output 013440..<br />
+why..???</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-10030">
+
+            			<cite>Hamza saghir</cite> on <small>March 23rd, 2014</small>:
+			
+			<p>Can anyone plzz tell me the forma<br />
+t specifier if the number is 1.345 and its displayed output is 1.35</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-10508">
+
+            			<cite>varun kumar</cite> on <small>April 12th, 2014</small>:
+			
+			<p>int a=20,b=30,c=40;<br />
+printf(&#8220;%d %d %d&#8221;);<br />
+output is 40 30 20<br />
+i want to know the reason behind it</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-61637">
+
+            			<cite>nadzgates</cite> on <small>May 15th, 2014</small>:
+			
+			<p>thanx this help me a lot&#8230;..i will be on the exam on this tuesday&#8230;wish me luck!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-68389">
+
+            			<cite>amish</cite> on <small>May 18th, 2014</small>:
+			
+			<p>i want only using format specifier %c print the int datatype hex datatype float datatype..<br />
+how to solve this prob?</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.831 seconds. -->
+</body>
+</html>
+

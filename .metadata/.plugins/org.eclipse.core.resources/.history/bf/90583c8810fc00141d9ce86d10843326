@@ -1,0 +1,85 @@
+import java.io.*;
+public class BtreeNode 
+{
+	public KeyNode[] keys;					
+	public BtreeNode[] child;
+	public int count;
+	public boolean leaf;
+	public BtreeNode(int t,boolean leaf)
+	{
+		keys = new KeyNode[2*t-1];
+		child = new BtreeNode[2*t];
+		this.leaf=leaf;
+		count = 0;
+	}
+	public void splitchild(int i, BtreeNode y,int t)
+	{
+		BtreeNode z = new BtreeNode(t,y.leaf);
+		z.count = t-1;
+		for(int j=0;j<t-1;j++)
+			z.keys[j] = y.keys[j+t];
+		if(!y.leaf)
+		{
+			for(int j=0;j<t;j++)
+				z.child[j] = y.child[j+t];
+		}
+		y.count = t-1;
+		for(int j=count;j>=i+1;j--)
+			child[j+1] = child[j];
+		child[i+1] = z;
+		for(int j=count-1;j>=i;j--)
+			keys[j+1] = keys[j];
+		keys[i] = y.keys[t-1];
+		count++;
+	}
+	public void insertNonFull(String kw, File f, int t)
+	{
+		int i = count -1;
+		if(leaf)
+		{
+			while(i>=0 && keys[i].keyword.compareTo(kw)>0)
+			{
+				keys[i+1]=keys[i];
+				i--;
+			}
+			keys[i+1].keyword = kw;
+			keys[i+1].pointer = f;
+			count++;
+		}
+		else
+		{
+			while(i>=0 && keys[i].keyword.compareTo(kw)>0)
+				i--;
+			if(child[i+1].count == 2*t - 1)
+			{
+				splitchild(i+1,child[i+1],t);
+				if(keys[i+1].keyword.compareTo(kw)<0)
+					i++;
+			}
+			child[i+1].insertNonFull(kw,f,t);
+		}
+	}
+	public BtreeNode search(String kw)
+	{
+		int i = 0;
+	    while (i < count && keys[i].keyword.compareTo(kw)<0)
+	        i++;
+	    if (keys[i].keyword == kw)
+	        return this;
+	    if (leaf == true)
+	        return null;
+	    return child[i].search(kw);
+	}
+	public void traversal()
+	{
+	    int i;
+	    for (i = 0; i < count; i++)
+	    {
+	        if (leaf == false)
+	            child[i].traversal();
+	        System.out.println(keys[i].keyword);
+	    }
+	    if (leaf == false)
+	        child[i].traversal();
+	}
+}

@@ -1,0 +1,29 @@
+import java.io.*;
+public class Btree 
+{
+	private BtreeNode root;
+	public static int t;
+	public Btree()
+	{
+		root = null;
+	}	
+	public void insert(String kw,File f)
+	{
+		if(root == null)
+		{
+			root = new BtreeNode(t,true);
+			root.keys[root.count].addkeynode(kw, f);
+			root.count++;
+		}
+		else
+		{
+			if(root.count == 2*t - 1)
+			{
+				BtreeNode s = new BtreeNode(t,false);
+				s.child[s.count] = root;
+				s.splitchild(0,root);
+				
+			}
+		}
+	}
+}

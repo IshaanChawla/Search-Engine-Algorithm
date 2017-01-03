@@ -1,0 +1,52 @@
+public class ZoneIndexing
+{
+	private double[] tagcounts;
+	private String[] tags;
+	private int totalcount;
+	public ZoneIndexing()
+	{
+		tags = new String[]{"<h1>","<h2>","<h3>","<h4>","<h5>","<p>","<td header","<a href","<a target","<th","<li","<code>","<div"};
+		tagcounts = new double[]{0,0,0,0,0,0,0,0};
+		totalcount = 0;
+	}
+	public void ratios(String text)
+	{
+		Kmp a = new Kmp();
+		int j = 0,k = 0;
+		for(String i : tags)
+		{
+			if(k<5)
+				j=0;
+			else if(k == 6 || k == 7)
+				j=2;
+			else
+				j = k-5;
+			tagcounts[j] += a.kmpzonesearch(text,i);
+			totalcount += tagcounts[j];
+			k++;
+		}
+		for(j=0;j<7;j++)
+			tagcounts[j] /= totalcount;
+	}
+	public double getzoneweight(String s)
+	{
+		int j=0,k=0;
+		if(s == "<title>")
+			return 2;
+		if(s.equals("</"))
+			return 0;
+		for(String i : tags)
+		{
+			if(k<5)
+				j=0;
+			else if(k == 6 || k == 7)
+				j=2;
+			else
+				j = k-5;
+			if(s.contains(i))
+				return tagcounts[j];
+			k++;
+		}
+		return 0;
+	}
+}

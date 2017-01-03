@@ -1,0 +1,771 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; File I/O (using text files) | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; File I/O (using text files)" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,633] -->
+<meta name="description"  content="The file I/O functions and types in the C language are straightforward and easy to understand. To make use of these functions and types you have to include the" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; File I/O (using text files) Comments Feed" href="http://www.codingunit.com/c-tutorial-file-io-using-text-files/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; structures, unions, typedef' href='http://www.codingunit.com/c-tutorial-structures-unions-typedef' />
+<link rel='next' title='C Tutorial &#8211; The functions malloc and free' href='http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=213' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-213">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">
+		C Tutorial &#8211; File I/O (using text files)</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>The file I/O functions and types in the C language are straightforward and easy to understand. To make use of these functions and types you have to include the stdio library. (Like we already did in most of the tutorials).</p>
+<p>The file I/O functions in the stdio library are:<span id="more-213"></span></p>
+<ul>
+<li><strong>fopen</strong> &#8211; opens a text file.</li>
+<li><strong>fclose</strong> &#8211; closes a text file.</li>
+<li><strong>feof</strong> &#8211; detects end-of-file marker in a file.</li>
+<li><strong>fscanf</strong> &#8211; reads formatted input from a file.</li>
+<li><strong>fprintf</strong> &#8211; prints formatted output to a file.</li>
+<li><strong>fgets</strong> &#8211; reads a string from a file.</li>
+<li><strong>fputs</strong> &#8211; prints a string to a file.</li>
+<li><strong>fgetc</strong> &#8211; reads a character from a file.</li>
+<li><strong>fputc</strong> &#8211; prints a character to a file.</li>
+</ul>
+<h2>File I/O: opening a text file</h2>
+<p>The fopen library function is used to open a text file. You also have to use a specified mode when you open a file. The three most common modes used are read (r), write (w), and append (a). Take a look at an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+		FILE *ptr_file;
+		int x;
+
+		ptr_file =fopen("output.txt", "w");
+
+		if (!ptr_file)
+			return 1;
+
+		for (x=1; x&lt;=10; x++)
+			fprintf(ptr_file,"%d\n", x);
+
+		fclose(ptr_file);
+
+		return  0;
+	}
+
+</code></pre>
+</div>
+<p>So let&#8217;s take a look at the example:</p>
+<h2>ptr_file =fopen(&#8220;output&#8221;, &#8220;w&#8221;);</h2>
+<p>The fopen statement opens a file &#8220;output.txt&#8221; in the write (w) mode. If the file does not exist it will be created. But you must be careful! If the file exists, it will be destroyed and a new file is created instead. The fopen command returns a pointer to the file, which is stored in the variable ptr_file. If the file cannot be opened (for some reason) the variable ptr_file will contain NULL.</p>
+<h2>if (!ptr_file)</h2>
+<p>The if statement after de fopen, will check if the fopen was successful. If the fopen was not successful, the program will return a one. (Indicating that something has gone wrong).</p>
+<h2>for (x=1; x&lt;=10; x++)</h2>
+<p>This for loop will count to ten, starting from one.</p>
+<h2>fprintf(ptr_file,&#8221;%d\n&#8221;, x);</h2>
+<p>The fprintf statement should look very familiar to you. It can be almost used in the same way as printf. The only new thing is that it uses the file pointer as its first parameter.</p>
+<h2>fclose(ptr_file);</h2>
+<p>The fclose statement will close the file. This command must be given, especially when you are writing files. So don&#8217;t forget it. You have to be careful that you don&#8217;t type &#8220;close&#8221; instead of &#8220;fclose&#8221;, because the close function exists. But the close function does not close the files correctly. (If there are a lot of files open but not closed properly, the program will eventually run out of file handles and/or memory space and crash.)</p>
+<h2>File I/O: reading a text file</h2>
+<p>If you want to read a file you have to open it for reading in the read (r) mode. Then the fgets library functions can be used to read the contents of the file. (It is also possible to make use of the library function fscanf. But you have to be sure that the file is perfectly formatted or fscanf will not handle it correctly). Let&#8217;s take a look at an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+    		FILE *ptr_file;
+    		char buf[1000];
+
+    		ptr_file =fopen("input.txt","r");
+    		if (!ptr_file)
+        		return 1;
+
+    		while (fgets(buf,1000, ptr_file)!=NULL)
+        		printf("%s",buf);
+
+		fclose(ptr_file);
+    		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong>The printf statement does not have the new-line (\n) in the format string. This is not necessary because the library function fgets adds the \n to the end of each line it reads.</p>
+<p>A file &#8220;input.txt&#8221; is opened for reading using the function fopen en the mode read (r). The library function fgets will read each line (with a maximum of 1000 characters per line.) If the end-of-file (EOF) is reached the fgets function will return a NULL value. Each line will be printed on stdout (normally your screen) until the EOF is reached. The file is then closed and the program will end.</p>
+<p>That&#8217;s all for this tutorial.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-file-io-using-text-files/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; File I/O (using text files) http://www.codingunit.com/c-tutorial-file-io-using-text-files" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 31 responses to &#8220;C Tutorial &#8211; File I/O (using text files)&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-3205">
+
+            			<cite>pravin</cite> on <small>January 19th, 2011</small>:
+			
+			<p>hello sir/madam<br />
+            i am doing my final yr B.E. mechanical engg, u tutorial helped me much in obtaining output file in txt format, thank a lot for ur help</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3779">
+
+            			<cite>gauti</cite> on <small>September 19th, 2011</small>:
+			
+			<p>awsm <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4220">
+
+            			<cite>Lmajor</cite> on <small>November 18th, 2011</small>:
+			
+			<p>I loove you. First year student at university with no  programming experience looking for something like this to process some files for an assignment. </p>
+<p>Thank you and I loooooooooooooove you for this.</p>
+<p>From Barbados.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4316">
+
+            			<cite>siva krishna</cite> on <small>December 1st, 2011</small>:
+			
+			<p>very usefull..thank you ..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4636">
+
+            			<cite>dhivu</cite> on <small>April 1st, 2012</small>:
+			
+			<p>superb&#8230;.clearly understandable&#8230;.thnk u&#8230;expecting more like this&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5253">
+
+            			<cite>grishma</cite> on <small>September 4th, 2012</small>:
+			
+			<p>very short and sweet programs<br />
+thanx&#8230;&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5454">
+
+            			<cite><a href='http://me' rel='external nofollow' class='url'>steven</a></cite> on <small>October 26th, 2012</small>:
+			
+			<p>concise and to the point, got me started with fprintf no problem, thank you , steve</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5501">
+
+            			<cite>Abel</cite> on <small>November 14th, 2012</small>:
+			
+			<p>Thanks!!! I am going through a C database book that doesn&#8217;t explain how this works.  I really enjoy how you made it simple thanks.  Do you have a complete tutorial online of everything C?  I would love to go through it if you do</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5576">
+
+            			<cite>reshmy</cite> on <small>November 26th, 2012</small>:
+			
+			<p>thanks..its very simple explanation about files..&amp; also expecting more like this…..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5777">
+
+            			<cite>ramu</cite> on <small>December 27th, 2012</small>:
+			
+			<p>hello these are vry usefull for me so please send the complecated problem to my mail</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5864">
+
+            			<cite>Yanik</cite> on <small>January 2nd, 2013</small>:
+			
+			<p>Thanks in advance, it was very simple (like that)and rather helpful&#8230; Thanks again</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6326">
+
+            			<cite>santosh</cite> on <small>January 27th, 2013</small>:
+			
+			<p>hello sir/madam</p>
+<p>this is what i was looking for&#8230;.. thanks &#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6480">
+
+            			<cite><a href='http://fb.com' rel='external nofollow' class='url'>judyann</a></cite> on <small>February 9th, 2013</small>:
+			
+			<p>I&#8217;m a first year college student and this is very useful for my report thank you ! ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6571">
+
+            			<cite>Mohamed</cite> on <small>March 6th, 2013</small>:
+			
+			<p>What is &#8220;FILE&#8221; in :<br />
+FILE ptr_file</p>
+<p>is it a variable type ?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6605">
+
+            			<cite>S MORU</cite> on <small>March 14th, 2013</small>:
+			
+			<p>Thanks a Lot for your time and effort in to focus in this great nutshell tutorials. This is a real example in how to teach the concepts to everyone.</p>
+<p>Thanks a Lot&#8230;</p>
+<p>Sal</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6768">
+
+            			<cite><a href='http://unikl.com' rel='external nofollow' class='url'>unikl</a></cite> on <small>April 26th, 2013</small>:
+			
+			<p>thanks for the info, this will be in my final exams!:)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6806">
+
+            			<cite>Ankie</cite> on <small>May 5th, 2013</small>:
+			
+			<p>Thanks a lot&#8230;<br />
+Nice tutorial&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6818">
+
+            			<cite>Manzoor Mustafa</cite> on <small>May 8th, 2013</small>:
+			
+			<p>Really I liked it. You approach of defining the things is best</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7099">
+
+            			<cite>kapkwen</cite> on <small>June 18th, 2013</small>:
+			
+			<p>The tutorial itself is short and precise void of spaghetti contents! Be blessed.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7169">
+
+            			<cite>raja</cite> on <small>June 25th, 2013</small>:
+			
+			<p>thanks!!!!!!!!!!,but i have a doubt,how to check the number of letters in each line of a file</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7330">
+
+            			<cite>sahadat sarkar</cite> on <small>July 13th, 2013</small>:
+			
+			<p>this example is really helpfull 4 first time programming in c&#8230;.thanks a lot!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7941">
+
+            			<cite>Apurva Popat</cite> on <small>September 16th, 2013</small>:
+			
+			<p>Hello Sir/Madam,</p>
+<p>   This tutorial was really helpfull for me to learn file operation. I<br />
+was able to create input.txt file in C:\TC\BIN folder (By default). And<br />
+now my question is that how to create file on specific path?</p>
+<p>Thanking you.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7950">
+
+            			<cite>Salma</cite> on <small>September 17th, 2013</small>:
+			
+			<p>Osome <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /> Expecting more like this..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8093">
+
+            			<cite>Ravikumar.R</cite> on <small>October 5th, 2013</small>:
+			
+			<p>Really nice &#8230;! simple &amp; Neat explanation of Pointers</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8806">
+
+            			<cite>Jake.S</cite> on <small>October 19th, 2013</small>:
+			
+			<p>But what if you want the program to be able to process different text files? Not just a hard coded single file like in the example. Like opening the program with a passed in text file from a command line. Like:<br />
+cat bunchofwords.text | wordprogram.c<br />
+and want to be able to use a different text file each time. How will the program read the file? scan?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9028">
+
+            			<cite>Ken</cite> on <small>November 5th, 2013</small>:
+			
+			<p>Thanks alot, this site really helps me</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9067">
+
+            			<cite>wissal</cite> on <small>November 17th, 2013</small>:
+			
+			<p>it is so helpful<br />
+thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9075">
+
+            			<cite>Arsalan</cite> on <small>November 19th, 2013</small>:
+			
+			<p>Awesome . very productive .</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9310">
+
+            			<cite><a href='http://www.facebook.com/hkuralkar' rel='external nofollow' class='url'>HEMANt Kuralkar</a></cite> on <small>December 30th, 2013</small>:
+			
+			<p>Marvellous&#8230;..!!!!!!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9373">
+
+            			<cite>Arif</cite> on <small>January 18th, 2014</small>:
+			
+			<p>one of the best online tutorial. Nice language. easy to understand. good for beginner. loved it.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9540">
+
+            			<cite>carl</cite> on <small>February 10th, 2014</small>:
+			
+			<p>how do you get the code to print the numbers on the same line. Thanks</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.623 seconds. -->
+</body>
+</html>
+

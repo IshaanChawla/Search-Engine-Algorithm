@@ -1,0 +1,1282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; structures, unions, typedef | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; structures, unions, typedef" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,633] -->
+<meta name="description"  content="In the C language structures are used to group together different types of variables under the same name. For example you could create a structure &quot;telephone&quot;:" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; structures, unions, typedef Comments Feed" href="http://www.codingunit.com/c-tutorial-structures-unions-typedef/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output' href='http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output' />
+<link rel='next' title='C Tutorial &#8211; File I/O (using text files)' href='http://www.codingunit.com/c-tutorial-file-io-using-text-files' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=211' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-211">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">
+		C Tutorial &#8211; structures, unions, typedef</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In the C language structures are used to group together different types of variables under the same name. For example you could create a structure &#8220;telephone&#8221;: which is made up of a string (that is used to hold the name of the person) and an integer (that is used to hold the telephone number).<br />
+Take a look at the example:<span id="more-211"></span></p>
+<div id="cl">
+<pre><code>
+	struct telephone
+	{
+		char *name;
+		int number;
+	};
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> the ; behind the last curly bracket.</p>
+<p>With the declaration of the structure you have created a new type, called telephone. Before you can use the type telephone you have to create a variable of the type telephone. Take a look at the following example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	struct telephone
+	{
+		char *name;
+		int number;
+	};
+
+	int main()
+	{
+		struct telephone index;
+
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> index is now a variable of the type telephone.</p>
+<p>To access the members of the structure telephone, you must use a dot between the structure name and the variable name(variables:name or number.) Take a look at the next example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	struct telephone
+	{
+		char *name;
+		int number;
+	};
+
+	int main()
+	{
+		struct telephone index;
+
+		index.name = "Jane Doe";
+		index.number = 12345;
+		printf("Name: %s\n", index.name);
+		printf("Telephone number: %d\n", index.number);
+
+		return 0;
+	}
+
+</code></pre>
+</div>
+<h2>Type definitions and structures</h2>
+<p>Type definitions make it possible to create your own variable types. In the following example we will create a type definition called &#8220;intpointer&#8221; (a pointer to an integer):</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	typedef int *int_ptr;
+
+	int main()
+	{
+		int_ptr myvar;
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>It is also possible to use type definitions with structures. The name of the type definition of a structure is usually in uppercase letters. Take a look at the example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	typedef struct telephone
+	{
+		char *name;
+		int number;
+	}TELEPHONE;
+
+	int main()
+	{
+		TELEPHONE index;
+
+		index.name = "Jane Doe";
+		index.number = 12345;
+		printf("Name: %s\n", index.name);
+		printf("Telephone number: %d\n", index.number);
+
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> The word struct is not needed before TELEPHONE index;</p>
+<h2>Pointer to structures</h2>
+<p>If you want a pointer to a structure you have to use the -&gt; (infix operator) instead of a dot.<br />
+Take a look at the following example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	typedef struct telephone
+	{
+		char *name;
+		int number;
+	}TELEPHONE;
+
+	int main()
+	{
+		TELEPHONE index;
+		TELEPHONE *ptr_myindex;
+
+		ptr_myindex = &amp;index;
+
+		ptr_myindex-&gt;name = "Jane Doe";
+		ptr_myindex-&gt;number = 12345;
+		printf("Name: %s\n", ptr_myindex-&gt;name);
+		printf("Telephone number: %d\n", ptr_myindex-&gt;number);
+
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong>Note:</strong> The -&gt; (infix operator) is also used in the printf statement.</p>
+<h2>Unions</h2>
+<p>A union is like a structure in which <strong>all members</strong> are stored at the <strong>same</strong> address. Members of a union can only be accessed one at a time. The union data type was invented to prevent memory fragmentation. The union data type prevents fragmentation by creating a standard size for certain data. Just like with structures, the members of unions can be accessed with the . and -&gt; operators. Take a look at the example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	typedef union myunion
+	{
+		double PI;
+		int B;
+	}MYUNION;
+
+	int main()
+	{
+		MYUNION numbers;
+		numbers.PI = 3.14;
+		numbers.B = 50;
+
+	return 0;
+	}
+
+</code></pre>
+</div>
+<p>That&#8217;s all for this tutorial.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-structures-unions-typedef/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; structures, unions, typedef http://www.codingunit.com/c-tutorial-structures-unions-typedef" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 73 responses to &#8220;C Tutorial &#8211; structures, unions, typedef&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-3449">
+
+            			<cite>Prithvi Macherla</cite> on <small>May 25th, 2011</small>:
+			
+			<p>dis site saves a lot of time ?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4153">
+
+            			<cite>sandhya</cite> on <small>November 12th, 2011</small>:
+			
+			<p>thanks <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4534">
+
+            			<cite>vikas</cite> on <small>March 3rd, 2012</small>:
+			
+			<p>really very very useful</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4756">
+
+            			<cite>prakash</cite> on <small>April 25th, 2012</small>:
+			
+			<p>i am very happy for this because it helps me to learn c language.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4877">
+
+            			<cite>sk</cite> on <small>May 18th, 2012</small>:
+			
+			<p>I worked in Java projects for 4 years after my college days.<br />
+Now i got a project in C.<br />
+It&#8217;s a real quick refresh after a long gap.<br />
+Thanks a lot <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4929">
+
+            			<cite>prakirtita</cite> on <small>May 31st, 2012</small>:
+			
+			<p>finally m clear that what is exactly typedef&#8230;.<br />
+<img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4953">
+
+            			<cite>lalli</cite> on <small>June 7th, 2012</small>:
+			
+			<p>wow it is really awsm website to learn quickly&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5060">
+
+            			<cite>vishaala</cite> on <small>July 4th, 2012</small>:
+			
+			<p>It&#8217;s Great! :)..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5098">
+
+            			<cite>Maha</cite> on <small>July 18th, 2012</small>:
+			
+			<p>Thanks a lot!<br />
+It was really helpful!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5157">
+
+            			<cite>SHALINI</cite> on <small>August 7th, 2012</small>:
+			
+			<p>thanx a lot&#8230;..its really very helpful n easy stuff</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5179">
+
+            			<cite>eurich</cite> on <small>August 12th, 2012</small>:
+			
+			<p>how can i make an array of structures?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5181">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>August 12th, 2012</small>:
+			
+			<p>#include&lt;stdio.h&gt;</p>
+<p>struct point {<br />
+    int x, y;<br />
+};</p>
+<p>int main() {<br />
+	point someArray[3] = {<br />
+		{0,1},<br />
+		{2,3},<br />
+	};</p>
+<p>	printf(&#8220;%d %d\n&#8221;, someArray[0]);<br />
+	printf(&#8220;%d %d\n&#8221;, someArray[1]);</p>
+<p>	return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5278">
+
+            			<cite><a href='http://gvpce' rel='external nofollow' class='url'>venkat509</a></cite> on <small>September 10th, 2012</small>:
+			
+			<p>thankyou a lot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5280">
+
+            			<cite>Georg</cite> on <small>September 10th, 2012</small>:
+			
+			<p>Very helpful and fast, exactly what i needed<br />
+Thanks and keep going!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5332">
+
+            			<cite>PUVANARAJAN</cite> on <small>September 24th, 2012</small>:
+			
+			<p>Thanks a lot.</p>
+<p>Very helpful and i got the knowledge&#8230;.<br />
+Thanks again&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5455">
+
+            			<cite>subh</cite> on <small>October 28th, 2012</small>:
+			
+			<p>coolllll&#8230;&#8230;&#8230;&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5464">
+
+            			<cite><a href='http://gmail.com' rel='external nofollow' class='url'>rani</a></cite> on <small>October 31st, 2012</small>:
+			
+			<p>nice</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5465">
+
+            			<cite><a href='http://gmail.com' rel='external nofollow' class='url'>swathi</a></cite> on <small>October 31st, 2012</small>:
+			
+			<p>super&#8230;&#8230;&#8230;&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5548">
+
+            			<cite>santho</cite> on <small>November 21st, 2012</small>:
+			
+			<p>very nice</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5613">
+
+            			<cite>YourSiteRocks</cite> on <small>December 5th, 2012</small>:
+			
+			<p>How do you use structs within structs or unions?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5624">
+
+            			<cite>Shivam</cite> on <small>December 7th, 2012</small>:
+			
+			<p>precise and clear</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5691">
+
+            			<cite>shabeer</cite> on <small>December 19th, 2012</small>:
+			
+			<p>u said members of a union can be set one at a time and here u hav done setting 2 values?????</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5773">
+
+            			<cite>ramu</cite> on <small>December 27th, 2012</small>:
+			
+			<p>excellent nice explanation</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5842">
+
+            			<cite>sangita</cite> on <small>January 1st, 2013</small>:
+			
+			<p>nice explanation</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5942">
+
+            			<cite>talpa</cite> on <small>January 7th, 2013</small>:
+			
+			<p>thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6016">
+
+            			<cite>Abhay</cite> on <small>January 10th, 2013</small>:
+			
+			<p>Good site, lot of info.<br />
+Thanks.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6245">
+
+            			<cite>Vikky sharma</cite> on <small>January 22nd, 2013</small>:
+			
+			<p>Eassy understable lang&#8230;once read &#8230; Gud to feell&#8230;and knw every thing about structure an union&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6287">
+
+            			<cite>Chandan Singh</cite> on <small>January 25th, 2013</small>:
+			
+			<p>This Site is good to understand and reduces time consumption a lot&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6441">
+
+            			<cite>Sharif</cite> on <small>February 4th, 2013</small>:
+			
+			<p>Thanks!<br />
+So useful!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6488">
+
+            			<cite><a href='http://www.gmail.com' rel='external nofollow' class='url'>sriveni</a></cite> on <small>February 12th, 2013</small>:
+			
+			<p>i understood structures explanation,i just want Stack operation program,plz explain</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6560">
+
+            			<cite>silpa,Melby</cite> on <small>March 2nd, 2013</small>:
+			
+			<p>superb..very effective..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6570">
+
+            			<cite>kiran</cite> on <small>March 5th, 2013</small>:
+			
+			<p>this is an owesome site to improve our c language thanx for publishing it for free.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6593">
+
+            			<cite>rajshree</cite> on <small>March 13th, 2013</small>:
+			
+			<p>Thanx alot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6640">
+
+            			<cite>Sripooja</cite> on <small>March 22nd, 2013</small>:
+			
+			<p>this site is really awesome&#8230;logic given and explained in such a way that naive users can also understand&#8230;Lots of Thanks:)</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6685">
+
+            			<cite>rajkumar</cite> on <small>April 7th, 2013</small>:
+			
+			<p>very useful tutorial.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6714">
+
+            			<cite>mashooque ghoto</cite> on <small>April 10th, 2013</small>:
+			
+			<p>good site</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6736">
+
+            			<cite><a href='http://google.com' rel='external nofollow' class='url'>Narasimman</a></cite> on <small>April 18th, 2013</small>:
+			
+			<p>Examples are very easy to understand&#8230;.Thx</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6746">
+
+            			<cite><a href='http://rahulageek.wordpress.com' rel='external nofollow' class='url'>rahul chhangani</a></cite> on <small>April 22nd, 2013</small>:
+			
+			<p>Awsm one&#8230;..<br />
+read it in 15 minutes&#8230;..save time..<br />
+thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6779">
+
+            			<cite>sohag</cite> on <small>April 28th, 2013</small>:
+			
+			<p>Helpful site for Beginner,tnx.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6815">
+
+            			<cite>jay pandya</cite> on <small>May 8th, 2013</small>:
+			
+			<p>its a very awosome i cleared my structure topic</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6821">
+
+            			<cite>Khet kumar</cite> on <small>May 10th, 2013</small>:
+			
+			<p>This is really to the point and clears all points regrad strutures &#8230;&#8230;.<br />
+Thanks a lot<br />
+carry on this work&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6830">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>khalil baloch Buledi</a></cite> on <small>May 14th, 2013</small>:
+			
+			<p>it is very good ,,my structures is clear know ,,it is best for learning&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6850">
+
+            			<cite>jayanthi</cite> on <small>May 16th, 2013</small>:
+			
+			<p>cool&#8230;&#8230;&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6861">
+
+            			<cite>unnati</cite> on <small>May 18th, 2013</small>:
+			
+			<p>this site is vry useful n its language is vry easy n understandable&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7138">
+
+            			<cite>sumaia akhter</cite> on <small>June 21st, 2013</small>:
+			
+			<p>wht a site!!vry usefl..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7145">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>Sheik Arbaz</a></cite> on <small>June 21st, 2013</small>:
+			
+			<p>Suprebbbbbbbbbbbb.site</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7163">
+
+            			<cite>venkatesh</cite> on <small>June 24th, 2013</small>:
+			
+			<p>Thanx a lot&#8230;good concept&#8230;.it was really helpful for who are learning  data structures&#8230;and easy to understand.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7235">
+
+            			<cite>keshav Kumar</cite> on <small>July 6th, 2013</small>:
+			
+			<p>thank you&#8230;&#8230;<br />
+it&#8217;s vry useful 4 all who want to learn..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7261">
+
+            			<cite>Tiffany</cite> on <small>July 8th, 2013</small>:
+			
+			<p>Great tutorial.<br />
+Just one question why is it that there was an &#8220;*&#8221; before the name of the variable &#8220;name&#8221;? I thought that the &#8220;*&#8221; was used to say that the variable was a pointer which doesn&#8217;t seem to be the case here.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7264">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>July 8th, 2013</small>:
+			
+			<p>@Tiffany &#8211; We have a structure with two variables, one of the type int and one char pointer called name. If you want to store one char, you would use char. If you want to store an array of character (in this case a name), you can use char pointer. (You point to an address in memory where the character array name is stored).<br />
+Hope this helps!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7349">
+
+            			<cite>Ali</cite> on <small>July 14th, 2013</small>:
+			
+			<p>what is difference when we define struct inside main function and outside main function.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7422">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>subramani</a></cite> on <small>July 18th, 2013</small>:
+			
+			<p>Thanks and its very useful .<br />
+I am beginner of the programming and understood myself is very easy..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7798">
+
+            			<cite>nisha</cite> on <small>August 11th, 2013</small>:
+			
+			<p>good job&#8230;its easy to understand .thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7845">
+
+            			<cite>sabs</cite> on <small>August 21st, 2013</small>:
+			
+			<p>Really very good&#8230;<br />
+Content presentation is good&#8230; <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /> keep it up.</p>
+<p>put some real example too.</p>
+<p>thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7869">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>Rahul kumar</a></cite> on <small>August 28th, 2013</small>:
+			
+			<p>This is very nice to learned c language&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7871">
+
+            			<cite>harshali dave</cite> on <small>August 28th, 2013</small>:
+			
+			<p>gud one..<br />
+nice explanation&#8230;.<br />
+nd dhe backgrond colour makes the text readable..<br />
+nicely designed.. <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":-)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7926">
+
+            			<cite>Sam</cite> on <small>September 14th, 2013</small>:
+			
+			<p>What is the actual mean of union? And for what purpuse its used by c?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7927">
+
+            			<cite>sathya</cite> on <small>September 14th, 2013</small>:
+			
+			<p>simply superb</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7947">
+
+            			<cite><a href='http://sathish' rel='external nofollow' class='url'>sathish</a></cite> on <small>September 17th, 2013</small>:
+			
+			<p>very good</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8046">
+
+            			<cite><a href='http://www.codingunit.com/c-tutorial-structures-unions-typedef' rel='external nofollow' class='url'>shubham</a></cite> on <small>October 2nd, 2013</small>:
+			
+			<p>really very gud for read</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8894">
+
+            			<cite>anjna</cite> on <small>October 24th, 2013</small>:
+			
+			<p>really helpful site &#8230;..:)</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8965">
+
+            			<cite>Tom</cite> on <small>October 29th, 2013</small>:
+			
+			<p>Very helpful. Thanks!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8982">
+
+            			<cite>Neeraj Agrahari</cite> on <small>October 30th, 2013</small>:
+			
+			<p>Thanks a lot. A beginner like me can easily understand what is the structure&#8230; thanks thanks thanks.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9168">
+
+            			<cite>bhaart</cite> on <small>November 30th, 2013</small>:
+			
+			<p>Well done , its simple and easy to understand.<br />
+thanks a lot !!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9182">
+
+            			<cite>Manikandan</cite> on <small>December 5th, 2013</small>:
+			
+			<p>super&#8230;..example</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9207">
+
+            			<cite>harshit</cite> on <small>December 9th, 2013</small>:
+			
+			<p>nice solutions</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9252">
+
+            			<cite>KIRUTHIKA</cite> on <small>December 16th, 2013</small>:
+			
+			<p>good!!!!!! need much information</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9261">
+
+            			<cite>swe</cite> on <small>December 17th, 2013</small>:
+			
+			<p>Thnx a Lot..it cvrs almost most needed topics</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9330">
+
+            			<cite>ALFA</cite> on <small>January 6th, 2014</small>:
+			
+			<p>It&#8217;s so useful for me, Thnx a lot</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9412">
+
+            			<cite>sil</cite> on <small>January 27th, 2014</small>:
+			
+			<p>Nice tutorial&#8230; <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /> please keep posting more of such stuff&#8230;.really easy to understand and revise <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9938">
+
+            			<cite>guna</cite> on <small>March 19th, 2014</small>:
+			
+			<p>#include</p>
+<p>	typedef struct telephone<br />
+	{<br />
+		char *name;<br />
+		int number;<br />
+	}TELEPHONE;</p>
+<p>	int main()<br />
+	{<br />
+		TELEPHONE index;<br />
+		TELEPHONE *ptr_myindex;</p>
+<p>		ptr_myindex = &amp;index;</p>
+<p>		ptr_myindex-&gt;name = &#8220;Jane Doe&#8221;;<br />
+		ptr_myindex-&gt;number = 12345;<br />
+		printf(&#8220;Name: %s\n&#8221;, ptr_myindex-&gt;name);<br />
+		printf(&#8220;Telephone number: %d\n&#8221;, ptr_myindex-&gt;number);</p>
+<p>		return 0;<br />
+	}<br />
+here y i dont use ptr_myindex as integer type .because it only stores address of the variable .y dont i use like this:-</p>
+<p>	#include</p>
+<p>	typedef struct telephone<br />
+	{<br />
+		char *name;<br />
+		int number;<br />
+	}TELEPHONE;</p>
+<p>	int main()<br />
+	{<br />
+		TELEPHONE index;<br />
+		int *ptr_myindex;</p>
+<p>		ptr_myindex = &amp;index;</p>
+<p>		ptr_myindex-&gt;name = &#8220;Jane Doe&#8221;;<br />
+		ptr_myindex-&gt;number = 12345;<br />
+		printf(&#8220;Name: %s\n&#8221;, ptr_myindex-&gt;name);<br />
+		printf(&#8220;Telephone number: %d\n&#8221;, ptr_myindex-&gt;number);</p>
+<p>		return 0;<br />
+	}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-10270">
+
+            			<cite>CHITTI</cite> on <small>April 3rd, 2014</small>:
+			
+			<p>how to get age using structures by taking two inputs(present date, date of birth)?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-46228">
+
+            			<cite>Quang</cite> on <small>May 7th, 2014</small>:
+			
+			<p>Great work! Thanks</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.876 seconds. -->
+</body>
+</html>
+

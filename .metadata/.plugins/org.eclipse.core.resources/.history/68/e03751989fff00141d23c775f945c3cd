@@ -1,0 +1,201 @@
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+class Spider
+{
+  private static final int MAX_PAGES_TO_SEARCH = 100;
+  private Set<String> pagesVisited = new HashSet<String>();
+  private List<String> pagesToVisit = new LinkedList<String>();
+
+  
+  public void search(String url, String searchWord)
+  {
+      while(this.pagesVisited.size() < MAX_PAGES_TO_SEARCH)
+      {
+          String currentUrl;
+          SpiderLeg leg = new SpiderLeg();
+          if(this.pagesToVisit.isEmpty())
+          {
+              currentUrl = url;
+              System.out.println("url : "+currentUrl);
+              this.pagesVisited.add(url);
+          }
+          else
+          {
+              currentUrl = this.nextUrl();
+              System.out.println("url : "+currentUrl);
+          }
+          leg.crawl(currentUrl);
+                                
+          boolean success = leg.searchForWord(searchWord);
+          if(success)
+          {
+              System.out.println(String.format("**Success** Word %s found at %s", searchWord, currentUrl));
+              break;
+          }
+          this.pagesToVisit.addAll(leg.getLinks());
+      }
+      System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
+  }
+
+  private String nextUrl()
+  {
+      String nextUrl;
+      do
+      {
+          nextUrl = this.pagesToVisit.remove(0);
+      } while(this.pagesVisited.contains(nextUrl));
+      this.pagesVisited.add(nextUrl);  
+      return nextUrl;
+  }
+}
+
+class SpiderLeg
+{
+    private static final String USER_AGENT =
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+    private List<String> links = new LinkedList<String>();
+    private Document htmlDocument;
+
+   public boolean crawl(String url)
+    {
+        try
+        {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
+            Document htmlDocument = connection.get();
+            this.htmlDocument = htmlDocument;
+            
+            
+            
+            if(connection.response().statusCode() == 200) // 200 is the HTTP OK status code
+                                                          // indicating that everything is great.
+            {
+                System.out.println("\n**Visiting** Received web page at " + url);
+            }
+            if(!connection.response().contentType().contains("text/html"))
+            {
+                System.out.println("**Failure** Retrieved something other than HTML");
+                return false;
+            }
+            
+            
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            
+            System.out.println("Found (" + linksOnPage.size() + ") links");
+
+            StringBuilder str = new StringBuilder();
+            for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+                str.append(link.absUrl("href")+"\n");
+            }
+            
+            File file = new File("./crawler/url.txt");
+            if(!(file.exists() && !file.isDirectory()))
+			{
+				boolean bool = file.createNewFile();
+				if(bool == true)
+				{
+					PrintWriter out = new PrintWriter(file);
+					out.print(str);
+					out.close();
+				}
+			}
+            else
+            {
+            	PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
+				out.print(str);
+				out.close();
+            }
+            return true;
+        }
+        catch(IOException ioe)
+        {
+            // not successful in HTTP request
+            return false;
+        }
+    }
+
+    public boolean searchForWord(String searchWord)
+    {
+        if(this.htmlDocument == null)
+        {
+            System.out.println("ERROR! Call crawl() before performing analysis on the document");
+            return false;
+        }
+        System.out.println("Searching for the word " + searchWord + "...");
+        String bodyText = this.htmlDocument.body().text();
+        return bodyText.toLowerCase().contains(searchWord.toLowerCase());
+    }
+
+
+    public List<String> getLinks()
+    {
+        return this.links;
+    }
+}
+
+
+public class SpiderTest
+{
+    public static void main(String[] args)
+    {
+        SpiderLeg spider = new SpiderLeg();
+        /*spider.crawl("http://www.programmingsimplified.com/");
+        spider.crawl("http://www.geeksforgeeks.org/");
+        spider.crawl("http://www.tutorialspoint.com/index.htm");
+        spider.crawl("http://www.tutorialspoint.com/java/");
+        spider.crawl("http://www.w3schools.com/default.asp");
+        spider.crawl("http://stackoverflow.com/questions/6830870/converting-element-to-string");
+        spider.crawl("http://www.tutorialspoint.com/java/java_string_valueof.htm");
+        spider.crawl("http://www.java-samples.com/showtutorial.php?tutorialid=392");
+        spider.crawl("http://www.mkyong.com/java/how-to-create-xml-file-in-java-dom/");
+        spider.crawl("http://jsoup.org/apidocs/org/jsoup/nodes/Element.html");
+        spider.crawl("http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/");
+        spider.crawl("http://introcs.cs.princeton.edu/java/72regular/WebCrawler.java.html");
+        spider.crawl("http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-087-practical-programming-in-c-january-iap-2010/lecture-notes/");
+        spider.crawl("http://www.cs.sfu.ca/~ggbaker/reference/unix/");
+        spider.crawl("http://www.cplusplus.com/");
+        spider.crawl("http://www.learncpp.com/");
+        spider.crawl("https://developers.google.com/university/");
+        spider.crawl("http://www.codecademy.com/fr/learn");
+        spider.crawl("http://www.javabeginner.com/");
+        spider.crawl("http://www.tutorialspoint.com/cplusplus/");
+        spider.crawl("http://courses.coreservlets.com/Course-Materials/java.html");
+        spider.crawl("https://www.udemy.com/java-tutorial/");
+        spider.crawl("http://www.javatpoint.com/java-tutorial");
+        spider.crawl("http://www.vogella.com/tutorials/java.html");
+        spider.crawl("http://www.vogella.com/tutorials/index.html");
+        spider.crawl("http://www.learnjavaonline.org/");
+        spider.crawl("http://www.w3schools.com/php/");
+        spider.crawl("http://www.w3schools.com/sql/default.asp");
+        spider.crawl("http://www.tutorialspoint.com/php/");*/
+        //spider.crawl("www.tizag.com/phpT");
+        spider.crawl("www.homeandlearn.co.uk/php/php.htm");
+        spider.crawl("www.php5-tutorial.com");
+        spider.crawl("html.net/tutorials/php/");
+        spider.crawl("www.programiz.com/c-programming");
+        spider.crawl("fresh2refresh.com/cprogramming/");
+        spider.crawl("www.learn-c.org/");
+        spider.crawl("www.codingunit.com/category/c-tutorials");
+    }
+}

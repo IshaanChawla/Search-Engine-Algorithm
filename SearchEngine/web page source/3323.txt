@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Magic Quotes</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">PHP Magic Quotes</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>You can use a HTML form to query your databases. But there are special security 
+  considerations you need to bear in mind. We'll look at those issues in this 
+  section. </P>
+<p><br>
+  If you use things like text boxes and text areas on your forms, you need to 
+  take care. This is because of an attacks like SQL injection. Things like single 
+  quotes need to be escaped. But you can use an inbuilt PHP function for this: 
+</p>
+<p class="TextIndent3">mysql_real_escape_string( )</p>
+<p>We'll see how this works in a moment, but let's get some practical work done. 
+  There is a file amongst the <a href="../downloads.html">ones you downloaded</a> 
+  called <b>magicTest.php</b> (in the scripts folder). Load this script in your 
+  browser, with your server running. You should see a text box and a button. Typed 
+  the following name into the text box:</p>
+<p class="TextIndent3">O'Connor</p>
+<p>Now click the button. You should see the name printed exactly as it is in the 
+  text box. </p>
+<p>So far, so good. Now, try this.</p>
+<p>When you installed your server, there will be a file called <b>php.ini</b>. 
+  This is a list of all the various settings to do with PHP itself. Locate this 
+  file called php.ini (in the folder called <b>apache</b>, or do a search for 
+  it). Open it up in a text editor. Search for this line:</p>
+<p class="TextIndent3">magic_quotes_gpc = Off</p>
+<p>Change the Off to On, if it's not already on. Then save the changes.</p>
+<p>Now load up the your PHP script with the text box and the button. With O'Connor 
+  still in the text box, click your button again. You should see this printed:</p>
+<p class="TextIndent3">O \' Connor</p>
+<p>So PHP has put a backslash before the single quote. But what's going on?</p>
+<p>Characters like single and double quotes can be very dangerous, if you're running 
+  SQL on your databases tables. These characters can be used to launch a SQL injection 
+  attack. So the makers of PHP came up with a function called <b>magic_quotes_gpc</b>. 
+  If this is set to On, then PHP will add the backslash to all single and double 
+  quotes. That way, an attacker's life is made more difficult. As an example, 
+  we'll load up a database and a script. These are already prepared for you.</p>
+<p>Amongst the <a href="../downloads.html">files you downloaded</a> there is a 
+  folder called <b>databases</b>. Inside this folder there is a one called <b>membertest</b>. 
+  Save the entire membertest folder to your <b>data</b> directory in your mysql 
+  data folder. For Wampserver users this will be at: </p>
+<p align="center"><b>C:\wamp\bin\mysql\mysql5.5.8\data</b></p>
+<p>(If you have an earlier or later version, the number will be different.)<br>
+</p>
+<p>Now set <b>magic_quotes_gpc = On</b> back to <b>magic_quotes_gpc = Off </b>in 
+  your <b>php.ini </b>file.</p>
+<p>Along with the database folder there is a PHP script called <b>magicTest2.php</b> 
+  (in the scripts folder). We'll use this script, and the database, to teach you 
+  about SQL injection. Not so that you can launch your own attacks, of course! 
+  It's so that you can thwart them.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php13p3.html">&lt;-- Back One Page</a> | <a href="php13p5.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

@@ -1,0 +1,1332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>8.14 &#8212; Anonymous variables and objects &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 8.14 &#8212; Anonymous variables and objects Comments Feed" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"50.144.0.132","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/814-anonymous-variables-and-objects\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Happy holidays to everyone!' href='http://www.learncpp.com/site-news/happy-holidays-to-everyone/' />
+<link rel='next' title='LearnCpp.com: Now with threaded comments!' href='http://www.learncpp.com/site-news/learncppcom-now-with-threaded-comments/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=164' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="8.14 -- Anonymous variables and objects" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/" />
+<meta property="og:description" content="In some cases, we need a variable only temporarily. For example, consider the following situation: [crayon-555d7916aed08659551306/] In the Add() function, note that the nSum variable is really only..." />
+<meta property="article:published_time" content="2007-12-27T17:32:37+00:00" />
+<meta property="article:modified_time" content="2007-12-27T17:32:37+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-164 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-164 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-164">
+						<div class="post-headline">		<h1>8.14 &#8212; Anonymous variables and objects</h1>
+		</div>		<div class="post-byline">By Alex, on December 27th, 2007</div>		<div class="post-bodycopy clearfix"><p>In some cases, we need a variable only temporarily.  For example, consider the following situation:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed08659551306" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed08659551306-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-4">4</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-6">6</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-8">8</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-10">10</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed08659551306-12">12</div><div class="crayon-num" data-line="crayon-555d7916aed08659551306-13">13</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed08659551306-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed08659551306-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nSum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nSum</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed08659551306-5"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-6">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed08659551306-7"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-8"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed08659551306-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-cn">3</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed08659551306-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed08659551306-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed08659551306-13"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0018 seconds] -->
+<p></p>
+<p>In the Add() function, note that the nSum variable is really only used as a temporary placeholder variable.  It doesn&#8217;t contribute much -- rather, it&#8217;s only function is to transfer the result of the expression to the return value.</p>
+<p>There is actually an easier way to write the Add() function using an anonymous variable.  An <strong>anonymous variable</strong> is a variable that is given no name.  Anonymous variables in C++ have &#8220;expression scope&#8221;, meaning they are destroyed at the end of the expression in which they are created.   Consequently, they must be used immediately!</p>
+<p>Here is the Add() function rewritten using an anonymous variable:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed18691007447" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed18691007447-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed18691007447-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed18691007447-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed18691007447-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed18691007447-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed18691007447-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed18691007447-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed18691007447-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>When the expression <code>nX + nY</code> is evaluated, the result is placed in an anonymous, unnamed variable.  A copy of the anonymous variable is returned to the caller by value.</p>
+<p>This not only works with return values, but also with function parameters.  For example, instead of this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed1f756449291" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-4">4</div><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-6">6</div><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-8">8</div><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-10">10</div><div class="crayon-num" data-line="crayon-555d7916aed1f756449291-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed1f756449291-12">12</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed1f756449291-1"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">PrintValue</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed1f756449291-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nValue</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed1f756449291-5"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-6">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed1f756449291-7"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-8"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed1f756449291-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nSum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-cn">5</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">3</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">PrintValue</span><span class="crayon-sy">(</span><span class="crayon-v">nSum</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed1f756449291-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed1f756449291-12"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0015 seconds] -->
+<p></p>
+<p>We can write this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed25679148709" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed25679148709-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed25679148709-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed25679148709-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed25679148709-4">4</div><div class="crayon-num" data-line="crayon-555d7916aed25679148709-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed25679148709-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed25679148709-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed25679148709-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">PrintValue</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">3</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed25679148709-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed25679148709-5"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>In this case, the expression 5 + 3 is evaluated to produce the result 8, which is placed in an anonymous variable.  A copy of this anonymous variable is then passed to the PrintValue() function, which prints the value 8.</p>
+<p>Note how much cleaner this keeps our code -- we don&#8217;t have to litter the code with temporary variables that are only used once.</p>
+<p><strong>Anonymous class objects</strong></p>
+<p>Although our prior examples have been with built-in data types, it is possible to construct anonymous objects of our own class types as well.  This is done by creating objects like normal, but omitting the variable name.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed2c029947502" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed2c029947502-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed2c029947502-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed2c029947502-1"><span class="crayon-e">Cents </span><span class="crayon-e">cCents</span><span class="crayon-sy">(</span><span class="crayon-cn">5</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// normal variable</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed2c029947502-2"><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-cn">7</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// anonymous variable</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>In the above code, <code>Cents(7)</code> will create an anonymous Cents object, initialize it with the value 7, and then destroy it.  In this context, that isn&#8217;t going to do us much good.  So let&#8217;s take a look at an example where it can be put to good use:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed33868412282" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed33868412282-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-4">4</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-6">6</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-8">8</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-10">10</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-12">12</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-14">14</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-16">16</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-18">18</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-20">20</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-22">22</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-24">24</div><div class="crayon-num" data-line="crayon-555d7916aed33868412282-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed33868412282-26">26</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed33868412282-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-3"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-6"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-8">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed33868412282-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-10"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-12"><span class="crayon-e">Cents </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c2</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-13"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-e">cTemp</span><span class="crayon-sy">(</span><span class="crayon-v">c1</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">c2</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">cTemp</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-16"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-18"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-19"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-e">cCents1</span><span class="crayon-sy">(</span><span class="crayon-cn">6</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-e">cCents2</span><span class="crayon-sy">(</span><span class="crayon-cn">8</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-v">cCentsSum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">cCents1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">cCents2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed33868412282-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"I have "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">cCentsSum</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" cents."</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-24">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed33868412282-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed33868412282-26"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0041 seconds] -->
+<p></p>
+<p>Note that this example is very similar to the prior one using integers.  In this case, our Add() function is constructing a short-lived cTemp variable that only serves as a placeholder.  We are also using a cCentsSum variable in main().  </p>
+<p>We can simplify this program by using anonymous variables:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916aed39812840067" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916aed39812840067-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-2">2</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-4">4</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-6">6</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-8">8</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-10">10</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-12">12</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-14">14</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-16">16</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-18">18</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-20">20</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-22">22</div><div class="crayon-num" data-line="crayon-555d7916aed39812840067-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916aed39812840067-24">24</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916aed39812840067-1"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-3"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-6"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-v">nCents</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-8">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed39812840067-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">m_nCents</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-10"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-12"><span class="crayon-e">Cents </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c2</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-13"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-v">c1</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">c2</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-15"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-16">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed39812840067-17"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-18"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-e">cCents1</span><span class="crayon-sy">(</span><span class="crayon-cn">6</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Cents </span><span class="crayon-e">cCents2</span><span class="crayon-sy">(</span><span class="crayon-cn">8</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916aed39812840067-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"I have "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">cCents1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">cCents2</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" cents."</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-22">&nbsp;</div><div class="crayon-line" id="crayon-555d7916aed39812840067-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916aed39812840067-24"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0036 seconds] -->
+<p></p>
+<p>This version of Add() functions identically to the one above, except it uses an anonymous Cents value instead of a named variable.  Also note that in main(), we no longer use a named cCentsSum variable as temporary storage.  Instead, we use the return value of Add() anonymously!</p>
+<p>As a result, our program is shorter, cleaner, and generally easier to follow (once you understand the concept).</p>
+<p>In C++, anonymous variables are primarily used either to pass or return values without having to create lots of temporary variables to do so.  However, it is worth noting that anonymous objects can only be passed or returned by value!  If a variable is passed or returned by reference or address, a named variable must be used instead.  It is also worth noting that because anonymous variables have expression scope, if you need to reference a value in multiple expressions, you will have to use a named variable.</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/91-introduction-to-operator-overloading/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 9.1 -- Introduction to operator overloading</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter8" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/813-friend-functions-and-classes/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 8.13 -- Friend functions and classes</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-164" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-164" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-164" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-164" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">23 comments to 8.14 &#8212; Anonymous variables and objects</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-6844">
+		<div id="div-comment-6844" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e69bbbbbc25be0ff13b7dd5f7038f504?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e69bbbbbc25be0ff13b7dd5f7038f504?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Zafer</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-6844">
+		January 29, 2008 at 7:22 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=6844#respond' onclick='return addComment.moveForm( "comment-6844", "6844", "respond", "164" )' aria-label='Reply to Zafer'> &middot; Reply</a></span>		 
+		</div>
+		<p>In the last coding example, how were we able to call the Add function directly from the main() function? Why didn&#8217;t we use Cents.Add instead? Also, how can we define an anonymous variable like Cents(7) for instance? How does the compiler act in terms of returning pointers or references to be able to define an anonymous variable?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-6847">
+		<div id="div-comment-6847" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-6847">
+		January 29, 2008 at 8:50 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=6847#respond' onclick='return addComment.moveForm( "comment-6847", "6847", "respond", "164" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>In the last example, note that Add() is written as a non-member function.  Consequently, it can be called directly.  We didn&#8217;t use Cents.Add() because we didn&#8217;t write an Add() member function for this version of the Cents class.  We certainly could have, but it was easier to show anonymous variables in action this way.</p>
+<p>Cents(7) _is_ an anonymous variable because it was never given a variable name.  Perhaps I am misunderstanding this part of your question?</p>
+<p>Anonymous variables are always dealt with by value.  It is not possible to create a pointer or reference to an anonymous variable, nor is it possible to use an anonymous variable where a pointer or reference parameter or return value is expected.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-64971">
+		<div id="div-comment-64971" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d219af79b45e5891507fda4c4c2139a0?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d219af79b45e5891507fda4c4c2139a0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Josh</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-64971">
+		July 24, 2009 at 6:21 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=64971#respond' onclick='return addComment.moveForm( "comment-64971", "64971", "respond", "164" )' aria-label='Reply to Josh'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;It is not possible to create a pointer or reference to an anonymous variable.&#8221;</p>
+<p>I beg to differ:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b23a6296724731" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b23a6296724731-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b23a6296724731-2">2</div><div class="crayon-num" data-line="crayon-555d7916b23a6296724731-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b23a6296724731-4">4</div><div class="crayon-num" data-line="crayon-555d7916b23a6296724731-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b23a6296724731-6">6</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b23a6296724731-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b23a6296724731-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b23a6296724731-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">a</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-cn">2</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-cn">2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b23a6296724731-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">a</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b23a6296724731-5"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b23a6296724731-6"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-10556">
+		<div id="div-comment-10556" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chris Buck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-10556">
+		March 29, 2008 at 11:46 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=10556#respond' onclick='return addComment.moveForm( "comment-10556", "10556", "respond", "164" )' aria-label='Reply to Chris Buck'> &middot; Reply</a></span>		 
+		</div>
+		<p>What is a &#8220;non-member function&#8221; anyway? The line:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b2705632051642" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b2705632051642-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b2705632051642-1"><span class="crayon-e">Cents </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c2</span><span class="crayon-sy">)</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p>seems pretty confusing to me, as I thought we would have to declare at least the Add() function&#8217;s prototype somewhere in the class definition and then use Cents::Add() for the actual implementation?<br />
+Pls excuse me if I missed it and non-member functions had already been covered.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-10563">
+		<div id="div-comment-10563" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-10563">
+		March 29, 2008 at 1:05 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=10563#respond' onclick='return addComment.moveForm( "comment-10563", "10563", "respond", "164" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>A non-member function is a function that does not belong to a class.  They are the functions that you first learned about before you even knew what a class was!</p>
+<p>For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b2645880374819" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b2645880374819-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b2645880374819-2">2</div><div class="crayon-num" data-line="crayon-555d7916b2645880374819-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b2645880374819-4">4</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b2645880374819-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b2645880374819-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b2645880374819-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">nX</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">nY</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b2645880374819-4"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>This is a simple non-member function.  It does not belong to a class.  In the same way, the Add() function above is a non-member function, except it adds Cents instead of ints.</p>
+<p>We could certainly have written Add() as a normal member function of Cents (in which case, it would have been Cents::Add()), but it would have been somewhat awkward to do so, since we&#8217;d have to call it like this:</p>
+<p>Cents cResult = cCents1.Add(cCents2);</p>
+<p>Probably the best solution would have been to make Add() a static member function of Cents.  In that case, we could have called it like this:</p>
+<p>Cents cResult = Cents::Add(cCents1, cCents2);</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-10587">
+		<div id="div-comment-10587" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chris Buck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-10587">
+		March 30, 2008 at 12:14 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=10587#respond' onclick='return addComment.moveForm( "comment-10587", "10587", "respond", "164" )' aria-label='Reply to Chris Buck'> &middot; Reply</a></span>		 
+		</div>
+		<p>I guessed I was just mixing something up. So &#8216;Cents&#8217; was just a simple return value..</p>
+<p>Thx for the quick answer and this outstanding tutorial.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-4 clearfix" id="comment-10608">
+		<div id="div-comment-10608" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-10608">
+		March 30, 2008 at 10:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=10608#respond' onclick='return addComment.moveForm( "comment-10608", "10608", "respond", "164" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yes, Cents is a return value.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-11348">
+		<div id="div-comment-11348" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2b415bdba532ed0a3055daf570c6c967?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2b415bdba532ed0a3055daf570c6c967?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">dano</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-11348">
+		April 10, 2008 at 7:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=11348#respond' onclick='return addComment.moveForm( "comment-11348", "11348", "respond", "164" )' aria-label='Reply to dano'> &middot; Reply</a></span>		 
+		</div>
+		<p>What&#8217;s really throwin me is line #22. Where I understand the:<br />
+Add(cCents1, cCents2) part but the .GetCents is confusing.<br />
+Which .GetCents is being called? cCents1.GetCents() or<br />
+cCents2.GetCents()?<br />
+I&#8217;m thinking like: Add(cCents1.GetCents(), cCents2.GetCents())</p>
+<p>Thanks for your help.</p>
+<p>Dano</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-11545">
+		<div id="div-comment-11545" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-11545">
+		April 12, 2008 at 2:16 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=11545#respond' onclick='return addComment.moveForm( "comment-11545", "11545", "respond", "164" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>The first thing that happens is that Add(cCents1, cCents2) is called.  Add() creates a new Cents object, which it returns to the caller.  Then, GetCents() is called on the return value of the Add() function.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-64811">
+		<div id="div-comment-64811" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1114c2d1a0202f0ae44f679621b2badb?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1114c2d1a0202f0ae44f679621b2badb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">the joker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-64811">
+		July 22, 2009 at 4:44 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=64811#respond' onclick='return addComment.moveForm( "comment-64811", "64811", "respond", "164" )' aria-label='Reply to the joker'> &middot; Reply</a></span>		 
+		</div>
+		<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b245a321213714" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b245a321213714-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b245a321213714-1"><span class="crayon-h"> </span><span class="crayon-e">Cents </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c2</span><span class="crayon-sy">)</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>i can&#8217;t understand why c1 and c2 are passed by reference ??!!</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-73734">
+		<div id="div-comment-73734" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9d073e9e2182b397dfc8151f44f4acd1?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9d073e9e2182b397dfc8151f44f4acd1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://digimongame.i3h.de' rel='external nofollow' class='url'>E-Barto</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-73734">
+		December 6, 2009 at 1:12 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=73734#respond' onclick='return addComment.moveForm( "comment-73734", "73734", "respond", "164" )' aria-label='Reply to E-Barto'> &middot; Reply</a></span>		 
+		</div>
+		<p>If they weren&#8217;t, you couldn&#8217;t access them later on in the function:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b2295803387861" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b2295803387861-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b2295803387861-2">2</div><div class="crayon-num" data-line="crayon-555d7916b2295803387861-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b2295803387861-4">4</div><div class="crayon-num" data-line="crayon-555d7916b2295803387861-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b2295803387861-1"><span class="crayon-e">Cents </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">Cents</span><span class="crayon-h"> </span><span class="crayon-v">&amp;c2</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b2295803387861-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b2295803387861-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">//here</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b2295803387861-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-v">c1</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-v">c2</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b2295803387861-5"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-72772">
+		<div id="div-comment-72772" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c06899df67f31361d385de93cf24dfeb?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c06899df67f31361d385de93cf24dfeb?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">keshava</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-72772">
+		November 21, 2009 at 11:26 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=72772#respond' onclick='return addComment.moveForm( "comment-72772", "72772", "respond", "164" )' aria-label='Reply to keshava'> &middot; Reply</a></span>		 
+		</div>
+		<p>nice!!!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-84401">
+		<div id="div-comment-84401" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/826c4b40e5f0b091bbc6257d52cc88a7?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/826c4b40e5f0b091bbc6257d52cc88a7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">CompuChip</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-84401">
+		May 10, 2010 at 2:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=84401#respond' onclick='return addComment.moveForm( "comment-84401", "84401", "respond", "164" )' aria-label='Reply to CompuChip'> &middot; Reply</a></span>		 
+		</div>
+		<p>In fact, I think you could write the main function without any named variables at all:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b21e2166871327" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b21e2166871327-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b21e2166871327-2">2</div><div class="crayon-num" data-line="crayon-555d7916b21e2166871327-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b21e2166871327-4">4</div><div class="crayon-num" data-line="crayon-555d7916b21e2166871327-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b21e2166871327-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b21e2166871327-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b21e2166871327-3"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"I have "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-cn">6</span><span class="crayon-sy">)</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-e">Cents</span><span class="crayon-sy">(</span><span class="crayon-cn">8</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span><span class="crayon-sy">.</span><span class="crayon-e">GetCents</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" cents."</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b21e2166871327-4"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b21e2166871327-5"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-104148">
+		<div id="div-comment-104148" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/126995eb221d2e47995918eb85fb8cd4?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/126995eb221d2e47995918eb85fb8cd4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ZNorQ</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-104148">
+		September 6, 2013 at 3:04 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=104148#respond' onclick='return addComment.moveForm( "comment-104148", "104148", "respond", "164" )' aria-label='Reply to ZNorQ'> &middot; Reply</a></span>		 
+		</div>
+		<p>REF: Add(Cents(6), Cents(8)).GetCents()<br />
+I also expected this to be true, but it wouldn&#8217;t run. I fail to see why this wouldn&#8217;t work. :/</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-104253">
+		<div id="div-comment-104253" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/126995eb221d2e47995918eb85fb8cd4?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/126995eb221d2e47995918eb85fb8cd4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ZNorQ</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-104253">
+		September 9, 2013 at 2:25 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=104253#respond' onclick='return addComment.moveForm( "comment-104253", "104253", "respond", "164" )' aria-label='Reply to ZNorQ'> &middot; Reply</a></span>		 
+		</div>
+		<p>Forget it, I understand why; Add()&#8217;s parameters are passed as references, and not by value.<br />
+ZNorQ</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-86431">
+		<div id="div-comment-86431" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/276a60e1b37886f94794bcc8f6d724c7?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/276a60e1b37886f94794bcc8f6d724c7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chip</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-86431">
+		June 13, 2010 at 4:16 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=86431#respond' onclick='return addComment.moveForm( "comment-86431", "86431", "respond", "164" )' aria-label='Reply to Chip'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hold your horses. You can write a function of type class? And how this works? : </p>
+<p>Cents cCentsSum = Add(cCents1, cCents2);</p>
+<p>Shouldn&#8217;t it be like:</p>
+<p>Cents cCentsSum(Add(cCents1, cCents2));</p>
+<p>I really want to know how things like this work.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-89624">
+		<div id="div-comment-89624" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/733724155ce268d53a46f18d9f94b30f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/733724155ce268d53a46f18d9f94b30f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Gammerz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-89624">
+		August 4, 2010 at 9:37 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=89624#respond' onclick='return addComment.moveForm( "comment-89624", "89624", "respond", "164" )' aria-label='Reply to Gammerz'> &middot; Reply</a></span>		 
+		</div>
+		<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b1fd2641857255" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b1fd2641857255-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b1fd2641857255-1"><span class="crayon-e">Cents </span><span class="crayon-v">cCentsSum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">cCents1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">cCents2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p>declares an object cCentsSum of type Cents and then initialises it, all on one line. It could have been split into two commands:-</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b1fdd175368542" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b1fdd175368542-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b1fdd175368542-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b1fdd175368542-1"><span class="crayon-e">Cents </span><span class="crayon-v">cCentsSum</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b1fdd175368542-2"><span class="crayon-v">cCentsSum</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-e">Add</span><span class="crayon-sy">(</span><span class="crayon-v">cCents1</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">cCents2</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>The Add function returns an object of type Cents so this initialisation is valid. Note that the Add function is not a member of the class cents, it&#8217;s defined outside the class, so is a &#8220;normal&#8221; function. It&#8217;s ok to use functions or expressions as initialisation values, we are not restricted to literals.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-89434">
+		<div id="div-comment-89434" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9ba6aa94986ac2f1de97ce822000f505?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9ba6aa94986ac2f1de97ce822000f505?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Steve</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-89434">
+		August 1, 2010 at 1:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=89434#respond' onclick='return addComment.moveForm( "comment-89434", "89434", "respond", "164" )' aria-label='Reply to Steve'> &middot; Reply</a></span>		 
+		</div>
+		<p>I totally disagree with the fact that anonymous types cannot be passed by reference to a function.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7916b20da182453378" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7916b20da182453378-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-2">2</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-4">4</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-6">6</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-8">8</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-10">10</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-12">12</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-14">14</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-16">16</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-18">18</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-20">20</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7916b20da182453378-22">22</div><div class="crayon-num" data-line="crayon-555d7916b20da182453378-23">23</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7916b20da182453378-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-2"><span class="crayon-p">#include &lt;string&gt;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-4"><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-6"><span class="crayon-t">void</span><span class="crayon-h"> </span><span class="crayon-e">print</span><span class="crayon-sy">(</span><span class="crayon-m">const</span><span class="crayon-h"> </span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-o">&amp;</span><span class="crayon-h"> </span><span class="crayon-v">mess</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">mess</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-10"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-12"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-13">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-e">print</span><span class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-s">"Hello world"</span><span class="crayon-h"> </span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-15">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-c">// or</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-e">print</span><span class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-t">string</span><span class="crayon-sy">(</span><span class="crayon-h"> </span><span class="crayon-s">"Hello world"</span><span class="crayon-h"> </span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">+</span><span class="crayon-h"> </span><span class="crayon-s">"?"</span><span class="crayon-h"> </span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp; </span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-21">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d7916b20da182453378-22"><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d7916b20da182453378-23"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0021 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-94994">
+		<div id="div-comment-94994" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9e78582c659380d5075f8dd5836012d9?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9e78582c659380d5075f8dd5836012d9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">mslade</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-94994">
+		December 2, 2010 at 10:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=94994#respond' onclick='return addComment.moveForm( "comment-94994", "94994", "respond", "164" )' aria-label='Reply to mslade'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great guide.  I thought I would add some advice for those new to programming:</p>
+<p>If you&#8217;re using the same expression in anonymous values repeatedly, it should probably be a named variable instead.  For example, if you&#8217;re passing strlen(szName) into the value of 3 different functions, capture it in a named variable and use that three times, instead.</p>
+<p>This way, strlen(szName) doesn&#8217;t have to be calculated three times.  It also makes the code more compact and thus more readable.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-95556">
+		<div id="div-comment-95556" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8b7cd5dd8a87eca9dc992e9e669bb11b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">smitha</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-95556">
+		June 13, 2011 at 9:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=95556#respond' onclick='return addComment.moveForm( "comment-95556", "95556", "respond", "164" )' aria-label='Reply to smitha'> &middot; Reply</a></span>		 
+		</div>
+		<p>got a doubt here.  Consider the same class.[code]<br />
+class Cents<br />
+{<br />
+ private:<br />
+    int m_nCents;  </p>
+<p> public:  </p>
+<p>     Cents(int nCents) { m_nCents = nCents; }<br />
+     int GetCents(Cents obj) { obj.m_nCents =10;}  </p>
+<p> };<br />
+int main()<br />
+{<br />
+  Cents c1,c2;<br />
+   c1.GetCents(c2);<br />
+}</p>
+<p>If you consider the function GetCents, am accessing the private variable of technically a different object namely obj. Why am I allowed to do this? Does not this override the quality that the private member of a class cannot be accessed by outside code?</p>
+<p>Regards,<br />
+Smitha</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-97844">
+		<div id="div-comment-97844" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0c54c6aac6251e9ab15085068b061920?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0c54c6aac6251e9ab15085068b061920?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">pravin_ms</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-97844">
+		October 7, 2012 at 10:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=97844#respond' onclick='return addComment.moveForm( "comment-97844", "97844", "respond", "164" )' aria-label='Reply to pravin_ms'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,</p>
+<p>Your explanations are precise and that too in simple language. thanks for posting such an useful site.</p>
+<p>One quick query. What about Static objects ? I have heard that there are something called as Static objects. I couldn&#8217;t find anywhere in the site. Is that being missed in the post or is there really anything called as Static Objects ?</p>
+<p>Please can you confirm this ?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-106400">
+		<div id="div-comment-106400" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e1046b8e7cfde667e3ba7bf8d33e5a78?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e1046b8e7cfde667e3ba7bf8d33e5a78?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">benquan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-106400">
+		October 1, 2013 at 2:25 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=106400#respond' onclick='return addComment.moveForm( "comment-106400", "106400", "respond", "164" )' aria-label='Reply to benquan'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great article, but the last paragraph is wrong and misleading, let&#8217;s go over it:</p>
+<p>&gt;&gt;&gt; In C++, anonymous variables are primarily used either to pass or return values without having to create lots of temporary variables to do so.<br />
+Actually, anonymous variables are still temporary variables, they just don&#8217;t need to have a name. There is no memory/CPU benefits here.</p>
+<p>&gt;&gt;&gt; However, it is worth noting that anonymous objects can only be passed or returned by value!<br />
+I&#8217;m not quite understand this.</p>
+<p>&gt;&gt;&gt; If a variable is passed or returned by reference or address, a named variable must be used instead.<br />
+Not 100% true. You can pass anonymous variable to a function if it accepts const reference. It is totally legitimate (personal, I think you should do so if possible, see the reason below).<br />
+Your last example can be re-written as:<br />
+Cents Add(const Cents &amp;c1, const Cents &amp;c2)<br />
+{<br />
+    return Cents(c1.GetCents() + c2.GetCents());<br />
+}</p>
+<p>std::cout &lt;&lt; &quot;I have &quot; &lt;&lt; Add(Cents(6), Cent(8).GetCents() &lt;&lt; &quot; cents.&quot; &lt;&gt;&gt; It is also worth noting that because anonymous variables have expression scope, if you need to reference a value in multiple expressions, you will have to use a named variable.<br />
+But, if you don&#8217;t need to reference it in multiple expressions, why do you have to give them names? Sometimes you have to give them fake names, which makes no good sense.</p>
+<p>Also, the life of the named variable extends to the end of the current code block, which is unnecessary:<br />
+  1. it may poplutes the naming space for the rest of the code;<br />
+  2. it occupies the memory longer than needed.<br />
+Some people use extra brackets to limit the scope of temporary variables, personally, I think it makes code ugly. Like this:<br />
+  {<br />
+      MyClass temp_obj;<br />
+      Foo(temp_obj);<br />
+  }<br />
+If Foo() accepts const reference, you should just replace it with:<br />
+   Foo(MyClass());</p>
+<p>If Foo() do accepts non-const reference, then, it implies that Foo() could modify the parameter, but you do not intent to reference to the modified result, that is a bigger design issue you should resolve first.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-251817">
+		<div id="div-comment-251817" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/87d25f970c178de6ce27ebf1d1001904?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/87d25f970c178de6ce27ebf1d1001904?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Janez</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/814-anonymous-variables-and-objects/#comment-251817">
+		March 14, 2015 at 12:40 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/814-anonymous-variables-and-objects/?replytocom=251817#respond' onclick='return addComment.moveForm( "comment-251817", "251817", "respond", "164" )' aria-label='Reply to Janez'> &middot; Reply</a></span>		 
+		</div>
+		<p>Function Cents Add() was a bit confusing (as you can see from comments). Especially this part: Cents cCentsSum = Add(cCents1, cCents2);<br />
+Since you&#8217;ve never mentioned, that this is one of possible ways to call class constructor (as I recall), this confuses a lot of people. Additionally you used &#8220;normal&#8221; constructor call in Add function (Cents(c1.GetCents() + c2.GetCents())). Maybe you should mention, that Cents cCentsSum = Add(cCents1, cCents2) is the same as Cents cCentsSum(Add(cCents1, cCents2)), and Add is non-class function with return type Cents. Cheers!</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/814-anonymous-variables-and-objects/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>two &#215; four = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4OTIwN3R5bTdtZjVxZ3o3ZGJwYWozMW04OA==" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432189207" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='164' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="bb022143a3" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="2"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/814-anonymous-variables-and-objects\/":164};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/814-anonymous-variables-and-objects/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'164',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '164' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.779 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:20:07 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

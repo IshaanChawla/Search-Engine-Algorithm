@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Other considerations for your User Authentication pages</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">PHP User Authentication</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<p>&nbsp;</p>
+<p>Our <a href="php14p1.html">User Authentication scripts</a> are fairly simple, 
+  and there other things you'll need to consider. Here's a few of them.</p>
+<h3><br>
+  Validation</h3>
+<p>Some sites ask you to provide an email address when signing up. (An alarming 
+  number of them!) They then send you your login details and confirmation via 
+  email, with perhaps a hyperlink that you need to click on to verify the details. 
+  You would then enter the verification code or codes before you can start using 
+  the site.</p>
+<p>To do this, you would need to add more fields to your database table - an email 
+  address field and a verified field. The verified field would be set to NO, by 
+  default. You could then check this field from all pages of your site. If it 
+  still says NO, then the user hasn't yet confirmed the login details. In which 
+  case, don't let them in. The verified field would only get set to YES if the 
+  user went to the page mentioned in the email and entered the correct details.</p>
+<p>This type of script is more complex to set up, and tends to be more frustrating 
+  for the user. And there is always a sneaking suspicion that your email address 
+  is being sold off to the nearest spammer!</p>
+<h3><br>
+  Passwords</h3>
+<p>If you need to save a password to your database table, then you have to encrypt 
+  the details. If you look at the <b>signup</b> script, you'll notice the use 
+  of this function:</p>
+<p class="TextIndent3">md5($pword)</p>
+<p>The inbuilt function <b>md5</b>() returns a 32-character hexadecimal number, 
+  based on the string you type between its round brackets. You then save this 
+  &quot;hash&quot; number to your password field. Or do it all in one go, with 
+  your SQL statement:</p>
+<p class="indent_small_no_bold">$SQL = &quot;INSERT INTO login (L1, L2) VALUES 
+  ($uname, <b>md5(</b>$pword<b>)</b>)&quot;;</p>
+<p>The L1 field is for the username and the L2 field for the password. The VALUE 
+  for the password now goes between the round brackets of <b>md5</b>()</p>
+<p>When you check the password field on the login page, you'd then do this:</p>
+<p class="indent_small_no_bold">$SQL = &quot;SELECT * FROM login WHERE L1 = $uname 
+  AND L2 = <b>md5(</b>$pword<b>)</b>&quot;;</p>
+<p>Again, the password goes between the round brackets of md5(). But storing passwords 
+  in encrypted format is highly recommended!</p>
+<p>&nbsp;</p>
+<h3>Some more things worth considering on your login/signup pages:</h3>
+<UL>
+<LI>Test if the users is already logged in. That way, they can't sign up repeatedly without closing down the browser</LI>
+<LI>Set a cookie for logins, instead of using sessions. You then need to write code to read the cookie data back for every protected page on your site.</LI>
+<LI>Collect other information, and store it in your database tables: date and time of login, IP address, etc</LI>
+<LI>User's forget their usernames and password. You'll need a link to send them the details. However, don't forget to add some extra security here! Something like a password reminder (memorable date, favourite teacher, etc) is recommended.</LI>
+<LI>Enumeration attacks are quite a common way for malicious users to try and gain access to your site. This is when the attacker can simply sit at his/her pc screen and enter the username and password over and over again, looking for "error message" clues. To thwart this type of attack, you might want to limit how long a user has to log on to your site. A good way to do this is by setting a session to end after so many minutes. This page is worth exploring, for such script ideas: http://www.weberdev.com/get_example-4267.html</LI>
+</UL>
+<p>&nbsp;</p>
+ <h3>Conclusion</h3>
+        <p>Although our login/sign up scripts are by no means complete, we hope 
+          that they've given you something to think about. In particular that 
+          these types of scripts are not as simple as you first thought! There 
+          are quite a few ready-made login scripts that will do the job for you, 
+          but we hope that you will develop your own!</p>
+        <p>In the next walkthrough, we'll script a complete survey/poll application.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php14p5.html">&lt;-- Back One Page</a> | <a href="php15p1.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

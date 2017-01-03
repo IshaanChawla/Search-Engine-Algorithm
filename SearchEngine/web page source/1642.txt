@@ -1,0 +1,1228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>10.3 &#8212; Aggregation &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 10.3 &#8212; Aggregation Comments Feed" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"141.113.86.92","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/103-aggregation\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='10.2 &#8212; Composition' href='http://www.learncpp.com/cpp-tutorial/102-composition/' />
+<link rel='next' title='Site news: Comment editing enabled!' href='http://www.learncpp.com/site-news/site-news-comment-editing-enabled/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/103-aggregation/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=157' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="10.3 -- Aggregation" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/103-aggregation/" />
+<meta property="og:description" content="In the previous lesson on composition, you learned that compositions are complex classes that contain other subclasses as member variables. In addition, in a composition, the complex object &quot;owns&quot; ..." />
+<meta property="article:published_time" content="2007-12-07T20:43:20+00:00" />
+<meta property="article:modified_time" content="2007-12-07T20:43:20+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-157 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-157 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-157">
+						<div class="post-headline">		<h1>10.3 &#8212; Aggregation</h1>
+		</div>		<div class="post-byline">By Alex, on December 7th, 2007</div>		<div class="post-bodycopy clearfix"><p>In the previous lesson on <a href="http://www.learncpp.com/cpp-tutorial/102-composition/">composition</a>, you learned that compositions are complex classes that contain other subclasses as member variables.  In addition, in a composition, the complex object &#8220;owns&#8221; all of the subobjects it is composed of.  When a composition is destroyed, all of the subobjects are destroyed as well.  For example, if you destroy a car, it&#8217;s frame, engine, and other parts should be destroyed as well.  If you destroy a PC, you would expect it&#8217;s RAM and CPU to be destroyed as well.</p>
+<p><strong>Aggregration</strong></p>
+<p>An <strong>aggregation</strong> is a specific type of composition where no ownership between the complex object and the subobjects is implied.  When an aggregate is destroyed, the subobjects are not destroyed.</p>
+<p>For example, consider the math department of a school, which is made up of one or more teachers.  Because the department does not own the teachers (they merely work there), the department should be an aggregate.  When the department is destroyed, the teachers should still exist independently (they can go get jobs in other departments).</p>
+<p>Because aggregations are just a special type of compositions, they are implemented almost identically, and the difference between them is mostly semantic.  In a composition, we typically add our subclasses to the composition using either normal variables or pointers where the allocation and deallocation process is handled by the composition class.</p>
+<p>In an aggregation, we also add other subclasses to our complex aggregate class as member variables.  However, these member variables are typically either references or pointers that are used to point at objects that have been created outside the scope of the class.  Consequently, an aggregate class usually either takes the objects it is going to point to as constructor parameters, or it begins empty and the subobjects are added later via access functions or operators.</p>
+<p>Because these subclass objects live outside of the scope of the class, when the class is destroyed, the pointer or reference member variable will be destroyed, but the subclass objects themselves will still exist.</p>
+<p>Let&#8217;s take a look at our Teacher and Department example in more detail.</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73e122122890040956" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73e122122890040956-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-2">2</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-4">4</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-6">6</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-8">8</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-10">10</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-12">12</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-14">14</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-16">16</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-18">18</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-20">20</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-22">22</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-24">24</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-26">26</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-28">28</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-30">30</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-32">32</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-34">34</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-35">35</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-36">36</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-37">37</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-38">38</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-39">39</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-40">40</div><div class="crayon-num" data-line="crayon-555d73e122122890040956-41">41</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d73e122122890040956-42">42</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73e122122890040956-1"><span class="crayon-p">#include &lt;string&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-2"><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-3">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-4"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Teacher</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-5"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-6"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">m_strName</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-8"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Teacher</span><span class="crayon-sy">(</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">strName</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-e">m_strName</span><span class="crayon-sy">(</span><span class="crayon-v">strName</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-13">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-e">GetName</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-sy">{</span><span class="crayon-h"> </span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-v">m_strName</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-15"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-16">&nbsp;</div><div class="crayon-line" id="crayon-555d73e122122890040956-17"><span class="crayon-t">class</span><span class="crayon-h"> </span><span class="crayon-e">Department</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-18"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-19"><span class="crayon-m">private</span><span class="crayon-o">:</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Teacher</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">m_pcTeacher</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// This dept holds only one teacher</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-21">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-22"><span class="crayon-m">public</span><span class="crayon-o">:</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Department</span><span class="crayon-sy">(</span><span class="crayon-v">Teacher</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pcTeacher</span><span class="crayon-o">=</span><span class="crayon-t">NULL</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-o">:</span><span class="crayon-h"> </span><span class="crayon-e">m_pcTeacher</span><span class="crayon-sy">(</span><span class="crayon-v">pcTeacher</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-27"><span class="crayon-sy">}</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-28">&nbsp;</div><div class="crayon-line" id="crayon-555d73e122122890040956-29"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-30"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-31"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create a teacher outside the scope of the Department</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">Teacher</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pTeacher</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-e">Teacher</span><span class="crayon-sy">(</span><span class="crayon-s">"Bob"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// create a teacher</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-34"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Create a department and use the constructor parameter to pass</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-35"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// the teacher to it.</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-36"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">Department </span><span class="crayon-e">cDept</span><span class="crayon-sy">(</span><span class="crayon-v">pTeacher</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-37">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-38"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span><span class="crayon-h"> </span><span class="crayon-c">// cDept goes out of scope here and is destroyed</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-39">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-40"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// pTeacher still exists here because cDept did not destroy it</span></div><div class="crayon-line" id="crayon-555d73e122122890040956-41"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">delete </span><span class="crayon-v">pTeacher</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d73e122122890040956-42"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0041 seconds] -->
+<p></p>
+<p>In this case, pTeacher is created independetly of cDept, and then passed into cDept&#8217;s constructor.  Note that the department class uses an initialization list to set the value of m_pcTeacher to the pTeacher value we passed in.  When cDept is destroyed, the m_pcTeacher pointer destroyed, but pTeacher is not deallocated, so it still exists until it is independently destroyed.</p>
+<p>To summarize the differences between composition and aggregation:</p>
+<p>Compositions:</p>
+<ul>
+<li>Typically use normal member variables
+<li>Can use pointer values if the composition class automatically handles allocation/deallocation
+<li>Responsible for creation/destruction of subclasses
+</ul>
+<p>Aggregations:</p>
+<ul>
+<li>Typically use pointer variables that point to an object that lives outside the scope of the aggregate class
+<li>Can use reference values that point to an object that lives outside the scope of the aggregate class
+<li>Not responsible for creating/destroying subclasses
+</ul>
+<p>It is worth noting that the concepts of composition and aggregation are not mutually exclusive, and can be mixed freely within the same class.  It is entirely possible to write a class that is responsible for the creation/destruction of some subclasses but not others.  For example, our Department class could have a name and a teacher.  The name would probably be added to the department by composition, and would be created and destroyed with the department.  On the other hand, the teacher would be added to the department by aggregate, and created/destroyed independently.</p>
+<p>It is also possible to create other hybrid aggregate/composition schemes, such as where a class holds independent subobjects like an aggregate, but will destroy them when the class goes out of scope like a composition.</p>
+<p>While aggregates can be extremely useful (which we will see more of in the next lesson on container classes), they are also potentially dangerous.  As noted several times, aggregates are not responsible for deallocating their subobjects when they are destroyed.  Consequently, if there are no other pointers or references to those subobjects when the aggregate is destroyed, those subobjects will cause a memory leak.  It is up to the programmer to ensure that this does not happen.  This is generally handled by ensuring other pointers or references to those subobjects exist when the aggregate is destroyed.</p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/104-container-classes/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 10.4 -- Container classes</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter10" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/102-composition/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 10.2 -- Composition</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-157" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-157" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-157" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-157" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/103-aggregation/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">25 comments to 10.3 &#8212; Aggregation</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-6902">
+		<div id="div-comment-6902" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e69bbbbbc25be0ff13b7dd5f7038f504?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e69bbbbbc25be0ff13b7dd5f7038f504?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Zafer</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-6902">
+		January 30, 2008 at 5:03 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=6902#respond' onclick='return addComment.moveForm( "comment-6902", "6902", "respond", "157" )' aria-label='Reply to Zafer'> &middot; Reply</a></span>		 
+		</div>
+		<p>In the Teacher and Department example, the constructor name is not same as the class name. Also when declaring an object of that class a third name is used.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-6908">
+		<div id="div-comment-6908" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-6908">
+		January 30, 2008 at 6:00 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=6908#respond' onclick='return addComment.moveForm( "comment-6908", "6908", "respond", "157" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Fixed.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-84743">
+		<div id="div-comment-84743" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/11acb10ac995bbb12889df69245a4b29?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/11acb10ac995bbb12889df69245a4b29?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ishrat Ali Khan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-84743">
+		May 16, 2010 at 12:21 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=84743#respond' onclick='return addComment.moveForm( "comment-84743", "84743", "respond", "157" )' aria-label='Reply to Ishrat Ali Khan'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Zafar,<br />
+I found that name of classes and constructors same for Teacher and Department.</p>
+<p>This is very good example, i got clear understanding of agreegation and composition.</p>
+<p>I hope i could help others guy as well.</p>
+<p>I would like to offer my sincere thanks to Alex.</p>
+<p>Regards,<br />
+Ishrat</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-10585">
+		<div id="div-comment-10585" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5c53e74e33503f1528e051362d35e4c4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chris Buck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-10585">
+		March 30, 2008 at 12:03 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=10585#respond' onclick='return addComment.moveForm( "comment-10585", "10585", "respond", "157" )' aria-label='Reply to Chris Buck'> &middot; Reply</a></span>		 
+		</div>
+		<p>Could you pls elaborate on what&#8217;s the difference between pcTeacher and pTeacher as far as hungarian notation is concerned?<br />
+Wasn&#8217;t the &#8216;c&#8217; used to clarify that it&#8217;s an instance of a class and didn&#8217;t we omit it when it&#8217;s a pointer to a class?</p>
+<p>Like shouldn&#8217;t the &#8216;c&#8217; be omitted in both cases and both pointers just be named pTeacher?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-10607">
+		<div id="div-comment-10607" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-10607">
+		March 30, 2008 at 10:28 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=10607#respond' onclick='return addComment.moveForm( "comment-10607", "10607", "respond", "157" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s really personal preference how you do your hungarian notation.  When it comes to pointers (or references), I use p (or r), then the letter denoting the type of the class, then the variable name.  Thus, a pointer to a class would be prefixed pc.  But however you decide to proceed is up to you (or your company).  Just be consistent.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-11275">
+		<div id="div-comment-11275" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-11275">
+		April 9, 2008 at 10:39 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=11275#respond' onclick='return addComment.moveForm( "comment-11275", "11275", "respond", "157" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>typo: &#8220;When cDept is destroyed, the m_pcTeacher pointer <b>is</b> destroyed&#8221;</p>
+<p>Where does the Teacher variable type get declared? Anywhere outside the aggregate class?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-11321">
+		<div id="div-comment-11321" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-11321">
+		April 9, 2008 at 5:56 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=11321#respond' onclick='return addComment.moveForm( "comment-11321", "11321", "respond", "157" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yep.  It&#8217;s just another class defined somewhere else.  Probably in another header that&#8217;s included by Department.cpp.</p>
+<p>Edit: I went ahead and defined a Teacher class just above the Department class so people can compile the example if they want.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-20662">
+		<div id="div-comment-20662" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/02c1c5ea8d78232b5c07affcb08c6984?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/02c1c5ea8d78232b5c07affcb08c6984?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Stuart</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-20662">
+		July 10, 2008 at 1:37 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=20662#respond' onclick='return addComment.moveForm( "comment-20662", "20662", "respond", "157" )' aria-label='Reply to Stuart'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex, I don&#8217;t understand why the pointer pcTeacher is assigned NULL as a Department constructor parameter, because it assigns to the address of the pTeacher pointer when an object of Department is instantiated. It seems like it&#8217;s never a null pointer. (?)</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-20693">
+		<div id="div-comment-20693" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-20693">
+		July 10, 2008 at 6:13 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=20693#respond' onclick='return addComment.moveForm( "comment-20693", "20693", "respond", "157" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s assigned NULL as a default parameter just in case the programmer wants to create a department with no teacher.  For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73e125729825798940" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73e125729825798940-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73e125729825798940-1"><span class="crayon-e">Department </span><span class="crayon-v">cDept</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0003 seconds] -->
+<p></p>
+<p>In this case cDept would call the Department constructor with pcTeacher set to NULL.  This NULL value would then be assigned to cDept.m_pcTeacher by the constructor.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-20722">
+		<div id="div-comment-20722" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/02c1c5ea8d78232b5c07affcb08c6984?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/02c1c5ea8d78232b5c07affcb08c6984?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Stuart</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-20722">
+		July 11, 2008 at 2:52 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=20722#respond' onclick='return addComment.moveForm( "comment-20722", "20722", "respond", "157" )' aria-label='Reply to Stuart'> &middot; Reply</a></span>		 
+		</div>
+		<p>Duh, it seems obvious now. LOL.</p>
+<p>Thanks. ;D</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-3 clearfix" id="comment-21074">
+		<div id="div-comment-21074" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/20e804f7facb22d8b4232bcc17221705?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/20e804f7facb22d8b4232bcc17221705?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">STommY</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-21074">
+		July 16, 2008 at 2:03 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=21074#respond' onclick='return addComment.moveForm( "comment-21074", "21074", "respond", "157" )' aria-label='Reply to STommY'> &middot; Reply</a></span>		 
+		</div>
+		<p>I&#8217;m not sure whether the statement above will call the constructor you defined, as the signatures do not match, and so the default constructor will be called.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-4 clearfix" id="comment-65524">
+		<div id="div-comment-65524" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/cc3d54885b2404198f1f2db17eb3d573?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cc3d54885b2404198f1f2db17eb3d573?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jason</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-65524">
+		August 2, 2009 at 10:43 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=65524#respond' onclick='return addComment.moveForm( "comment-65524", "65524", "respond", "157" )' aria-label='Reply to jason'> &middot; Reply</a></span>		 
+		</div>
+		<p>This &#8220;is&#8221; the default constructor so, the signature does match.</p>
+<p>Department(Teacher *pcTeacher=NULL)<br />
+        : m_pcTeacher(pcTeacher)<br />
+    {<br />
+    }</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-60394">
+		<div id="div-comment-60394" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ab2b54525229c8214ce432856402433c?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ab2b54525229c8214ce432856402433c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Prateek Jain</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-60394">
+		May 10, 2009 at 1:04 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=60394#respond' onclick='return addComment.moveForm( "comment-60394", "60394", "respond", "157" )' aria-label='Reply to Prateek Jain'> &middot; Reply</a></span>		 
+		</div>
+		<p>How do you handle the situation when subclass object gets destroyed? In our case, if the teacher dies for some reason (say heart attack:-) in case of real world situation), the pTeacher pointer will still have some value but that value will no longer be valid. If Department class has some member which access pTeacher, this could give rise to some potential problem.<br />
+If you somehow can pass a message to Department class, it can make pTeacher equal to NULL but checking (pTeacher == NULL) everywhere in Department class doesn&#8217;t seem to be a good idea.<br />
+How do you incorporate it into your design?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-65069">
+		<div id="div-comment-65069" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c87632bda546b21c58499a02d17c373f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c87632bda546b21c58499a02d17c373f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://gameview.host56.com/index.php' rel='external nofollow' class='url'>death2all</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-65069">
+		July 26, 2009 at 9:53 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=65069#respond' onclick='return addComment.moveForm( "comment-65069", "65069", "respond", "157" )' aria-label='Reply to death2all'> &middot; Reply</a></span>		 
+		</div>
+		<p>shouldn&#8217;t </p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d73e125590280295221" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d73e125590280295221-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d73e125590280295221-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">main</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0002 seconds] -->
+<p> return 0?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-65647">
+		<div id="div-comment-65647" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/873e4d3c00340afa0e32daa45245471a?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/873e4d3c00340afa0e32daa45245471a?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">f117f117f117677</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-65647">
+		August 4, 2009 at 6:49 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=65647#respond' onclick='return addComment.moveForm( "comment-65647", "65647", "respond", "157" )' aria-label='Reply to f117f117f117677'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi: Alex<br />
+as you said<br />
+there are two pointers point to Teacher(&#8220;Bob&#8221;). pTeacher and m_pcTeacher</p>
+<p>if aggregate class is destroyed then m_pcTeacher is destroyed. So<br />
+teacher(&#8220;Bob&#8221;) is gone(died).</p>
+<p>but delete pTeacher again?  is this problem? pTeacher become a wild pointer?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-73568">
+		<div id="div-comment-73568" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/411ff8888c03cf888be5d1a39b192a8e?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/411ff8888c03cf888be5d1a39b192a8e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">serenity</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-73568">
+		December 3, 2009 at 8:49 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=73568#respond' onclick='return addComment.moveForm( "comment-73568", "73568", "respond", "157" )' aria-label='Reply to serenity'> &middot; Reply</a></span>		 
+		</div>
+		<p>f117f117f117677: &#8220;class Department&#8221; doesn&#8217;t actaully delete the teacher; the only thing removed when it&#8217;s destroyed is its pointer to the teacher. The pointer in main() remains and is still valid, so there is no wild pointer and no double delete.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-85338">
+		<div id="div-comment-85338" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/287e685c290e9c5c3628aa93c9bef739?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/287e685c290e9c5c3628aa93c9bef739?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">auasp</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-85338">
+		May 25, 2010 at 7:14 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=85338#respond' onclick='return addComment.moveForm( "comment-85338", "85338", "respond", "157" )' aria-label='Reply to auasp'> &middot; Reply</a></span>		 
+		</div>
+		<p>the heading of this lesson is Aggregration.<br />
+(one extra r)</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-89454">
+		<div id="div-comment-89454" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/96b990c16249e87c3741058fe0eade8c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/96b990c16249e87c3741058fe0eade8c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Amit</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-89454">
+		August 1, 2010 at 11:01 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=89454#respond' onclick='return addComment.moveForm( "comment-89454", "89454", "respond", "157" )' aria-label='Reply to Amit'> &middot; Reply</a></span>		 
+		</div>
+		<p>Thanks for teh description but there are couple of loose ends:<br />
+1. How is association different from aggregation and composition ? You may want to add a section on that<br />
+2. If a class has a data member(only one)  which points to another object but this is not allocated/dealloacted in constructor and destructor. Will this be aggregation or composition ? For teh relation to be aggregation is it necessary that you should have more that one object of the same type ?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-94808">
+		<div id="div-comment-94808" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3b18b15be6813f0d14205c1e1e7be076?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3b18b15be6813f0d14205c1e1e7be076?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">hector</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-94808">
+		October 29, 2010 at 1:14 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=94808#respond' onclick='return addComment.moveForm( "comment-94808", "94808", "respond", "157" )' aria-label='Reply to hector'> &middot; Reply</a></span>		 
+		</div>
+		<p>I love the new look of the site yo <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-95400">
+		<div id="div-comment-95400" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8e940b6b132f5d5d6abffc393ee62cc0?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8e940b6b132f5d5d6abffc393ee62cc0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">mccp13</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-95400">
+		May 1, 2011 at 12:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=95400#respond' onclick='return addComment.moveForm( "comment-95400", "95400", "respond", "157" )' aria-label='Reply to mccp13'> &middot; Reply</a></span>		 
+		</div>
+		<p>I still don&#8217;t get the pointer *m_pcTeacher. when m_pcTeacher recieves pTeacher, it means that m_pTeacher and pTeacher are pointing to the same address. So when m_pcTeacher is destroyed doesn&#8217;t that mean that the address to which it is pointing to is freed, so when pTeacher gets the contents of the address, it could have changed since it is already free and ready to be used by some other program&#8230;???</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-96401">
+		<div id="div-comment-96401" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b266e3b8f4f57987d34735478b500116?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b266e3b8f4f57987d34735478b500116?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">maxatan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-96401">
+		November 17, 2011 at 12:55 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=96401#respond' onclick='return addComment.moveForm( "comment-96401", "96401", "respond", "157" )' aria-label='Reply to maxatan'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi ! and congratulations for your job !</p>
+<p>However, I have a question : What would be the code with more than one teacher belonging to the Department ? How will you implement it ? With a list of pointers to Teachers (list) ?</p>
+<p>Thank you in advance for your advice</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-119485">
+		<div id="div-comment-119485" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/720da0becddc0b6146edbf2ff415d3fa?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/720da0becddc0b6146edbf2ff415d3fa?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Muddasar Azeem</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-119485">
+		January 18, 2014 at 8:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=119485#respond' onclick='return addComment.moveForm( "comment-119485", "119485", "respond", "157" )' aria-label='Reply to Muddasar Azeem'> &middot; Reply</a></span>		 
+		</div>
+		<p>#include</p>
+<p>#include</p>
+<p>using namespace std;</p>
+<p>class Time</p>
+<p>{     //Time class</p>
+<p>public:</p>
+<p>      Time()</p>
+<p>{     //default constructor</p>
+<p>      hr = 0;</p>
+<p>      min = 0;</p>
+<p>}</p>
+<p>      Time(int hours, int minutes)</p>
+<p>{     //class time constructor that accepts parameters</p>
+<p>      if(0 &lt;= hours &amp;&amp; hours &lt; 24)//makes sure hours are valid</p>
+<p>            hr = hours;</p>
+<p>      else</p>
+<p>            hr = 0;</p>
+<p>      if(0 &lt;= minutes &amp;&amp; minutes &lt; 60)//makes sure minutes are valid</p>
+<p>            min = minutes;</p>
+<p>      else</p>
+<p>            min = 0;</p>
+<p>}</p>
+<p>   Time  setTime(int hours, int minutes)</p>
+<p>{     //sets a valid time</p>
+<p>      if(0 &lt;= hours &amp;&amp; hours &lt; 24)</p>
+<p>            hr = hours;</p>
+<p>      else</p>
+<p>            hr = 0;</p>
+<p>      if(0 &lt;= minutes &amp;&amp; minutes &lt; 60)</p>
+<p>            min = minutes;</p>
+<p>      else</p>
+<p>            min = 0;</p>
+<p>}</p>
+<p>       Time getTime(int&amp; hours, int&amp; minutes)</p>
+<p>{     </p>
+<p>//returns the hours and minutes</p>
+<p>      hr = hours;</p>
+<p>      min = minutes;</p>
+<p>}</p>
+<p>      Time printTime()</p>
+<p>{     </p>
+<p>//displays the hours and minutes to the screen</p>
+<p>      if(hr &lt; 10)</p>
+<p>            cout &lt;&lt; &quot;0&quot;;</p>
+<p>      cout &lt;&lt; hr &lt;&lt; &quot;:&quot;;</p>
+<p>      if(min &lt; 10)</p>
+<p>            cout &lt;&lt; &quot;0&quot;;</p>
+<p>      cout &lt;&lt; min &lt; 23)</p>
+<p>            hr = 0;</p>
+<p>}</p>
+<p> Time incrementMinutes()</p>
+<p>{     //increments minutes by one</p>
+<p>      min++;</p>
+<p>      if(min &gt; 59)</p>
+<p>      {</p>
+<p>            min = 0;</p>
+<p>            incrementHours();</p>
+<p>      }</p>
+<p>}</p>
+<p>private:</p>
+<p>      int hr;</p>
+<p>      int min;</p>
+<p>};</p>
+<p>class Date</p>
+<p>{//Date class</p>
+<p>public:</p>
+<p>      Date()</p>
+<p>{//default constructor</p>
+<p>      month = 1;</p>
+<p>      day = 1;</p>
+<p>      year = 1900;</p>
+<p>}</p>
+<p>Date(int m, int d, int y)</p>
+<p>{//constructor that accepts parameters</p>
+<p>      if(m &gt;= 1 &amp;&amp; m = 1 &amp;&amp; d = 1900 &amp;&amp; y = 1 &amp;&amp; m = 1 &amp;&amp; d = 1900 &amp;&amp; y &lt;= 2010)</p>
+<p>            year = y;</p>
+<p>      else</p>
+<p>            year = 1900;</p>
+<p>}</p>
+<p>     Date getDate(int&amp; m, int&amp; d, int&amp; y)</p>
+<p>{//returns the month, day and year</p>
+<p>      month = m;</p>
+<p>      day = d;</p>
+<p>      year = y;</p>
+<p>}</p>
+<p>Date printDate()</p>
+<p>{//displays the month, day and year to the screen</p>
+<p>      if(month &lt; 10)</p>
+<p>            cout &lt;&lt; &quot;0&quot;;</p>
+<p>      cout &lt;&lt; month &lt;&lt; &quot;/&quot;;</p>
+<p>      if(day &lt; 10)</p>
+<p>            cout &lt;&lt; &quot;0&quot;;</p>
+<p>      cout &lt;&lt; day &lt;&lt; &quot;/&quot;;</p>
+<p>      cout &lt;&lt; year;</p>
+<p>}</p>
+<p>private:</p>
+<p>      int month;</p>
+<p>      int day;</p>
+<p>      int year;</p>
+<p>};</p>
+<p>class Event</p>
+<p>{//Event class<br />
+private:</p>
+<p>      string eventName;</p>
+<p>      Time eventTime;</p>
+<p>      Date eventDay;</p>
+<p>public:</p>
+<p>      Event(int hours = 0, int minutes = 0, int m = 1,</p>
+<p>            int d = 1, int y = 1900, string name = &quot;Christmas&quot;); </p>
+<p>      Event(int hours, int minutes, int m, int d, int y, string name)<br />
+         : eventTime(hours, minutes), eventDay(m, d, y)</p>
+<p>{</p>
+<p>      eventName = name;</p>
+<p>}</p>
+<p> Event setEventData(int hours, int minutes, int m, int d, int y, string name)</p>
+<p>{</p>
+<p>      eventTime.setTime(hours, minutes);</p>
+<p>      eventDay.setDate(m, d, y);</p>
+<p>      eventName = name;</p>
+<p>}</p>
+<p> Event printEventData()</p>
+<p>{</p>
+<p>      cout &lt;&lt; eventName &lt;&lt; &quot; occurs &quot;;</p>
+<p>      eventDay.printDate();</p>
+<p>      cout &lt;&lt; &quot; at &quot;;</p>
+<p>      eventTime.printTime();</p>
+<p>      cout &lt;&lt; endl;</p>
+<p>}</p>
+<p>};<br />
+int main()</p>
+<p>{//instantiate an object and set data for Christmas</p>
+<p>      Event object;</p>
+<p>      object.setEventData(6, 0, 12, 25, 2010, &quot;Christmas&quot;);</p>
+<p>      //print out the data for object</p>
+<p>      object.printEventData();</p>
+<p>      //instantiate the second object and set date for the fourth of July</p>
+<p>      Event object2;</p>
+<p>      object2.setEventData(1, 15, 7, 4, 2010, &quot;Fourth of July&quot;);</p>
+<p>      //print out the data for the second object</p>
+<p>      object2.printEventData();<br />
+ return 0;<br />
+}</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-119486">
+		<div id="div-comment-119486" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/720da0becddc0b6146edbf2ff415d3fa?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/720da0becddc0b6146edbf2ff415d3fa?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Muddasar Azeem</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-119486">
+		January 18, 2014 at 8:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=119486#respond' onclick='return addComment.moveForm( "comment-119486", "119486", "respond", "157" )' aria-label='Reply to Muddasar Azeem'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey any one tell me whats error in the EVENT Class?????????????</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-148107">
+		<div id="div-comment-148107" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c775c8de5a7b0597a43eb218fa543820?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c775c8de5a7b0597a43eb218fa543820?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Darin</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-148107">
+		May 30, 2014 at 7:29 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=148107#respond' onclick='return addComment.moveForm( "comment-148107", "148107", "respond", "157" )' aria-label='Reply to Darin'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,<br />
+I want to ask how do you dereference something like<br />
+Teacher *pTeacher = new Teacher(&#8220;Bob&#8221;);<br />
+since I could not fully inderstand the whole aggregration example. The only thing that I was able to understande was that the classes are exchanging the adress that pTeacher holds, but I cannot actually do anything with it(since I cannot dereference it). If possible could you please explain?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-252172">
+		<div id="div-comment-252172" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/5e8a5a8c0f365eef63ff9cba1481df06?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5e8a5a8c0f365eef63ff9cba1481df06?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Megan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/103-aggregation/#comment-252172">
+		April 15, 2015 at 1:55 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/103-aggregation/?replytocom=252172#respond' onclick='return addComment.moveForm( "comment-252172", "252172", "respond", "157" )' aria-label='Reply to Megan'> &middot; Reply</a></span>		 
+		</div>
+		<p>please send me code of below question if possible</p>
+<p>First create a student class that contains the name and student ID, set and get functions. Then create a department class that contains name of department (for example computer science or electric engineering) and set and get functions. After that create a college class that contains school name and number of departments, an array of 3 departments by using composition and an array of 4 students by using aggregation. Test them in main by creating a college that has college name and some number of majors, an array of departments, and an array of students. Use set and get functions to get information from the college.</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/103-aggregation/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>3 &#215; four = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4Nzg3M3R5bTdtZjVxZ3o3ZGJwYWozMW04MTI=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432187873" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='157' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="da206e8a64" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="187"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/103-aggregation\/":157};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/103-aggregation/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'157',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '157' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.758 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 21:57:53 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

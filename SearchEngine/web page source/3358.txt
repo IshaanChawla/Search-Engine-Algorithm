@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The resultsP page</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	
+<BODY>
+<HEADER ID="Banner">
+<P>&nbsp;</P>
+<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+</HEADER> 
+<HR /><NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">The Forum resultsP.php page</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p11.html">here</a>.</i></P>
+<p>At the top of the code for the <b>resultsP.php</b> page, there's two functions. 
+  We'll take a look at these later. But bear in mind what this page does &#150; 
+  inserts the new post into the database table. (The security issues discussed 
+  in the previous section apply here, as well)</p>
+<p>To get the data posted from the FORM, we have this:</p>
+<P class="indent_big">$secID = $_POST['h1'];<br>
+  $memID = $_POST['h2'];<br>
+  $posTopic = $_POST['tp'];<br>
+  $posText = $_POST['post'];</P>
+<p>This is the same technique we used in the previous section: just put the POST 
+  data into variables. The <b>$secID</b> variable will hold something like secWP, 
+  the <b>$memID</b> variable will hold the member id, the <b> $posTopic</b> variable 
+  will hold the heading for the topic, and the <b>$posText</b> variable will hold 
+  the text of the post itself.</p>
+<p>After we get the connection to the database, we run in to our first problem. 
+  The problem is that the Primary Keys in the post tables are not auto-incrementing 
+  numbers. With an auto-incrementing number, you can usually leave the database 
+  to update this field &#150;all it needs to do is to add 1 to the previous value. 
+  Like this:</p>
+<p align="center"><b><u>ID</u><br>
+  0<br>
+  1<br>
+  2<br>
+  3</b></p>
+<p>If you update the table, the database would automatically add 1 to the ID field, 
+  and the next row would be 4. You don't have to do anything.</p>
+<p>But for the Primary Key in the post tables, we have a field called <b>threadID</b>. 
+  The threadID field looks like this:</p>
+<p align="center"><b><u>threadID</u><br>
+  pos1<br>
+  pos2<br>
+  pos3</b></p>
+<p>So you can't just add 1 to this field, if you insert a new row. You have to 
+  make sure that the new row is pos4, and the next new row will be pos5, etc.</p>
+<p>There's another problem as well. How can you be sure that the database hasn't 
+  inserted your rows like this (and it will!):</p>
+<p align="center"><b><u>threadID</u><br>
+  pos1<br>
+  pos3<br>
+  pos2</b></p>
+<p>So the last row in the table is pos2. If you try to update this with pos3 as 
+  the new row, you'll get an error. Because there already is a pos3. A Primary 
+  Key field is one that has unique values. And that why you'd get an error.</p>
+<p>This is a common problem when you have your own format as the Primary Key in 
+  a database table &#150; adding a new unique value when that value is not an 
+  auto-incrementing number.</p>
+<p>In the example above, we need make sure that the new value in the threadID 
+  field is pos4. This is a run-down on how we'll do it:</p>
+<ul>
+  <li> Get all the posts from the table</li>
+  <li>Set up an array to hold the threadID data</li>
+  <li>Strip the &quot;pos&quot; part, and just leave the number</li>
+  <li>Sort the array with the lowest number first and the highest last</li>
+  <li>Get the last value in the array (which will be the highest number)</li>
+  <li>Add 1 to this number</li>
+  <li>Put the &quot;pos&quot; part back</li>
+  <li>Update the threadID array </li>
+</ul>
+<p>If you open up the code for the resultsP.php page, you'll see comments that 
+  tackle the items in list above. The first part of the code gets all the posts 
+  from the table:</p>
+<p class="TextIndent3">$SQL = getPostTable($secID);</p>
+<p>This is just a call to one of the functions at the top of the page. When the 
+  function is run, you'll have SQL like this:</p>
+<p class="TextIndent3">&quot;SELECT * FROM wpposts&quot;;</p>
+<p>This selects all the records from a table called wpposts. The next two lines 
+  are these:</p>
+<p class="TextIndent3">$result = mysql_query($SQL);<br>
+  $numRows = mysql_num_rows($result);</p>
+<p>The first line executes the SQL. The second line returns how many rows we have 
+  returned from table. We'll need this for the for loop. We then set up an array 
+  to hold the threadID values:</p>
+<p class="TextIndent3">$posNums = array();</p>
+<p>We now need to loop round the rows in the table, and get the threadID field:</p>
+<p class="TextIndent1">for ($i = 0; $i &lt; $numRows; $i++) {</p>
+<p class="TextIndent3">$row = mysql_fetch_row($result);<br>
+  $pID = $row[0];</p>
+<p class="TextIndent3">$posNums[$i] = ltrim($pID, 'pos');</p>
+<p class="TextIndent1">}</p>
+<p>The loop goes from zero, to less than $numRows. The first line in the for loop 
+  is this:</p>
+<p class="TextIndent3">$row = mysql_fetch_row($result)<b>;</b></p>
+<p>The inbuilt function mysql_fetch_row, as its name suggest, fetches a row from 
+  a table. It will fetch it back with row[0] as the first table column, row[1] 
+  as the second column, row[2] as the third, etc. Because we know that row[0] 
+  is our threadID field, we can grab this value:</p>
+<p class="TextIndent3">$pID = $row[0];</p>
+<p>The treadID , then, is placed into a variable called $pID. To strip off the 
+  &quot;pos&quot; part of the threadID, we have this:</p>
+<p class="TextIndent3">$posNums[$i] = ltrim($pID, 'pos');</p>
+<p>We're using the unbuilt function ltrim( ) to trim the &quot;pos&quot; part. 
+  In between the round brackets, you type the text you want examine. After a comma, 
+  you type the text you want trimming. </p>
+<p>After the loop finishes, we might end up with something like this:</p>
+<p align="center"><b>$posNums[ ]<br>
+  1<br>
+  3<br>
+  2</b></p>
+<p>So we have all the numbers in an array, but they are not sorted from lowest 
+  to highest. The next line does that:</p>
+<p class="indent_big">sort($posNums);</p>
+<p>The inbuilt function <b>sort</b> is used to sort the array. The name of the 
+  array you want to sort goes between the round brackets of the function. But 
+  note that the square brackets of the array go missing. </p>
+<p>Once the array is sorted, we can get the last item in the array:</p>
+<p class="indent_big">$lastID = end($posNums);</p>
+<p>Again, we're using an unbuilt function. The <b>end</b> function is used to 
+  move to the last element of an array. Here, we're putting the value returned 
+  by the function into a variable called $lastID. </p>
+<p>Once we have the last number, increment it:</p>
+<p class="TextIndent3">$lastID++;</p>
+<p>Finally, once we have the last number, we can add the &quot;pos&quot; back 
+  on:</p>
+<p class="TextIndent3">$threadid = 'pos' . $lastID;</p>
+<p>All that coding gets us the highest pos number from our threadID field. We 
+  can then go ahead an get the SQL for our INSERT statement:</p>
+<p class="TextIndent3">$tableSQL = getPostSQL($secID);</p>
+<p>This calls the function at the top of the page. The function will return something 
+  like this:</p>
+<P class="TextIndent2">$sql = &quot;INSERT INTO wpposts(threadID, memberID, threadTopic, 
+  postText, datePosted) VALUES &quot;</P>
+<P>We want to INSERT INTO the wpposts table a set of VALUES. The names of the 
+  table columns go between the round brackets. But we still need to add the VALUES. 
+  This is done with the rather long next line:</P>
+<P class="TextIndent2">$tableSQL = $tableSQL . &quot;(&quot; . $threadid . &quot;,&quot; 
+  . $memID . &quot;,&quot; . $posTopic . &quot;,&quot; .$posText . &quot;,&quot; 
+  . $date_today . &quot;)&quot;;</P>
+<P>We're just building up a string. Something like this:</P>
+<p class="TextIndent2">INSERT INTO wpposts(threadID, memberID, threadTopic, postText, 
+  datePosted) VALUES (pos1, mem1, &quot;New Post&quot;, &quot;This is the text&quot;, 
+  &quot;2006-10-22 13:30:14&quot;)</p>
+<p>Once we have our SQL, we can try to run it:</p>
+<p class="TextIndent3">$result = mysql_query($tableSQL);</p>
+<p>We can test to see if it is run successfully:</p>
+<p class="indent_big">if ($result) {</p>
+<p class="indent_bigger">print &quot;Your Post has been added to the Forum.&quot; 
+  . &quot;&lt;BR&gt;&quot;;<br>
+  print &quot;&lt;A HREF = forumTest.php&gt;Back to the forum&lt;/A&gt;&quot; 
+  . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_big">}<br>
+  else {</p>
+<p class="indent_bigger">print &quot;Couldn't add Post to the Forum&quot;;</p>
+<p class="indent_big">}</p>
+<p>If the code executes successfully, a new post will be added to the forum.</p>
+<p><br>
+  And that completes the code for Posting new topics. In fact that completes our 
+  walkthrough of the entire forum! There is still work to be done, of course. 
+  So there's a final Project for you to try.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p11.html">&lt;-- Back One Page</a> | <a href="php17p13.html">Move 
+  on to the Next Part --&gt;</a></p>
+<P><A HREF="php.html">Back to the PHP Contents Page</A> 
+<P>&copy; All course material copyright Home and Learn</P>
+</FOOTER> 
+</BODY>
+</HTML>
+
+

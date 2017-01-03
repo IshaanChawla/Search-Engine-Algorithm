@@ -1,0 +1,1357 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Java Performance - Memory and Runtime Analysis - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Abstract This article will be a collection of Java performance measurement pointer. It describes how memory works in general and how Java use the heap and the stack. The article describes how to set the available memory for Java. It discusses then how to get the runtime and the memory consumption of a Java application.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d436951e1"></a>Java Performance - Memory and Runtime Analysis - Tutorial
+                     
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 1.1</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008, 2009, 2010, 2011, 2012, 2013, 2014 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">
+                     01.08.2014
+                     
+                  </p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Abstract</b></p>
+                     <p>This article will be a collection of Java performance
+                        measurement pointer.
+                        
+                     </p>
+                     <p> It describes how memory works in general and how Java use the
+                        heap and the stack. The article describes how to set the available
+                        memory for Java. It discusses then how to get the runtime and the
+                        memory consumption of a Java application.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#overview">1. Performance factors</a></span></dt>
+               <dt><span class="section"><a href="#memory">2. Memory handling in Java</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#memory_native">2.1. Native Memory</a></span></dt>
+                     <dt><span class="section"><a href="#memory_overview">2.2. Memory in Java</a></span></dt>
+                     <dt><span class="section"><a href="#memory_heap">2.3. Java Heap</a></span></dt>
+                     <dt><span class="section"><a href="#memory_stack">2.4. Java Stack</a></span></dt>
+                     <dt><span class="section"><a href="#Escape Analysis">2.5. Escape analysis</a></span></dt>
+                     <dt><span class="section"><a href="#memoryleaks">2.6. Memory leaks</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#garbagecollector">3. Garbage Collector</a></span></dt>
+               <dt><span class="section"><a href="#jvmsettings">4. Memory settings for Java virtual machine</a></span></dt>
+               <dt><span class="section"><a href="#runtimeinfo">5. Memory Consumption and Runtime</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#runtimeinfo_memory">5.1. Memory Consumption</a></span></dt>
+                     <dt><span class="section"><a href="#runtimeinfo_runtime">5.2. Runtime of a Java program</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#lazyinit">6. Lazy initialization</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#lazyinit_synchronized">6.1. Concurrency - Overview</a></span></dt>
+                     <dt><span class="section"><a href="#lazyinit_doublecheckitem">6.2. Double-Check Item</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#jit">7. Just-in-time (JIT) compiler</a></span></dt>
+               <dt><span class="section"><a href="#profiler_visualvm">8. Visualvm as profiler</a></span></dt>
+               <dt><span class="section"><a href="#performance_yourkit">9. Yourkit</a></span></dt>
+               <dt><span class="section"><a href="#loadtest">10. Load Test</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">11. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">11.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">11.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">11.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">12. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#resources_performance">12.1. Performance</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="overview"></a>1.&nbsp;Performance factors
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Important influence factors to the performance of a Java program can
+               be separated into two main parts:
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>Memory Consumption of the Java program</p>
+                  </li>
+                  <li class="listitem">
+                     <p>Total runtime of a program</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+            <p> In case the program is to some case a program which interacts
+               with others also the response time is a very important fact of the
+               performance of a program.
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3> A average CPU can do approximately 1 billion (10^9) operations
+               per second.
+            </div>
+            <p>
+               
+            </p>
+            <p>
+               This article does not cover concurrency. If you want to read about
+               concurrency / multithreading please see
+               <a class="ulink" href="http://www.vogella.com/tutorials/JavaConcurrency/article.html" target="_top"> Concurrency / Multithreading in Java</a>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="memory"></a>2.&nbsp;Memory handling in Java
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Java handles its memory in two areas. The
+               <em class="wordasword">heap</em>
+               and the
+               <em class="wordasword">stack</em>. We will start with a short overview of memory in general on a
+               computer. Then the Java heap and stack is explained.
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memory_native"></a>2.1.&nbsp;Native Memory
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Native memory is the memory which is available to a process,
+                  e.g. the Java process. Native memory is controlled by the operating
+                  system (OS) and based on physical memory and other physical devices,
+                  e.g. disks, flash memory, etc.
+                  
+               </p>
+               <p> The processor (CPU) of the computer computes the instructions
+                  to execute and stores its computation results into registers. These
+                  registers are fast memory elements which stores the result of the
+                  CPU. The processor can access the normal memory over the memory bus.
+                  A amount of memory a CPU can access is based on the size of the
+                  physical address which the CPU uses to identify physical memory. A
+                  16-bit address can access 2^16 (=65.536) memory locations. A 32-bit
+                  address can access 2^32 (=4.294.967.296) memory locations. If each
+                  memory area consists of 8 bytes then a 16-bit system can access 64KB
+                  of memory and the 32-bit system can access 4GB of memory.
+                  
+               </p>
+               <p> An operating system (OS) normally uses virtual memory to map
+                  the physical memory
+                  to memory which each process can see. The OS
+                  assigns then memory to
+                  each process in a virtual memory space for this
+                  process and maps
+                  access to this virtual memory to the real physical
+                  memory.
+                  
+               </p>
+               <p> Current 32-bit systems uses an extension (Physical Address
+                  Extension (PAE)) which extends the physical space to 36-bits of the
+                  operation system. This allows the OS to access 64GB. The OS uses then
+                  virtual memory to allow the individual process 4 GB of memory. Even
+                  with PAE enabled a process can not access more than 4 GB of memory.
+                  
+               </p>
+               <p> Of course with a 64-bit OS this 4GB limitation does not exist
+                  anymore.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memory_overview"></a>2.2.&nbsp;Memory in Java
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Java manages the memory for use. New objects created and placed
+                  in the heap. Once your application have no reference anymore to an
+                  object the Java garbage collector is allowed to delete this object
+                  and remove the memory so that your application can use this memory
+                  again.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memory_heap"></a>2.3.&nbsp;Java Heap
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> In the heap the Java Virtual Machine (JVM) stores all objects
+                  created by the Java application, e.g. by using the "new" operator.
+                  The Java garbage collector (gc) can logically separate the heap into
+                  different areas, so that the gc can faster identify objects which can
+                  get removed.
+                  
+               </p>
+               <p> The memory for new objects is allocated on the heap at run
+                  time. Instance variables live inside the object in which they are
+                  declared.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memory_stack"></a>2.4.&nbsp;Java Stack
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>Stack is where the method invocations and the local
+                  variables are
+                  stored. If a method is called then its stack frame is
+                  put onto the top
+                  of the call stack. The stack frame holds the state
+                  of the method
+                  including which line of code is executing and the
+                  values of all local
+                  variables. The method at the top of the stack is
+                  always the current
+                  running method for that stack. Threads have their
+                  own call stack.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="Escape Analysis"></a>2.5.&nbsp;Escape analysis
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>As stated earlier Java objects are created and stored in the
+                  heap. The
+                  programming language
+                  does not offer the possibility to let
+                  the
+                  programmer decide if an
+                  object should be generated in the stack.
+                  But
+                  in certain cases it would be desirable to allocate an object on
+                  the
+                  stack, as the memory allocation on the stack is cheaper than the
+                  memory allocation
+                  in the heap, deallocation on the stack is free and
+                  the stack is efficiently
+                  managed by the
+                  runtime.
+                  
+               </p>
+               <p> The JVM uses therefore internally escape analysis to check if
+                  an
+                  object is used only with a thread or method. If the JVM identify
+                  this
+                  it may decide to create the object on the stack, increasing
+                  performance of the Java program.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="memoryleaks"></a>2.6.&nbsp;Memory leaks
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  The
+                  garbage collector of the JVM
+                  releases Java objects from memory
+                  as long as no other object refers to
+                  this
+                  object. If other objects
+                  still hold references to these objects, then the garbage collector of
+                  the JVM cannot release them.
+                  
+               </p>
+            </div>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="garbagecollector"></a>3.&nbsp;Garbage Collector
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> The JVM automatically re-collects the memory which is not used
+               any more. The memory for objects which are not referred any more will
+               be automatically released by the garbage collector.
+            </p>
+            <p>To see then the garbage collector starts working add the
+               command line argument "-verbose:gc" to your virtual machine.
+            </p>
+            <p>
+               An in-depth article about the garbage collector can be found here:
+               <a class="ulink" href="http://java.sun.com/docs/hotspot/gc5.0/gc_tuning_5.html" target="_top"> Tuning Garbage Collection with the 5.0 Java Virtual
+                  Machine</a>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="jvmsettings"></a>4.&nbsp;Memory settings for Java virtual machine
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               The JVM runs with fixed available memory. Once this memory is
+               exceeded
+               you will receive "java.lang.OutOfMemoryError". The JVM tries to
+               make an
+               intelligent choice about the available memory at startup (see
+               <a class="ulink" href="http://java.sun.com/javase/6/docs/technotes/tools/windows/java.html" target="_top"> Java settings</a>
+               for details) but you can overwrite the default with the following
+               settings.
+               
+            </p>
+            <p> To turn performance you can use certain parameters in the JVM.
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="table"><a name="d436951e153"></a><p class="title"><b>Table&nbsp;1.&nbsp;</b></p>
+               <div class="table-contents">
+                  <table border="1">
+                     <colgroup>
+                        <col align="left" class="c1">
+                        <col align="left" class="c2">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"> Parameter</th>
+                           <th align="left">Description</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              
+                              <p>
+                                 -Xms1024m
+                                 
+                              </p>
+                              
+                           </td>
+                           <td align="left">Set the minimum available memory for the JVM to 1024
+                              Megabyte
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="left">
+                              
+                              <p>-Xmx1800m</p>
+                              
+                           </td>
+                           <td align="left">Set the maximum available memory for the JVM to 1800
+                              Megabyte. The Java application cannot use more heap memory then
+                              defined via this parameter. 
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <p><br class="table-break">
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3> Increase the values in these parameters to avoid the following
+               error: "Exception in thread java.lang.OutOfMemoryError: Java heap
+               space". Note that you cannot allocate more memory then you have
+               physically available.
+            </div>
+            <p>
+               
+            </p>
+            <p> If you start your Java program from the command line use for
+               example the following setting: java -Xmx1024m YourProgram. 
+            </p>
+            <p>In Eclipse
+               your can use the VM arguments in the run configuration.
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="mediaobject"><img src="images/xvmsettings10.gif.pagespeed.ic.Qf1ABodzrN.png"></div>
+            <p>
+               
+            </p>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="runtimeinfo"></a>5.&nbsp;Memory Consumption and Runtime
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>In general a operation is considered as extensive if this
+               operation has a long runtime or a high memory consumption.
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="runtimeinfo_memory"></a>5.1.&nbsp;Memory Consumption
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> The total used / free memory of an program can be obtained in
+                  the program via java.lang.Runtime.getRuntime();
+               </p>
+               <p> The runtime has several method which relates to the memory. The
+                  following code example demonstrate its usage.
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> test;
+
+<span class="hl-keyword">import</span> java.util.ArrayList;
+<span class="hl-keyword">import</span> java.util.List;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> PerformanceTest {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">final</span> <span class="hl-keyword">long</span> MEGABYTE = <span class="hl-number">1024L</span> * <span class="hl-number">1024L</span>;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">long</span> bytesToMegabytes(<span class="hl-keyword">long</span> bytes) {
+    <span class="hl-keyword">return</span> bytes / MEGABYTE;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <em class="hl-comment" style="color: #080">// I assume you will know how to create a object Person yourself...</em>
+    List&lt;Person&gt; list = <span class="hl-keyword">new</span> ArrayList&lt;Person&gt;();
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt;= <span class="hl-number">100000</span>; i++) {
+      list.add(<span class="hl-keyword">new</span> Person(<span class="hl-string" style="color:blue">"Jim"</span>, <span class="hl-string" style="color:blue">"Knopf"</span>));
+    }
+    <em class="hl-comment" style="color: #080">// Get the Java runtime</em>
+    Runtime runtime = Runtime.getRuntime();
+    <em class="hl-comment" style="color: #080">// Run the garbage collector</em>
+    runtime.gc();
+    <em class="hl-comment" style="color: #080">// Calculate the used memory</em>
+    <span class="hl-keyword">long</span> memory = runtime.totalMemory() - runtime.freeMemory();
+    System.out.println(<span class="hl-string" style="color:blue">"Used memory is bytes: "</span> + memory);
+    System.out.println(<span class="hl-string" style="color:blue">"Used memory is megabytes: "</span>
+        + bytesToMegabytes(memory));
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="runtimeinfo_runtime"></a>5.2.&nbsp;Runtime of a Java program
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Use System.currentTimeMillis() to get the start time and the
+                  end time and calculate the difference.
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.test;
+
+<span class="hl-keyword">class</span> TimeTest1 {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+
+    <span class="hl-keyword">long</span> startTime = System.currentTimeMillis();
+
+    <span class="hl-keyword">long</span> total = <span class="hl-number">0</span>;
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; <span class="hl-number">10000000</span>; i++) {
+      total += i;
+    }
+
+    <span class="hl-keyword">long</span> stopTime = System.currentTimeMillis();
+    <span class="hl-keyword">long</span> elapsedTime = stopTime - startTime;
+    System.out.println(elapsedTime);
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="lazyinit"></a>6.&nbsp;Lazy initialization
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> In case a variable is very expensive to create then sometimes it
+               is good to defer the creation of this variable until the variable is
+               needed. This is called lazy initialization.
+            </p>
+            <p> In general lazy initialization should only be used if a analysis
+               has proven that this is really a very expensive operations. This is
+               based on the fact that lazy initialization makes it more difficult to
+               read the code.
+            </p>
+            <p> I use the project "de.vogella.performance.lazyinitialization" for
+               the examples in this chapter. And a have a own field defined."
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.lazyinitialization;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MyField {
+
+} </pre><p>
+               
+            </p>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="lazyinit_synchronized"></a>6.1.&nbsp;Concurrency - Overview
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> The simplest way is to use a synchronized block. As then field
+                  access is always synchronized in case on read access this variant is
+                  slow.
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.lazyinitialization;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> SynchronizedTest {
+  <span class="hl-keyword">private</span> MyField myField;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">synchronized</span> MyField getMyField() {
+    <span class="hl-keyword">if</span> (myField == null) {
+      myField = <span class="hl-keyword">new</span> MyField();
+    }
+    <span class="hl-keyword">return</span> myField;
+  }
+
+} </pre><p>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="lazyinit_doublecheckitem"></a>6.2.&nbsp;Double-Check Item
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p> Faster is to use the synchronized block only if the variable is
+                  still initial and to define the variable as volatile to propagate
+                  the change to other threads.
+               </p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.lazyinitialization;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> DoubleCheckItem {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">volatile</span> MyField myField;
+
+  <span class="hl-keyword">public</span> MyField getMyField() {
+    <span class="hl-keyword">if</span> (myField == null) {
+      <span class="hl-keyword">synchronized</span> (<span class="hl-keyword">this</span>) {
+        <span class="hl-keyword">if</span> (myField == null) {
+          myField = <span class="hl-keyword">new</span> MyField();
+        }
+      }
+    }
+    <span class="hl-keyword">return</span> myField;
+  }
+} </pre><p>
+                  
+               </p>
+               <p> An improved version of this came from Joshua Bloch.</p>
+               <p>
+                  
+               </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.performance.lazyinitialization;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> DoubleCheckItemImproved {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">volatile</span> MyField myField;
+
+  <span class="hl-keyword">public</span> MyField getMyField() {
+    MyField tmp = myField;
+    <span class="hl-keyword">if</span> (tmp == null) {
+      <span class="hl-keyword">synchronized</span> (<span class="hl-keyword">this</span>) {
+        tmp = myField;
+        <span class="hl-keyword">if</span> (tmp == null) {
+          myField = tmp = <span class="hl-keyword">new</span> MyField();
+        }
+      }
+    }
+    <span class="hl-keyword">return</span> tmp; <em class="hl-comment" style="color: #080">// Using tmp here instead of myField avoids an memory update</em>
+  }
+} </pre><p>
+                  
+               </p>
+            </div>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3> Avoid lazy initialization if you can, the code becomes difficult
+               to read if you use it.
+            </div>
+            <p>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="jit"></a>7.&nbsp;Just-in-time (JIT) compiler
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> The Java JIT compiler compiles Java bytecode to native
+               executable code during the runtime of your program. This increases the
+               runtime of your program significantly. The JIT compiler uses runtime
+               information to identify part in your application which are runtime
+               intensive. These so-called "hot spots" are then translated native
+               code. This is the reason why the JIT compiler is also called
+               "Hot-spot" compiler.
+            </p>
+            <p> JIT is store the original bytecode and the native code in
+               memory because JIT can also decide that a certain compilation steps
+               must be revised.
+            </p>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="profiler_visualvm"></a>8.&nbsp;Visualvm as profiler
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> A profiler for Java is a program which allows you to trace a
+               running java program and see the memory and CPU consumption for the
+               Java application.
+               
+            </p>
+            <p>
+               Visualvm is already part of the jdk distribution (as of Update 7 for
+               jdk1.6).
+               <a class="ulink" href="https://visualvm.dev.java.net/" target="_top"> https://visualvm.dev.java.net/</a>. To start visualvm just click on jvisualvm.exe in the jdk bin
+               directory.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="performance_yourkit"></a>9.&nbsp;Yourkit
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>Yourkit is a commercial tool for performance tracing and analysis. You
+               require a license to use it but Yourkit
+               offers free licencses to Open Source projects.
+               
+            </p>
+            <p>
+               To install Yourkit, you need to download if from
+               <a class="ulink" href="https://www.yourkit.com/download/" target="_top">Yourkit download</a>. Depending your platform you can the installer (Windows) or extract the compressed archive to your system.
+               
+            </p>
+            <p>
+               |
+               On Linux extract it to a folder of your choice. In this folder you find the script
+               <code class="filename">bin/yjp.sh</code>
+               to start Yourkit. The Yourkit tooling starts and
+               ask you for the
+               license key and with which IDE it
+               should
+               integrate.
+               
+            </p>
+            <p>You also need to install the Eclipse plug-ins from the following
+               update site:
+               http://www.yourkit.com/download/yjp2013_for_eclipse/
+               
+            </p>
+            <p>
+               
+               See
+               <a class="ulink" href="http://www.yourkit.com/docs/java/help/eclipse.jsp" target="_top">Yourkit</a>
+               and
+               <a class="ulink" href="http://www.yourkit.com/docs/java/help/running_with_profiler.jsp" target="_top">http://www.yourkit.com/docs/java/help/running_with_profiler.jsp</a>
+               
+            </p>
+            <p>
+               
+               <a class="ulink" href="https://wiki.eclipse.org/Eclipse/Testing#Performance_tests " target="_top"> Eclipse performance test</a>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="loadtest"></a>10.&nbsp;Load Test
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> A load test tool is a tool which emulates user and system
+               actions on an application to measure the reaction and behavior of this
+               system. A load test tool is commonly used for a web application to
+               measure its behavior.
+            </p>
+            <p>
+               Popular tools for load testing are:
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>Apache JMeter - See
+                        <a class="ulink" href="http://jakarta.apache.org/jmeter/" target="_top"> http://jakarta.apache.org/jmeter/</a>
+                        
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>Eclipse TPTP testing tool - See
+                        <a class="ulink" href="http://www.eclipse.org/tptp/" target="_top"> http://www.eclipse.org/tptp/</a> 
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>Grinder - See
+                        <a class="ulink" href="http://grinder.sourceforge.net/" target="_top"> http://grinder.sourceforge.net/</a>
+                        
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>11.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>11.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>11.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>11.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>12.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_performance"></a>12.1.&nbsp;Performance
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="https://www.ibm.com/developerworks/java/library/j-jtp09196/" target="_top"> 
+                     https://www.ibm.com/developerworks/java/library/j-jtp09196/</a>
+                  Java theory and practice: Instrumenting applications with JMX
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp11137.html" target="_top"> 
+                     http://www.ibm.com/developerworks/java/library/j-jtp11137.html</a>
+                  Java theory and practice: Stick a fork in it, Part 1
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.ibm.com/developerworks/java/library/j-jtp03048.html" target="_top"> 
+                     http://www.ibm.com/developerworks/java/library/j-jtp03048.html</a>
+                  Java theory and practice: Stick a fork in it, Part 2
+                  
+               </p>
+            </div>
+         </div><img src="http://vg04.met.vgwort.de/na/bc2f952cfbe84ae3b5c3aff1a198a2d3" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/JavaPerformance/article.html');
+//]]></script></body>
+</html>
+

@@ -1,0 +1,1464 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>13.6 &#8212; Basic file I/O &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 13.6 &#8212; Basic file I/O Comments Feed" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"23.94.124.251","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/136-basic-file-io\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Tiga and WordPress 2.5' href='http://www.learncpp.com/wordpress/tiga-and-wordpress-25/' />
+<link rel='next' title='13.7 &#8212; Random file I/O' href='http://www.learncpp.com/cpp-tutorial/137-random-file-io/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/136-basic-file-io/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=194' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="13.6 -- Basic file I/O" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/" />
+<meta property="og:description" content="File I/O in C++ works very similarly to normal I/O (with a few minor added complexities). There are 3 basic file I/O classes in C++: ifstream (derived from istream), ofstream (derived from ostream)..." />
+<meta property="article:published_time" content="2008-04-01T07:05:50+00:00" />
+<meta property="article:modified_time" content="2015-01-03T02:37:57+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-194 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-194 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-194">
+						<div class="post-headline">		<h1>13.6 &#8212; Basic file I/O</h1>
+		</div>		<div class="post-byline">By Alex, on March 31st, 2008</div>		<div class="post-bodycopy clearfix"><p>File I/O in C++ works very similarly to normal I/O (with a few minor added complexities).  There are 3 basic file I/O classes in C++: ifstream (derived from istream), ofstream (derived from ostream), and fstream (derived from iostream).  These classes do file input, output, and input/output respectively.  To use the file I/O classes, you will need to include the fstream.h header.</p>
+<p>Unlike the cout, cin, cerr, and clog streams, which are already ready for use, file streams have to be explicitly set up by the programmer.  However, this is extremely simple: to open a file for reading and/or writing, simply instantiate an object of the appropriate file I/O class, with the name of the file as a parameter.  Then use the insertion (<<) or extraction (>>) operator to read/write to the file.  Once you are done, there are several ways to close a file: explicitly call the close() function, or just let the file I/O variable go out of scope (the file I/O class destructor will close the file for you).</p>
+<p><strong>File output</strong></p>
+<p>To do file output in the following example, we&#8217;re going to use the ofstream class.  This is extremely straighforward:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d75831632e813277230" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d75831632e813277230-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-2">2</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-4">4</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-6">6</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-8">8</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-10">10</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-12">12</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-14">14</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-16">16</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-18">18</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-20">20</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-22">22</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-24">24</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-26">26</div><div class="crayon-num" data-line="crayon-555d75831632e813277230-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831632e813277230-28">28</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d75831632e813277230-1"><span class="crayon-p">#include &lt;fstream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-2"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-3"><span class="crayon-h"> </span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-4"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-5"><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// ofstream is used for writing files</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// We'll make a file called Sample.dat</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">ofstream</span><span class="crayon-h"> </span><span class="crayon-e">outf</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-11">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If we couldn't open the output file stream for writing</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">outf</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Print an error and exit</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cerr</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Uh oh, Sample.dat could not be opened for writing!"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-19">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// We'll write two lines into this file</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 1"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 2"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-23">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-25"><span class="crayon-h">	</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// When outf goes out of scope, the ofstream</span></div><div class="crayon-line" id="crayon-555d75831632e813277230-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// destructor will close the file</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831632e813277230-28"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0027 seconds] -->
+<p></p>
+<p>If you look in your project directory, you should see a file called Sample.dat.  If you open it with a text editor, you will see that it indeed contains two lines we wrote to the file.</p>
+<p>Note that it is also possible to use the put() function to write a single character to the file.</p>
+<p><strong>File input</strong></p>
+<p>Now, we&#8217;ll take the file we wrote in the last example and read it back in from disk.  Note that ifstream returns a 0 if we&#8217;ve reached the end of the file (EOF).  We&#8217;ll use this fact to determine how much to read.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d75831634f357363049" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d75831634f357363049-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-2">2</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-4">4</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-6">6</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-8">8</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-10">10</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-12">12</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-14">14</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-16">16</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-18">18</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-20">20</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-22">22</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-24">24</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-26">26</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-28">28</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-30">30</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-32">32</div><div class="crayon-num" data-line="crayon-555d75831634f357363049-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831634f357363049-34">34</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d75831634f357363049-1"><span class="crayon-p">#include &lt;fstream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-2"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-3"><span class="crayon-p">#include &lt;string&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-4"><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d75831634f357363049-5"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-6"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-8">&nbsp;</div><div class="crayon-line" id="crayon-555d75831634f357363049-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// ifstream is used for reading files</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// We'll read from a file called Sample.dat</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">ifstream</span><span class="crayon-h"> </span><span class="crayon-e">inf</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-12">&nbsp;</div><div class="crayon-line" id="crayon-555d75831634f357363049-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If we couldn't open the output file stream for reading</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">inf</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Print an error and exit</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cerr</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Uh oh, Sample.dat could not be opened for reading!"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-20">&nbsp;</div><div class="crayon-line" id="crayon-555d75831634f357363049-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// While there's still stuff left to read</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">while</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">inf</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// read stuff from the file into a string and print it</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">inf</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-31"><span class="crayon-h">	</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// When inf goes out of scope, the ifstream</span></div><div class="crayon-line" id="crayon-555d75831634f357363049-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// destructor will close the file</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831634f357363049-34"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0038 seconds] -->
+<p></p>
+<p>This produces the result:</p>
+<pre>
+This
+is
+line
+1
+This
+is
+line
+2
+</pre>
+<p>Hmmm, that wasn&#8217;t quite what we wanted.  Remember that the extraction operator deals with &#8220;formatted output&#8221;, and breaks on whitespace.  In order to read in entire lines, we&#8217;ll have to use the getline() function.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758316358105845268" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758316358105845268-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-2">2</div><div class="crayon-num" data-line="crayon-555d758316358105845268-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-4">4</div><div class="crayon-num" data-line="crayon-555d758316358105845268-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-6">6</div><div class="crayon-num" data-line="crayon-555d758316358105845268-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-8">8</div><div class="crayon-num" data-line="crayon-555d758316358105845268-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-10">10</div><div class="crayon-num" data-line="crayon-555d758316358105845268-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-12">12</div><div class="crayon-num" data-line="crayon-555d758316358105845268-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-14">14</div><div class="crayon-num" data-line="crayon-555d758316358105845268-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-16">16</div><div class="crayon-num" data-line="crayon-555d758316358105845268-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-18">18</div><div class="crayon-num" data-line="crayon-555d758316358105845268-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-20">20</div><div class="crayon-num" data-line="crayon-555d758316358105845268-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-22">22</div><div class="crayon-num" data-line="crayon-555d758316358105845268-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-24">24</div><div class="crayon-num" data-line="crayon-555d758316358105845268-25">25</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-26">26</div><div class="crayon-num" data-line="crayon-555d758316358105845268-27">27</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-28">28</div><div class="crayon-num" data-line="crayon-555d758316358105845268-29">29</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-30">30</div><div class="crayon-num" data-line="crayon-555d758316358105845268-31">31</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-32">32</div><div class="crayon-num" data-line="crayon-555d758316358105845268-33">33</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316358105845268-34">34</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758316358105845268-1"><span class="crayon-p">#include &lt;fstream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-2"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line" id="crayon-555d758316358105845268-3"><span class="crayon-p">#include &lt;string&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-4"><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d758316358105845268-5"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-6"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d758316358105845268-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-8">&nbsp;</div><div class="crayon-line" id="crayon-555d758316358105845268-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// ifstream is used for reading files</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// We'll read from a file called Sample.dat</span></div><div class="crayon-line" id="crayon-555d758316358105845268-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">ifstream</span><span class="crayon-h"> </span><span class="crayon-e">inf</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-12">&nbsp;</div><div class="crayon-line" id="crayon-555d758316358105845268-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If we couldn't open the input file stream for reading</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">inf</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d758316358105845268-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Print an error and exit</span></div><div class="crayon-line" id="crayon-555d758316358105845268-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cerr</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Uh oh, Sample.dat could not be opened for reading!"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316358105845268-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-20">&nbsp;</div><div class="crayon-line" id="crayon-555d758316358105845268-21"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// While there's still stuff left to read</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-22"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">while</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">inf</span><span class="crayon-sy">)</span></div><div class="crayon-line" id="crayon-555d758316358105845268-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// read stuff from the file into a string and print it</span></div><div class="crayon-line" id="crayon-555d758316358105845268-25"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-26"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">getline</span><span class="crayon-sy">(</span><span class="crayon-v">inf</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316358105845268-27"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-28"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d758316358105845268-29"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-30"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316358105845268-31"><span class="crayon-h">	</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-32"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// When inf goes out of scope, the ifstream</span></div><div class="crayon-line" id="crayon-555d758316358105845268-33"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// destructor will close the file</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316358105845268-34"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0032 seconds] -->
+<p></p>
+<p>This produces the result:</p>
+<pre>
+This is line 1
+This is line 2
+</pre>
+<p><strong>Buffered output</strong></p>
+<p>Output in C++ may be buffered.  This means that anything that is output to a file stream may not be written to disk immediately.  Instead, several output operations may be batched and handled together.  This is done primarily for performance reasons.  When a buffer is written to disk, this is called <strong>flushing</strong> the buffer.  One way to cause the buffer to be flushed is to close the file -- the contents of the buffer will be flushed to disk, and then the file will be closed.</p>
+<p>Buffering is usually not a problem, but in certain circumstance it can cause complications for the unwary.  The main culprit in this case is when there is data in the buffer, and then program terminates immediately (either by crashing, or by calling exit()).  In these cases, the destructors for the file stream classes are not executed, which means the files are never closed, which means the buffers are never flushed.  In this case, the data in the buffer is not written to disk, and is lost forever.  This is why it is always a good idea to explicitly close any open files before calling exit().</p>
+<p>It is possible to flush the buffer manually using the ostream::flush() function or sending std::flush to the output stream.  Either of these methods can be useful to ensure the contents of the buffer are written to disk immediately, just in case the program crashes.</p>
+<p>One interesting note is that std::endl; also flushes the output stream.  Consequently, overuse of std::endl (causing unnecessary buffer flushes) can have performance impacts when doing buffered I/O where flushes are expensive (such as writing to a file).  For this reason, performance conscious programmers will often use &#8216;\n&#8217; instead of std::endl to insert a newline into the output stream, to avoid unnecessary flushing of the buffer.</p>
+<p><strong>File modes</strong></p>
+<p>What happens if we try to write to a file that already exists?  Running the output example again shows that the original file is completely overwritten each time the program is run.  What if, instead, we wanted to append some more data to the end of the file?  It turns out that the file stream constructors take an optional second parameter that allows you to specify information about how the file should be opened.  This parameter is called mode, and the valid flags that it accepts live in the Ios class.</p>
+<table cellpadding=3 border=1>
+<tr>
+<th>Ios file mode</th>
+<th>Meaning</th>
+</tr>
+<tr>
+<td>app</td>
+<td>Opens the file in append mode</td>
+</tr>
+<tr>
+<td>ate</td>
+<td>Seeks to the end of the file before reading/writing</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>Opens the file in binary mode (instead of text mode)</td>
+</tr>
+<tr>
+<td>in</td>
+<td>Opens the file in read mode (default for ifstream)</td>
+</tr>
+<tr>
+<td>nocreate</td>
+<td>Opens the file only if it already exists</td>
+</tr>
+<tr>
+<td>noreplace</td>
+<td>Opens the file only if it does not already exist</td>
+</tr>
+<tr>
+<td>out</td>
+<td>Opens the file in write mode (default for ofstream)</td>
+</tr>
+<tr>
+<td>trunc</td>
+<td>Erases the file if it already exists</td>
+</tr>
+</table>
+<p>It is possible to specify multiple flags by bitwise ORing them together (using the | operator).  Note that ios::in and ios::out are already defaults for the ifstream and ofstream classes respectively.  If you opt to use fstream (which can do both input and output), you explicitly have to pass in ios::in and/or ios::out depending on which mode you&#8217;d like to use.</p>
+<p>Let&#8217;s write a program that appends two more lines to the Sample.dat file we previously created:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758316364794793205" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758316364794793205-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-2">2</div><div class="crayon-num" data-line="crayon-555d758316364794793205-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-4">4</div><div class="crayon-num" data-line="crayon-555d758316364794793205-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-6">6</div><div class="crayon-num" data-line="crayon-555d758316364794793205-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-8">8</div><div class="crayon-num" data-line="crayon-555d758316364794793205-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-10">10</div><div class="crayon-num" data-line="crayon-555d758316364794793205-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-12">12</div><div class="crayon-num" data-line="crayon-555d758316364794793205-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-14">14</div><div class="crayon-num" data-line="crayon-555d758316364794793205-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-16">16</div><div class="crayon-num" data-line="crayon-555d758316364794793205-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-18">18</div><div class="crayon-num" data-line="crayon-555d758316364794793205-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-20">20</div><div class="crayon-num" data-line="crayon-555d758316364794793205-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-22">22</div><div class="crayon-num" data-line="crayon-555d758316364794793205-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758316364794793205-24">24</div><div class="crayon-num" data-line="crayon-555d758316364794793205-25">25</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758316364794793205-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d758316364794793205-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-4">&nbsp;</div><div class="crayon-line" id="crayon-555d758316364794793205-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// We'll pass the ios:app flag to tell the ofstream to append</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// rather than rewrite the file.&nbsp;&nbsp;We do not need to pass in ios::out</span></div><div class="crayon-line" id="crayon-555d758316364794793205-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// because ofstream defaults to ios::out</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">ofstream</span><span class="crayon-h"> </span><span class="crayon-e">outf</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">ios</span><span class="crayon-o">::</span><span class="crayon-v">app</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316364794793205-9">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// If we couldn't open the output file stream for writing</span></div><div class="crayon-line" id="crayon-555d758316364794793205-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">if</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-v">outf</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d758316364794793205-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// Print an error and exit</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">cerr</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Uh oh, Sample.dat could not be opened for writing!"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316364794793205-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">exit</span><span class="crayon-sy">(</span><span class="crayon-cn">1</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-sy">}</span></div><div class="crayon-line" id="crayon-555d758316364794793205-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 3"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758316364794793205-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 4"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span></div><div class="crayon-line" id="crayon-555d758316364794793205-21"><span class="crayon-h">	</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-22"><span class="crayon-h">	</span></div><div class="crayon-line" id="crayon-555d758316364794793205-23"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// When outf goes out of scope, the ofstream</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758316364794793205-24"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-c">// destructor will close the file</span></div><div class="crayon-line" id="crayon-555d758316364794793205-25"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0027 seconds] -->
+<p></p>
+<p>Now if we take a look at Sample.dat (using one of the above sample programs that prints its contents, or loading it in a text editor), we will see the following:</p>
+<pre>
+This is line 1
+This is line 2
+This is line 3
+This is line 4
+</pre>
+<p><strong>Explicitly opening files using open()</strong></p>
+<p>Just like it is possible to explicitly close a file stream using close(), it&#8217;s also possible to explicitly open a file stream using open().  open() works just like the file stream constructors -- it takes a file name and an optional file mode.</p>
+<p>For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d75831636c252806636" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d75831636c252806636-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831636c252806636-2">2</div><div class="crayon-num" data-line="crayon-555d75831636c252806636-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831636c252806636-4">4</div><div class="crayon-num" data-line="crayon-555d75831636c252806636-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831636c252806636-6">6</div><div class="crayon-num" data-line="crayon-555d75831636c252806636-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831636c252806636-8">8</div><div class="crayon-num" data-line="crayon-555d75831636c252806636-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d75831636c252806636-1"><span class="crayon-r">ofstream</span><span class="crayon-h"> </span><span class="crayon-e">outf</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831636c252806636-2"><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 1"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831636c252806636-3"><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 2"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831636c252806636-4"><span class="crayon-v">outf</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// explicitly close the file</span></div><div class="crayon-line" id="crayon-555d75831636c252806636-5">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d75831636c252806636-6"><span class="crayon-c">// Oops, we forgot something</span></div><div class="crayon-line" id="crayon-555d75831636c252806636-7"><span class="crayon-v">outf</span><span class="crayon-sy">.</span><span class="crayon-e">open</span><span class="crayon-sy">(</span><span class="crayon-s">"Sample.dat"</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">ios</span><span class="crayon-o">::</span><span class="crayon-v">app</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831636c252806636-8"><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"This is line 3"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d75831636c252806636-9"><span class="crayon-v">outf</span><span class="crayon-sy">.</span><span class="crayon-e">close</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0029 seconds] -->
+<p></p>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/137-random-file-io/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 13.7 -- Random file I/O</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter13" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/135-stream-states-and-input-validation/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 13.5 -- Stream states and input validation</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-194" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-194" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-194" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-194" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">27 comments to 13.6 &#8212; Basic file I/O</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-51409">
+		<div id="div-comment-51409" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1348f386c762fcf266f4200cfd61fda5?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1348f386c762fcf266f4200cfd61fda5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.google.ca' rel='external nofollow' class='url'>Unknown</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-51409">
+		March 17, 2009 at 7:05 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=51409#respond' onclick='return addComment.moveForm( "comment-51409", "51409", "respond", "194" )' aria-label='Reply to Unknown'> &middot; Reply</a></span>		 
+		</div>
+		<p>Very nice&#8230; I can do a lot with this stuff. <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /><br />
+By the way Alex :<br />
+Is there any way to change where to save the files that we make with ofstream? for example- I want to save my Sample.dat to desktop.<br />
+Thanks</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-59721">
+		<div id="div-comment-59721" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-59721">
+		May 1, 2009 at 7:25 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=59721#respond' onclick='return addComment.moveForm( "comment-59721", "59721", "respond", "194" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I believe instead of specifying just a filename, you can specify a path and a filename.  I&#8217;m not sure which directory corresponds to the windows desktop, but there is one somewhere on your hard drive&#8230;</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-65355">
+		<div id="div-comment-65355" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/35f3d767300e44960ad8e55df955011d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/35f3d767300e44960ad8e55df955011d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-65355">
+		July 31, 2009 at 3:49 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=65355#respond' onclick='return addComment.moveForm( "comment-65355", "65355", "respond", "194" )' aria-label='Reply to alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I tried adding the complete path and filename, but it still outputs the file in the projects folder.<br />
+Is there a way to actually output the file where you want? It can&#8217;t be that difficult&#8230;<br />
+Thanx</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-4 clearfix" id="comment-65360">
+		<div id="div-comment-65360" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/35f3d767300e44960ad8e55df955011d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/35f3d767300e44960ad8e55df955011d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-65360">
+		July 31, 2009 at 4:43 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=65360#respond' onclick='return addComment.moveForm( "comment-65360", "65360", "respond", "194" )' aria-label='Reply to alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Ignore my previous comment, I had overlooked the explanation below (use double backslashes):<br />
+“c:\\test\\abc.txt”</p>
+<p>This worked for me.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-56186">
+		<div id="div-comment-56186" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/703d43e64e5d52bcaedba6af73a124e5?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/703d43e64e5d52bcaedba6af73a124e5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Mountaingod</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-56186">
+		April 5, 2009 at 12:07 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=56186#respond' onclick='return addComment.moveForm( "comment-56186", "56186", "respond", "194" )' aria-label='Reply to Mountaingod'> &middot; Reply</a></span>		 
+		</div>
+		<p>I don&#8217;t know if anybody checks these for comments, but outputting to text files doesn&#8217;t work for me in Visual C++ 2008 <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/frownie.png" alt=":(" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>I&#8217;ve copy-pasted your output example exactly. The program compiles &amp; runs, but no text file results. What&#8217;s happening?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-59722">
+		<div id="div-comment-59722" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-59722">
+		May 1, 2009 at 7:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=59722#respond' onclick='return addComment.moveForm( "comment-59722", "59722", "respond", "194" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I do read all the comments (eventually).  I don&#8217;t know why it wouldn&#8217;t be outputting a file.  Perhaps you don&#8217;t have permission to create files in the output directory?  Seems unlikely though.  You might do a google search on ofstream() and see if you can find reasons that it might fail.  I can&#8217;t think of any other obvious reasons.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-60181">
+		<div id="div-comment-60181" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bfdddccf2cc506434753e2714ae6e0e1?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bfdddccf2cc506434753e2714ae6e0e1?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chandrakant</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-60181">
+		May 7, 2009 at 2:33 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=60181#respond' onclick='return addComment.moveForm( "comment-60181", "60181", "respond", "194" )' aria-label='Reply to Chandrakant'> &middot; Reply</a></span>		 
+		</div>
+		<p>if you given complete file path using single slash separator like &#8220;c:\test\abc.txt&#8221;  try with double slash separator like &#8220;c:\\test\\abc.txt&#8221;</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-82810">
+		<div id="div-comment-82810" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/858ad861939570730e3dba6ce789f1ac?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/858ad861939570730e3dba6ce789f1ac?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Coderdude</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-82810">
+		April 12, 2010 at 7:05 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=82810#respond' onclick='return addComment.moveForm( "comment-82810", "82810", "respond", "194" )' aria-label='Reply to Coderdude'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hmm&#8230; I&#8217;m wondering if you can make the program so that the user can write to the file? Like, something with cin. Is it possible? It probably is, and has an easy explanation, but I just want to know if it is possible, and how to write the program to do this if it is possible. Thanks!!</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-93587">
+		<div id="div-comment-93587" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/485576a3e34f44e6bd426eff518f5462?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/485576a3e34f44e6bd426eff518f5462?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">tylerfb11</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-93587">
+		October 12, 2010 at 11:48 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=93587#respond' onclick='return addComment.moveForm( "comment-93587", "93587", "respond", "194" )' aria-label='Reply to tylerfb11'> &middot; Reply</a></span>		 
+		</div>
+		<p>It sure is possible! You can outf a varible just like you do with cout:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758319c56506534658" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758319c56506534658-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-2">2</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-4">4</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-6">6</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-8">8</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-10">10</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-12">12</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-14">14</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-16">16</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-18">18</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-19">19</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-20">20</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-21">21</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-22">22</div><div class="crayon-num" data-line="crayon-555d758319c56506534658-23">23</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319c56506534658-24">24</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758319c56506534658-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-4">&nbsp;</div><div class="crayon-line" id="crayon-555d758319c56506534658-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavNum</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">char</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavLet</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavNum</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavLet</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-10">&nbsp;</div><div class="crayon-line" id="crayon-555d758319c56506534658-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">ofstream</span><span class="crayon-h"> </span><span class="crayon-e">outf</span><span class="crayon-sy">(</span><span class="crayon-s">"MyFile.txt"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-12">&nbsp;</div><div class="crayon-line" id="crayon-555d758319c56506534658-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"My favorite number is: "</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavNum</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"My favorite letter is: "</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavLet</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-17">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-18">&nbsp;</div><div class="crayon-line" id="crayon-555d758319c56506534658-19"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"Thank-you!"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-20"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-e">system</span><span class="crayon-sy">(</span><span class="crayon-s">"pause"</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-21">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-22"><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319c56506534658-23"><span class="crayon-sy">}</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319c56506534658-24"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0030 seconds] -->
+<p></p>
+<p>-Tyler</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-93588">
+		<div id="div-comment-93588" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/485576a3e34f44e6bd426eff518f5462?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/485576a3e34f44e6bd426eff518f5462?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">tylerfb11</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-93588">
+		October 12, 2010 at 11:55 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=93588#respond' onclick='return addComment.moveForm( "comment-93588", "93588", "respond", "194" )' aria-label='Reply to tylerfb11'> &middot; Reply</a></span>		 
+		</div>
+		<p>hmmm&#8230;. WordPress strikes again:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758319b4a600359758" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758319b4a600359758-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319b4a600359758-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758319b4a600359758-1"><span class="crayon-r">cout</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavNum</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319b4a600359758-2"><span class="crayon-r">cout</span><span class="crayon-h">&nbsp;&nbsp;</span><span class="crayon-o">&lt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavLet</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+<p>should be:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758319b55071077000" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758319b55071077000-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319b55071077000-2">2</div><div class="crayon-num" data-line="crayon-555d758319b55071077000-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758319b55071077000-1"><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavNum</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319b55071077000-2"><span class="crayon-v">cin</span><span class="crayon-h"> </span><span class="crayon-o">&gt;&gt;</span><span class="crayon-h"> </span><span class="crayon-v">nMyFavLet</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319b55071077000-3"><span class="crayon-o">&lt;</span><span class="crayon-o">!</span><span class="crayon-o">--</span><span class="crayon-v">formatted</span><span class="crayon-o">--</span><span class="crayon-o">&gt;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>-Tyler</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-95246">
+		<div id="div-comment-95246" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1837644fac584b15d30c431c1a769d1f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1837644fac584b15d30c431c1a769d1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">chrys</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-95246">
+		March 11, 2011 at 12:54 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=95246#respond' onclick='return addComment.moveForm( "comment-95246", "95246", "respond", "194" )' aria-label='Reply to chrys'> &middot; Reply</a></span>		 
+		</div>
+		<p>For those that get an &#8220;error: &#8216;exit&#8217; was not declared in this scope&#8221; they have to include </p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-95247">
+		<div id="div-comment-95247" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1837644fac584b15d30c431c1a769d1f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1837644fac584b15d30c431c1a769d1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.seotiras.com' rel='external nofollow' class='url'>chrys</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-95247">
+		March 11, 2011 at 12:56 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=95247#respond' onclick='return addComment.moveForm( "comment-95247", "95247", "respond", "194" )' aria-label='Reply to chrys'> &middot; Reply</a></span>		 
+		</div>
+		<p>cstdlib!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-97208">
+		<div id="div-comment-97208" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9758a0d2d30b57d613700032df1b2f89?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9758a0d2d30b57d613700032df1b2f89?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Sakthi</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-97208">
+		April 4, 2012 at 9:17 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=97208#respond' onclick='return addComment.moveForm( "comment-97208", "97208", "respond", "194" )' aria-label='Reply to Sakthi'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hello Alex,<br />
+In the first program in this page, why do we need to include both fstream and iostream header files?<br />
+You have already mentioned that fstream class is derived from iostream class. Then isn&#8217;t it enough if we include only fstream ?</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-251281">
+		<div id="div-comment-251281" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">FuckTheDuck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-251281">
+		January 29, 2015 at 1:37 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=251281#respond' onclick='return addComment.moveForm( "comment-251281", "251281", "respond", "194" )' aria-label='Reply to FuckTheDuck'> &middot; Reply</a></span>		 
+		</div>
+		<p>yes and what about the other things, like (string, cin, cerr, cout). They require iostream to be included.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-98014">
+		<div id="div-comment-98014" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1da9e5194a4d432c423d43e8d085bd81?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1da9e5194a4d432c423d43e8d085bd81?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">el_ivan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-98014">
+		December 11, 2012 at 10:59 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=98014#respond' onclick='return addComment.moveForm( "comment-98014", "98014", "respond", "194" )' aria-label='Reply to el_ivan'> &middot; Reply</a></span>		 
+		</div>
+		<p>Learncpp has the best c++ tutorial I&#8217;ve seen so far, thank you very much for this set of tutorials.  </p>
+<p>I&#8217;ve learned so much on the past 3 weeks thanks to this website.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-98050">
+		<div id="div-comment-98050" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9881689bacc36207780dd60930b46ede?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9881689bacc36207780dd60930b46ede?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Onix_GCI</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-98050">
+		December 26, 2012 at 6:57 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=98050#respond' onclick='return addComment.moveForm( "comment-98050", "98050", "respond", "194" )' aria-label='Reply to Onix_GCI'> &middot; Reply</a></span>		 
+		</div>
+		<p>First paragraph says that the header is fstream.h, it is probably should be just fstream.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-100628">
+		<div id="div-comment-100628" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/152a5421cf53ae414b7ad5eedae2985f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/152a5421cf53ae414b7ad5eedae2985f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">1krishna23</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-100628">
+		July 8, 2013 at 10:20 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=100628#respond' onclick='return addComment.moveForm( "comment-100628", "100628", "respond", "194" )' aria-label='Reply to 1krishna23'> &middot; Reply</a></span>		 
+		</div>
+		<p>hello,</p>
+<p>Is it possible to pass an object data/parameter/member to FILE,if it possible please write a small program that a class contain one char and int variable,and how to read the object from FILE.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-104268">
+		<div id="div-comment-104268" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/ef77914ea41adda997c4078699795199?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/ef77914ea41adda997c4078699795199?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">GS</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-104268">
+		September 9, 2013 at 5:27 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=104268#respond' onclick='return addComment.moveForm( "comment-104268", "104268", "respond", "194" )' aria-label='Reply to GS'> &middot; Reply</a></span>		 
+		</div>
+		<p>I wanted to create CPP application which will access data from MySQL database, i have now idea from where to start, looking for guidance ?</p>
+<p><i> i hope i have placed my question at right place </i></p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-251785">
+		<div id="div-comment-251785" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/223bab05de051f8d4fce32cdc0c0c880?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/223bab05de051f8d4fce32cdc0c0c880?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">venkat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-251785">
+		March 11, 2015 at 10:57 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=251785#respond' onclick='return addComment.moveForm( "comment-251785", "251785", "respond", "194" )' aria-label='Reply to venkat'> &middot; Reply</a></span>		 
+		</div>
+		<p>http://dev.mysql.com/downloads/connector/cpp/</p>
+<p>Check this. It might help you.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-122508">
+		<div id="div-comment-122508" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/69c0c3fedde6178cd72db7078dba007f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/69c0c3fedde6178cd72db7078dba007f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">AlwaysLearning</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-122508">
+		February 1, 2014 at 4:44 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=122508#respond' onclick='return addComment.moveForm( "comment-122508", "122508", "respond", "194" )' aria-label='Reply to AlwaysLearning'> &middot; Reply</a></span>		 
+		</div>
+		<p>This works fine for me, but this while loop adds an extra new line character when outputting both to the console and to a file. What would be the most efficient way of avoiding this issue?</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-251280">
+		<div id="div-comment-251280" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">FuckTheDuck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-251280">
+		January 29, 2015 at 1:05 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=251280#respond' onclick='return addComment.moveForm( "comment-251280", "251280", "respond", "194" )' aria-label='Reply to FuckTheDuck'> &middot; Reply</a></span>		 
+		</div>
+		<p>try this </p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758319451366929837" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758319451366929837-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319451366929837-2">2</div><div class="crayon-num" data-line="crayon-555d758319451366929837-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319451366929837-4">4</div><div class="crayon-num" data-line="crayon-555d758319451366929837-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319451366929837-6">6</div><div class="crayon-num" data-line="crayon-555d758319451366929837-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d758319451366929837-8">8</div><div class="crayon-num" data-line="crayon-555d758319451366929837-9">9</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758319451366929837-1"><span class="crayon-h"> </span><span class="crayon-st">while</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-v">inf</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319451366929837-2"><span class="crayon-sy">{</span><span class="crayon-h"> </span></div><div class="crayon-line" id="crayon-555d758319451366929837-3"><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319451366929837-4">&nbsp;</div><div class="crayon-line" id="crayon-555d758319451366929837-5"><span class="crayon-st">if</span><span class="crayon-sy">(</span><span class="crayon-o">!</span><span class="crayon-e">getline</span><span class="crayon-sy">(</span><span class="crayon-v">inf</span><span class="crayon-sy">,</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">)</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d758319451366929837-6"><span class="crayon-st">break</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319451366929837-7">&nbsp;</div><div class="crayon-line crayon-striped-line" id="crayon-555d758319451366929837-8"><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d758319451366929837-9"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0011 seconds] -->
+<p></p>
+<p>notice in the first example (output file)<br />
+he sent an extra (endl) and it was translated to a newline</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d75831945d138057197" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d75831945d138057197-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d75831945d138057197-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d75831945d138057197-1"><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"this is line 1"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d75831945d138057197-2"><span class="crayon-v">outf</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"this is line 2"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">//extra endl</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>so when you read from the file that extra new line will be counted too!</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-127243">
+		<div id="div-comment-127243" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/1c41726b41b7d2563f6cb523629ee5c9?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/1c41726b41b7d2563f6cb523629ee5c9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">thunder boldt</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-127243">
+		February 25, 2014 at 7:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=127243#respond' onclick='return addComment.moveForm( "comment-127243", "127243", "respond", "194" )' aria-label='Reply to thunder boldt'> &middot; Reply</a></span>		 
+		</div>
+		<p>can any one help me write a code using cstirings and arrays maybe for-loops help please i&#8217;m a sophomore in high-school</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-130667">
+		<div id="div-comment-130667" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8f34fc56405e858c69f2b26b9523c6f3?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8f34fc56405e858c69f2b26b9523c6f3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">boyydz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-130667">
+		March 16, 2014 at 4:42 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=130667#respond' onclick='return addComment.moveForm( "comment-130667", "130667", "respond", "194" )' aria-label='Reply to boyydz'> &middot; Reply</a></span>		 
+		</div>
+		<p>Any idea why I get a stack overflow exception while writing to ofstream?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-154549">
+		<div id="div-comment-154549" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f9793453ab66f74a2079f25b8c31915d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f9793453ab66f74a2079f25b8c31915d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">kekie</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-154549">
+		June 23, 2014 at 3:41 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=154549#respond' onclick='return addComment.moveForm( "comment-154549", "154549", "respond", "194" )' aria-label='Reply to kekie'> &middot; Reply</a></span>		 
+		</div>
+		<p>error: &#8216;nocreate&#8217; is not a member of &#8216;std::ios {aka std::basic_ios}&#8217;|</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-173963">
+		<div id="div-comment-173963" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fdfdb2d0cbcea1b82c61596338c62f30?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fdfdb2d0cbcea1b82c61596338c62f30?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://sites.google.com/site/ismrahulsoni' rel='external nofollow' class='url'>Rahul</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-173963">
+		August 29, 2014 at 6:25 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=173963#respond' onclick='return addComment.moveForm( "comment-173963", "173963", "respond", "194" )' aria-label='Reply to Rahul'> &middot; Reply</a></span>		 
+		</div>
+		<p>I am trying to prepare a simple converter that reads data from a file and then rearranges the data followed by its writing work in a different file. </p>
+<p>I have written the code in CODE::BLOCKS. It is compiled without any error. However, while running it fails and gives message that the program has stopped working. </p>
+<p>The code written is as below:<br />
+/*dump2VTKconverter*/<br />
+#include<br />
+#include<br />
+#include &#8220;stdio.h&#8221;</p>
+<p>/*************************For reading data from files*************************************/<br />
+#include &#8220;assert.h&#8221;<br />
+#include &#8220;stdio.h&#8221;<br />
+#include<br />
+#include<br />
+/*****************************************************************************************/</p>
+<p>using namespace std;</p>
+<p>/* --------------Function to jump to a specific line of file----------------- */<br />
+std::ifstream&amp; GotoLine(std::ifstream&amp; myfile, unsigned int num)<br />
+    {<br />
+        myfile.seekg(std::ios::beg);<br />
+        for(int i=0; i &lt; num - 1; ++i)<br />
+            {<br />
+                myfile.ignore(std::numeric_limits::max(),&#8217;\n&#8217;);<br />
+            }<br />
+        return myfile;<br />
+    }</p>
+<p>/* -----------------Function to write an array to a file------------------- */<br />
+std::fstream&amp; writefile(std::fstream&amp; file, int nparticles, int ntimestep, double *array, int array_length, int array_type)<br />
+    {<br />
+        if(file.is_open())<br />
+            {<br />
+                file&lt;&lt;&quot;\n&quot;;<br />
+                if(array_type == 1)<br />
+                    {<br />
+                        file&lt;&lt;ntimestep;<br />
+                        file&lt;&lt;&quot;\t \t&quot;;<br />
+                        file&lt;&lt;nparticles;<br />
+                        file&lt;&lt;&quot;\t \t&quot;;<br />
+                    }<br />
+                for(int i = 0; i &lt; array_length; i++)<br />
+                    {<br />
+                        file&lt;&lt;array[i];<br />
+                        file&lt;&lt;&quot;\t&quot;;<br />
+                    }<br />
+            }<br />
+    }<br />
+/*--------------------------------------------------------------*/</p>
+<p>int main()<br />
+    {<br />
+        int NoOfPropertiesInDumpFiles=0; int TimeStepLineNo=0; int NoOfAtomsLineNo=0; int FirstDataLineNo=0;</p>
+<p>        cout &lt;&gt; NoOfPropertiesInDumpFiles;<br />
+        cout &lt;&gt; TimeStepLineNo;<br />
+        cout &lt;&gt; NoOfAtomsLineNo;<br />
+        cout &lt;&gt; FirstDataLineNo;</p>
+<p>        int TimeStep=0; int NoOfAtoms=0; int LineNo=0;</p>
+<p>        int *ATOM_ID; int *ATOM_TYPE01; int *ATOM_TYPE02; double *X; double *Y; double *Z; double *IX; double *IY; double *IZ;<br />
+        double *VX; double *VY; double *VZ; double *FX; double *FY; double *FZ; double *OMEGAX; double *OMEGAY; double *OMEGAZ;<br />
+        double *Radius;</p>
+<p>        for(int i=1;10;i++)<br />
+            {<br />
+                ifstream dumpFile(&#8220;dumpfile&#8221;);<br />
+                //dumpFile.open(&#8220;dumpfile&#8221;, std::ios::in::out);</p>
+<p>                    if(ATOM_ID) delete[] ATOM_ID; if(ATOM_TYPE01) delete[] ATOM_TYPE01; if(ATOM_TYPE02) delete[] ATOM_TYPE02; if(X) delete[] X; if(Y) delete[] Y; if(Z) delete[] Z;<br />
+                    if(IX) delete[] IX; if(IY) delete[] IY; if(IZ) delete[] IZ; if(VX) delete[] VX; if(VY) delete[] VY; if(VZ) delete[] VZ;<br />
+                    if(FX) delete[] FX; if(FY) delete[] FY; if(FZ) delete[] FZ; if(OMEGAX) delete[] OMEGAX; if(OMEGAY) delete[] OMEGAY; if(OMEGAZ) delete[] OMEGAZ; if(Radius) delete[] Radius;</p>
+<p>                    ATOM_ID=new int[NoOfAtoms]; ATOM_TYPE01=new int[NoOfAtoms]; ATOM_TYPE02=new int[NoOfAtoms]; X=new double[NoOfAtoms]; Y=new double[NoOfAtoms]; Z=new double[NoOfAtoms];<br />
+                    IX=new double[NoOfAtoms]; IY=new double[NoOfAtoms]; IZ=new double[NoOfAtoms]; VX=new double[NoOfAtoms]; VY=new double[NoOfAtoms]; VZ=new double[NoOfAtoms];<br />
+                    FX=new double[NoOfAtoms]; FY=new double[NoOfAtoms]; FZ=new double[NoOfAtoms]; OMEGAX=new double[NoOfAtoms]; OMEGAY=new double[NoOfAtoms]; OMEGAZ=new double[NoOfAtoms]; Radius=new double[NoOfAtoms];</p>
+<p>                    GotoLine(dumpFile,TimeStepLineNo);<br />
+                    dumpFile&gt;&gt;TimeStep;<br />
+                    GotoLine(dumpFile,NoOfAtomsLineNo);<br />
+                    dumpFile&gt;&gt;NoOfAtoms;</p>
+<p>                    LineNo = FirstDataLineNo; int Current_ATOM_No=0;<br />
+                    while(LineNo &gt;ATOM_ID[Current_ATOM_No]; dumpFile&gt;&gt;ATOM_TYPE01[Current_ATOM_No]; dumpFile&gt;&gt;ATOM_TYPE02[Current_ATOM_No]; dumpFile&gt;&gt;X[Current_ATOM_No]; dumpFile&gt;&gt;Y[Current_ATOM_No]; dumpFile&gt;&gt;Z[Current_ATOM_No];<br />
+                            dumpFile&gt;&gt;IX[Current_ATOM_No]; dumpFile&gt;&gt;IY[Current_ATOM_No]; dumpFile&gt;&gt;IZ[Current_ATOM_No]; dumpFile&gt;&gt;VX[Current_ATOM_No]; dumpFile&gt;&gt;VY[Current_ATOM_No]; dumpFile&gt;&gt;VZ[Current_ATOM_No];<br />
+                            dumpFile&gt;&gt;FX[Current_ATOM_No]; dumpFile&gt;&gt;FY[Current_ATOM_No]; dumpFile&gt;&gt;FZ[Current_ATOM_No]; dumpFile&gt;&gt;OMEGAX[Current_ATOM_No]; dumpFile&gt;&gt;OMEGAY[Current_ATOM_No]; dumpFile&gt;&gt;OMEGAZ[Current_ATOM_No]; dumpFile&gt;&gt;Radius[Current_ATOM_No];<br />
+                            LineNo++; Current_ATOM_No++;<br />
+                        }<br />
+                // dumpFile.close();<br />
+                ofstream vtkFile(&#8220;vtkfile&#8221;);<br />
+                    vtkFile &lt;&lt; &quot;# vtk DataFile Version 2.0&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;Generated by Rahul K Soni&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;ASCII&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;DATASET POLYDATA&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;POINTS &quot; &lt;&lt; NoOfAtoms &lt;&lt; &quot; float&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; X[i] &lt;&lt; &quot; &quot; &lt;&lt; Y[i] &lt;&lt; &quot; &quot; &lt;&lt; Z[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;VERTICES &quot; &lt;&lt; NoOfAtoms &lt;&lt; &quot; &quot; &lt;&lt; NoOfAtoms*2.0 &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; 1 &lt;&lt; &quot; &quot; &lt;&lt; i &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;POINT_DATA &quot; &lt;&lt; NoOfAtoms &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;VECTORS i float&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; IX[i] &lt;&lt; &quot; &quot; &lt;&lt; IY[i] &lt;&lt; &quot; &quot; &lt;&lt; IZ[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;VECTORS f float&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; FX[i] &lt;&lt; &quot; &quot; &lt;&lt; FY[i] &lt;&lt; &quot; &quot; &lt;&lt; FZ[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;VECTORS v float&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; VX[i] &lt;&lt; &quot; &quot; &lt;&lt; VY[i] &lt;&lt; &quot; &quot; &lt;&lt; VZ[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS omegax float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; OMEGAX[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS omegay float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; OMEGAY[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS omegaz float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; OMEGAZ[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS radius float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; Radius[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS type float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; ATOM_TYPE01[i] &lt;&lt; endl;<br />
+                        }<br />
+                    vtkFile &lt;&lt; &quot;SCALARS id float 1&quot; &lt;&lt; endl;<br />
+                    vtkFile &lt;&lt; &quot;LOOKUP_TABLE default&quot; &lt;&lt; endl;<br />
+                    for(int i=0; NoOfAtoms; i++)<br />
+                        {<br />
+                            vtkFile &lt;&lt; ATOM_ID[i] &lt;&lt; endl;<br />
+                        }<br />
+            }</p>
+<p>        return 0;<br />
+    }</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-251279">
+		<div id="div-comment-251279" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f04a8dbe01087c34f77c8bdf6be4480c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">FuckTheDuck</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-251279">
+		January 29, 2015 at 12:55 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=251279#respond' onclick='return addComment.moveForm( "comment-251279", "251279", "respond", "194" )' aria-label='Reply to FuckTheDuck'> &middot; Reply</a></span>		 
+		</div>
+		<p>in the input file example<br />
+if you declared</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d758319557833826183" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d758319557833826183-1">1</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d758319557833826183-1"><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-o">::</span><span class="crayon-t">string</span><span class="crayon-h"> </span><span class="crayon-v">strInput</span><span class="crayon-sy">;</span><span class="crayon-h"> </span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0004 seconds] -->
+<p></p>
+<p>outside the while loop<br />
+it will print the same as your output but with extra 2 at the end<br />
+that means 2 will be printed twice.<br />
+can you explain why?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-251784">
+		<div id="div-comment-251784" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/223bab05de051f8d4fce32cdc0c0c880?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/223bab05de051f8d4fce32cdc0c0c880?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">venkat</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/136-basic-file-io/#comment-251784">
+		March 11, 2015 at 10:56 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/136-basic-file-io/?replytocom=251784#respond' onclick='return addComment.moveForm( "comment-251784", "251784", "respond", "194" )' aria-label='Reply to venkat'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,</p>
+<p>I always check this website whenever i need to brush up my C++ skills. It is a great resource.</p>
+<p>But recently, i came across a situation where i need to work with uni code characters. I tried couple of other websites and understood a bit. But i would like to read something about working with Unicode files on this site.</p>
+<p>Could you please add this?.</p>
+<p>Thank you.</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/136-basic-file-io/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>eight &#43; 20 = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4ODI5MXR5bTdtZjVxZ3o3ZGJwYWozMW04Mjg=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432188291" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='194' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8f01f2ed65" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="249"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/136-basic-file-io\/":194};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/136-basic-file-io/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'194',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '194' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.769 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:04:51 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

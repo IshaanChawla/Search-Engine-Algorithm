@@ -1,0 +1,17 @@
+import java.net.*;						//URL class and URLConnection Class
+import java.io.*;						//URL Connection class throws a IOException. For the bufferedreader class 
+public class GetSrcPage 
+{
+	public String getsrc(String url) throws IOException
+	{
+		URL webpage = new URL(url);
+		URLConnection wpc = webpage.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(wpc.getInputStream(),"UTF-8"));
+		String input;
+		StringBuilder str = new StringBuilder();
+		while((input = in.readLine())!= null)
+			str.append(input + "\n");
+		in.close();
+		return str.toString();
+	}
+}

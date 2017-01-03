@@ -1,0 +1,1851 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>2.3 &#8212; Variable sizes and the sizeof operator &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 2.3 &#8212; Variable sizes and the sizeof operator Comments Feed" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"134.74.83.253","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[["2015","04","23"],["1"]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/23-variable-sizes-and-the-sizeof-operator\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='News &#8212; new section 1.5, anonymous comments, feedburner' href='http://www.learncpp.com/site-news/news-new-section-110-added-anonymous-posting-feedburner/' />
+<link rel='next' title='We apologize for the downtime' href='http://www.learncpp.com/site-news/we-apologize-for-the-downtime/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=43' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="2.3 -- Variable sizes and the sizeof operator" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/" />
+<meta property="og:description" content="As you learned in the lesson 2.1 -- basic addressing and variable definition, memory on modern machines is typically organized into byte-sized units, with each unit having a unique address. Up to t..." />
+<meta property="article:published_time" content="2007-06-06T22:33:24+00:00" />
+<meta property="article:modified_time" content="2015-03-24T23:20:43+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="https://s0.wp.com/i/blank.jpg" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-43 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-43 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-43">
+						<div class="post-headline">		<h1>2.3 &#8212; Variable sizes and the sizeof operator</h1>
+		</div>		<div class="post-byline">By Alex, on June 6th, 2007</div>		<div class="post-bodycopy clearfix"><p>As you learned in the lesson <a href="http://www.learncpp.com/cpp-tutorial/21-basic-addressing-and-variable-declaration/">2.1 -- basic addressing and variable definition</a>, memory on modern machines is typically organized into byte-sized units, with each unit having a unique address.  Up to this point, it has been useful to think of memory as a bunch of cubbyholes or mailboxes where we can put and retrieve information, and variables as names for accessing those cubbyholes or mailboxes.</p>
+<p>However, this analogy is not quite correct in one regard -- most variables actually take up more than 1 byte of memory.  Consequently, a single variable may use 2, 4, or even 8 consecutive memory addresses.  The amount of memory that a variable uses is based on it&#8217;s data type.  Fortunately, because we typically access memory through variable names and not memory addresses, the compiler is largely able to hide the details of working with different sized variables from us.</p>
+<p>There are several reasons it is useful to know how much memory a variable takes up.</p>
+<p>First, the more memory a variable takes up, the more information it can hold.  Because each bit can only hold a 0 or a 1, we say that bit can hold 2 possible values.</p>
+<p>2 bits can hold 4 possible values:</p>
+<table border=1 cellspacing=0 cellpadding=3>
+<tr>
+<th>bit 0</th>
+<th>bit 1</th>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+</tr>
+</table>
+<p>3 bits can hold 8 possible values:</p>
+<table border=1 cellspacing=0 cellpadding=3>
+<tr>
+<th>bit 0</th>
+<th>bit 1</th>
+<th>bit 2</th>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</table>
+<p>To generalize, a variable with n bits can hold 2<sup>n</sup> (2 to the power of n, also commonly written 2^n) possible values.  Because a byte is 8 bits, a byte can store 2<sup>8</sup> (256) possible values.</p>
+<p>The size of the variable puts a limit on the amount of information it can store -- variables that utilize more bytes can hold a wider range of values.  We will address this issue further when we get into the different types of variables.</p>
+<p>Second, computers have a finite amount of free memory.  Every time we declare a variable, a small portion of that free memory is used as long as the variable is in existence.  Because modern computers have a lot of memory, this often isn&#8217;t a problem, especially if only declaring a few variables.  However, for programs that need a large amount of variables (eg. 100,000), the difference between using 1 byte and 8 byte variables can be significant.</p>
+<p>However, you may find on your system that the variables are larger (particularly for int, which is often 4 bytes).</p>
+<p><strong>The size of C++ basic data types</strong></p>
+<p>The obvious next question is &#8220;how much memory do variables of different data types take?&#8221;.  You may be surprised to find that the size of a given data type is dependent on the compiler and/or the computer architecture!</p>
+<p>C++ guarantees that the basic data types will have a minimum size:</p>
+<table border=1 cellspacing=0 cellpadding=3>
+<tr>
+<th>Category</th>
+<th>Type</th>
+<th>Minimum Size</th>
+<th>Note</th>
+</tr>
+<tr>
+<td>boolean</td>
+<td>bool</td>
+<td>1 byte</td>
+<td></td>
+</tr>
+<tr>
+<td>character</td>
+<td>char</td>
+<td>1 byte</td>
+<td>May be signed or unsigned</td>
+</tr>
+<tr>
+<td></td>
+<td>wchar_t</td>
+<td>1 byte</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>char16_t</td>
+<td>2 bytes</td>
+<td>C++11 type</td>
+</tr>
+<tr>
+<td></td>
+<td>char32_t</td>
+<td>4 bytes</td>
+<td>C++11 type</td>
+</tr>
+<tr>
+<td>integer</td>
+<td>short</td>
+<td>2 bytes</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>int</td>
+<td>2 bytes</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>long</td>
+<td>4 bytes</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>long long</td>
+<td>8 bytes</td>
+<td>C99/C++11 type</td>
+</tr>
+<tr>
+<td>floating point</td>
+<td>float</td>
+<td>4 bytes</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>double</td>
+<td>8 bytes</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>long double</td>
+<td>8 bytes</td>
+<td></td>
+</tr>
+</table>
+<p>However, the actual size of the variables may be different on your machine.  In order to determine the size of data types on a particular machine, C++ provides an operator named sizeof.  The <strong>sizeof operator</strong> is a unary operator that takes either a type or a variable, and returns its size in bytes.  You can compile and run the following program to find out how large some of your data types are:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77901dabd942939878" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77901dabd942939878-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-2">2</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-4">4</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-5">5</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-6">6</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-7">7</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-8">8</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-9">9</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-10">10</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-11">11</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-12">12</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-13">13</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-14">14</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-15">15</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-16">16</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-17">17</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dabd942939878-18">18</div><div class="crayon-num" data-line="crayon-555d77901dabd942939878-19">19</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77901dabd942939878-1"><span class="crayon-p">#include &lt;iostream&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-2">&nbsp;</div><div class="crayon-line" id="crayon-555d77901dabd942939878-3"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-4"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-5"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">using</span><span class="crayon-h"> </span><span class="crayon-t">namespace</span><span class="crayon-h"> </span><span class="crayon-v">std</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-6"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"bool:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">bool</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-7"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"char:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">char</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-8"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"wchar_t:\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">wchar_t</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-9"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"char16_t:\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">char16_t</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// C++11, may not be supported by your compiler</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-10"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"char32_t:\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">char32_t</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// C++11, may not be supported by your compiler</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-11"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"short:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">short</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-12"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"int:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-13"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"long:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">long</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-14"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"float:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">float</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-15"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"long long:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">long</span><span class="crayon-h"> </span><span class="crayon-t">long</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// C++11, may not be supported by your compiler</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-16"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"double:\t\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">double</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-17"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"long double:\t"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">long</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dabd942939878-18"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d77901dabd942939878-19"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0071 seconds] -->
+<p></p>
+<p>Here is the output from the author&#8217;s x64 machine (in 2015), using Visual Studio 2013:</p>
+<pre>
+bool:           1 bytes
+char:           1 bytes
+wchar_t:        2 bytes
+char16_t:       2 bytes
+char32_t:       4 bytes
+short:          2 bytes
+int:            4 bytes
+long:           4 bytes
+float:          4 bytes
+long long:      8 bytes
+double:         8 bytes
+long double:    8 bytes
+</pre>
+<p>Your results may vary if you are using a different type of machine, or a different compiler.  Note that you can not take the sizeof the void type, since is has no size (doing so will cause a compile error).</p>
+<p>If you&#8217;re wondering what &#8216;\t&#8217; is in the above program, it&#8217;s a special symbol that inserts a tab (in the example, we&#8217;re using it to align the output columns).  We will cover &#8216;\t&#8217; and other special symbols when we talk about the char data type.</p>
+<p>Interestingly, the sizeof operator is one of only three operators in C++ that is a word instead of a symbol.  The other two are <em>new</em> and <em>delete</em>.</p>
+<p>You can also use the sizeof operator on a variable name:</p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77901dacf221992129" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77901dacf221992129-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77901dacf221992129-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77901dacf221992129-1"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">x</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77901dacf221992129-2"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-r">cout</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">"x is "</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-v">x</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">&lt;&lt;</span><span class="crayon-h"> </span><span class="crayon-s">" bytes"</span><span class="crayon-o">&lt;&lt;</span><span class="crayon-v">endl</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<pre>
+x is 4 bytes
+</pre>
+<p>We&#8217;ll discuss the size of different types in the upcoming lessons, as well as a summary table at the end.</p>
+<table border=0 cellpadding=3>
+<tr><td>
+	<a href="/cpp-tutorial/24-integers/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 2.4 -- Integers</a>
+</td></tr>
+<tr><td>
+        <a href="http://www.learncpp.com/#Chapter0" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td></tr>
+<tr><td>
+	<a href="/cpp-tutorial/2-2-void/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 2.2 -- Void</a>
+</td></tr>
+</table>
+
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-43" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-43" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-43" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-43" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">58 comments to 2.3 &#8212; Variable sizes and the sizeof operator</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-5596">
+		<div id="div-comment-5596" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Abhishek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-5596">
+		January 6, 2008 at 1:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=5596#respond' onclick='return addComment.moveForm( "comment-5596", "5596", "respond", "43" )' aria-label='Reply to Abhishek'> &middot; Reply</a></span>		 
+		</div>
+		<p>Never heard of wchar_t before&#8230;&#8230;is that a new data type?What kind of data does it hold?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-5614">
+		<div id="div-comment-5614" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-5614">
+		January 6, 2008 at 10:34 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=5614#respond' onclick='return addComment.moveForm( "comment-5614", "5614", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>There&#8217;s more information about wchar_t on <a href="http://en.wikipedia.org/wiki/Wide_character" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://en.wikipedia.org/wiki/Wide_character', 'wikipedia']);" rel="nofollow">wikipedia</a>.  In short, it was meant to be used to hold &#8220;wide characters&#8221; (eg. those that take more than 8 bits to represent).  However, the size varies depending on platform (and can be as small as 8 bits), so I&#8217;m not sure I see the practical use.</p>
+<p>Edit: To be clear, I&#8217;m not sure I see the practical use of using wchar_t instead of a variable that&#8217;s guaranteed to be at least 16 bits (e.g. char16_t).</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-6505">
+		<div id="div-comment-6505" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/06a389d8d6b95f3fbbd50025722bc875?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/06a389d8d6b95f3fbbd50025722bc875?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">chris</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-6505">
+		January 23, 2008 at 12:39 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=6505#respond' onclick='return addComment.moveForm( "comment-6505", "6505", "respond", "43" )' aria-label='Reply to chris'> &middot; Reply</a></span>		 
+		</div>
+		<p>Pocket PC/Windows Mobile only uses wide characters.  Beyond that the practical use is for foreign languages.  Some languages (like Chinese) have a lot more than 128 characters.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-6555">
+		<div id="div-comment-6555" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/4f7ed6a3705625db2986d562264feb4f?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/4f7ed6a3705625db2986d562264feb4f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Nikki</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-6555">
+		January 24, 2008 at 2:39 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=6555#respond' onclick='return addComment.moveForm( "comment-6555", "6555", "respond", "43" )' aria-label='Reply to Nikki'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;On most 32-bit machines &#8230;. &#8221;<br />
+I am not sure if this is the right place to ask this question .<br />
+ What is a &#8220;32-bit machine &#8221; ?<br />
+Thanks,<br />
+Nikki</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-6561">
+		<div id="div-comment-6561" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-6561">
+		January 24, 2008 at 4:04 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=6561#respond' onclick='return addComment.moveForm( "comment-6561", "6561", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Computers work by moving binary digits (bits) around.  However, most computers do not work with individual bits -- rather, they move data around in chunks.  This chunk size is called a &#8220;word&#8221;.  Typically, when we speak of the bit-ness of a machine, we speak of the size of a word.  Thus, a 32-bit machine has a 32-bit word size, which means it moves information around 32-bits at a time.</p>
+<p>Typically, modern computers use one word to address memory.  With a 32-bit word, this means there are about 2^32 (4 billion) unique memory addresses that can be addressed.  This is why 32-bit machines generally can&#8217;t make use of more than 4GB of memory.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-33055">
+		<div id="div-comment-33055" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/003aa224fb6ca93a53bd2973a98e242e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/003aa224fb6ca93a53bd2973a98e242e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Frederik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-33055">
+		November 27, 2008 at 12:08 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=33055#respond' onclick='return addComment.moveForm( "comment-33055", "33055", "respond", "43" )' aria-label='Reply to Frederik'> &middot; Reply</a></span>		 
+		</div>
+		<p>The amount of memory a machine can address has nothing to do with the &#8220;bitness&#8221; of the machine -- in fact there is no real consensus on what it means to be of a certain &#8220;bitness&#8221;.</p>
+<p>Some 32 bits machines (such as the Pentium Pro and later 32 bit x86s) can address more than 4 GiB, but they are still only considered 32 bit computers.</p>
+<p>I (personally) only consider a machine to be an n bit machine, if it is able to (at least) address up to 2^n individual bytes, is able to hold at least n bits in all registers and can do all operations on n bit (or larger) registers.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-3 clearfix" id="comment-91124">
+		<div id="div-comment-91124" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bf6a79276532ceb36c6571caf682944f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bf6a79276532ceb36c6571caf682944f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">JD</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-91124">
+		August 30, 2010 at 1:25 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=91124#respond' onclick='return addComment.moveForm( "comment-91124", "91124", "respond", "43" )' aria-label='Reply to JD'> &middot; Reply</a></span>		 
+		</div>
+		<p>So, if I understand this correctly, the computer moves data around in 32-bit chunks (4 bytes), but in my C++ program I can assign variables to a single byte of memory.  This seems contradictory to me.</p>
+<p>I guess my question boils down to:  Say I have a program that uses a large number of variables, so space matters.  One byte will suffice for the data I need to carry so to save space I assign them as chars (1 byte).  But, if the smallest &#8220;chunk&#8221; that the computer passes around is 4 bytes, does this actually save any space?  Or would this effectively use the same amount of memory as if I made my variables ints (4 bytes, or one full word)?</p>
+<p>This is a somewhat subtle question, so let me know if I&#8217;m not being clear.</p>
+<p>PS - Thanks for a clear, organized, and well-written tutorial!  I&#8217;ve really enjoyed it so far.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-4 clearfix" id="comment-251490">
+		<div id="div-comment-251490" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251490">
+		February 12, 2015 at 9:59 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251490#respond' onclick='return addComment.moveForm( "comment-251490", "251490", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yes, using 1-byte variables saves space.  Modern architectures generally have memory that is byte-addressable, meaning you can read/write memory one byte at a time.  x86 architecture computers can move different size &#8220;chunks&#8221; around (1 byte, 2 byte, 4 bytes, etc&#8230;).</p>
+<p>Generally you won&#8217;t have to worry about how the computer internally accesses memory and moves data around.  Your compiler should be smart enough to use the best set of assembly instructions for whatever task you&#8217;re throwing at it.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even depth-3 clearfix" id="comment-95438">
+		<div id="div-comment-95438" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/21b2deaaa0bcf172aa88051b6cf7ba1f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">zingmars</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-95438">
+		May 11, 2011 at 5:10 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=95438#respond' onclick='return addComment.moveForm( "comment-95438", "95438", "respond", "43" )' aria-label='Reply to zingmars'> &middot; Reply</a></span>		 
+		</div>
+		<p>It would be easier to explain the whole thing using the architecture name x86(x86_64) rather than calling them &#8217;32-bit&#8217; machines. Confuses people.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-8714">
+		<div id="div-comment-8714" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/511aa092b3aa086ed64f29b7329d62a5?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/511aa092b3aa086ed64f29b7329d62a5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">vader347</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-8714">
+		February 29, 2008 at 6:47 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=8714#respond' onclick='return addComment.moveForm( "comment-8714", "8714", "respond", "43" )' aria-label='Reply to vader347'> &middot; Reply</a></span>		 
+		</div>
+		<p>my long double takes 12 bytes</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-75879">
+		<div id="div-comment-75879" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/738f27894f853f564cefac9d4849f109?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/738f27894f853f564cefac9d4849f109?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Mulky</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-75879">
+		January 6, 2010 at 1:05 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=75879#respond' onclick='return addComment.moveForm( "comment-75879", "75879", "respond", "43" )' aria-label='Reply to Mulky'> &middot; Reply</a></span>		 
+		</div>
+		<p>I bet you say that to all the ladies.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-91737">
+		<div id="div-comment-91737" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/46f5c9bf86dc52175242ba3b76206545?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/46f5c9bf86dc52175242ba3b76206545?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">kemawalker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-91737">
+		September 9, 2010 at 4:01 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=91737#respond' onclick='return addComment.moveForm( "comment-91737", "91737", "respond", "43" )' aria-label='Reply to kemawalker'> &middot; Reply</a></span>		 
+		</div>
+		<p>now THAT is funny!!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-3 clearfix" id="comment-95836">
+		<div id="div-comment-95836" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/224996895a2f35fc3320ce3e58c867b3?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/224996895a2f35fc3320ce3e58c867b3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Kostas81</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-95836">
+		August 7, 2011 at 1:10 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=95836#respond' onclick='return addComment.moveForm( "comment-95836", "95836", "respond", "43" )' aria-label='Reply to Kostas81'> &middot; Reply</a></span>		 
+		</div>
+		<p>This page should have a like button! ?</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-96753">
+		<div id="div-comment-96753" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/38e47e76e48f223b0d6e8f67ac4b4b0f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/38e47e76e48f223b0d6e8f67ac4b4b0f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ascendancy</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96753">
+		December 29, 2011 at 12:31 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96753#respond' onclick='return addComment.moveForm( "comment-96753", "96753", "respond", "43" )' aria-label='Reply to Ascendancy'> &middot; Reply</a></span>		 
+		</div>
+		<p>As does mine.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-181837">
+		<div id="div-comment-181837" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d6c9bda328846b2597f30db6033a8e51?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d6c9bda328846b2597f30db6033a8e51?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">theodorSkywalker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-181837">
+		September 18, 2014 at 5:38 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=181837#respond' onclick='return addComment.moveForm( "comment-181837", "181837", "respond", "43" )' aria-label='Reply to theodorSkywalker'> &middot; Reply</a></span>		 
+		</div>
+		<p>I bet that&#8217;s how you ADDRESS the ladies.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-181838">
+		<div id="div-comment-181838" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d6c9bda328846b2597f30db6033a8e51?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d6c9bda328846b2597f30db6033a8e51?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">theodorSkywalker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-181838">
+		September 18, 2014 at 5:39 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=181838#respond' onclick='return addComment.moveForm( "comment-181838", "181838", "respond", "43" )' aria-label='Reply to theodorSkywalker'> &middot; Reply</a></span>		 
+		</div>
+		<p>too late?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even depth-2 clearfix" id="comment-208666">
+		<div id="div-comment-208666" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208666">
+		November 3, 2014 at 2:09 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208666#respond' onclick='return addComment.moveForm( "comment-208666", "208666", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>My long double is 16 bytes wide. But 7 years ago it probably would have been 12 like yours.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-16380">
+		<div id="div-comment-16380" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/955e2da4be0e3260bdac4bd4c4c7fc55?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/955e2da4be0e3260bdac4bd4c4c7fc55?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Syed</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-16380">
+		May 14, 2008 at 10:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=16380#respond' onclick='return addComment.moveForm( "comment-16380", "16380", "respond", "43" )' aria-label='Reply to Syed'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi, I would like to know what is the sizeof(long double); ? In this tutorial it is mentioned 8 bytes. Where as i tried in Dev C++ compiler it is giving 12. </p>
+<p>Thanks,<br />
+syed</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-17903">
+		<div id="div-comment-17903" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-17903">
+		May 30, 2008 at 3:37 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=17903#respond' onclick='return addComment.moveForm( "comment-17903", "17903", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>The size of a long double can vary from machine to machine.  On most machines, it is either 8 or 12.  The only way to know for sure is to use sizeof(long double) just as you have.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-19189">
+		<div id="div-comment-19189" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/de4e9534819b7c9154de5d67c84398c0?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/de4e9534819b7c9154de5d67c84398c0?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Mitul Golakiya</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-19189">
+		June 17, 2008 at 2:17 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=19189#respond' onclick='return addComment.moveForm( "comment-19189", "19189", "respond", "43" )' aria-label='Reply to Mitul Golakiya'> &middot; Reply</a></span>		 
+		</div>
+		<p>My int takes 2 bytes.<br />
+I am working with tourbo C .<br />
+My PC is 32-bit.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-33061">
+		<div id="div-comment-33061" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/003aa224fb6ca93a53bd2973a98e242e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/003aa224fb6ca93a53bd2973a98e242e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Frederik</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-33061">
+		November 27, 2008 at 1:35 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=33061#respond' onclick='return addComment.moveForm( "comment-33061", "33061", "respond", "43" )' aria-label='Reply to Frederik'> &middot; Reply</a></span>		 
+		</div>
+		<p>Turbo C only produces 16 bit DOS programs and is not C++ complaint. Consider upgrading to DJGPP, MinGW or any other modern compiler</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-36749">
+		<div id="div-comment-36749" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7e260ba6cae5d3e8cd9820eaac911511?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7e260ba6cae5d3e8cd9820eaac911511?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Julian</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-36749">
+		January 8, 2009 at 4:17 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=36749#respond' onclick='return addComment.moveForm( "comment-36749", "36749", "respond", "43" )' aria-label='Reply to Julian'> &middot; Reply</a></span>		 
+		</div>
+		<p>Wow, imagine how many variables I could store in a kilobyte ?</p>
+<p>I know that years ago when they used to use punchtape in stuff like CNC machines, having a strip of tape that was over 12 kilobytes of information was very impracticle ?</p>
+<p>Now that I think about it, punchtape was just a lot like bytes, where each row on the tape would have 8 circles, some of which were punched out (which I guess would be the equivalent to a bit with value 1) and the computer would read the values off it&#8230;   At least I think that&#8217;s how it worked ;S</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-208675">
+		<div id="div-comment-208675" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208675">
+		November 3, 2014 at 2:22 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208675#respond' onclick='return addComment.moveForm( "comment-208675", "208675", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>Back in the late 1970s we had an air show at the Air Force base I was stationed at. We had a paper tape punch machine set up so that attendees could type in their name or whatever and have it punched out on the tape as the actual letters, not the binary. Was a hit.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-38740">
+		<div id="div-comment-38740" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/75577eb07f0028227c42086e55336a18?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/75577eb07f0028227c42086e55336a18?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Adam</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-38740">
+		January 22, 2009 at 1:13 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=38740#respond' onclick='return addComment.moveForm( "comment-38740", "38740", "respond", "43" )' aria-label='Reply to Adam'> &middot; Reply</a></span>		 
+		</div>
+		<p>What do you mean when you use ^ and n in your equations? Are these standard operators and variables?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-41986">
+		<div id="div-comment-41986" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-41986">
+		February 5, 2009 at 11:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=41986#respond' onclick='return addComment.moveForm( "comment-41986", "41986", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>2^n means 2 to the nth power.  eg. 2^3 = 2 * 2 * 2 = 8.  2^4 = 2 * 2 * 2 * 2 = 16.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-208682">
+		<div id="div-comment-208682" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208682">
+		November 3, 2014 at 2:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208682#respond' onclick='return addComment.moveForm( "comment-208682", "208682", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>C++ does not have a built-in operator for exponentiation. There is a pow() function in the <code>&lt;cmath&gt;</code> library. And ^ is the C++ bitwise XOR.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-55129">
+		<div id="div-comment-55129" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d3e8bd7353b39a0a971a4f028cb976ba?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d3e8bd7353b39a0a971a4f028cb976ba?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Ranjan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-55129">
+		April 1, 2009 at 8:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=55129#respond' onclick='return addComment.moveForm( "comment-55129", "55129", "respond", "43" )' aria-label='Reply to Ranjan'> &middot; Reply</a></span>		 
+		</div>
+		<p>what the resone behind it, why you can&#8217;t overload the size of operator ?</p>
+<p>REgards,<br />
+Ranjan</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-59744">
+		<div id="div-comment-59744" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-59744">
+		May 1, 2009 at 8:34 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=59744#respond' onclick='return addComment.moveForm( "comment-59744", "59744", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Why would you want to? <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>Stroustrup says <a href="http://www.research.att.com/~bs/bs_faq2.html#overload-dot" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://www.research.att.com/~bs/bs_faq2.html#overload-dot', 'here']);" rel="nofollow">here</a>:</p>
+<blockquote><p>
+Sizeof cannot be overloaded because built-in operations, such as incrementing a pointer into an array implicitly depends on it. Consider:</p>
+<p>	X a[10];<br />
+	X* p = &amp;a[3];<br />
+	X* q = &amp;a[3];<br />
+	p++;	// p points to a[4]<br />
+		// thus the integer value of p must be<br />
+		// sizeof(X) larger than the integer value of q</p>
+<p>Thus, sizeof(X) could not be given a new and different meaning by the programmer without violating basic language rules.
+</p></blockquote>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-208782">
+		<div id="div-comment-208782" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208782">
+		November 3, 2014 at 4:13 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208782#respond' onclick='return addComment.moveForm( "comment-208782", "208782", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>Very nice. Being able to oveload the sizeof operator would be total anarchy.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-77795">
+		<div id="div-comment-77795" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3a1e71347a541022e5a9506732650710?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a1e71347a541022e5a9506732650710?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Anon</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-77795">
+		February 3, 2010 at 9:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=77795#respond' onclick='return addComment.moveForm( "comment-77795", "77795", "respond", "43" )' aria-label='Reply to Anon'> &middot; Reply</a></span>		 
+		</div>
+		<p>So does it really matter what variable type you use? Dont get me wrong i want to use the right one, but it seems a task to remember all of the maximum values etc.</p>
+<p>is there a trick to it?</p>
+<p>There&#8217;s an awful lot to choose from.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-93739">
+		<div id="div-comment-93739" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3244cdd2c32527f8877743bc5171a4ce?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3244cdd2c32527f8877743bc5171a4ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">PReinie</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-93739">
+		October 14, 2010 at 10:45 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=93739#respond' onclick='return addComment.moveForm( "comment-93739", "93739", "respond", "43" )' aria-label='Reply to PReinie'> &middot; Reply</a></span>		 
+		</div>
+		<p>It depends on the use or application of the code and your engineering design. (You can&#8217;t put 5# of @&amp;*!*^ in a 1# bag.) As Alex said above &#8220;However, for programs that need a large amount of variables (eg. 100,000), the difference between using 1 byte and 8 byte variables can be significant.&#8221; that&#8217;s an 8-times increase of memory.</p>
+<p>If you use the maximum word size for each piece of memory, your &#8220;product&#8221; may cost more because you need more memory to hold or run your program. The additional memory may also require larger circuit boards to hold the memory chips and power for the boards/memory which increases the weight and may require a fan (which takes power) to cool the components. This might be important when go to market or have to carry it to a space station, a battlefield, hiking up a mountain or as a cell phone or iPod.</p>
+<p>If you&#8217;re just providing code for existing computers it may not be that big a deal.</p>
+<p>(Sorry for the long winded explanaition. I&#8217;ve programmed to the bit level in assembly and in C for limited memory machines.)</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-88651">
+		<div id="div-comment-88651" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/488b4b7e66bb359705f3ce22e23bfde4?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/488b4b7e66bb359705f3ce22e23bfde4?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://6pie.com' rel='external nofollow' class='url'>Gerald Parsons</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-88651">
+		July 18, 2010 at 12:41 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=88651#respond' onclick='return addComment.moveForm( "comment-88651", "88651", "respond", "43" )' aria-label='Reply to Gerald Parsons'> &middot; Reply</a></span>		 
+		</div>
+		<p>This tutorial is so easy. It makes learning programing so easy. The problem comes once you get out of C++ and try to understand msdn help. These guys from Microsoft are from outer space. Just try looking up some of the things you learn here and see if you can get anything that explains it in common english. I could sure use a tutorial on how to use Microsoft help, once you get to the help you need. Sometimes they just go round and round.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-91738">
+		<div id="div-comment-91738" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/46f5c9bf86dc52175242ba3b76206545?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/46f5c9bf86dc52175242ba3b76206545?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">kemawalker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-91738">
+		September 9, 2010 at 4:04 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=91738#respond' onclick='return addComment.moveForm( "comment-91738", "91738", "respond", "43" )' aria-label='Reply to kemawalker'> &middot; Reply</a></span>		 
+		</div>
+		<p>I am on a MAC (64bit) so my values are significantly larger for 4 of the types.   </p>
+<p>QUESTION - how do you manage the risk that you might code for too large a type that won&#8217;t run on other machines?  In other words, if I code using &#8220;long double&#8221; which is 16 bytes on my machine, but only 8 bytes on yours, will there be an issue when the program runs or no?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-251491">
+		<div id="div-comment-251491" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251491">
+		February 12, 2015 at 1:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251491#respond' onclick='return addComment.moveForm( "comment-251491", "251491", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>This is a challenging question with no easy answer.</p>
+<p>If you&#8217;re writing for portability, the best thing to do is assume that variables are only as large as their guaranteed minimum sizes and avoid the problem in the first place.</p>
+<p>If you do need to assume long double is 16 bytes for your code, you could use assert() to &#8220;document&#8221; that:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d77902128a310098264" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d77902128a310098264-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d77902128a310098264-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d77902128a310098264-1"><span class="crayon-p">#include &lt;cassert&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d77902128a310098264-2"><span class="crayon-st">assert</span><span class="crayon-h"> </span><span class="crayon-sy">(</span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">long</span><span class="crayon-h"> </span><span class="crayon-t">double</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">16</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+<p>That way anybody who compiles the code on an architecture or compiler that is using a different size would be aware of the issue.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-95101">
+		<div id="div-comment-95101" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6684b1de53faa36653492f8832a68261?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6684b1de53faa36653492f8832a68261?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">daksh</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-95101">
+		January 16, 2011 at 6:44 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=95101#respond' onclick='return addComment.moveForm( "comment-95101", "95101", "respond", "43" )' aria-label='Reply to daksh'> &middot; Reply</a></span>		 
+		</div>
+		<p><code><br />
+bool:           1 bytes<br />
+char:           1 bytes<br />
+wchar_t:        2 bytes<br />
+short:          2 bytes<br />
+int:            4 bytes<br />
+long:           4 bytes<br />
+float:          4 bytes<br />
+double:         8 bytes<br />
+long double:    8 bytes</p>
+<p>Your results may vary if you are using a different type of machine, or a different compiler.<br />
+</code></p>
+<p>I can understand that it depends on the machine.. But how does it depend on the compiler??</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-208690">
+		<div id="div-comment-208690" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208690">
+		November 3, 2014 at 2:52 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208690#respond' onclick='return addComment.moveForm( "comment-208690", "208690", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>Most modern compilers have options you can specify on the command line to target different architectures.</p>
+<p>There is a lot of information in the g++ documentation about this.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-96248">
+		<div id="div-comment-96248" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/595bf1955de7f8b8f9a04a07180de6ce?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">sanjeev_e</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96248">
+		October 31, 2011 at 11:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96248#respond' onclick='return addComment.moveForm( "comment-96248", "96248", "respond", "43" )' aria-label='Reply to sanjeev_e'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex/Members,</p>
+<p>Is there any other way to find the size of a variable without using sizeof(operator).</p>
+<p>I have seen in some of the websites that the below way we can find the same.</p>
+<p>int i = 1; </p>
+<p>size_t size1 = (char*)(&amp;i+1)-(char*)(&amp;i); </p>
+<p>size_t size2 = (int*)(&amp;i+1)-(int*)(&amp;i); </p>
+<p>cout&lt;&lt;size1&lt;&lt;&quot;\t&quot;&lt;&lt;size2&lt;&lt;endl;</p>
+<p>Output: 4 1</p>
+<p>Why it is varying here by typecasting with different datatypes?</p>
+<p>I want to know where it is restricted to use sizeof() operator anywhere? and also whether the above code internally uses sizeof() operator like</p>
+<p>size1 = address-diff/sizeof(int); size2 = address-diff/sizeof(char); </p>
+<p>Please clarify.</p>
+<p>Thanks,<br />
+Sanjeev.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-2 clearfix" id="comment-208730">
+		<div id="div-comment-208730" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208730">
+		November 3, 2014 at 3:15 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208730#respond' onclick='return addComment.moveForm( "comment-208730", "208730", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>Any time you use mathematical operators with pointer types, you then are working with pointer arithmetic, and the expressions will evaluate differently depending on the size of the type pointed to.</p>
+<p><code><br />
+int i;<br />
+size_t size1 = &amp;i+1; // size1 is assigned address of next byte in storage space of the integer i<br />
+size_t size2 = (int*)(&amp;i+1); // size2 is assigned address of the next following integer, perhaps in an array.<br />
+<!--formatted--></code></p>
+<p>In the case of the size2 assignment in your posting, pointer arithmetic will resolve the size of the type, by taking the difference of the addresses of two identical data types that are adjacent in memory.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96581">
+		<div id="div-comment-96581" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7d7fb40af9dec94f76eb40ea509fc9cd?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7d7fb40af9dec94f76eb40ea509fc9cd?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jimbo</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96581">
+		December 8, 2011 at 4:02 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96581#respond' onclick='return addComment.moveForm( "comment-96581", "96581", "respond", "43" )' aria-label='Reply to jimbo'> &middot; Reply</a></span>		 
+		</div>
+		<p>First of all thanks Alex for this amazing tutorial&#8230;your awesome!!</p>
+<p>I was just wandering if one bit can store a 0 or a 1 so two values and two bits can store 4 different values i.e 0101. How come it says 3 bits can store 8 values i.e 01010101? Surely 3 bits would store 6 different values if 1 bit stores 2 different values. 3*2 = 6. If I am missing the point can someone please try and explain where I am going wrong!?<br />
+Many thanks in advance.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-96582">
+		<div id="div-comment-96582" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/7d7fb40af9dec94f76eb40ea509fc9cd?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/7d7fb40af9dec94f76eb40ea509fc9cd?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">jimbo</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96582">
+		December 8, 2011 at 4:20 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96582#respond' onclick='return addComment.moveForm( "comment-96582", "96582", "respond", "43" )' aria-label='Reply to jimbo'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s ok I just worked it out. one bit can store two values i.e a 0 or a 1 i.e 2^1 2*1=2. 2 bits can store 4 different values i.e 2^2 2*2= 4 and 3 bits can store 8 different values i.e 2^3 2*2*2= 8.</p>
+<p>One more thing..just wondering what to the nth power means? is it like 2^9 or 2*2*2*2*2*2*2*2*2?  Many thanks in advance.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-96937">
+		<div id="div-comment-96937" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/cc3f4a80d95936b75cfcf27a66612485?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cc3f4a80d95936b75cfcf27a66612485?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">tsdrifter</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96937">
+		February 10, 2012 at 7:27 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96937#respond' onclick='return addComment.moveForm( "comment-96937", "96937", "respond", "43" )' aria-label='Reply to tsdrifter'> &middot; Reply</a></span>		 
+		</div>
+		<p>n doesn&#8217;t stand for 9, it just stands for any integer. what he is saying is if you have a given number of bits, you can store 2^(number of bits). if you had nine bits, then n would equal 9, but this is not always the case.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt depth-2 clearfix" id="comment-208769">
+		<div id="div-comment-208769" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/2dc58df301aaf9474e1d1a1a14608917?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">rameye</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-208769">
+		November 3, 2014 at 3:41 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=208769#respond' onclick='return addComment.moveForm( "comment-208769", "208769", "respond", "43" )' aria-label='Reply to rameye'> &middot; Reply</a></span>		 
+		</div>
+		<p>Since ^ is being so freely used here in the comments, I must mention to be careful using ^ as an operator in C++ expressions.</p>
+<p>C++ has NO built-in operator for exponentiation. The ^ operator in C++ is a binary (operating on two values) operator performing a bitwise XOR.</p>
+<p>For example what does <code>2^3</code> resolve to in C++?</p>
+<p><code>int x = 2^3;</code></p>
+<p>x will not contain the value 8, it will contain the value 1</p>
+<p>Why is this?</p>
+<p>Assuming 8 bit wide integers this is what happened:</p>
+<p><code><br />
+00000010 ^<br />
+00000011<br />
+--------<br />
+00000001 &lt;== bitwise XOR of the two integers results in value of 1<br />
+<!--formatted--></code></p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-96971">
+		<div id="div-comment-96971" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/efd8abb88cb180102b4c6bc4369e7d49?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/efd8abb88cb180102b4c6bc4369e7d49?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">bacia</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-96971">
+		February 18, 2012 at 3:34 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=96971#respond' onclick='return addComment.moveForm( "comment-96971", "96971", "respond", "43" )' aria-label='Reply to bacia'> &middot; Reply</a></span>		 
+		</div>
+		<p>Using long doubles I made a program which can compute factorials up to 170!, more than my TI-831!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-102450">
+		<div id="div-comment-102450" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">machello</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-102450">
+		August 14, 2013 at 7:28 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=102450#respond' onclick='return addComment.moveForm( "comment-102450", "102450", "respond", "43" )' aria-label='Reply to machello'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex!</p>
+<p>I must say you have highly systematic tutorials which are very pedagogical written!</p>
+<p>I just have one remark which is worth to mention.<br />
+If trying to determine the size of a structure or in general any object, you probably<br />
+may not get the amount of bytes used by the object as you probably expected.<br />
+Example:</p>
+<p>struct Something<br />
+{<br />
+    int nX, nY, nZ;<br />
+    double dX;<br />
+};</p>
+<p>Something sSomeStuff;</p>
+<p>You expect (64bit, gcc 4.7.2): sizeof( sSomeStuff ) == 20 (= 3*4 + 8)<br />
+(i.e. sizeof(int) == 3, sizeof(double) == 8 ).<br />
+The object uses 20 bytes of memory or at least<br />
+that must is allocated for each variable in the structure. However you won&#8217;t that value!<br />
+Instead you get: sizeof( sSomeStuff ) == 24.</p>
+<p>I won&#8217;t explain in details (internet is used for this purpose) but it is related with<br />
+how CPU can most efficienty collect variables (blocks) or more techical, is related with<br />
+data structure alignment or internal padding. </p>
+<p>In the example, the higest variable size (double) is sizeof( double ) == 8. Total<br />
+effective size of the structure (without padding) is 20. Structure block size must<br />
+be (or should, for most systems) multiple of the highest variable size in that structure,<br />
+in the example, multiple of 8: 8, 16, 24, 32,&#8230;<br />
+Optimal structure size is not 16, which is to small,<br />
+but 24, which is higher than effective structure size.</p>
+<p>With proper order of type declarations, additional padding bytes could be minimized.</p>
+<p>With regards,<br />
+M</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-251586">
+		<div id="div-comment-251586" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/835663c6af41c9a4e7467f60a24e626d?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/835663c6af41c9a4e7467f60a24e626d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">FrostByte</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251586">
+		February 21, 2015 at 1:09 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251586#respond' onclick='return addComment.moveForm( "comment-251586", "251586", "respond", "43" )' aria-label='Reply to FrostByte'> &middot; Reply</a></span>		 
+		</div>
+		<p>Shouldn&apos;t<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char16_t:\t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char32_t:\t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler<br />
+be<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char16_t:\t&quot; &lt;&lt; sizeof(char16_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char32_t:\t&quot; &lt;&lt; sizeof(char32_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler</p>
+<p>Otherwise it prints out wchar_t size instead of char16_t and char32_t!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251603">
+		<div id="div-comment-251603" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b9eae564a77589e64b80d8a71bbc7db9?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b9eae564a77589e64b80d8a71bbc7db9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Catreece</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251603">
+		February 23, 2015 at 10:19 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251603#respond' onclick='return addComment.moveForm( "comment-251603", "251603", "respond", "43" )' aria-label='Reply to Catreece'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alright, that&apos;s weird&#8230;</p>
+<p>So I ran the program, curious as to what was different. I expected my values to probably have one or two higher than normal. Instead, it popped up minimum values for everything&#8230; except one. (Well, two; int was 4 instead of 2; made sense after checking the next chapter though; that&#8217;s not what bothers me, though.)</p>
+<p>Somehow, char32_t shows up as only 2 bytes for my machine, but in the tutorial it states that C++ architecture ensures char32_t will have an absolute minimum of 4 bytes.</p>
+<p>So&#8230; yeah, I dunno what&apos;s up. Is it feeding me incorrect information, or has there somehow been a change where it was found to actually be possible to compress char32_t into 2 bytes instead of 4? Something&apos;s strange regardless of the answer.</p>
+<p>-----------<br />
+NEVER MIND, I&apos;d typed that all out and figured out the problem:</p>
+<p>In the above code, there&apos;s an error.</p>
+<p>What you have listed is:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;bool:tt&quot; &lt;&lt; sizeof(bool) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char:tt&quot; &lt;&lt; sizeof(char) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;wchar_t:t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char16_t:t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char32_t:t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler</p>
+<p>What SHOULD be listed is:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;bool:tt&quot; &lt;&lt; sizeof(bool) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char:tt&quot; &lt;&lt; sizeof(char) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;wchar_t:t&quot; &lt;&lt; sizeof(wchar_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char16_t:t&quot; &lt;&lt; sizeof(char16_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler<br />
+&nbsp;&nbsp;&nbsp;&nbsp;cout &lt;&lt; &quot;char32_t:t&quot; &lt;&lt; sizeof(char32_t) &lt;&lt; &quot; bytes&quot; &lt;&lt; endl; // C++11, may not be supported by your compiler</p>
+<p>It was feeding me the stats for wchar_t not char16_t or char32_t, hence why it popped up 2.</p>
+<p>Once I fed in the updated code, it gave back the correct 4 bytes for char32_t, and char16_t remained at 2 bytes.</p>
+<p>I double-checked all the others just to be on the safe side and the rest of them are good, it was just the char16_t and char32_t that were off.</p>
+<p>Anyway, problem solved! Yay! Shame it wasn&apos;t possible to compress char32_t down to 2 bytes, though. =P</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-251616">
+		<div id="div-comment-251616" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251616">
+		February 23, 2015 at 5:31 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251616#respond' onclick='return addComment.moveForm( "comment-251616", "251616", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Yup, copy/paste error in the sample code.  It&#8217;s fixed now.  Thanks for debugging. <img src="http://www.learncpp.com/blog/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-251627">
+		<div id="div-comment-251627" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/b9eae564a77589e64b80d8a71bbc7db9?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/b9eae564a77589e64b80d8a71bbc7db9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Catreece</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251627">
+		February 24, 2015 at 5:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251627#respond' onclick='return addComment.moveForm( "comment-251627", "251627", "respond", "43" )' aria-label='Reply to Catreece'> &middot; Reply</a></span>		 
+		</div>
+		<p>Welcome, thanks for teaching me how to in the first place! =P</p>
+<p>I&apos;m starting to think coding&apos;s a bit more of an artform than I already thought, though. Like it was already clear that it requires a lot of logic, but also a fair bit of grace. At this point, I&apos;m starting to think it follows the rule for art:</p>
+<p>Art is never &quot;finished&quot;, it simply runs out of time, resources or patience.</p>
+<p>Debugging seems to be a similar endeavour - you&apos;ll never get 100% of it cleared out on really complex programs (Maya, Windows, whatever), which explains why they&apos;re always coming out with new patches to fix stuff.</p>
+<p>I kind of knew before that changing anything in a program could inadvertently break something else in the process if you didn&apos;t especially carefully comment the hell out of everything, hence why so many games break something during a patch (LoL and WoW are especially notorious for such). I&apos;m starting to see why it happens so often now, though, and even good commenting isn&apos;t always enough to completely avoid the damage.</p>
+<p>I suppose that&apos;s why alpha testers are so important though, and why wide-scale beta tests are essential. A million people trying to break something are simply vastly more effective at finding ways to do so casually, than a handful of dedicated testers that are actively trying to break something.</p>
+<p>Anyway, thanksies for the tutorial as normal. I&apos;d almost suggest the average person should try to go through the first 2-3 chapters just to get a feel for how many problems there can be when writing a program, so that they&apos;re a little more understanding of the issues faced. =P</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-251783">
+		<div id="div-comment-251783" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/fce3c53c599db2caa426a99b530025a9?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/fce3c53c599db2caa426a99b530025a9?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">PixelHero</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251783">
+		March 11, 2015 at 9:56 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251783#respond' onclick='return addComment.moveForm( "comment-251783", "251783", "respond", "43" )' aria-label='Reply to PixelHero'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;ll be a problem if I use the C++11 language standard to compile my programs for the rest of the tutorial? That was the only way i could make the code work, otherwise it&#8217;ll not compile at all.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-251788">
+		<div id="div-comment-251788" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251788">
+		March 12, 2015 at 10:02 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251788#respond' onclick='return addComment.moveForm( "comment-251788", "251788", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It&#8217;s fine if your compiler doesn&#8217;t support C++11.  You&#8217;ll occasionally need to modify an example to remove C++11 specific lines (as in the case above), but I&#8217;ll generally try to keep the C++11 stuff separate so the examples will work whether your compiler supports C++11 or not.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-251916">
+		<div id="div-comment-251916" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e487be0eb24de5d693813606466334a7?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e487be0eb24de5d693813606466334a7?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chris</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251916">
+		March 24, 2015 at 10:56 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251916#respond' onclick='return addComment.moveForm( "comment-251916", "251916", "respond", "43" )' aria-label='Reply to Chris'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hey Alex, </p>
+<p>Just a heads up, the print out from your computer is missing the &quot;long&quot; output. It goes from &quot;float&quot; straight to &quot;long long&quot;.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-251920">
+		<div id="div-comment-251920" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-251920">
+		March 24, 2015 at 3:20 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=251920#respond' onclick='return addComment.moveForm( "comment-251920", "251920", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Thanks, fixed.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-252331">
+		<div id="div-comment-252331" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/e0fbf72584f94d9e9576ad587fc01a4c?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/e0fbf72584f94d9e9576ad587fc01a4c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Niroshan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252331">
+		May 3, 2015 at 10:46 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252331#respond' onclick='return addComment.moveForm( "comment-252331", "252331", "respond", "43" )' aria-label='Reply to Niroshan'> &middot; Reply</a></span>		 
+		</div>
+		<p>What is the minimum size for int? I think 4 Bytes. Please Check your table.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-252332">
+		<div id="div-comment-252332" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252332">
+		May 3, 2015 at 4:00 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252332#respond' onclick='return addComment.moveForm( "comment-252332", "252332", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>The minimum size for int (as guaranteed by the C++ standard) is 2 bytes.  However, for most modern architectures, ints are  4 bytes, and thus are larger than the minimum guaranteed size.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-252386">
+		<div id="div-comment-252386" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/66ae69eff52196cd84a2e183b75a1098?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/66ae69eff52196cd84a2e183b75a1098?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">The Questioner</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252386">
+		May 9, 2015 at 7:08 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252386#respond' onclick='return addComment.moveForm( "comment-252386", "252386", "respond", "43" )' aria-label='Reply to The Questioner'> &middot; Reply</a></span>		 
+		</div>
+		<p>Just a simple question: Why would you use the sizeof() function?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-252395">
+		<div id="div-comment-252395" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252395">
+		May 10, 2015 at 5:40 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252395#respond' onclick='return addComment.moveForm( "comment-252395", "252395", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Sizeof is used mostly for reasons you&#8217;ll learn about in future lessons.</p>
+<p>First, you can use sizeof() to see how large integers are on your machine, so you know the largest and smallest numbers they&#8217;ll hold.  </p>
+<p>You&#8217;ll sometimes see developers document assumptions about variable sizes like this:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d779020dc3108579013" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d779020dc3108579013-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d779020dc3108579013-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d779020dc3108579013-1"><span class="crayon-p">#include &lt;cassert&gt;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d779020dc3108579013-2"><span class="crayon-st">assert</span><span class="crayon-sy">(</span><span class="crayon-r">sizeof</span><span class="crayon-sy">(</span><span class="crayon-t">int</span><span class="crayon-sy">)</span><span class="crayon-h"> </span><span class="crayon-o">==</span><span class="crayon-h"> </span><span class="crayon-cn">4</span><span class="crayon-sy">)</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// terminate the program if sizeof(int) isn't 4</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0005 seconds] -->
+<p></p>
+<p>Second, later on, we&#8217;ll learn about ways to dynamically allocate memory while your program is running.  If you wanted to dynamically allocate memory for 4 integers, you&#8217;ll need to know how large those integers are, so you allocate enough memory for them.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-3 clearfix" id="comment-252398">
+		<div id="div-comment-252398" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/66ae69eff52196cd84a2e183b75a1098?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/66ae69eff52196cd84a2e183b75a1098?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">The Questioner</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252398">
+		May 11, 2015 at 12:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252398#respond' onclick='return addComment.moveForm( "comment-252398", "252398", "respond", "43" )' aria-label='Reply to The Questioner'> &middot; Reply</a></span>		 
+		</div>
+		<p>So I don&#8217;t have to worry about it too much right now?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-4 clearfix" id="comment-252418">
+		<div id="div-comment-252418" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Alex</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#comment-252418">
+		May 12, 2015 at 6:17 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/?replytocom=252418#respond' onclick='return addComment.moveForm( "comment-252418", "252418", "respond", "43" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>Nope, no need to worry about it too much right now.  At this point, it&#8217;s more used to illustrate that variables have different sizes, so we can talk about the ramifications of that later.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>4 &#215; one = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4ODgxNnR5bTdtZjVxZ3o3ZGJwYWozMW04NA==" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432188816" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='43' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e9e5450488" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="102"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/23-variable-sizes-and-the-sizeof-operator\/":43};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/23-variable-sizes-and-the-sizeof-operator/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'43',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '43' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.857 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:13:36 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

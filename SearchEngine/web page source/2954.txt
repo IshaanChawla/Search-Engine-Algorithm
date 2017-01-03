@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>While loops - Learn C - Free Interactive C Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="description" content="Learn-C.org is a free interactive C tutorial for people who want to learn C, fast."/>
+<meta name="keywords" content="Learn,C,Tutorial,Interactive,Free"/>
+<meta name="google-site-verification" content="cXWj61RCtO3fVP24Y7CO-nX0ba30tgdJYY8GGBactLI"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="While loops - Learn C - Free Interactive C Tutorial"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://learn-c.org/"/>
+<meta property="og:image" content="http://learn-c.org/static/img/logos/learn-c.png"/>
+<link rel="stylesheet" href="/static/css/codemirror.css">
+<link rel="stylesheet" href="/static/css/theme/monokai.css">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/learnpython.css"/>
+<script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-static-top" style="margin-bottom: 10px">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href="/" style="padding: 4px 10px"><img src="/static/img/logos/learn-c.png" style="height: 32px;"/></a>
+<div class="social hidden-phone" style="margin-top: 10px; display: inline-block; float: left">
+ 
+<div class="addthis_toolbox addthis_default_style " style="width: 400px; margin-left: 20px">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">
+                    var addthis_config = {"data_track_clickback":true};
+                    var addthis_share = {"url": "http://learn-c.org" };
+                </script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dafdfe6039782b1"></script>
+ 
+ 
+</div>
+<ul class="nav pull-right">
+<li><a href="/about">About</a></li>
+ 
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="span8">
+<ul class="nav nav-pills">
+<li><a href="http://www.learnpython.org">Python</a></li>
+<li><a href="http://www.learnjavaonline.org">Java</a></li>
+<li class="active"><a href="http://www.learn-c.org">C</a></li>
+ 
+<li><a href="http://www.learn-js.org">JavaScript</a></li>
+<li><a href="http://www.learn-php.org">PHP</a></li>
+<li><a href="http://www.learnshell.org">Shell</a></li>
+<li><a href="http://www.learncs.org">C#</a></li>
+ 
+<li><a href="/recruit-coders-jobs">Jobs</a></li>
+</ul>
+</div>
+<div class="span4">
+<ul class="nav nav-pills pull-right">
+<li><a href="/de/"><img src="/static/img/flags/de.png"/></a></li>
+<li class="active"><a href="/en/"><img src="/static/img/flags/en.png"/></a></li>
+<li><a href="/pl/"><img src="/static/img/flags/pl.png"/></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container" id="main">
+<div class="row">
+<div class="span10" style="padding-right: 10px; box-sizing: border-box;">
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    google_ad_slot = "7782329453";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<ul class="breadcrumb" style="margin-top: 10px">
+<li><a href="/en/Welcome">Welcome</a> <span class="divider">/</span></li>
+<li class="active">While loops</li>
+</ul>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn pull-left" href="/en/For_loops"> <i class="icon-chevron-left"></i> Previous Tutorial</a>
+<a class="btn pull-right" href="/en/Functions">Next Tutorial <i class="icon-chevron-right"></i></a>
+</div>
+<span id="inner-text">
+<h1>While loops</h1>
+<p>While loops are similar to for loops, but have less functionality. A while loop continues executing the while block as long as the
+condition in the while holds. For example, the following code will execute exactly ten times:</p>
+<pre><code>int n = 0;
+while (n &lt; 10) {
+    n++;
+}
+</code></pre>
+<p>While loops can also execute infinitely if a condition is given which always evaluates as true (non-zero):</p>
+<pre><code>while (1) {
+   /* do something */
+}
+</code></pre>
+<h3>Loop directives</h3>
+<p>There are two important loop directives that are used in conjunction with all loop types in C - the <code>break</code> and <code>continue</code> directives.</p>
+<p>The <code>break</code> directive halts a loop after ten loops, even though the while loop never finishes:</p>
+<pre><code>int n = 0;
+while (1) {
+    n++;
+    if (n == 10) {
+        break;
+    }
+}
+</code></pre>
+<p>In the following code, the <code>continue</code> directive causes the <code>printf</code> command to be skipped, so that only even numbers are printed out:</p>
+<pre><code>int n = 0;
+while (n &lt; 10) {
+    n++;
+
+    /* check that n is odd */
+    if (n % 2 == 1) {
+        /* go back to the start of the while block */
+        continue;
+    }
+
+    /* we reach this code only if n is even */
+    printf("The number %d is even.\n", n);
+}
+</code></pre>
+<h2>Exercise</h2>
+<p>The <code>array</code> variable consists of a sequence of ten numbers. Inside the while loop, you must write two <code>if</code> conditions,
+which change the flow of the loop in the following manner (without changing the <code>printf</code> command):</p>
+<ul>
+<li>If the current number which is about to printed is less than 5, don't print it.</li>
+<li>If the current number which is about to printed is greater than 10, don't print it and stop the loop.</li>
+</ul>
+<p>Notice that if you do not advance the iterator variable <code>i</code> and use the <code>continue</code> derivative, you will get stuck in an infinite loop.</p>
+</span>
+<button id="start-exercise" class="btn btn-success" onclick="toggleMinimize(true)"><div class="icon-play icon-white" style="padding-right: 10px"></div> Start Exercise</button>
+<script>
+                $(function(){
+                    toggleMinimize();
+                })
+            </script>
+<hr/>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn btn-primary pull-left" href="/en/For_loops"><i class="icon-chevron-left icon-white"></i> Previous Tutorial</a>
+<a class="btn btn-primary pull-right" href="/en/Functions">Next Tutorial <i class="icon-chevron-right icon-white"></i></a>
+</div>
+<hr/>
+<div class="hidden-phone">
+ 
+ 
+<iframe src="https://www.skillfeed.com/related_courses?border=yes&search=yes&title=Related Tutorials&head=center&keyword=c%20programming&affiliate_code=67577" width="800" height="255" frameborder="0" style="margin-left: -10px"></iframe>
+ 
+ 
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    // google_ad_slot = "7782329453";
+
+                    /* Learn Python Long Bottom */
+                    google_ad_slot = "7062365450";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<script type="text/javascript" src="https://www.spoj.com/banner.js"></script>
+</div>
+</div>
+<div class="span2 hidden-phone" style="margin-left: 0">
+<div id="google-ad-right">
+ 
+<div style="margin-bottom: 10px">
+<script>
+                        google_ad_client = "ca-pub-3723950136133694";
+                        google_ad_slot = "6624688330";
+                        google_ad_width = 160;
+                        google_ad_height = 600;
+                    </script>
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+</div>
+<div style="margin-bottom: 10px">
+<script type="text/javascript" src="http://ap.lijit.com/www/delivery/fpi.js?z=283190&u=learnpython&width=160&height=600"></script>
+</div>
+<div style="margin-left: 5px;">
+<a href="https://digitalocean.com/"><img src="/static/img/banners/digital-ocean.png"></a>
+</div>
+ 
+ 
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="row">
+<div class="span6">
+<h5 style="line-height: 28px">
+Code Window
+<span style="float: right;">
+<button id="run-button" class="btn btn-success" onclick="execute()"><div class="icon-play icon-white" style="padding-right: 10px"></div>Run</button>
+<button id="reset-button" onclick="reset()" class="btn btn-primary">Reset</button>
+<button id="solution-button" onclick="showSolution()" class="btn btn-primary">Solution</button>
+</span>
+</h5>
+</div>
+<div class="span6">
+<div style="width: 100%; height: 100%">
+<h5 style="line-height: 28px">
+Output Window
+<span style="float: right">
+<button id="expected-output-button" class="btn btn-primary" onclick="showExpected()">Expected Output</button>
+<button id="minimize-button" class="btn" onclick="toggleMinimize()">Minimize Code Window</button>
+</span>
+</h5>
+</div>
+</div>
+</div>  
+<div class="row" id="footer-toggle">
+<div class="span6">
+<textarea id="code" style="width: 100%; height: 210px">#include &lt;stdio.h&gt;
+
+int main() {
+    int array[] = {1, 7, 4, 5, 9, 3, 5, 11, 6, 3, 4};
+    int i = 0;
+
+    while (i &lt; 10) {
+        /* your code goes here */
+
+        printf(&#34;%d\n&#34;, array[i]);
+        i++;
+    }
+
+    return 0;
+}</textarea>
+</div>
+<div class="span6">
+ 
+<div id="loading" style="">
+Executing, please wait...
+</div>
+<textarea id="output" style="width: 475px; height: 210px"></textarea>
+<div style="background: rgba(255,255,255,0.1); margin-top: -20px; text-align: right; font-size: 10px; color: white; z-index: inherit; position: relative; line-height: 20px; padding-right: 5px;">
+Powered by <a target="_blank" href="http://sphere-engine.com/">Sphere Engine &trade;</a>
+</div>
+</div>
+</div>
+</div>  
+<div class="container">
+<div class="row">
+<div class="span12">
+<div class="pull-right" style="padding-top: 3px">
+<a href="http://www.dmca.com/Protection/Status.aspx?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" title="DMCA"> <img src="/static/img/dmca_protected_sml_120ad.png?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" alt="DMCA.com"/></a>
+</div>
+<div class="copyright">Copyright &copy; Learn-C.org. Read our <a href='/tos'>Terms of Use</a> and <a href='/privacy'>Privacy Policy</a></div>
+</div>
+</div>
+</div>
+</footer>
+<script src="http://s.univide.com/t.js?pid=1&pcid=7f635a1befce9a96d067472d3890e6f4"></script>
+<script src="/static/js/codemirror/codemirror.js"></script>
+<script src="/static/js/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="/static/js/codemirror/mode/clike/clike.js"></script>
+<script src="/static/js/codemirror/mode/python/python.js"></script>
+<script src="/static/js/codemirror/mode/perl/perl.js"></script>
+<script src="/static/js/codemirror/mode/php/php.js"></script>
+<script src="/static/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/static/js/codemirror/mode/ruby/ruby.js"></script>
+<script src="/static/js/codemirror/mode/shell/shell.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22741967-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+    $(function() {
+        $("#sign-in").click(function() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/signin",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        document.location.refresh();
+                    } else {
+                        $("#status").text("E-mail or password combination invalid.")
+                    }
+                }
+            })
+        });
+
+        $("#sign-up").click(function() {
+
+        });
+    });
+</script>
+<script>
+        var domainData = {"container": "#include <stdio.h>\n\nint main() {\n{code}\nreturn 0;\n}\n", "sender": "Learn-C.org <admin@learn-c.org>", "language": "c", "twitter": "@learnc", "namespace": "learn-c.org", "language_uppercase": "C", "container_word": "main()", "styled_domain": "Learn-C.org", "analytics": "UA-22741967-3", "contact_email": "admin@learn-c.org", "copyright": "Copyright &copy; Learn-C.org. ", "logo": "/static/img/logos/learn-c.png", "support_email": "support@learn-c.org", "favicon": "favicon-learn-c.ico", "full_url": "http://learn-c.org", "container_indent": "    ", "default_code": "/* Welcome to the Interactive C Tutorial.\nStart by choosing a chapter and\nwrite your code in this window. */\n\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\");\n    return 0;\n}\n    "};
+        var nextChapter = "/en/Functions";
+        var previousChapter = "/en/For_loops";
+        var backChapter = "/en/Welcome";
+        var tutorialData = {"code": "#include <stdio.h>\n\nint main() {\n    int array[] = {1, 7, 4, 5, 9, 3, 5, 11, 6, 3, 4};\n    int i = 0;\n\n    while (i < 10) {\n        /* your code goes here */\n\n        printf(\"%d\\n\", array[i]);\n        i++;\n    }\n\n    return 0;\n}", "page_title": "While loops", "links": [], "text": "<p>While loops are similar to for loops, but have less functionality. A while loop continues executing the while block as long as the\ncondition in the while holds. For example, the following code will execute exactly ten times:</p>\n<pre><code>int n = 0;\nwhile (n &lt; 10) {\n    n++;\n}\n</code></pre>\n<p>While loops can also execute infinitely if a condition is given which always evaluates as true (non-zero):</p>\n<pre><code>while (1) {\n   /* do something */\n}\n</code></pre>\n<h3>Loop directives</h3>\n<p>There are two important loop directives that are used in conjunction with all loop types in C - the <code>break</code> and <code>continue</code> directives.</p>\n<p>The <code>break</code> directive halts a loop after ten loops, even though the while loop never finishes:</p>\n<pre><code>int n = 0;\nwhile (1) {\n    n++;\n    if (n == 10) {\n        break;\n    }\n}\n</code></pre>\n<p>In the following code, the <code>continue</code> directive causes the <code>printf</code> command to be skipped, so that only even numbers are printed out:</p>\n<pre><code>int n = 0;\nwhile (n &lt; 10) {\n    n++;\n\n    /* check that n is odd */\n    if (n % 2 == 1) {\n        /* go back to the start of the while block */\n        continue;\n    }\n\n    /* we reach this code only if n is even */\n    printf(\"The number %d is even.\\n\", n);\n}\n</code></pre>\n<h2>Exercise</h2>\n<p>The <code>array</code> variable consists of a sequence of ten numbers. Inside the while loop, you must write two <code>if</code> conditions, \nwhich change the flow of the loop in the following manner (without changing the <code>printf</code> command):</p>\n<ul>\n<li>If the current number which is about to printed is less than 5, don't print it.</li>\n<li>If the current number which is about to printed is greater than 10, don't print it and stop the loop.</li>\n</ul>\n<p>Notice that if you do not advance the iterator variable <code>i</code> and use the <code>continue</code> derivative, you will get stuck in an infinite loop.</p>", "solution": "#include <stdio.h>\n\nint main() {\n    int array[] = {1, 7, 4, 5, 9, 3, 5, 11, 6, 3, 4};\n    int i = 0;\n\n    while (i < 10) {\n        if(array[i] < 5){\n            i++;\n            continue;\n        }\n\n        if(array[i] > 10){\n            break;\n        }\n\n        printf(\"%d\\n\", array[i]);\n        i++;\n    }\n\n    return 0;\n}", "is_tutorial": true, "previous_chapter": "For_loops", "output": "7\n5\n9\n5", "next_chapter": "Functions", "back_chapter": "Welcome"};
+    </script>
+<script src="/static/js/learnpython.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1082 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Dependency Injection with the Spring Framework - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Spring dependency injection This article describes how to use dependency injection with the Spring Framework. It first describes dependency injection as a general principle, gives then an overview of Spring and explains then the configuration of Spring with annotations and with XML.">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d514210e1"></a>Dependency Injection with the Spring Framework - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 0.3</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">30.08.2009</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Spring dependency injection</b></p>
+                     <p> This article describes how to use dependency injection with
+                        the Spring Framework.
+                        
+                     </p>
+                     <p> It first describes dependency injection as a general
+                        principle, gives then an overview of Spring and explains then the
+                        configuration of Spring with annotations and with XML.
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#dependencyinjection">1. Dependency Injection</a></span></dt>
+               <dt><span class="section"><a href="#springoverview">2. Spring Overview</a></span></dt>
+               <dt><span class="section"><a href="#Installation">3. Spring Installation</a></span></dt>
+               <dt><span class="section"><a href="#datamodel">4. Datamodel</a></span></dt>
+               <dt><span class="section"><a href="#usageannotations">5. Using dependency injection with annotations</a></span></dt>
+               <dt><span class="section"><a href="#usagexml">6. Using dependency injection with XML</a></span></dt>
+               <dt><span class="section"><a href="#summary">7. Summary</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">8. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">8.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">8.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">8.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">9. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">9.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#springlinks">9.2. Spring Links</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="dependencyinjection"></a>1.&nbsp;Dependency Injection
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> Java components / classes should be as independent as possible
+               of other Java classes. This increases the possibility to reuse these
+               classes and to test them independently of other classes(Unit Testing).
+               To decouple Java components from other Java components the dependency
+               to a certain other class should get injected into them rather that the
+               class itself creates / finds this object.
+            </p>
+            <p> A class A has a dependency to class B if class uses class B as a
+               variable.
+            </p>
+            <p>
+               If dependency injection is used then the class B is given to class A
+               via
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>the constructor of the class A - this is then called
+                        construction injection
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>a setter - this is then called setter injection</p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+            <p> The general concept between dependency injection is called
+               Inversion of Control. A class should not configure itself but should
+               be configured from outside.
+            </p>
+            <p> A design based on independent classes / components increases the
+               re-usability and possibility to test the software. For example, if a
+               class A expects a Dao (Data Access object) for receiving the data from
+               a database you can easily create another test object which mocks the
+               database connection and inject this object into A to test A without
+               having an actual database connection.
+            </p>
+            <p> A software design based on dependency injection is possible with
+               standard Java.
+            </p>
+            <p> Spring just simplifies the use of dependency injection
+               by providing a standard way of providing the configuration
+               and by managing the reference to the created objects.
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="springoverview"></a>2.&nbsp;Spring Overview
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> The Spring Framework is a very comprehensive framework.</p>
+            <p> The fundamental functionality provided by the Spring Container
+               is dependency injection. Spring provides a light-weight container,
+               e.g. the Spring core container, for dependency injection (DI).
+            </p>
+            <p> This container lets you inject required objects into other
+               objects. This results in a design in which the Java class are not
+               hard-coupled. The injection in Spring is either done via setter
+               injection of via construction injection.
+            </p>
+            <p>These classes which are managed by Spring must conform to
+               the JavaBean standard.
+            </p>
+            <p>In the context of Spring classes are also referred to as beans
+               or as spring beans.
+            </p>
+            <p>
+               The Spring core container:
+               
+            </p>
+            <div class="itemizedlist">
+               <ul class="itemizedlist" type="disc">
+                  <li class="listitem">
+                     <p>handles the configuration, generally based on
+                        annotations or on an XML file (XMLBeanFactory)
+                     </p>
+                  </li>
+                  <li class="listitem">
+                     <p>manages the selected Java classes via the BeanFactory
+                        
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>
+               
+            </p>
+            <p> The core container uses the so-called bean factory to create
+               new objects. New objects are generally created as Singletons if not
+               specified differently.
+            </p>
+            <p>
+               
+            </p>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="Installation"></a>3.&nbsp;Spring Installation
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Download Spring from
+               <a class="ulink" href="http://www.springframework.org/download" target="_top">
+                  http://www.springframework.org/download.</a>
+               Select the -with-dependencies.zip to get also all required
+               plugins. At
+               this time of writing I downloaded the version Spring Framework 2.5.5.
+               
+            </p>
+            <p>
+               The folder "dist" contains the Spring container "spring.jar". The
+               folder lib contains additional require libraries. A minimal
+               Spring
+               application requires the spring.jar,
+               commons-logging.jar (from
+               \lib\jakarta-commons) and log4j*.jar
+               (from \lib\log4j).
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="datamodel"></a>4.&nbsp;Datamodel
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> We will later use the following datamodel for the example.
+               
+            </p>
+            <p> Create a Java project "de.vogella.spring.di.model" and create
+               the following packages and classes.
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> writer;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">interface</span> IWriter {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> writer(String s);
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> writer;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Writer <span class="hl-keyword">implements</span> IWriter {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> writer (String s){
+    System.out.println(s);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> writer;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> NiceWriter <span class="hl-keyword">implements</span> IWriter {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> writer (String s){
+    System.out.println(<span class="hl-string" style="color:blue">"The string is "</span> + s);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> testbean;
+
+<span class="hl-keyword">import</span> writer.IWriter;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MySpringBeanWithDependency {
+  <span class="hl-keyword">private</span> IWriter writer;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setWriter(IWriter writer) {
+    <span class="hl-keyword">this</span>.writer = writer;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> run() {
+    String s = <span class="hl-string" style="color:blue">"This is my test"</span>;
+    writer.writer(s);
+  }
+} </pre><p>
+               
+            </p>
+            <p> The class "MySpringBeanWithDependency.java" contains a setter
+               for the actual writer. We will use the Spring Framework to inject the
+               correct writer into this class.
+            </p>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="usageannotations"></a>5.&nbsp;Using dependency injection with annotations
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> As of Spring 2.5 it is possible to configure the dependency
+               injection via annotations. I recommend to use this way of configuring
+               your Spring beans. The next chapter will also describe the way to
+               configure this via XML.
+            </p>
+            <p> Create a new Java project
+               "de.vogella.spring.di.annotations.first" and include the minimal
+               required spring jars into your classpath.
+            </p>
+            <p>Copy your model class from the de.vogella.spring.di.model
+               project into this project.
+            </p>
+            <p> You need now to add annotations to your model to tell Spring
+               which beans should be managed by Spring and how they should be
+               connected.
+            </p>
+            <p>Add the @Service annotation the
+               MySpringBeanWithDependency.java and NiceWriter.java. Also define with
+               @Autowired on the setWriter method that the property "writer" will be
+               autowired by Spring.
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3>@Autowired will tell Spring to search for a Spring bean
+               which implements the required interface and place it automatically
+               into the setter.
+            </div>
+            <p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> testbean;
+
+<span class="hl-keyword">import</span> org.springframework.beans.factory.annotation.Autowired;
+<span class="hl-keyword">import</span> org.springframework.stereotype.Service;
+
+<span class="hl-keyword">import</span> writer.IWriter;
+
+<em><span class="hl-annotation" style="color: gray">@Service</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> MySpringBeanWithDependency {
+  <span class="hl-keyword">private</span> IWriter writer;
+
+  <em><span class="hl-annotation" style="color: gray">@Autowired</span></em>
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> setWriter(IWriter writer) {
+    <span class="hl-keyword">this</span>.writer = writer;
+  }
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> run() {
+    String s = <span class="hl-string" style="color:blue">"This is my test"</span>;
+    writer.writer(s);
+  }
+} </pre><p>
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> writer;
+
+<span class="hl-keyword">import</span> org.springframework.stereotype.Service;
+
+<em><span class="hl-annotation" style="color: gray">@Service</span></em>
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> NiceWriter <span class="hl-keyword">implements</span> IWriter {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">void</span> writer(String s) {
+    System.out.println(<span class="hl-string" style="color:blue">"The string is "</span> + s);
+  }
+} </pre><p>
+               
+            </p>
+            <p> Under the src folder create a folder META-INF and create the
+               following file in this folder. This is the Spring configuration file.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting">&lt;beans xmlns=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/beans"</span>
+  xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  xmlns:aop=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/aop"</span>
+  xmlns:context=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/context"</span>
+  xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/beans
+</span>           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/beans/spring-beans-2.5.xsd</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/aop</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/aop/spring-aop-2.5.xsd</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/context</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/context/spring-context-2.5.xsd"&gt;</em>
+
+  &lt;context:component-scan base-<span class="hl-keyword">package</span>=<span class="hl-string" style="color:blue">"testbean"</span> /&gt;
+  &lt;context:component-scan base-<span class="hl-keyword">package</span>=<span class="hl-string" style="color:blue">"writer"</span> /&gt;
+
+&lt;/beans&gt; </pre><p>
+               
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3>
+               You can also configure the log4j logger (this is optional) by copying
+               the following file into the source folder.
+               
+               <p>
+                  
+               </p><pre class="programlisting">log4j.rootLogger=FATAL, first
+log4j.appender.first=org.apache.log4j.ConsoleAppender
+log4j.appender.first.layout=org.apache.log4j.PatternLayout
+log4j.appender.first.layout.ConversionPattern=%-4r [%t] %-5p %c %x - %m%n </pre><p>
+                  
+               </p>
+            </div>
+            <p>
+               
+            </p>
+            <p> Afer this setup you can wire the application together. Create a
+               main class which reads the configuration file and starts the
+               application.
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> main;
+
+<span class="hl-keyword">import</span> org.springframework.beans.factory.BeanFactory;
+<span class="hl-keyword">import</span> org.springframework.context.ApplicationContext;
+<span class="hl-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;
+
+<span class="hl-keyword">import</span> testbean.MySpringBeanWithDependency;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Main {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ApplicationContext context = <span class="hl-keyword">new</span> ClassPathXmlApplicationContext(<span class="hl-string" style="color:blue">"META-INF/beans.xml"</span>);
+    BeanFactory factory = context;
+    MySpringBeanWithDependency test = (MySpringBeanWithDependency) factory
+        .getBean(<span class="hl-string" style="color:blue">"mySpringBeanWithDependency"</span>);
+    test.run();
+  }
+} </pre><p>
+               
+            </p>
+            <p> If you run the application then the class for the
+               IWriterInterface will be inserted into the Test class. By applying the
+               dependency injecting I can later replace this writer with a more
+               sophisticated writer.
+            </p>
+            <p> As a result the class Test does not depend on the concrete
+               Writer class, is extensible and can be easily tested.
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="usagexml"></a>6.&nbsp;Using dependency injection with XML
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> The following example will demonstrate the usage of the
+               dependency injection via xml. The example will inject a writer into
+               another class.
+            </p>
+            <p>
+               
+            </p>
+            <div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Tip</h3> I think annotations rock in general, therefore I recommend not
+               to use the XML configuration but the annotation one. If you have good
+               reason to use the XML configuration please feel free to do so.
+            </div>
+            <p>
+               
+            </p>
+            <p> Create a new Java project "de.vogella.spring.di.xml.first" and
+               include the minimal required spring jars into your classpath.
+            </p>
+            <p>Copy your model class from the de.vogella.spring.di.model
+               project into this project.
+            </p>
+            <p> Under the src folder create a folder META-INF and create the
+               following file in this folder. This is the Spring configuration file.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting">&lt;beans xmlns=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/beans"</span>
+  xmlns:xsi=<span class="hl-string" style="color:blue">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  xmlns:aop=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/aop"</span>
+  xmlns:context=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/context"</span>
+  xsi:schemaLocation=<span class="hl-string" style="color:blue">"http://www.springframework.org/schema/beans
+</span>           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/beans/spring-beans-2.5.xsd</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/aop</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/aop/spring-aop-2.5.xsd</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/context</em>
+           http:<em class="hl-comment" style="color: #080">//www.springframework.org/schema/context/spring-context-2.5.xsd"&gt;</em>
+
+
+&lt;bean id=<span class="hl-string" style="color:blue">"writer"</span> <span class="hl-keyword">class</span>=<span class="hl-string" style="color:blue">"writer.NiceWriter"</span> /&gt;
+
+&lt;bean id=<span class="hl-string" style="color:blue">"mySpringBeanWithDependency"</span> <span class="hl-keyword">class</span>=<span class="hl-string" style="color:blue">"testbean.MySpringBeanWithDependency"</span>&gt;
+&lt;property name=<span class="hl-string" style="color:blue">"writer"</span> ref=<span class="hl-string" style="color:blue">"writer"</span> /&gt;
+&lt;/bean&gt;
+
+&lt;/beans&gt; </pre><p>
+               
+            </p>
+            <p> Again, you can now wire the application together. Create a main
+               class which reads the configuration file and starts the application.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> main;
+
+<span class="hl-keyword">import</span> org.springframework.beans.factory.BeanFactory;
+<span class="hl-keyword">import</span> org.springframework.context.ApplicationContext;
+<span class="hl-keyword">import</span> org.springframework.context.support.ClassPathXmlApplicationContext;
+
+<span class="hl-keyword">import</span> testbean.MySpringBeanWithDependency;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> Main {
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    ApplicationContext context = <span class="hl-keyword">new</span> ClassPathXmlApplicationContext(<span class="hl-string" style="color:blue">"META-INF/beans.xml"</span>);
+    BeanFactory factory = context;
+    MySpringBeanWithDependency test = (MySpringBeanWithDependency) factory
+        .getBean(<span class="hl-string" style="color:blue">"mySpringBeanWithDependency"</span>);
+    test.run();
+  }
+} </pre><p>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="summary"></a>7.&nbsp;Summary
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p> This tutorial gave you an applied approach for using dependency
+               injection with the Spring framework. Both possible way, with
+               annotations and with XML were discussed.
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>8.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>8.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>8.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>8.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>9.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>9.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/codejava.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="springlinks"></a>9.2.&nbsp;Spring Links
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.springframework.org/" target="_top"> http://www.springframework.org/</a>
+                  Homepage of the Spring Framework
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/tutorials/SpringJDBC/article.html" target="_top">
+                     http://www.vogella.com/tutorials/SpringJDBC/article.html</a>
+                  Using the Spring Jdbc Template for Database Access
+                  
+               </p>
+            </div>
+         </div><img src="http://vg08.met.vgwort.de/na/ce6b85b05d864bc3b656078914e10ea2" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/SpringDependencyInjection/article.html');
+//]]></script></body>
+</html>
+

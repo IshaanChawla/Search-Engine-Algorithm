@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Find out which member posted</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Forum Member Posts</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p5.html">here</a>.</i></p>
+<p>&nbsp;</p>
+<p>The next thing we need to do is find out which member posted the original thread. 
+  The code in the <b>pageThread.php</b> script that does this is as follows:</p>
+<p class="indent_small">for ($i = 0; $i &lt; $cnt; ++$i) {</p>
+<p class="indent_big">$memb = $postData[$i]['memberID'];</p>
+<p class="indent_big">$memSQL = &quot;SELECT * from members WHERE memberID = '$memb'&quot;;</p>
+<p class="indent_big">$result2 = mysql_query($memSQL);</p>
+<p class="indent_big">if ($result2) {</p>
+<p class="indent_bigger">$db_field = mysql_fetch_assoc($result2);<br>
+  $memName = $db_field['username'];<br>
+  $postData[$i]['member'] = $memName;</p>
+<p class="indent_big">}</p>
+<p class="indent_small">}</p>
+<p> The for loop uses the same variable that we set up to count the number of 
+  positions in the 2D array. We're looping round each position in the 2D array 
+  and grabbing the memberID. The line that does that is this:</p>
+<p class="indent_big">$memb = $postData[$i]['memberID'];</p>
+<p>When we set up the 2D arrray, one of the values that was returned from the 
+  table was the memberID. We're storing this in a variable called $memb.</p>
+<p>The next line is this:</p>
+<p class="indent_small">$memSQL = &quot;SELECT * from members WHERE memberID = 
+  '$memb'&quot;;</p>
+<p>We're setting up some SQL here. Because we set up our database with a memberID 
+  in three of the tables, we can select all the records where the memberIDs match. 
+  Again, this shows you the benefits of planning your database before you start!</p>
+<p>The next few lines are these:</p>
+<p class="indent_big">$result2 = mysql_query($memSQL);</p>
+<p class="indent_big">if ($result2) {</p>
+<p class="indent_bigger">$db_field = mysql_fetch_assoc($result2);<br>
+  $memName = $db_field['username'];<br>
+  $postData[$i]['member'] = $memName;</p>
+<p class="indent_big">}</p>
+<p>First, we run the SQL:</p>
+<p class="TextIndent3">$result2 = mysql_query($memSQL);</p>
+<p>Next, we have an if statement testing to see if the variable called $result2 
+  is true. If it is, the next few lines are executed. (We should really have an 
+  else part here, as well. This should say what happens if $result2 is false.)</p>
+<p>The first line inside of the if statement is this:</p>
+<p class="TextIndent3">$db_field = mysql_fetch_assoc($result2);</p>
+<p>This brings back the result as an array. The array will return all the columns 
+  and the data from the table row. This is then placed into the variable called 
+  <b>$db_field</b>.</p>
+<p>The only thing we need is the username. So the line is this:</p>
+<p class="TextIndent3">$memName = $db_field['username'];</p>
+<p>We're placing the username in a variable called $memName. This is then added 
+  to the 2D array:</p>
+<p class="indent_big">$postData[$i]['member'] = $memName;</p>
+<p>We now have a new key and value in our 2D array - member. This holds the member's 
+  username. If you wanted to display other information about the member, you would 
+  do it here. Get the email address, for example, or that Avatar we didn't set 
+  up! You'd do it like this:</p>
+<p class="indent_big">$email = $db_field['username'];<br>
+  $postData[$i]['emailAddress'] = $email;</p>
+<p>In other words, grab the column name from the table, and add a new key to the 
+  2D array.<br>
+</p>
+<P>In the next part, you'll see how to print out all the values we've grabbed 
+  from the <b>pageThread.php</b> page.</P>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p5.html">&lt;-- Back One Page</a> | <a href="php17p7.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

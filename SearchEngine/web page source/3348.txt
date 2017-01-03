@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The forum main page</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">The forumTest.php page</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p1.html">here</a>.</i></P>
+<p align="center">&nbsp;</p>
+<p align="left">Start your server, and then load up the <b>forumTest.php</b> page 
+  in your browser by typing the following address (again, you can use localhost 
+  instead of 127.0.0.1):</p>
+<p class="TextIndent3">127.0.0.1/forum/forumTest.php</p>
+<p>You should see the main page of the forum (assuming that you've downloaded 
+  the files and saved them to the correct place). This one:</p>
+<p align="center"><a href="#" onClick ="DoPopUp('images/forum3.jpg', 770, 660);return false">The 
+  Basic Forum</a> (Opens in a new window 80K). </p>
+<p>The HTML is, of course, not something you'd want on your own site - that table 
+  looks far too basic! But the code is what we're interested in. Here's the coding 
+  strategy:</p>
+<OL>
+  <LI>Get the number of posts in each forum</LI>
+  <LI>Get the number of replies for each post</LI>
+  <LI>Get the Forum main topics</LI>
+  <LI>Build up some hyperlinks</LI>
+  <LI>Print out a HTML table</LI>
+</OL>
+<p>The problem here is that we need to gain access to more than one table in our 
+  database. The Forum main topics are in the table called <b>forumsections</b>, 
+  the posts are in the table called <b>wpposts</b>, and the replies are in the 
+  table called <b>wpreplies</b>. </p>
+<p>But the SQL is not too difficult, because we only need a limited amount of 
+  information: how many forum sections there are, and what the link text should 
+  be; a count of how many posts there are in each forum section; and a count of 
+  how many replies there are in each forum section.</p>
+<p>Bearing this in mind, open up the code for the <b>forumTest.php</b> page.</p>
+<p>At first sight, it looks rather long and daunting. You'll see some comments 
+  in the code, so as to break it down into manageable chunks.</p>
+<p>The first eight lines of the code are just variables to hold the table HTML. 
+  This sets the look and feel of the forum. In fact, you can make a start right 
+  away in changing this!</p>
+<p><b>Exercise</b></p>
+<p>Even if your table HTML skills are a bit patchy, you can still change the colour 
+  scheme. On line 7 of the code, you'll see this:</p>
+<P class="TextIndent2">$tableHeaders = &quot;&lt;TR WIDTH = 200 height = 10 align 
+  = center valign = middle bgcolor =#00EBEB&gt;&quot;</P>
+<P>Change the bgcolor to anything you like. Try these, and see what happens:</P>
+<P class="indent_big">#F84EFC<br>
+  #402C3E<br>
+  #74283E</P>
+<P>What happened with the darker colours? Try a few colours of your own, and see 
+  how you get on</P>
+<p>Another thing you can change is the main cell colour. The cell colouring is 
+  done with this line:</p>
+<P class="TextIndent2">$tdStart = &quot;&lt;TD WIDTH = 200 height = 100 align 
+  = centervalign = middle bgcolor =#F84EFC&gt;&quot;;</P>
+<p>Again, change the bgcolor to anything you like. Start with the same colours 
+  as above.</p>
+<p>Suppose you decided to go for one of the darker colours for the heading. How 
+  would you change the font colour for the heading text? Can you see what you 
+  would need to change? If you wanted white text, for example, the HTML would 
+  be this:</p>
+<p class="TextIndent3">&lt;FONT COLOR = white&gt;White Text&lt;/FONT&gt;</p>
+<p>Where in the PHP would you put the FONT tag?</p>
+<p>&nbsp;</p>
+<p><b>Exercise</b></p>
+<p>Using the colours above, change your table so that it looks like this one:</p>
+<p align="center"><a href="#" onClick ="DoPopUp('images/forum15.jpg', 620, 560);return false">The 
+  Basic Forum</a> (Opens in a new window 58K).</p>
+<p>&nbsp;</p>
+<h4>Back to the Code</h4>
+<p>Ok, let's move on and examine the code.</p>
+<p><br>
+  After the table HTML, we set up some HTML for the hyperlinks:</p>
+<p class="indent_big">$hrefStart = &quot;&lt;A HREF = pageThread.php?sID&quot;;<br>
+  $hrefEnd = &quot;&lt;/A&gt;&quot;;</p>
+<p>The important part here is the page we want to take the user to when a link 
+  is clicked, and the part after php. The page we want to take the user to is 
+  <b>pageThread.php</b>. But we're adding a question mark, and a variable name, 
+  as well: <b>?sID</b>. We'll put something into the <b>sID</b> variable later. 
+  This will be the GET data that we want hand to the page called pageThread.php. 
+  If you hold your mouse over each link, you'll see this sID variable change. 
+  It will be one of five values: <b>secWP</b>, <b>secXL</b>, <b>secVB</b>, <b>secWD</b>, 
+  and <b>secPH</b>. It's these values that we want to hand over to pageThread.php.</p>
+<p>The next 15 lines in the code set up some arrays. We want five arrays. They 
+  are:</p>
+<P class="indent_big">$secIDs[ ] = array();<br>
+  $tblPosts[ ] = array();<br>
+  $tblReply[ ] = array();<br>
+  $numPosts[ ] = array();<br>
+  $numReply[ ] = array();</P>
+<p>You'll see what they all do as we go along. But notice the two arrays called 
+  $<b>tblPosts</b>[ ] and $<b>tblReply</b>[ ]. We've set these arrays up to hold 
+  the names of the tables for the posts, and the names of the tables for the replies:</p>
+<p class="indent_big">$tblPosts[ ] = &quot;wpposts&quot;;<br>
+  etc</p>
+<p class="indent_big">$tblReply[ ] = &quot;wpreplies&quot;;<br>
+  etc</p>
+<p>The technique we'll use is to loop round these tables, and get information 
+  from each table. </p>
+<p>The next six lines just get a connection to the database. You've met this code 
+  before, so we won't go into it.</p>
+<p>An if statement comes next, to see if a connection to the database has been 
+  found:</p>
+<p class="indent_big">if ($db_found) {</p>
+<p class="indent_big">}</p>
+<p>You can add an else part to this, if you like. This should say what to do if 
+  the database is not found. Print a simple &quot;database not found&quot; statement, 
+  for example.</p>
+<p>The first code inside of the if statement is a for loop. We want to record 
+  how many posts there are in each forum section, so we need to loop round each 
+  table and count the number of rows in each post table. The for loop starts like 
+  this:</p>
+<p class="indent_big">for ($i = 1; $i &lt; 6; $i++) {</p>
+<p class="indent_big">}</p>
+<p>The value of 6 is a hard-coded one. But this is not a good idea. Suppose you 
+  wanted to add more sections to the forum. The code would break right here. A 
+  better way to do this is use code to get how many rows there are in the forumsections 
+  table. You would then use this number in the for loop. For teaching purposes, 
+  though, we've stuck to a hard-coded value. We know there are only five main 
+  sections in our forum, and we won't be adding any more!</p>
+<p>To count how many rows there are in each of the post tables, the first line 
+  of the for loop is this:</p>
+<p class="indent_small_no_bold">$SQL = &quot;SELECT * FROM &quot; . <b>$tblPosts[</b>$i<b>]</b>;</p>
+<p>We need some SQL to hand to PHP, and this is what the line does. The first 
+  value we stored in the $tblPosts array was &quot;wpposts&quot;. So the first 
+  time round the loop, the SQL variable will hold this:</p>
+<p class="TextIndent3">$SQL = &quot;SELECT * FROM wpposts&quot;</p>
+<p>The next time round the loop, the SQL will be this:</p>
+<p class="TextIndent3">$SQL = &quot;SELECT * FROM wdposts&quot;</p>
+<p>Each time round the loop, the only thing that changes about the SQL is the 
+  name of the table.</p>
+<p>To count the number of rows in each table, we have this:</p>
+<p class="TextIndent1">$result = mysql_query($SQL);</p>
+<p class="TextIndent1">if ($result) {</p>
+<p class="TextIndent3">$num_rows = mysql_num_rows($result);</p>
+<p class="TextIndent3">$numPosts[$i] = $num_rows;</p>
+<p class="TextIndent1">}</p>
+<p>We pass the SQL to the inbuilt PHP function <b>mysql_query</b>( ). If any results 
+  are found then the variable called <b>$result</b> will be true. We're testing 
+  for this in the if statement.</p>
+<p>If it is true, then next two lines will be executed:</p>
+<p class="TextIndent3">$num_rows = mysql_num_rows($result);</p>
+<p class="TextIndent3">$numPosts[$i] = $num_rows;</p>
+<p>The first one just returns how many rows there are in a table. The second line 
+  puts the number of rows into the array we set up earlier - <b>$numPosts</b>. 
+  When we come to write our HTML for the hyperlinks, we'll use this array to print 
+  out how many posts there are in each forum section.</p>
+<p>The next few lines of the code are for the replies. We want to record how many 
+  replies there are in each forum section. We do this in exactly the same was 
+  as for the posts - just loop round the $tblReply array and execute some SQL. 
+  When the loop is finished, the number of replies in each section is held in 
+  the array called <b>$numReply</b>:</p>
+<p class="indent_big">$numReply[$i] = $num_rows;</p>
+<p>The next part of the code is a little bit trickier. We want to get the forum 
+  main topics, and build up the links. We're doing both of those things inside 
+  of another loop, a while loop this time. Here's the code:</p>
+<p class="indent_big">$SQL = &quot;SELECT * FROM forumsections&quot;;<br>
+  $result = mysql_query($SQL);<br>
+  $loopCount = 1;</p>
+<p class="indent_big">while ($db_field = mysql_fetch_assoc($result)) {</p>
+<p class="indent_bigger">$secIDs[$loopCount] = $hrefStart . &quot;=&quot; . $db_field['sectionID'] 
+  . &quot;&gt;&quot; . <br>
+  $db_field['sections'] . $hrefEnd;</p>
+<p class="indent_bigger">$loopCount++;</p>
+<p class="indent_big">}</p>
+<p>The first two lines set up some SQL, and then execute that against the database. 
+  The third line sets up a loop counter. We use this to access a different slot 
+  in the <b>$secIDs</b> array. Then we have the while loop (actually, we should 
+  be testing to see if <b>$result</b> is true, just like we did with the other 
+  two loops):</p>
+<p class="indent_big">while ($db_field = mysql_fetch_assoc($result)) {</p>
+<p class="indent_big">}</p>
+<p>The variable <b>$db_field</b> will hold the array data that is brought back 
+  from mysql_fetch_assoc($result). This inbuilt PHP function, if you remember, 
+  returns an array. The array that is brought back is a row from our forumsections 
+  table. (There are only two columns in this table.) The function will bring back 
+  data in this format:</p>
+<p class="TextIndent3">Column_Name =&gt; Data</p>
+<p>To access the data in the array, you can then do this:</p>
+<p class="TextIndent3">$data = $db_field[Column_Name];</p>
+<p>That's what the first line of the while loop does. It's a long line that spills 
+  over into two on these pages:</p>
+<P class="TextIndent2">$secIDs[$loopCount] = $hrefStart . &quot;=&quot; . $db_field['sectionID'] 
+  . &quot;&gt;&quot; . $db_field['sections'] . $hrefEnd;</P>
+<p>The part before the equals sign is this:</p>
+<p class="indent_big">$secIDs[$loopCount]</p>
+<p>$secIDs is the name of one of the arrays we set up at the top of the page. 
+  We want to store the hyperlinks in this array. The hyperlink in <b>$hrefStart 
+  </b>was this:</p>
+<p class="TextIndent3">$hrefStart = &quot;&lt;A HREF = pageThread.php?sID&quot;;</p>
+<p>We're adding the sectionID after <b>?sID</b> in the hyperlink above:</p>
+<p class="TextIndent3">$hrefStart . &quot;=&quot; . $db_field['sectionID']</p>
+<p>After this code executes, it would give you something like this:</p>
+<p class="TextIndent3">pageThread.php?sID=secWP</p>
+<p>To add the text for the hyperlink, we also have this in the while loop:</p>
+<p class="TextIndent3">&quot;&gt;&quot; . $db_field['sections'] . $hrefEnd;</p>
+<p>The right pointy arrow ( &gt; ) completes the first part of the &quot;A Href&quot; 
+  HTML code. The text for the link is then this:</p>
+<p class="TextIndent3">$db_field['sections']</p>
+<p>Finally, we add the rest of the HTML code for a hyperlink:</p>
+<p class="TextIndent3">$hrefEnd</p>
+<p>The last thing we do in the while loop is to increment the loop counter:</p>
+<p class="TextIndent3">$loopCount++;</p>
+<p>And that's the while loop! Yes, it's quite difficult. But study it for a while, 
+  and you'll get there. Remember: all we want to do is to build up an array of 
+  hyperlinks. Each hyperlink will be in this format:</p>
+<p class="TextIndent3">&lt;A HREF = pageThread.php?sID=secWP&gt;Link Text&lt;/A&gt;</p>
+<p>The last thing we do in the forumTest.php code is to print out the HTML table. 
+  Here it is:</p>
+<P class="indent_big">print &quot;&lt;CENTER&gt;&quot;;<br>
+  print $TableStart;<br>
+  print $tableHeaders;</P>
+<p class="indent_big">for ($i = 1; $i &lt; 6; $i++) {</p>
+<p class="indent_bigger">print $RowStart;</p>
+<p class="indent_bigger">print $tdStart . $secIDs[$i] . $tdEnd;<br>
+  print $tdStart . $numPosts[$i] . $tdEnd;<br>
+  print $tdStart . $numReply[$i] . $tdEnd;</p>
+<p class="indent_bigger">print $RowEnd;</p>
+<p class="indent_big">}</p>
+<p class="indent_big">print $TableEnd;<br>
+  print &quot;&lt;/CENTER&gt;&quot;;</p>
+ <p>The first line just prints out the HTML code to centre things (note 
+          the American spelling). Then we have our two variables we set up at 
+          the top of the code. This prints out the HTML for the start of a table, 
+          and prints out the formatted headings we set up (these include the colour 
+          changes you made earlier).</p>
+        <p>Next, we have a for loop. What the loop does is to print out table 
+          code. It prints out the row start tag (&lt;TR&gt;), and then some table 
+          data tags (&lt;TD&gt;). Inside of each table data tag is the data from 
+          our three arrays $secIDs, $numPosts, and $numReply.</p>
+        <p>The last line in the for loop prints out the row end tag (&lt;/TR&gt;). 
+          After the loop has finished, we print out the HTML for table end, and 
+          end the centre tag.</p>
+        <p>And that completes the code for the main page of our forum, forumTest.php. 
+          Here's a summary of what we did:</p>
+<UL>
+<LI>Set up some variables to hold HTML table information</LI>
+<LI>Set up some arrays to hold information from the database tables</LI>
+<LI>Set up an array to hold all the hyperlinks</LI>
+<LI>Accessed the database, and returned the number of rows in the posts and replies tables</LI>
+<LI>Returned the information about each forum section, and built up a hyperlink</LI>
+<LI>Looped round and printed out the table, the hyperlinks, the number of posts, and the numbers of replies</LI>
+</UL>
+<p><b>Exercise</b><br>
+          Play around with the HTMl Table code, and see if you can improve things. 
+          If you know any CSS, you can try to add that too.</p>
+        
+<p>Next, we'll take a look at the code for that page printed out in all the hyperlinks: 
+  <b>pageThread.php</b>.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p1.html">&lt;-- Back One Page</a> | <a href="php17p3.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

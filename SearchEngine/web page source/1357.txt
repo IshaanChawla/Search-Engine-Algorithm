@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>How to make a simple web crawler in Java</title>
+    <meta name="description" content="After making a simple crawler in 50 lines of Python,  I wrote one in 150 lines of Java spread over just two classes. I also walk through projects in Eclipse" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=30e0f76571" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25699647-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <link rel="canonical" href="http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/" />
+    
+    <meta property="og:site_name" content="'Net Instructions" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="How to make a simple web crawler in Java" />
+    <meta property="og:description" content="After making a simple crawler in 50 lines of Python,  I wrote one in 150 lines of Java spread over just two classes. I also walk through projects in Eclipse" />
+    <meta property="og:url" content="http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/" />
+    <meta property="article:published_time" content="2014-12-18T22:43:47.559Z" />
+    <meta property="article:modified_time" content="2014-12-18T22:43:47.555Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="How to make a simple web crawler in Java" />
+    <meta name="twitter:description" content="After making a simple crawler in 50 lines of Python,  I wrote one in 150 lines of Java spread over just two classes. I also walk through projects in Eclipse" />
+    <meta name="twitter:url" content="http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "'Net Instructions",
+    "author": {
+        "@type": "Person",
+        "name": "Stephen",
+        "url": "http://www.netinstructions.com/author/stephen",
+        "sameAs": null,
+        "description": null
+    },
+    "headline": "How to make a simple web crawler in Java",
+    "url": "http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/",
+    "datePublished": "2014-12-18T22:43:47.559Z",
+    "dateModified": "2014-12-18T22:43:47.555Z",
+    "description": "After making a simple crawler in 50 lines of Python,  I wrote one in 150 lines of Java spread over just two classes. I also walk through projects in Eclipse"
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.6" />
+    <link rel="alternate" type="application/rss+xml" title="&#x27;Net Instructions" href="http://www.netinstructions.com/rss/" />
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://www.netinstructions.com/">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://www.netinstructions.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">How to make a simple web crawler in Java</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2014-12-18">18 December 2014</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>A year or two after I created the <a href="http://netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/">dead simple web crawler in Python</a>, I was curious how many lines of code and classes would be required to write it in Java. It turns out <strong>I was able to do it in about 150 lines of code spread over two classes</strong>. That's it! </p>
+
+<h3 id="howdoesitwork">How does it work?</h3>
+
+<p>You give it a URL to a web page and word to search for. The spider will go to that web page and collect all of the words on the page as well as all of the URLs on the page. If the word isn't found on that page, it will go to the next page and repeat. Pretty simple, right? There are a few small edge cases we need to take care of, like handling HTTP errors, or retrieving something from the web that isn't HTML, and avoid accidentally visiting pages we've already visited, but those turn out to be pretty simple to implement. I'll show you how.</p>
+
+<p>I'll be using <a href="https://www.eclipse.org/downloads/">Eclipse</a> along the way, but any editor will suffice. There are only two classes, so even a text editor and a command line will work.</p>
+
+<p>Let's fire up Eclipse and start a new workspace. <br />
+<img src="/content/images/2014/10/eclise-workspace.png" alt="eclipse workspace" /></p>
+
+<p>We'll create a new project. <br />
+<img src="/content/images/2014/10/new-java-project-eclipse.png" alt="eclipse new project" /></p>
+
+<p>And finally create our first class that we'll call <code>Spider.java</code>. <br />
+<img src="/content/images/2014/10/eclipse-new-class.png" alt="eclipse new class" /></p>
+
+<p>We're almost ready to write some code. But first, let's think how we'll separate out the logic and decide which classes are going to do what. Let's think of all the things we need to do:</p>
+
+<ul>
+<li>Retrieve a web page (we'll call it a document) from a website</li>
+<li>Collect all the links on that document</li>
+<li>Collect all the words on that document</li>
+<li>See if the word we're looking for is contained in the list of words</li>
+<li>Visit the next link</li>
+</ul>
+
+<p>Is that everything? What if we start at Page A and find that it contains links to Page B and Page C. That's fine, we'll go to Page B next if we don't find the word we're looking for on Page A. But what if Page B contains a bunch more links to other pages, and one of those pages links back to Page A? <br />
+<img src="/content/images/2014/10/page-links-circle-recursion.png" alt="circular dependency" /></p>
+
+<p>We'll end up back at the beginning again! So let's add a few more things our crawler needs to do:</p>
+
+<ul>
+<li>Keep track of pages that we've already visited</li>
+<li>Put a limit on the number of pages to search so this doesn't run for eternity.</li>
+</ul>
+
+<p>Let's sketch out the first draft of our <code>Spider.java</code> class:</p>
+
+<pre><code>public class Spider
+{
+    // Fields
+    private static final int MAX_PAGES_TO_SEARCH = 10;
+    private Set&lt;String&gt; pagesVisited = new HashSet&lt;String&gt;();
+    private List&lt;String&gt; pagesToVisit = new LinkedList&lt;String&gt;();
+}
+</code></pre>
+
+<p>Why is <code>pagesVisited</code> a <code>Set</code>? Remember that a set, by definition, contains unique entries. In other words, no duplicates. All the pages we visit will be unique (or at least their URL will be unique). We can enforce this idea by choosing the right data structure, in this case a set.</p>
+
+<p>Why is <code>pagesToVisit</code> a <code>List</code>? This is just storing a bunch of URLs we have to visit next. When the crawler visits a page it collects all the URLs on that page and we just append them to this list. Recall that Lists have special methods that Sets ordinarily do not, such as adding an entry to the end of a list or adding an entry to the beginning of a list. Every time our crawler visits a webpage, we want to collect all the URLs on that page and add them to the end of our big list of pages to visit. Is this necessary? No. But it makes our crawler a little more consistent, in that it'll always crawl sites in a breadth-first approach (as opposed to a depth-first approach).</p>
+
+<p>Remember how we don't want to visit the same page twice? Assuming we have values in these two data structures, can you think of a way to determine the next site to visit?</p>
+
+<p>...</p>
+
+<p>Okay, here's my method for the <code>Spider.java</code> class:</p>
+
+<pre><code>private String nextUrl()
+    {
+        String nextUrl;
+        do
+        {
+            nextUrl = this.pagesToVisit.remove(0);
+        } while(this.pagesVisited.contains(nextUrl));
+        this.pagesVisited.add(nextUrl);
+        return nextUrl;
+    }
+</code></pre>
+
+<p>A little explanation: We get the first entry from pagesToVisit, make sure that URL isn't in our set of URLs we visited, and then return it. If for some reason we've already visited the URL (meaning it's in our set pagesVisited) we keep looping through the list of pagesToVisit and returning the next URL.</p>
+
+<p>Okay, so we can determine the next URL to visit, but then what? We still have to do all the work of HTTP requests, parsing the document, and collecting words and links. But let's leave that for another class and wrap this one up. This is an idea of separating out functionality. Let's assume that we'll write another class (we'll call it <code>SpiderLeg.java</code>) to do that work and this other class provides three public methods:</p>
+
+<pre><code>public void crawl(String nextURL) // Give it a URL and it makes an HTTP request for a web page
+public boolean searchForWord(String word) // Tries to find a word on the page
+public List&lt;String&gt; getLinks() // Returns a list of all the URLs on the page
+</code></pre>
+
+<p>Assuming we have this other class that's going to do the work listed above, can we write one public method for this <code>Spider.java</code> class? What are our inputs? A word to look for and a starting URL. Let's flesh out that method for the <code>Spider.java</code> class:</p>
+
+<pre><code>public void search(String url, String searchWord)
+    {
+        while(this.pagesVisited.size() &lt; MAX_PAGES_TO_SEARCH)
+        {
+            String currentUrl;
+            SpiderLeg leg = new SpiderLeg();
+            if(this.pagesToVisit.isEmpty())
+            {
+                currentUrl = url;
+                this.pagesVisited.add(url);
+            }
+            else
+            {
+                currentUrl = this.nextUrl();
+            }
+            leg.crawl(currentUrl); // Lots of stuff happening here. Look at the crawl method in
+                                   // SpiderLeg
+            boolean success = leg.searchForWord(searchWord);
+            if(success)
+            {
+                System.out.println(String.format("**Success** Word %s found at %s", searchWord, currentUrl));
+                break;
+            }
+            this.pagesToVisit.addAll(leg.getLinks());
+        }
+        System.out.println(String.format("**Done** Visited %s web page(s)", this.pagesVisited.size());
+    }
+</code></pre>
+
+<p>That should do the trick. We use all of our three fields in the Spider class as well as our private method to get the next URL. We assume the other class, SpiderLeg, is going to do the work of making HTTP requests and handling responses, as well as parsing the document. This separation of concerns is a big deal for many reasons, but the gist of it is that it makes code more readable, maintainable, testable, and flexible. </p>
+
+<p><strong>Let's look at our complete <code>Spider.java</code> class, with some added comments and javadoc:</strong></p>
+
+<pre><code>package com.stephen.crawler;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+public class Spider
+{
+  private static final int MAX_PAGES_TO_SEARCH = 10;
+  private Set&lt;String&gt; pagesVisited = new HashSet&lt;String&gt;();
+  private List&lt;String&gt; pagesToVisit = new LinkedList&lt;String&gt;();
+
+
+  /**
+   * Our main launching point for the Spider's functionality. Internally it creates spider legs
+   * that make an HTTP request and parse the response (the web page).
+   * 
+   * @param url
+   *            - The starting point of the spider
+   * @param searchWord
+   *            - The word or string that you are searching for
+   */
+  public void search(String url, String searchWord)
+  {
+      while(this.pagesVisited.size() &lt; MAX_PAGES_TO_SEARCH)
+      {
+          String currentUrl;
+          SpiderLeg leg = new SpiderLeg();
+          if(this.pagesToVisit.isEmpty())
+          {
+              currentUrl = url;
+              this.pagesVisited.add(url);
+          }
+          else
+          {
+              currentUrl = this.nextUrl();
+          }
+          leg.crawl(currentUrl); // Lots of stuff happening here. Look at the crawl method in
+                                 // SpiderLeg
+          boolean success = leg.searchForWord(searchWord);
+          if(success)
+          {
+              System.out.println(String.format("**Success** Word %s found at %s", searchWord, currentUrl));
+              break;
+          }
+          this.pagesToVisit.addAll(leg.getLinks());
+      }
+      System.out.println("\n**Done** Visited " + this.pagesVisited.size() + " web page(s)");
+  }
+
+
+  /**
+   * Returns the next URL to visit (in the order that they were found). We also do a check to make
+   * sure this method doesn't return a URL that has already been visited.
+   * 
+   * @return
+   */
+  private String nextUrl()
+  {
+      String nextUrl;
+      do
+      {
+          nextUrl = this.pagesToVisit.remove(0);
+      } while(this.pagesVisited.contains(nextUrl));
+      this.pagesVisited.add(nextUrl);
+      return nextUrl;
+  }
+</code></pre>
+
+<p>}</p>
+
+<p>Okay, one class down, one more to go. Earlier we decided on three public methods that the SpiderLeg class was going to perform. The first was public void crawl(nextURL) that would make an HTTP request for the next URL, retrieve the document, and collect all the text on the document and all of the links or URLs on the document. Unfortunately Java doesn't come with all of the tools to <a href="https://github.com/jhy/jsoup/blob/master/src/main/java/org/jsoup/helper/HttpConnection.java">make an HTTP request</a> and <a href="https://github.com/jhy/jsoup/tree/master/src/main/java/org/jsoup/parser">parse the page</a> in a super easy way. Fortunately there's a really lightweight and super easy to use package called <a href="http://jsoup.org/">jsoup</a> that makes this very easy. There's about 700 lines of code to form the HTTP request and the response, and a few thousand lines of code to parse the response. But because this is all neatly bundled up in this package for us, we just have to write a few lines of code ourselves.</p>
+
+<p>For example, here's three lines of code to make an HTTP request, parse the resulting HTML document, and get all of the links:</p>
+
+<pre><code>Connection connection = Jsoup.connect("http://www.example.com")
+Document htmlDocument = connection.get();
+Elements linksOnPage = htmlDocument.select("a[href]");
+</code></pre>
+
+<p>That could even be condensed into one line of code if we really wanted to. jsoup is a really awesome project. But how do we start using jsoup?</p>
+
+<p>You import the jsoup jar into your project!</p>
+
+<p>Okay, now that we have access to the jsoup jar, let's get back to our crawler. Let's start with the most basic task of making an HTTP request and collecting the links. Later we'll improve this method to handle unexpected HTTP response codes and non HTML pages.</p>
+
+<p>First let's add two private fields to this <code>SpiderLeg.java</code> class:</p>
+
+<pre><code>private List&lt;String&gt; links = new LinkedList&lt;String&gt;(); // Just a list of URLs
+private Document htmlDocument; // This is our web page, or in other words, our document
+</code></pre>
+
+<p>And now the simple method in the SpiderLeg class that we'll later improve upon</p>
+
+<pre><code>public void crawl(String url)
+    {
+        try
+        {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
+            Document htmlDocument = connection.get();
+            this.htmlDocument = htmlDocument;
+
+            System.out.println("Received web page at " + url);
+
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            System.out.println("Found (" + linksOnPage.size() + ") links");
+            for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+        }
+        catch(IOException ioe)
+        {
+            // We were not successful in our HTTP request
+            System.out.println("Error in out HTTP request " + ioe);
+        }
+    }
+</code></pre>
+
+<p>Still following? Nothing too fancy going on here. There are two little tricks in that we have to know how to specify all the URLs on a page such as <code>a[href]</code> and that we want the absolute URL to add to our list of URLs.</p>
+
+<p>Great, and if we remember the other thing we wanted this second class (<code>SpiderLeg.java</code>) to do, it was to search for a word. This turns out to be surprisingly easy:</p>
+
+<pre><code>public boolean searchForWord(String searchWord)
+    {
+        System.out.println("Searching for the word " + searchWord + "...");
+        String bodyText = this.htmlDocument.body().text();
+        return bodyText.toLowerCase().contains(searchWord.toLowerCase());
+    }
+</code></pre>
+
+<p>We'll also improve upon this method later.</p>
+
+<p>Okay, so this second class (<code>SpiderLeg.java</code>) was supposed to do three things: <br />
+1. Crawl the page (make an HTTP request and parse the page) <br />
+2. Search for a word <br />
+3. Return all the links on the page</p>
+
+<p>We've just written methods for the first two actions. Remember that we store the links in a private field in the first method? It's these lines:</p>
+
+<pre><code>//... code above
+for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+//... code below
+</code></pre>
+
+<p>So to return all the links on the page we just provide a getter to this field</p>
+
+<pre><code>public List&lt;String&gt; getLinks() 
+{
+  return this.links;
+}
+</code></pre>
+
+<p>Done!</p>
+
+<p>Okay, let's look at this code in all its glory. You'll notice I added a few more lines to handle some edge cases and do some defensive coding. Here's the complete <code>SpiderLeg.java</code> class:</p>
+
+<pre><code>package com.stephen.crawler;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+public class SpiderLeg
+{
+    // We'll use a fake USER_AGENT so the web server thinks the robot is a normal web browser.
+    private static final String USER_AGENT =
+            "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1";
+    private List&lt;String&gt; links = new LinkedList&lt;String&gt;();
+    private Document htmlDocument;
+
+
+    /**
+     * This performs all the work. It makes an HTTP request, checks the response, and then gathers
+     * up all the links on the page. Perform a searchForWord after the successful crawl
+     * 
+     * @param url
+     *            - The URL to visit
+     * @return whether or not the crawl was successful
+     */
+    public boolean crawl(String url)
+    {
+        try
+        {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT);
+            Document htmlDocument = connection.get();
+            this.htmlDocument = htmlDocument;
+            if(connection.response().statusCode() == 200) // 200 is the HTTP OK status code
+                                                          // indicating that everything is great.
+            {
+                System.out.println("\n**Visiting** Received web page at " + url);
+            }
+            if(!connection.response().contentType().contains("text/html"))
+            {
+                System.out.println("**Failure** Retrieved something other than HTML");
+                return false;
+            }
+            Elements linksOnPage = htmlDocument.select("a[href]");
+            System.out.println("Found (" + linksOnPage.size() + ") links");
+            for(Element link : linksOnPage)
+            {
+                this.links.add(link.absUrl("href"));
+            }
+            return true;
+        }
+        catch(IOException ioe)
+        {
+            // We were not successful in our HTTP request
+            return false;
+        }
+    }
+
+
+    /**
+     * Performs a search on the body of on the HTML document that is retrieved. This method should
+     * only be called after a successful crawl.
+     * 
+     * @param searchWord
+     *            - The word or string to look for
+     * @return whether or not the word was found
+     */
+    public boolean searchForWord(String searchWord)
+    {
+        // Defensive coding. This method should only be used after a successful crawl.
+        if(this.htmlDocument == null)
+        {
+            System.out.println("ERROR! Call crawl() before performing analysis on the document");
+            return false;
+        }
+        System.out.println("Searching for the word " + searchWord + "...");
+        String bodyText = this.htmlDocument.body().text();
+        return bodyText.toLowerCase().contains(searchWord.toLowerCase());
+    }
+
+
+    public List&lt;String&gt; getLinks()
+    {
+        return this.links;
+    }
+
+}
+</code></pre>
+
+<p>Why the <code>USER_AGENT</code>? This is because some web servers get confused when robots visit their page. Some web servers return pages that are formatted for mobile devices if your user agent says that you're requesting the web page from a mobile web browser. If you're on a desktop web browser you get the page formatted for a large screen. If you don't have a user agent, or your user agent is not familiar, some websites won't give you the web page at all! This is rather unfortunate, and just to prevent any troubles, we'll set our user agent to that of Mozilla Firefox. </p>
+
+<p>Ready to try out the crawler? Remember that we wrote the <code>Spider.java</code> class and the <code>SpiderLeg.java</code> class. Inside the <code>Spider.java</code> class we instantiate a <code>spiderLeg</code> object which does all the work of crawling the site. But where do we instantiate a <code>spider</code> object? We can write a simple test class (<code>SpiderTest.java</code>) and method to do this.</p>
+
+<pre><code>package com.stephen.crawler;
+
+public class SpiderTest
+{
+    /**
+     * This is our test. It creates a spider (which creates spider legs) and crawls the web.
+     * 
+     * @param args
+     *            - not used
+     */
+    public static void main(String[] args)
+    {
+        Spider spider = new Spider();
+        spider.crawl("http://arstechnica.com/", "computer");
+    }
+}
+</code></pre>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/stephen/">Stephen</a></h4>
+
+                    <p>Read <a href="/author/stephen/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=How%20to%20make%20a%20simple%20web%20crawler%20in%20Java&amp;url=http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://www.netinstructions.com/how-to-make-a-simple-web-crawler-in-java/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+            <div class=disqusbox>
+                <div>
+                    <hr />
+                </div>
+                <p><strong>View or post Comments</strong></p>
+            </div>
+            <div id="disqus_thread">
+                <form onsubmit="my.loadDisqus(); return false;" class="formBlock">
+                    <input class="disqusButton" type="submit" value="Load Comments">
+                </form>
+            </div>
+            <script type="text/javascript">
+                var disqus_shortname = 'netinstructions';
+                var disqus_identifier = '';
+
+                var my = my || {};
+                my.loadDisqus = function() {
+                    var dsq = document.createElement('script');
+                    dsq.type = 'text/javascript';
+                    dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                };
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="/a-developers-guide-to-estimating-software/">
+        <section class="post">
+            <h2>A developer&#x27;s thoughts on estimating software development</h2>
+            <p>I recently attended a class on estimation. While I believe in the value of estimating I am extremely wary&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="/my-live-migration-from-wordpress-to-ghost/">
+        <section class="post">
+            <h2>My live migration from Wordpress to Ghost</h2>
+            <p>A few months ago I heard about the Ghost blogging platform as it picked up some momentum and was&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://www.netinstructions.com">&#x27;Net Instructions</a> &copy; 2011-2015</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script src="/public/jquery.min.js?v=30e0f76571"></script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js?v=30e0f76571"></script>
+    <script type="text/javascript" src="/assets/js/index.js?v=30e0f76571"></script>
+
+</body>
+</html>
+

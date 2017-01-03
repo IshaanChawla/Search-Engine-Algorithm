@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie ie8"> <![endif]-->
+<!--[if IE 9]><html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
+<head>
+<!-- Basic -->
+<meta charset="utf-8">
+<title>Java - Networking</title>
+<meta name="description" content="Java Networkingn Learning Java in simple and easy steps : A beginner's tutorial containing complete knowledge of Java Syntax Object Oriented Language, Methods, Overriding, Inheritance, Polymorphism, Interfaces, Packages, Collections, Networking, Multithreading, Generics, Multimedia, Serialization, GUI." />
+<meta name="keywords" content="Java, Tutorials, Learning, Beginners, Basics, Object Oriented Language, Methods, Overriding, Inheritance, Polymorphism, Interfaces, Packages, Collections, Networking, Multithreading, Generics, Multimedia, Serialization, GUI." />
+<base href="http://www.tutorialspoint.com/" />
+<link rel="shortcut icon" href="http://cdn.tutorialspoint.com/favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+<meta name="author" content="tutorialspoint.com">
+<meta property="fb:app_id" content="471319149685276" />
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/script-min-v1.js"></script>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/style-min-v1.css">
+<!-- Head Libs -->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie8.css">
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie9.css">
+<![endif]-->
+<!-- Front Page related changes -->
+<style>
+div.feature-box div.feature-box-icon, .col-md-3 .course-box, li.heading, footer div.footer-ribon, div.footer-copyright { background: #eb4847 url(/images/pattern.png) repeat center center !important; }
+header nav ul.nav-main li a:hover, header nav ul.nav-main li.dropdown:hover a.dropdown-toggle { background: #eb4847;} 
+header nav ul.nav-main li.dropdown:hover > ul{ border:2px solid #eb4847}
+header nav ul.nav-main ul.dropdown-menu > li > a:hover, #mainMenu > li:hover, header nav.mega-menu ul.nav-main .mega-menu-content ul.sub-menu li:hover{ background: #eb4847 !important;}
+img.mobile-apps { border: 1px solid #eb4847 !important; }
+footer i.icon, footer ul.list.icons li i { color: #eb4847 !important; }
+button.btn-responsive-nav, header div.search button.btn-default { background: #eb4847 !important;}
+.social-icons-top { display:none; }
+</style>
+</head>
+<script>
+$(document).ready(function() {
+  $('input[name="q"]').keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<body onload="prettyPrint()">
+<div class="wrapLoader">
+   <div class="imgLoader">
+      <img  src="http://cdn.tutorialspoint.com/images/loading-cg.gif" alt="" width="70" height="70" />
+   </div>
+</div>
+<div id="divGoogle"></div>
+<div class="body">
+<header>
+   <div class="container">			
+      <h1 class="logo">
+      <a href="index.htm" title="tutorialspoint">
+      <img alt="tutorialspoint" src="/java/images/logo.png">
+      </a>
+      </h1>			
+      <div class="search" id="searchBar">
+         <form method="get" id="searchform" name="searchform" action="http://www.google.com/search" target="_blank">
+            <input type="hidden" name="sitesearch" value="www.tutorialspoint.com">
+            <div class="input-group">
+               <input type="text" class="form-control search" name="q" id="q" autocomplete="off" placeholder="Search your tutorials..." onfocus="if (this.value == 'Search your tutorials...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search your tutorials...';}">
+               <input value="FORID:11" name="cof" type="hidden">
+               <input type="hidden" name="ie" value="ISO-8859-1">
+               <span class="input-group-btn"> <button class="btn btn-default" type="submit" onclick="javascript:void(0);"><i class="icon icon-search"></i></button> </span>
+            </div>
+         </form>
+      </div>
+      <nav>
+         <ul class="nav nav-pills nav-top">
+            <li><a  id="free-training-icon" href="absoluteclasses.htm"><img src="http://cdn.tutorialspoint.com/images/free-training.jpg" style="width:100px; position:absolute;left:-158px; top:-7px; z-index:99;" title="Free Online Training"></a></li>
+            <li> <a href="shared-tutorials.php"><i class="icon icon-user"></i> &nbsp;Shared</a> </li>
+            <li> <a href="shorttutorials"><i class="icon icon-file-text-o"></i> &nbsp;Articles</a> </li>
+            <li>
+            <div class="social-icons social-icons-top">
+               <ul class="social-icons">
+               <li class="facebook"><a href="http://www.facebook.com/tutorialspointindia" target="_blank" title="Facebook">Facebook</a></li>
+               <li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" title="Twitter">Twitter</a></li>
+               <li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+               <li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" title="tutorialspoint @ Linkedin">Linkedin</a></li>
+               </ul>
+            </div>
+            </li>
+         </ul>
+      </nav>
+         <!-- search code here  --> 
+      <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull"> <i class="icon icon-bars"></i> </button>
+   </div>
+   <div class="navbar nav-main">
+      <div class="container">
+         <nav class="nav-main mega-menu">
+            <ul class="nav nav-pills nav-main" id="mainMenu">
+               <li class="dropdown"> <a class="dropdown" href="index.htm"><i class="icon icon-home"></i> Home</a> </li>   
+               <li class="dropdown"><a class="dropdown-toggle tut-lib" href="tutorialslibrary.htm"> Tutorials Library </a>
+      <ul class="dropdown-menu" id="submenu">
+         <li>
+            <div class="mega-menu-content">
+              <div class="row">
+                 <div class="col-md-6">
+                    <ul class="sub-menu">
+                     <li><a href="academic_tutorials.htm">Academic</a></li>
+                     <li><a href="big_data_tutorials.htm">Big Data</a></li>
+                     <li><a href="database_tutorials.htm">Databases</a></li>
+                     <li><a href="java_technology_tutorials.htm">Java Technologies</a></li>
+                     <li><a href="mainframe_tutorials.htm">Mainframe</a></li>
+                     <li><a href="management_tutorials.htm">Management</a></li>
+                     <li><a href="microsoft_technologies_tutorials.htm">Microsoft Technologies</a></li>
+                     <li><a href="questions_and_answers.htm">Questions and Answers</a></li>
+                     <li><a href="misc_tutorials.htm">Miscellaneous</a></li>
+                   </ul>
+                 </div>
+                 <div class="col-md-6">
+                  <ul class="sub-menu">
+                     <li><a href="mobile_development_tutorials.htm">Mobile Development</a></li>
+                     <li><a href="computer_programming_tutorials.htm">Programming</a></li>
+                     <li><a href="scripting_lnaguage_tutorials.htm">Scripts</a></li>
+                     <li><a href="software_quality_tutorials.htm">Software Quality</a></li>
+                     <li><a href="telecom_tutorials.htm">Telecom</a></li>
+                     <li><a href="web_development_tutorials.htm">Web Development</a></li>
+                     <li><a href="xml_technologies_tutorials.htm">XML Technologies</a></li>
+                     <li><a href="multi_language_tutorials.htm">Multi Language Tutorials</a></li>
+                  </ul>
+                 </div>
+              </div>
+            </div>
+         </li>
+       </ul>
+               </li>
+               <li class="dropdown"><a class="dropdown" href="codingground.htm"><i class="fa-code"></i> Coding Ground</a> </li>
+                  <li class="dropdown"> 							
+                     <a class="dropdown-toggle tut-plus" href="absoluteclasses.htm">Absolute Classes</a>                     <ul class="dropdown-menu" id="submenu1">
+                                                <li class="current-menu-ancestor current-menu-parent active dropdown-submenu" style="border-bottom:none;">
+                        <li style="border-bottom:none;"><a href="absoluteclasses/userlogin.htm"><i class="fa-sign-in"></i>&nbsp;Login</a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px" class="stickyhide">&nbsp;</li>
+                        <li><a href="absoluteclasses/usersignup.htm"><i class="fa-pencil-square-o"></i>&nbsp;Sign Up&nbsp;</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/upcomingclasses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> Upcoming Classes </a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/allcourses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> All Courses </a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/testimonials.htm" style="border-bottom:none;"><i class="fa-check check"></i> Testimonial</a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/help.htm" style="border-bottom:none;"><i class="fa-question book-head"></i> Help/FAQ</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/contact_abc.htm" style="border-bottom:none;"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                                             
+                     </ul>
+                  </li>
+            </ul>
+         </nav>
+      </div>
+   </div>	
+</header>
+<div style="clear:both;"></div>
+<div role="main" class="main">
+<div class="container">
+<div class="row">
+<div class="col-md-2">
+<aside class="sidebar">
+  <div class="mini-logo">
+<img src="/java/images/java-mini-logo.jpg" alt="Java Tutorial" />
+</div>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Tutorial</li>
+<li><a target="_top" href="/java/index.htm">Java - Home</a></li>
+<li><a target="_top" href="/java/java_overview.htm">Java - Overview</a></li>
+<li><a target="_top" href="/java/java_environment_setup.htm">Java - Environment Setup</a></li>
+<li><a target="_top" href="/java/java_basic_syntax.htm">Java - Basic Syntax</a></li>
+<li><a target="_top" href="/java/java_object_classes.htm">Java - Object &amp; Classes</a></li>
+<li><a target="_top" href="/java/java_basic_datatypes.htm">Java - Basic Datatypes</a></li>
+<li><a target="_top" href="/java/java_variable_types.htm">Java - Variable Types</a></li>
+<li><a target="_top" href="/java/java_modifier_types.htm">Java - Modifier Types</a></li>
+<li><a target="_top" href="/java/java_basic_operators.htm">Java - Basic Operators</a></li>
+<li><a target="_top" href="/java/java_loop_control.htm">Java - Loop Control</a></li>
+<li><a target="_top" href="/java/java_decision_making.htm">Java - Decision Making</a></li>
+<li><a target="_top" href="/java/java_numbers.htm">Java - Numbers</a></li>
+<li><a target="_top" href="/java/java_characters.htm">Java - Characters</a></li>
+<li><a target="_top" href="/java/java_strings.htm">Java - Strings</a></li>
+<li><a target="_top" href="/java/java_arrays.htm">Java - Arrays</a></li>
+<li><a target="_top" href="/java/java_date_time.htm">Java - Date &amp; Time</a></li>
+<li><a target="_top" href="/java/java_regular_expressions.htm">Java - Regular Expressions</a></li>
+<li><a target="_top" href="/java/java_methods.htm">Java - Methods</a></li>
+<li><a target="_top" href="/java/java_files_io.htm">Java - Files and I/O</a></li>
+<li><a target="_top" href="/java/java_exceptions.htm">Java - Exceptions</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Object Oriented</li>
+<li><a target="_top" href="/java/java_inheritance.htm">Java - Inheritance</a></li>
+<li><a target="_top" href="/java/java_overriding.htm">Java - Overriding</a></li>
+<li><a target="_top" href="/java/java_polymorphism.htm">Java - Polymorphism</a></li>
+<li><a target="_top" href="/java/java_abstraction.htm">Java - Abstraction</a></li>
+<li><a target="_top" href="/java/java_encapsulation.htm">Java - Encapsulation</a></li>
+<li><a target="_top" href="/java/java_interfaces.htm">Java - Interfaces</a></li>
+<li><a target="_top" href="/java/java_packages.htm">Java - Packages</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Advanced</li>
+<li><a target="_top" href="/java/java_data_structures.htm">Java - Data Structures</a></li>
+<li><a target="_top" href="/java/java_collections.htm">Java - Collections</a></li>
+<li><a target="_top" href="/java/java_generics.htm">Java - Generics</a></li>
+<li><a target="_top" href="/java/java_serialization.htm">Java - Serialization</a></li>
+<li><a target="_top" href="/java/java_networking.htm">Java - Networking</a></li>
+<li><a target="_top" href="/java/java_sending_email.htm">Java - Sending Email</a></li>
+<li><a target="_top" href="/java/java_multithreading.htm">Java - Multithreading</a></li>
+<li><a target="_top" href="/java/java_applet_basics.htm">Java - Applet Basics</a></li>
+<li><a target="_top" href="/java/java_documentation.htm">Java - Documentation</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Java Useful Resources</li>
+<li><a target="_top" href="/java/java_questions_answers.htm">Java - Questions and Answers</a></li>
+<li><a target="_top" href="/java/java_quick_guide.htm">Java - Quick Guide</a></li>
+<li><a target="_top" href="/java/java_useful_resources.htm">Java - Useful Resources</a></li>
+<li><a target="_top" href="/java/java_discussion.htm">Java - Discussion</a></li>
+<li><a target="_top" href="/javaexamples/index.htm">Java - Examples</a></li>
+</ul>
+<ul class="nav nav-list primary push-bottom left-menu special">
+<li class="sreading">Selected Reading</li>
+<li><a target="_top" href="/developers_best_practices/index.htm">Developer's Best Practices</a></li>
+<li><a target="_top" href="/questions_and_answers.htm">Questions and Answers</a></li>
+<li><a target="_top" href="/effective_resume_writing.htm">Effective Resume Writing</a></li>
+<li><a target="_top" href="/computer_glossary.htm">Computer Glossary</a></li>
+<li><a target="_top" href="/computer_whoiswho.htm">Who is Who</a></li>
+</ul>
+</aside>
+</div>
+<!-- PRINTING STARTS HERE -->
+<div class="row">
+<div class="content">
+<div class="col-md-7 middle-col">
+<h1>Java - Networking</h1>
+<div class="topgooglead">
+<hr />
+<div style="padding-bottom:5px;padding-left:10px;">Advertisements</div>
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "image";
+google_ad_channel = "";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js"> 
+</script>
+</div>
+<hr />
+<div class="pre-btn">
+<a href="/java/java_serialization.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="nxt-btn">
+<a href="/java/java_sending_email.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<div class="clearer"></div>
+<hr />
+<p>The term <i>network programming</i> refers to writing programs that execute across multiple devices (computers), in which the devices are all connected to each other using a network.</p>
+<p>The java.net package of the J2SE APIs contains a collection of classes and interfaces that provide the low-level communication details, allowing you to write programs that focus on solving the problem at hand.</p>
+<p>The java.net package provides support for the two common network protocols:</p>
+<ul class="list">
+<li><p><b>TCP:</b> TCP stands for Transmission Control Protocol, which allows for reliable communication between two applications. TCP is typically used over the Internet Protocol, which is referred to as TCP/IP.</p></li>
+<li><p><b>UDP:</b> UDP stands for User Datagram Protocol, a connection-less protocol that allows for packets of data to be transmitted between applications.</p></li>
+</ul>
+<p>This tutorial gives good understanding on the following two subjects:</p>
+<ul class="list">
+<li><p><b>Socket Programming</b>: This is most widely used concept in Networking and it has been explained in very detail.</p></li>
+<li><p><b>URL Processing</b>: This would be covered separately. Click here to learn about <a href="/java/java_url_processing.htm" title="URL Processing">URL Processing</a> in Java language.</p></li>
+</ul>
+<h2>Socket Programming:</h2>
+<p>Sockets provide the communication mechanism between two computers using TCP. A client program creates a socket on its end of the communication and attempts to connect that socket to a server.</p>
+<p>When the connection is made, the server creates a socket object on its end of the communication. The client and server can now communicate by writing to and reading from the socket.</p>
+<p>The java.net.Socket class represents a socket, and the java.net.ServerSocket class provides a mechanism for the server program to listen for clients and establish connections with them.</p>
+<p>The following steps occur when establishing a TCP connection between two computers using sockets:</p>
+<ul class="list">
+<li><p>The server instantiates a ServerSocket object, denoting which port number communication is to occur on.</p></li>
+<li><p>The server invokes the accept() method of the ServerSocket class. This method waits until a client connects to the server on the given port.</p></li>
+<li><p>After the server is waiting, a client instantiates a Socket object, specifying the server name and port number to connect to.</p></li>
+<li><p>The constructor of the Socket class attempts to connect the client to the specified server and port number. If communication is established, the client now has a Socket object capable of communicating with the server.</p></li>
+<li><p>On the server side, the accept() method returns a reference to a new socket on the server that is connected to the client's socket.</p></li>
+</ul>
+<p>After the connections are established, communication can occur using I/O streams. Each socket has both an OutputStream and an InputStream. The client's OutputStream is connected to the server's InputStream, and the client's InputStream is connected to the server's OutputStream.</p>
+<p>TCP is a twoway communication protocol, so data can be sent across both streams at the same time. There are following usefull classes providing complete set of methods to implement sockets.</p>
+<h2>ServerSocket Class Methods:</h2>
+<p>The <b>java.net.ServerSocket</b> class is used by server applications to obtain a port and listen for client requests</p>
+<p> The ServerSocket class has four constructors:</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public ServerSocket(int port) throws IOException</b>
+<p>Attempts to create a server socket bound to the specified port. An exception occurs if the port is already bound by another application.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public ServerSocket(int port, int backlog) throws IOException</b>
+<p>Similar to the previous constructor, the backlog parameter specifies how many
+incoming clients to store in a wait queue.</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public ServerSocket(int port, int backlog, InetAddress address) throws IOException</b>
+<p>Similar to the previous constructor, the InetAddress
+parameter specifies the local IP address to bind to. The InetAddress is used for servers that may have multiple IP addresses, allowing the server to specify which of its IP addresses to accept client requests on</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public ServerSocket() throws IOException</b>
+<p>Creates an unbound server socket. When using this constructor, use the bind() method when you
+are ready to bind the server socket</p>
+</td>
+</tr>
+</table>
+<p>If the ServerSocket constructor does not throw an exception, it means that your application has successfully bound to the specified port and is ready for client requests.</p>
+<p>Here are some of the common methods of the ServerSocket class:</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public int getLocalPort()</b>
+<p>Returns the port that the server socket is listening on. This method is useful if you passed in 0 as the port number in a constructor and let the server find a port for you.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public Socket accept() throws IOException</b>
+<p>Waits for an incoming client. This method blocks until either a client connects to the server on
+the specified port or the socket times out, assuming that the time-out value has been set using the setSoTimeout() method. Otherwise, this method blocks indefinitely</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public void setSoTimeout(int timeout)</b>
+<p>Sets the time-out value for how long the server socket waits for a client during the accept().</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public void bind(SocketAddress host, int backlog)</b>
+<p>Binds the socket to the specified server and port in the SocketAddress object. Use this method if you instantiated the ServerSocket using the no-argument constructor.
+</td>
+</tr>
+</table>
+<p>When the ServerSocket invokes accept(), the method does not return until a client connects. After a client does connect, the ServerSocket creates a new Socket on an unspecified port and returns a reference to this new Socket. A TCP connection now exists between the client and server, and communication can begin.</p>
+<h2>Socket Class Methods:</h2>
+<p>The <b>java.net.Socket</b> class represents the socket that both the client and server use to communicate with each other. The client obtains a Socket object by
+instantiating one, whereas the server obtains a Socket object from the return value of the accept() method.</p>
+<p>The Socket class has five constructors that a client uses to connect to a server:</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public Socket(String host, int port) throws UnknownHostException, IOException.</b>
+<p>This method attempts to connect to the specified server at the specified port. If this constructor does not throw an exception, the connection is successful and the client is connected to the server.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public Socket(InetAddress host, int port) throws IOException</b>
+<p>This method is identical to the previous constructor, except that the host is denoted by an InetAddress object.</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public Socket(String host, int port, InetAddress localAddress, int localPort) throws IOException.</b>
+<p>Connects to the specified host and port,
+creating a socket on the local host at the specified address and port.</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public Socket(InetAddress host, int port, InetAddress localAddress, int localPort) throws IOException.</b>
+<p>This method is identical to the previous constructor, except that the host is denoted by an InetAddress object instead of a String</p>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>public Socket()</b>
+<p>Creates an unconnected socket. Use the connect() method to connect this socket to a server.</p>
+</td>
+</tr>
+</table>
+<p>When the Socket constructor returns, it does not simply instantiate a Socket object but it actually attempts to connect to the specified server and port.</p>
+<p>Some methods of interest in the Socket class are listed here. Notice that both the client and server have a Socket object, so these methods can be invoked by both the client and server.</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>public void connect(SocketAddress host, int timeout) throws IOException</b>
+<p>This method connects the socket to the specified host. This method is needed only when you instantiated the Socket using the no-argument constructor.</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>public InetAddress getInetAddress()</b>
+<p>This method returns the address of the other computer that this socket is connected to.</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>public int getPort()</b>
+<p>Returns the port the socket is bound to on the remote machine.</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>public int getLocalPort()</b>
+<p>Returns the port the socket is bound to on the local machine.</p>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>public SocketAddress getRemoteSocketAddress()</b>
+<p>Returns the address of the remote socket.</p>
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>public InputStream getInputStream() throws IOException</b>
+<p>Returns the input stream of the socket. The input stream is connected to the output
+stream of the remote socket.</p>
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td><b>public OutputStream getOutputStream() throws IOException</b>
+<p>Returns the output stream of the socket. The output stream is connected to the
+input stream of the remote socket</p>
+</td>
+</tr>
+<tr>
+<td>8</td>
+<td><b>public void close() throws IOException</b>
+<p>Closes the socket, which makes this Socket object no longer capable of connecting again to any server</p>
+</td>
+</tr>
+</table>
+<h2>InetAddress Class Methods:</h2>
+<p>This class represents an Internet Protocol (IP) address. Here are following usefull methods which you would need while doing socket programming:</p>
+<table class="table table-bordered">
+<tr>
+<th>SN</th>
+<th>Methods with Description</th>
+</tr>
+<tr>
+<td>1</td>
+<td><b>static InetAddress getByAddress(byte[] addr)</b>
+<p>Returns an InetAddress object given the raw IP address .</p>
+</td>
+</tr>
+<tr>
+<td>2</td>
+<td><b>static InetAddress getByAddress(String host, byte[] addr)</b>
+<p>Create an InetAddress based on the provided host name and IP address.</p>
+</td>
+</tr>
+<tr>
+<td>3</td>
+<td><b>static InetAddress getByName(String host)</b>
+<p>Determines the IP address of a host, given the host's name.</p>
+</td>
+</tr>
+<tr>
+<td>4</td>
+<td><b>String getHostAddress() </b>
+<p> Returns the IP address string in textual presentation.</p>
+</td>
+</tr>
+<tr>
+<td>5</td>
+<td><b>String getHostName() </b>
+<p>Gets the host name for this IP address.</p>
+</td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>static InetAddress InetAddress getLocalHost()</b>
+<p>Returns the local host.</p>
+</td>
+</tr>
+<tr>
+<td>7</td>
+<td><b>String toString()</b>
+<p>Converts this IP address to a String.</p>
+</td>
+</tr>
+</table>
+<h2>Socket Client Example:</h2>
+<p>The following GreetingClient is a client program that connects to a server by using a socket and sends a greeting, and then waits for a response.</p>
+<pre class="prettyprint notranslate">
+// File Name GreetingClient.java
+
+import java.net.*;
+import java.io.*;
+
+public class GreetingClient
+{
+   public static void main(String [] args)
+   {
+      String serverName = args[0];
+      int port = Integer.parseInt(args[1]);
+      try
+      {
+         System.out.println("Connecting to " + serverName
+                             + " on port " + port);
+         Socket client = new Socket(serverName, port);
+         System.out.println("Just connected to "
+                      + client.getRemoteSocketAddress());
+         OutputStream outToServer = client.getOutputStream();
+         DataOutputStream out =
+                       new DataOutputStream(outToServer);
+
+         out.writeUTF("Hello from "
+                      + client.getLocalSocketAddress());
+         InputStream inFromServer = client.getInputStream();
+         DataInputStream in =
+                        new DataInputStream(inFromServer);
+         System.out.println("Server says " + in.readUTF());
+         client.close();
+      }catch(IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+}
+</pre>
+<h2>Socket Server Example:</h2>
+<p>The following GreetingServer program is an example of a server application that uses the Socket class to listen for clients on a port number specified by a command-line argument:</p>
+<pre class="prettyprint notranslate">
+// File Name GreetingServer.java
+
+import java.net.*;
+import java.io.*;
+
+public class GreetingServer extends Thread
+{
+   private ServerSocket serverSocket;
+   
+   public GreetingServer(int port) throws IOException
+   {
+      serverSocket = new ServerSocket(port);
+      serverSocket.setSoTimeout(10000);
+   }
+
+   public void run()
+   {
+      while(true)
+      {
+         try
+         {
+            System.out.println("Waiting for client on port " +
+            serverSocket.getLocalPort() + "...");
+            Socket server = serverSocket.accept();
+            System.out.println("Just connected to "
+                  + server.getRemoteSocketAddress());
+            DataInputStream in =
+                  new DataInputStream(server.getInputStream());
+            System.out.println(in.readUTF());
+            DataOutputStream out =
+                 new DataOutputStream(server.getOutputStream());
+            out.writeUTF("Thank you for connecting to "
+              + server.getLocalSocketAddress() + "\nGoodbye!");
+            server.close();
+         }catch(SocketTimeoutException s)
+         {
+            System.out.println("Socket timed out!");
+            break;
+         }catch(IOException e)
+         {
+            e.printStackTrace();
+            break;
+         }
+      }
+   }
+   public static void main(String [] args)
+   {
+      int port = Integer.parseInt(args[0]);
+      try
+      {
+         Thread t = new GreetingServer(port);
+         t.start();
+      }catch(IOException e)
+      {
+         e.printStackTrace();
+      }
+   }
+}
+</pre>
+<p>Compile client and server and then start server as follows:</p>
+<pre class="prettyprint notranslate">
+$ java GreetingServer 6066
+Waiting for client on port 6066...
+</pre>
+<p>Check client program as follows:</p>
+<pre class="prettyprint notranslate">
+$ java GreetingClient localhost 6066
+Connecting to localhost on port 6066
+Just connected to localhost/127.0.0.1:6066
+Server says Thank you for connecting to /127.0.0.1:6066
+Goodbye!
+</pre>
+<hr />
+<div class="pre-btn">
+<a href="/java/java_serialization.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="print-btn center">
+<a href="/cgi-bin/printpage.cgi" target="_blank"><i class="icon icon-print big-font"></i> Print</a>
+</div>
+<div class="pdf-btn">
+<a href="/java/pdf/java_networking.pdf" title="Java - Networking" target="_blank"><i class="icon icon-file-pdf-o big-font"></i> PDF</a>
+</div>
+<div class="nxt-btn">
+<a href="/java/java_sending_email.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<hr />
+<!-- PRINTING ENDS HERE -->
+<div class="bottomgooglead">
+<div class="bottomadtag">Advertisements</div>
+<script type="text/javascript"><!--
+var width = 580;
+var height = 400;
+var format = "580x400_as";
+if( window.innerWidth < 468 ){
+   width = 300;
+   height = 250;
+   format = "300x250_as";
+}
+google_ad_client = "pub-7133395778201029";
+google_ad_width = width;
+google_ad_height = height;
+google_ad_format = format;
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-3" id="rightbar">
+<!-- AddThis Button BEGIN -->
+<!--
+<div class="simple-ad">
+<div class="addthis_sharing_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f661ec623a400f0"></script>
+</div>
+-->
+<!-- AddThis Button END -->
+<!--
+<div class="google-ad" style="position:relative; left:20px;">Advertisements</div>
+-->
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 600;
+google_ad_format = "300x600_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2537027957187252";
+/* Right Side Ad */
+google_ad_slot = "right_side_ad";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="inner">
+<div class="container">
+<div class="row">
+<div class="footer-ribon">
+<span>Extras</span>
+</div>
+<div class="col-md-2">
+<h4>Mobile First</h4>
+<ul class="list icons list-unstyled">
+<li><a id="iphone" href="https://itunes.apple.com/om/app/tutorials-point/id914891263?mt=8" target="_blank" rel="nofollow"><img alt="tutorialspoint iPhone App" src="http://cdn.tutorialspoint.com/images/apple_store.jpg" class="mobile-apps"/></a></li>
+<li><a id="android" href="https://play.google.com/store/apps/details?id=com.tutorialspoint.onlineviewer" target="_blank" rel="nofollow"><img alt="tutorialspoint Android app" src="http://cdn.tutorialspoint.com/images/google_play.jpg" class="mobile-apps"/></a></li>
+<li><a id="microsoft" href="http://www.windowsphone.com/s?appid=91249671-7184-4ad6-8a5f-d11847946b09" target="_blank" rel="nofollow"><img alt="tutorialspoint Windows app" src="http://cdn.tutorialspoint.com/images/windows_store.jpg" class="mobile-apps"/></a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>About us</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="/about/index.htm">Company</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_team.htm">Team</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_careers.htm">Careers</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_privacy.htm">Privacy Policy</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_terms_of_use.htm">Terms of use</a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>Extra Links</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="forums/index.php">Forums</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shorttutorials/">Articles</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shared-tutorials.php">Shared</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="seo_tools.htm">Seo Tools</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="about/contact_us.htm">Contact</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<div class="contact-details">
+<h4>Contact Us</h4>
+<ul class="contact">
+<li><p><i class="icon icon-map-marker"></i> <strong>Address:</strong> 388-A , Road no 22, Jubilee Hills, Hyderabad Telangana, INDIA-500033</p></li>
+<li><p><i class="icon icon-envelope"></i> <strong>Email:</strong> <a href="about/contact_us.htm">Click Here</a></p></li>
+<li><p><i class="icon icon-dribbble"></i> <strong>Website:</strong> <a href="http://www.tutorialspoint.com">www.tutorialspoint.com</a></p></li>
+</ul>
+</div>
+<div class="social-icons">
+<ul class="social-icons">
+<li class="facebook"><a href="https://www.facebook.com/tutorialspointindia" target="_blank" data-placement="bottom" title="tutorialspoint @ Facebook">Facebook</a></li>
+<li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+<li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Twitter">Twitter</a></li>
+<li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Linkedin">Linkedin</a></li>
+<li class="rss"><a href="http://feeds.feedburner.com/SharedTutorials" target="_blank" data-placement="bottom" title="tutorialspoint RSS">RSS</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-copyright">
+<div class="container">
+<div class="row">
+<div class="col-md-1">
+<a href="index.htm" class="logo">
+<img alt="Tutorials Point" class="img-responsive" src="http://cdn.tutorialspoint.com/scripts/img/logo-footer.png">
+</a>
+</div>
+<div class="col-md-6">
+<p>&copy; Copyright 2015. All Rights Reserved.</p>
+</div>
+<div class="col-md-4">
+<nav id="sub-menu">
+<ul>
+<li><a href="/about/tutorials_writing.htm">Write for us</a></li>
+<li><a href="/about/faq.htm">FAQ's</a></li>
+<li><a href="/about/about_helping.htm">Helping</a></li>
+<li><a href="/about/contact_us.htm">Contact</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<!-- Libs -->
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/custom-min.js"></script>
+<script src="http://www.google-analytics.com/urchin.js">
+</script>
+<script type="text/javascript">
+_uacct = "UA-232293-6";
+urchinTracker();
+$('.pg-icon').click(function(){
+   $('.wrapLoader').show();
+});
+</script>
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/jquery.colorbox-min.js"></script>
+<script type="text/javascript">
+   var tryit = new $.TryIt('java/try_java.php');
+   tryit.compile();
+</script>
+<style>
+pre.prettyprint.tryit {
+    background: #eee url('java/images/try-it.jpg') top right no-repeat !important;
+}
+</style></div>
+</body>
+</html>
+

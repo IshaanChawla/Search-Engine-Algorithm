@@ -1,0 +1,1226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Tutorial: JSF (JavaServer Faces) 1.x, Apache MyFaces, &amp; Facelets</title>
+<meta name="description" content="Extensive set of free JSF 1.x tutorials, with complete source code available for free download. Has links to JSF 2.0 tutorials." />
+<script src="../../scripts/sniffer.js" type="text/javascript"></script>
+<script src="../../scripts/menus.js" type="text/javascript"></script>
+<script src="../../scripts/toc.js" type="text/javascript"></script>
+<link href="../../styles/screen.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../styles/print.css" rel="stylesheet" type="text/css" media="print" />
+<script type="text/javascript">
+<!--
+chooseCss();
+//-->
+</script>
+<style type="text/css">
+  .norway { font-size: xx-small;
+	          color: #330066 }
+</style>
+
+<script src="../../scripts/jquery/js/jquery.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/jquery-ui.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/setup.js" type="text/javascript"></script>
+<link href="../../scripts/jquery/css/current-theme/current-theme.css" rel="stylesheet" type="text/css" media="screen" />
+<style type="text/css">
+#content {
+    padding-left: 30px;
+    }
+</style>
+</head>
+
+<body>
+<!-- Begin Banner Table -->
+<a name="top"></a>
+<table id="banner_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="logo"><a href="http://www.coreservlets.com/"><img src="../../images/banner.jpg" alt="logo" width="601" height="86" border="0" /></a><img src="../../images/Gosling.jpg" alt="Hall and Gosling" /></td>
+  <td id="martyPic"><img src="../../images/marty-hall.jpg" alt="Marty Hall" width="96" height="86" /></td>
+  <td id="banner_bg">&nbsp;</td>
+  </tr>
+</table>
+<!-- End Banner Table -->
+
+<!-- Begin SubNav Table -->
+<table id="subnav_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="subnav"><a href="http://www.coreservlets.com/">home</a> <a href="mailto:hall@coreservlets.com">contact</a> <a href="http://www.coreservlets.com/sitemap.html">sitemap</a> </td>
+  </tr>
+</table>
+<!-- End SubNav Table -->
+
+<!-- Begin Nav Bar Table with Google search -->
+<form method="get" action="http://www.google.com/search">
+<table id="navbar_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr id="navbar">
+  <td id="nav_training" nowrap="nowrap"><a href="http://courses.coreservlets.com/" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">Training</a></td>
+  <td id="nav_tutorials" nowrap="nowrap"><a href="http://courses.coreservlets.com/Course-Materials/" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">Tutorials</a></td>
+  <td id="nav_books" nowrap="nowrap"><a href="http://books.coreservlets.com/" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">Books</a></td>
+  <td id="nav_consulting" nowrap="nowrap"><a href="http://consulting.coreservlets.com/">Consulting&nbsp;&amp;&nbsp;Outsourcing</a></td>
+  <td id="nav_resources" nowrap="nowrap"><a href="http://resources.coreservlets.com/" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">Programming Resources</a></td>
+  <td id="nav_jobs" nowrap="nowrap"><a href="http://jobs.coreservlets.com/">Jobs</a></td>
+  <td colspan="2"></td>
+  <td id="search_cell" colspan="2" nowrap="nowrap">
+<!-- SiteSearch Google -->
+<input type="hidden" name="ie" value="iso-8859-1" />
+<input type="hidden" name="oe" value="iso-8859-1" />
+<input id="search" type="text" name="q" maxlength="255" value="" /><input id="search_button" type="submit" name="btnG" value="search" />
+<input type="hidden" name="sitesearch" value="coreservlets.com" />
+<!-- SiteSearch Google -->
+  </td>
+  </tr>
+  <tr>
+  <td colspan="9">&nbsp;</td>
+  </tr>
+</table>
+</form>
+<!-- End Nav Bar Table with Google search -->
+
+<!-- Begin Drop-down Menus -->
+<div id="submenu">
+<div id="submenu_training" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">
+<a href="http://www.courses.coreservlets.com/about-instructor.html">About the Instructor</a>
+<a href="http://www.courses.coreservlets.com/student-reviews.html">Training Course Reviews</a>
+<a href="http://courses.coreservlets.com/jsf-training.html">JSF 2 Training<br/>&amp; PrimeFaces Training</a>
+<a href="http://courses.coreservlets.com/java-training.html">Java Training<br/>(Java 7 &amp; 8 Programming)</a>
+<a href="http://courses.coreservlets.com/android-training.html">Android Training</a>
+<a href="http://courses.coreservlets.com/ajax-training.html">Ajax Training<br/>(w/ jQuery, HTML5, etc.)</a>
+<a href="http://courses.coreservlets.com/hadoop-training.html">Hadoop Training</a>
+<a href="http://courses.coreservlets.com/web-services-training.html">Web Services Training<br/>(RESTful &amp; SOAP-Based)</a>
+<a href="http://courses.coreservlets.com/spring-training.html">Spring Training</a>
+<a href="http://courses.coreservlets.com/hibernate-training.html">Hibernate &amp; JPA Training</a>
+<a href="http://courses.coreservlets.com/gwt-training.html">GWT Training</a>
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html">Servlet &amp; JSP Training</a>
+<a href="http://courses.coreservlets.com/scwcd-training.html">SCWCD Training</a>
+<a href="http://courses.coreservlets.com/">Customized On-Site Training</a> 
+<a href="http://courses.coreservlets.com/public-courses/">Public Course Schedule</a>
+</div>
+<div id="submenu_tutorials" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+Tomcat &amp; Eclipse Tutorial</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+JSF (JavaServer Faces)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+&nbsp;&nbsp;&nbsp;JSF 2 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+&nbsp;&nbsp;&nbsp;PrimeFaces Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+&nbsp;&nbsp;&nbsp;JSF 1 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+Java 7 and Java 8 Programming Tutorial</a>
+<a href="http://www.coreservlets.com/android-tutorial/">
+Android Programming Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+Ajax Tutorial (&amp; GWT)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+&nbsp;&nbsp;&nbsp;Basics &amp; JavaScript</a>
+<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+&nbsp;&nbsp;&nbsp;Prototype Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+&nbsp;&nbsp;&nbsp;Scriptaculous Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+&nbsp;&nbsp;&nbsp;jQuery Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+&nbsp;&nbsp;&nbsp;Dojo Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+&nbsp;&nbsp;&nbsp;GWT Tutorial</a>
+<a href="http://www.coreservlets.com/html5-tutorial/">
+HTML5 Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+Spring Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+JPA &amp; Hibernate Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+Intermediate Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+Advanced Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+EJB3 &amp; Web Services</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+SCWCD Tutorial</a>
+<a href="http://www.courses.coreservlets.com/Course-Materials/struts.html">
+Jakarta Struts Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+Tutorials in Chinese</a>
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+Tutorials in Japanese</a>	
+</div>
+<div id="submenu_books" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">
+<a href="http://volume1.coreservlets.com/">Core Servlets &amp; JSP Vol I</a>
+<a href="http://volume2.coreservlets.com/">Core Servlets &amp; JSP Vol II</a>
+<a href="http://www.moreservlets.com/">More Servlets &amp; JSP</a>
+<a href="http://pdf.coreservlets.com/">Core Servlets &amp; JSP E-Book</a>
+<a href="http://pdf.moreservlets.com/">More Servlets &amp; JSP E-Book</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Recommended Java EE Books</a>
+<a href="http://www.corewebprogramming.com/">Core Web Programming</a>
+<a href="http://www.coreservlets.com/first-edition.html">Core Servlets &amp; JSP 1st Ed.</a>
+</div>
+<div id="submenu_resources" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">
+<a href="http://resources.coreservlets.com/quick-summary.html">Quick Ref to APIs &amp; Docs</a>
+<a href="http://resources.coreservlets.com/jsp-docs.html">Specifications &amp; Documentation</a>
+<a href="http://resources.coreservlets.com/jsp-servers.html">Servers</a>
+<a href="http://resources.coreservlets.com/jsp-ides.html">IDEs</a>
+<a href="http://resources.coreservlets.com/j2ee-jobs.html">Java-Related Jobs</a>
+<a href="http://resources.coreservlets.com/jsf.html">JSF (JavaServer Faces)</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Books</a>
+<a href="http://resources.coreservlets.com/jsp-hosting.html">Web Hosting Providers</a>
+<a href="http://www.apl.jhu.edu/~hall/java/">Java Programming</a>
+<a href="http://coreservlets.tradepub.com/">Free trade magazines &amp; whitepapers</a>
+</div>
+</div>
+<!-- End Drop-down Menus -->
+
+<div id="main_table">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0">  
+<tr>
+<!-- Begin Left Sidebar -->
+<td id="sidebar_left" nowrap="nowrap"><!-- #BeginLibraryItem "/Library/TutorialsSideLinks.lbi" -->    <div class="sidebar_left_heading2"><a href="http://courses.coreservlets.com/Course-Materials/">free tutorials</a></div>
+<div class="list"> 
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">6</span></a><br/>
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/tomcat-7-with-eclipse.html">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">7</span></a><br/>
+
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>ERVER <span class="smallCaps">F</span>ACES <span class="smallCaps">(JSF)</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">1</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">G</span>ENERAL <span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/java-8-tutorial/">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">8</span> <span class="smallCaps">L</span>AMBDAS &amp; <span class="smallCaps">S</span>TREAMS</a><br/>
+
+<a href="http://www.coreservlets.com/android-tutorial/">
+<span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://www.coreservlets.com/hadoop-tutorial/">
+<span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+<span class="smallCaps">A</span>JAX &amp; <span class="smallCaps">GWT</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>CRIPT &amp;
+<span class="smallCaps">A</span>JAX <span class="smallCaps">B</span>ASICS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+<span class="smallCaps">P</span>ROTOTYPE</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+<span class="smallCaps">S</span>CRIPTACULOUS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+J<span class="smallCaps">Q</span>UERY</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+<span class="smallCaps">D</span>OJO</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://www.coreservlets.com/html5-tutorial/">
+<span class="smallCaps">HTML 5</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+<span class="smallCaps">I</span>NTERMEDIATE <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+<span class="smallCaps">A</span>DVANCED <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+<span class="smallCaps">S</span>PRING</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+<span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/struts.html">
+<span class="smallCaps">J</span>AKARTA <span class="smallCaps">S</span>TRUTS</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">EJB</span>3</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES WITH <span class="smallCaps">A</span>XIS2</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+<span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">C</span>HINESE</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">J</span>APANESE</a><br/><br/>	
+
+</div><!-- #EndLibraryItem --><!-- #BeginLibraryItem "/Library/TrainingSideLinks.lbi" -->      
+<div id="sidebar_left_heading"><a href="http://courses.coreservlets.com/">training courses</a></div>
+<div class="list">
+
+<a href="http://courses.coreservlets.com/about-instructor.html"><span class="smallCaps">A</span>BOUT THE <span class="smallCaps">I</span>NSTRUCTOR</a><br/>
+  
+<a href="http://courses.coreservlets.com/student-reviews.html"><span class="smallCaps">C</span>OURSE <span class="smallCaps">R</span>EVIEWS</a><br/>
+  
+<a href="http://courses.coreservlets.com/jsf-training.html">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span> &amp;
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+<a href="http://courses.coreservlets.com/java-training.html"><span class="smallCaps">J</span>AVA 7 &amp; <span class="smallCaps">J</span>AVA 8 <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/android-training.html"><span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/ajax-training.html">
+<span class="smallCaps">A</span>JAX (w/ J<span class="smallCaps">Q</span>UERY, <span class="smallCaps">HTML</span>5, 
+<span class="smallCaps">E</span>TC.)</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">R</span>ESTful
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES</a><br/>
+
+<a href="http://courses.coreservlets.com/gwt-training.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://courses.coreservlets.com/spring-training.html"><span class="smallCaps">S</span>PRING 
+<span class="smallCaps">F</span>RAMEWORK</a><br/>
+
+<a href="http://courses.coreservlets.com/hibernate-training.html"><span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html"><span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/scwcd-training.html"><span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/"><span class="smallCaps">C</span>USTOMIZED <span class="smallCaps">O</span>N-SITE</a><br/>
+  
+<a href="http://courses.coreservlets.com/public-courses/"><span class="smallCaps">P</span>UBLIC <span class="smallCaps">T</span>RAINING <span class="smallCaps">S</span>CHEDULE</a><br/><br/>
+</div><!-- #EndLibraryItem --><br /><p>&nbsp;</p>
+  </td>
+<!-- End Left Sidebar -->
+
+<!-- Begin Main Content -->
+<td  id="content" colspan="7"><h1 class="content_heading">JSF 1.<i>x</i> Tutorial</h1>
+<h1 class="subtitle">An Introduction to JavaServer Faces 1.<i>x</i> with Apache MyFaces Extensions</h1><!-- #BeginLibraryItem "/Library/JsfTrainingHeader.lbi" -->
+<h2 class="content_subheading" align="center"><font color="#0000ff">Interested in live training from 
+the author of these tutorials?
+See the upcoming <a href="http://courses.coreservlets.com/public-courses/jsf2/">JSF 2.2</a> and 
+<a href="http://courses.coreservlets.com/public-courses/primefaces/">PrimeFaces</a> training courses in Maryland,
+co-sponsored by Johns Hopkins. Or, contact 
+<a href="mailto:hall@coreservlets.com">hall@coreservlets.com</a> for info on
+customized JSF 2 or PrimeFaces courses onsite at <i>your</i> location. 
+See  
+<a href="http://courses.coreservlets.com/jsf-training.html">the JSF and PrimeFaces training page</a> for
+various options for the onsite courses.
+</font></h2><br/>
+<!-- #EndLibraryItem --><!--
+-->
+<p>This tutorial covers JSF 1.x with Apache MyFaces, but the
+  <a href="../jsf2/index.html">the JSF 2.0 tutorial</a> covers JSF 2 with the free Mojarra JSF2 implementation. 
+  <b><font color="red">This JSF 1 tutorial
+    is left online only for those maintaining existing projects: <a href="../jsf2/index.html">JSF 2</a> is both simpler and more powerful than JSF 1, and is
+    strongly preferred for all new projects.</font></b>
+  Click on a topic below to get the detailed tutorial,
+  download the source code, or try out exercises on the topic.
+</p>
+<p>
+  This tutorial is derived from
+  <a href="http://courses.coreservlets.com/jsf-training.html">Marty Hall's world-renowned live JSF training courses</a>.
+  Courses on JSF 1.x or 2.0 are usually taught on-site at customer locations, but
+  <a href="http://courses.coreservlets.com/public-courses/">Java 7, servlet, JSP,
+    Ajax (with jQuery), GWT, Spring, Hibernate, Web Services (SOAP and REST), Hadoop, JSF 1.x, JSF 2.0, and PrimeFaces training courses
+    at public venues</a> are periodically scheduled for people with too few developers
+  for an onsite course. For descriptions of the various other courses that are
+  available, please see the <a href="http://courses.coreservlets.com/">Java EE and Ajax training course page</a>.
+  To inquire about a customized training course at your location, please contact Marty at
+  <a href="mailto:hall@coreservlets.com">hall@coreservlets.com</a>.
+</p>
+<p>If you find these free tutorials helpful, we would appreciate it if you would
+  <a href="http://courses.coreservlets.com/Course-Materials/link-to-us.html">link to us</a>. Send corrections or feedback on any tutorial to
+  <a href="mailto:hall@coreservlets.com">hall@coreservlets.com</a>.</p>
+
+
+
+<div class="accordion-div">
+  <h1 class="book_part"><a name="Review"><b>Servlets and JSP: A Review of the Basics</b></a></h1>
+<div> <!-- Accordion content -->
+  <p>This section provides a quick review of the basics of servlets and JSP, as a review
+    before moving on to the JSF-specific topics.
+    Please note that this section is not detailed enough for those who have never done server-side
+    programming in Java; it is intended as a review for those who have done it before, but are rusty.
+    If you are new to building Web apps in Java, please see <a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+      the beginning and intermediate servlet and JSP tutorials</a>. </p>
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/ajax/Servlet+JSP-Review.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/ajax-code/review.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/exercises/exercises-review.pdf" target="_blank">Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/ajax-code/review-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>What servlets are all about</li>
+        <li>Servlet basics</li>
+        <li>Creating and deploying projects in Eclipse. Also see
+          <a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/eclipse.html">
+            the Tomcat and Eclipse tutorial</a>.</li>
+        <li>Creating forms and reading form data</li>
+        <li>JSP scripting</li>
+        <li>Using XML syntax for JSP pages</li>
+        <li>JSP file inclusion</li>
+        <li>The MVC architecture</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec1"><b>Introducing JSF</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/01-JSF-Intro.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-blank-myfaces.zip">jsf-blank-myfaces.zip</a><br/>
+      Blank Web app to use as a starting point for JSF applications.
+      Apache MyFaces version, bundled as
+      <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">an Eclipse project</a>.
+      Has all necessary JAR files in <em>WEB-INF/lib</em>,
+      all required settings in <em>WEB-INF/web.xml</em>, a
+      a blank <em>WEB-INF/faces-config.xml</em> file, and the JSF project facet for Eclipse.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-intro.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Understanding JSF
+          <ul>
+            <li>Different views of JSF</li>
+            <li>Comparing JSF to standard servlet/JSP technology (Pros/Cons)</li>
+            <li>Comparing JSF to Apache Struts (Pros/Cons)</li>
+            </ul>
+          </li>
+        <li>Setting Up JSF
+          <ul>
+            <li>Downloading and configuring JSF
+              <ul>
+                <li>Apache MyFaces</li>
+                <li>Sun Reference Implementation</li>
+                </ul>
+              </li>
+            <li>Testing JSF</li>
+            <li>Setting up JSF applications</li>
+            <li>Accessing JSF documentation
+              <ul>
+                <li>Generic</li>
+                <li>Specific to Apache MyFaces</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec2"><b>Controlling Page Navigation</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/02-Page-Navigation.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-navigation.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-navigation.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-navigation-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>JSF flow of control</li>
+        <li>The basic steps in using JSF</li>
+        <li>Static navigation
+          <ul>
+            <li>One result mapping</li>
+            </ul></li>
+        <li>Dynamic navigation
+          <ul>
+            <li>Multiple result mappings</li>
+            </ul></li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+
+<h1 class="book_part"><a name="sec3"><b>Handling Request Parameters with Managed Beans</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/03-Managed-Beans.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-beans.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-beans.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-beans-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Using beans to represent request parameters</li>
+        <li>Declaring beans in faces-config.xml</li>
+        <li>Outputting bean properties
+          <ul>
+            <li>Standard JSF approach</li>
+            <li>JSP 2.0 expression language</li>
+            </ul></li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec4"><b>Using the JSF Expression Language</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/04-Expression-Language.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-el.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-el.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-el-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Motivating use of the expression language
+          <ul>
+            <li>Comparing to the JSP 2.0 EL</li>
+            </ul></li>
+        <li> Accessing bean properties
+          <ul>
+            <li>Direct</li>
+            <li>Nested</li>
+            </ul></li>
+        <li>Submitting bean properties
+          <ul>
+            <li>Expressions in output values</li>
+            <li>Expressions in submission values</li>
+            <li>Expressions for action controllers</li>
+            </ul></li>
+        <li>Accessing collection elements</li>
+        <li>Using implicit objects and operators</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec5"><b>Using Properties Files (Resource Bundles)</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/05-Properties-Files.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/properties.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/properties.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/properties-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Loading properties files</li>
+        <li>Simple messages</li>
+        <li>Parameterized messages</li>
+        <li>Internationalized messages</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec6"><b>Handling Events</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/06-Event-Handling.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-events.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-events.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-events-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Comparing action controllers to event listeners</li>
+        <li>Action listeners</li>
+        <li>Value change listeners</li>
+        <li>Using JavaScript to submit form
+          <ul>
+            <li>Browser incompatibilities</li>
+            </ul>
+          </li>
+        <li>Combining action listeners and action controllers in the same GUI element</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec7"><b>Building Input Forms with the h: Library</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/07-HTML-Library.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-html.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-html.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-html-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>The most common HTML elements</li>
+        <li>Shared attributes</li>
+        <li>Implied attributes</li>
+        <li>Elements that can invoke action controllers/listeners</li>
+        <li>Elements that can invoke value change listeners</li>
+        <li>Elements that display lists of items</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec8"><b>Validating User Input and Redisplaying Incomplete Forms</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/08-Validation.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/jsf-validation.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/jsf-validation.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/jsf-validation-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Manual validation</li>
+        <li>Implicit automatic validation</li>
+        <li>Explicit validation</li>
+        <li>Defining your own validation methods</li>
+        <li>Creating custom validators</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="JDBC"><b>Accessing Databases with JDBC</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/10-JDBC.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/jdbc.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/exercises/exercises-jdbc.pdf" target="_blank">Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/jdbc-starting-point.zip">Starting-point project for JDBC/Derby exercises.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li>Topics covered:
+      <ul>
+        <li>Overview of JDBC technology</li>
+        <li>JDBC design strategies</li>
+        <li>Using Apache Derby (Java DB)</li>
+        <li>Seven basic steps in using JDBC</li>
+        <li>Using JDBC from desktop Java apps</li>
+        <li>Using JDBC from Web apps</li>
+        <li>Prepared statements (parameterized commands)</li>
+        <li>Meta data</li>
+        <li>Transaction control</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec10"><b>Displaying JSF Data Tables</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/10-Data-Tables.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/tables.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/tables.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Motivation</li>
+        <li>Basic syntax</li>
+        <li>Defining table headings</li>
+        <li>Formatting tables with style sheets</li>
+        <li>Displaying database tables</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec11"><b>Using the Apache MyFaces Components (Tomahawk)</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/11-MyFaces-Components.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/myfaces-components.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/myfaces-components.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/myfaces-components-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Popular Apache component libraries
+          <ul>
+            <li>Tomahawk</li>
+            <li>Tobago</li>
+            <li>Trinidad</li>
+            </ul></li>
+        <li>Getting the Tomahawk components</li>
+        <li>Configuring MyFaces to use Tomahawk</li>
+        <li>Sample components
+          <ul>
+            <li>Date input</li>
+            <li>Tabbed panes</li>
+            <li>Popups</li>
+            <li>Data lists</li>
+            <li>Tables with column flow</li>
+            </ul></li>
+        <li>Sample validators
+          <ul>
+            <li>Regular expressions</li>
+            <li>Email addresses</li>
+            <li>Credit cards</li>
+            <li>Equality</li>
+            </ul></li>
+        <li>Overview of other components</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+
+<h1 class="book_part"><a name="sec11b"><b>Using the Ajax4jsf Library</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/12-Ajax4jsf.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li>Source code:
+      <ul>
+        <li><a href="code/ajax4jsf.zip">ajax4jsf.zip</a><br/>
+          Web application used for the examples in this section.</li>
+        <li><a href="code/ajax4jsf-blank.zip">ajax4jsf-blank.zip</a><br/>
+          Starting-point Web application to be used as the basis for projects
+          that use Ajax4jsf with MyFaces.</li>
+        </ul>
+      Bundled as <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse projects</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/ajax4jsf.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="code/ajax4jsf-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Ajax motivation</li>
+        <li>Installation</li>
+        <li>Main Ajax4jsf Elements
+          <ul>
+            <li>a4j:commandButton</li>
+            <li>a4j:commandLink</li>
+            <li>a4j:poll</li>
+            <li>a4j:support</li>
+            </ul></li>
+        <li>Limitations on use of h:outputText with Ajax4jsf</li>
+        <li>Other Ajax Toolkits</li>
+        </ul>
+      <b>Note: for more details on Ajax, please see
+        <a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+          the Ajax and GWT (Google Web Toolkit) tutorial</a>. Also,
+        <a href="../jsf2/index.html">the JSF 2.0 tutorial</a> has some sections on
+        the new builtin Ajax support that makes Ajax4JSF somewhat unnecessary in JSF 2.</b>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="Tags-Basics"><b>Creating Custom JSP Tag Libraries: The Basics</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/07-Basic-Custom-Tags.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/basicTags.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/exercises/exercises-basic-tags.pdf" target="_blank">Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/basic+advancedTags-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Java-based tags
+          <ul>
+            <li>Components of a tag library</li>
+            <li>Basic tags</li>
+            <li>Tags that use attributes</li>
+            <li>Tags that use body content</li>
+            <li>Tags that optionally use body content</li>
+            </ul></li>
+        <li>JSP-based tags (tag files)
+          <ul>
+            <li>Components of a tag library</li>
+            <li>Basic tags</li>
+            <li>Tags that use attributes</li>
+            <li>Tags that use body content</li>
+            </ul></li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="Tags-Advanced"><b>Creating Custom JSP Tag Libraries: Advanced Topics</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/08-Advanced-Custom-Tags.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/advancedTags.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/exercises/exercises-advanced-tags.pdf" target="_blank">Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/servlet+jsp-code/basic+advancedTags-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Tags with dynamic attribute values</li>
+        <li>Tags with complex objects for attributes</li>
+        <li>Manipulating the tag body</li>
+        <li>Looping tags</li>
+        <li>Nested tags</li>
+        <li>Using TagLibraryValidator to validate tag library syntax</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+
+<h1 class="book_part"><a name="sec14"><b>Developing Custom Components</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/14-Custom-Components.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/custom-components.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/custom-components.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Simple output-only components</li>
+        <li>Components that accept attributes</li>
+        <li>Components that accept input</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec15"><b>Page Templating with Facelets</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/16A-Facelets-Templating.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li><a href="code/facelets.zip">Source code of examples in this section.</a>
+      Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/facelets.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Facelets motivation</li>
+        <li>Installation and setup</li>
+        <li>Basic mechanism
+          <ul>
+            <li>Template file</li>
+            <li>Client file</li>
+            </ul>
+          </li>
+        <li>Templating with includes</li>
+        <li>Handling relative URLs</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+
+<h1 class="book_part"><a name="sec16"><b>Using (Struts) Tiles with JSF</b></a></h1>
+<div> <!-- Accordion content -->
+  <p>Now that Facelets are well established, Tiles is considered obsolete by many JSF developers.
+    So, unless you have a specific reason to use Tiles, look at the previous section on Facelets instead of this section.</p>
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/16B-JSF-and-Tiles.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li>Source code:
+      <ul>
+        <li><a href="./code/e-boats.zip">e-boats.zip</a><br/>
+          First Web application used for the examples in this section.</li>
+        <li><a href="./code/e-boats2.zip">e-boats2.zip</a><br/>
+          Second Web application used for the examples in this section.</li>
+        </ul>
+      Bundled as <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse projects</a>.</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/exercises/tiles.pdf" target="_blank">
+      Exercises to reinforce the concepts in this section.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Tiles motivations</li>
+        <li>Setting up JSF (any implementation) for simple Tiles</li>
+        <li>Tiles basics
+          <ul>
+            <li>Sketch out desired layout</li>
+            <li>Make template file that represents layout</li>
+            <li>Create JSP pages that define layout pieces</li>
+            <li>Create JSP pages that populate layout</li>
+            </ul></li>
+        <li>Setting up MyFaces for Tiles definitions</li>
+        <li>Using Tiles definitions file</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="JSTL"><b>The JSP Standard Tag Library (JSTL)</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/jsf/17-JSF-and-JSTL.pdf" target="_blank">This tutorial section in PDF.</a></li>
+    <li>Source code:
+      <ul>
+        <li><a href="http://courses.coreservlets.com/Course-Materials/ajax-code/jstl.zip">Source code of examples in this section.</a>
+          Bundled as an <a href="http://courses.coreservlets.com/Course-Materials/eclipse-code.html">Eclipse project</a>.</li>
+        <li><a href="http://courses.coreservlets.com/Course-Materials/ajax-code/jstl-jars.zip">jstl-jars.zip</a>.
+          The two required JSTL JAR files, from the Apache site.
+          Drop in the WEB-INF/lib folder of your project.</li>
+        </ul>
+      </li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/pdf/msajsp/exercises/exercises-jstl.pdf" target="_blank">Exercises to reinforce the concepts in this section.</a></li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/ajax-code/jstl-exercises.zip">Exercise solutions.</a></li>
+    <li>Topics covered:
+      <ul>
+        <li>Obtaining JSTL documentation and code</li>
+        <li>The JSTL Expression Language</li>
+        <li>Looping Tags</li>
+        <li>Using JSTL to simplify Ajax data generation</li>
+        <li>Conditional Evaluation Tags</li>
+        <li>Database Access Tags</li>
+        <li>Other Tags</li>
+        </ul>
+      </li>
+  </ul>
+</div> <!-- Accordion content -->
+
+<h1 class="book_part"><a name="sec18"><b>JSF References</b></a></h1>
+<div> <!-- Accordion content -->
+  <ul>
+    <li><a href="http://java.sun.com/j2ee/javaserverfaces/">JSF home page</a></li>
+    <li><a href="http://java.sun.com/j2ee/javaserverfaces/download.html">JSF download page</a></li>
+    <li><a href="http://courses.coreservlets.com/jsf-training.html">Onsite JSF 1.x and 2.0 Training Courses</a><br/>
+      Personally developed and
+      taught by the author of the best-selling Sun Press books
+      Core Servlets and JavaServer Pages, More Servlets and JavaServer Pages,
+      Core Web Programming, and this JavaServer Faces tutorial.</li>
+    <li><a href="http://resources.coreservlets.com/java-ee-books.html#jsf">Recommended JSF books</a></li>
+    <li><a href="http://java.sun.com/j2ee/1.4/docs/tutorial/doc/J2EETutorialTOC.html#wp321529">
+      JSF Section of Sun J2EE 1.4 tutorial</a></li>
+    <li><a href="http://java.sun.com/j2ee/javaserverfaces/1.1/docs/api/">JSF API Javadocs</a></li>
+    <li><a href="http://java.sun.com/j2ee/javaserverfaces/1.1/docs/tlddocs/">JSF tag library docs</a></li>
+    <li><a href="http://horstmann.com/corejsf/faces-config.html">jsf-config.xml annotated DTD</a></li>
+    <li><a href="http://java.sun.com/j2ee/javaserverfaces/reference/faqs/index.html">Sun's JSF FAQ</a></li>
+    <li><a href="http://forum.java.sun.com/forum.jsp?forum=427">The JavaServer Faces Forum</a></li>
+    <li><a href="http://resources.corejsp.com/">Servlet, JSP, and Struts Programming Resources</a> (Links)</li>
+    <li><a href="http://courses.coreservlets.com/Course-Materials/">Servlet, JSP, and Struts Course Materials</a> (PDF)</li>
+    <li><a href="http://www.apl.jhu.edu/~hall/java/">Basic Java Programming Resources</a> (Links)</li>
+    <li><a href="http://courses.coreservlets.com/">Customized onsite training courses: servlets, JSP,
+      Ajax, GWT 1.6, Struts, Spring, Hibernate, JPA, &amp; Java 6 programming.</a></li>
+    <li>JSF component libraries
+      <ul>
+        <li><a href="http://myfaces.apache.org/tomahawk/">Tomahawk.</a> From Apache MyFaces,
+          but runs in any implementation.</li>
+        <li><a href="http://www.jboss.org/jbossrichfaces/">RichFaces (includes Ajax4Jsf).</a>
+          From JBoss, but runs on any Java server.</li>
+        <li><a href="http://www.icefaces.org/">ICEfaces.</a></li>
+        <li><a href="https://woodstock.dev.java.net/">Woodstock.</a>
+          From GlassFish, but runs on any Java server.</li>
+        <li><a href="http://www.oracle.com/technology/products/adf/index.html">Oracle ADF.</a>
+          From Oracle, but runs on any Java server.</li>
+        <li><a href="http://www.infragistics.com/java/netadvantage/jsf.aspx#Overview">Infragistics NetAdvantage.</a></li>
+        <li><a href="http://www.teamdev.com/quipukit/index.jsf">QuipuKit.</a></li>
+        <li><a href="http://primefaces.prime.com.tr/en/">PrimeFaces.</a></li>
+        <li><a href="http://www.ria-components.org/content/products/wgf/webGalileoFaces.html">WebGalileo Faces.</a></li>
+        <li><a href="http://www.jsfcentral.com/products/components/">Component Library List.</a>
+          Very extensive list of JSF component libraries from JSF Central.</li>
+        <li><a href="http://free-jsf-components.net/">free-jsf-components.net.</a>
+          Reviews and details on the most popular of the free JSF component libraries.</li>
+        </ul>
+      </li>
+    </ul>
+</div> <!-- Accordion content -->
+
+<h2 class="book_part"><a name="Code"><b>Source Code</b></a></h2>
+<p>
+  Source code for all examples in this tutorial can be downloaded from the
+  <a href="./code">JSF 1 sample code repository</a>. Each section also has links
+  to the code used in that section.
+</p>
+
+<!-- #BeginLibraryItem "/Library/PPT-for-Faculty.lbi" --><h2 class="book_part"><a class="accordionLink" href="#PPT" name="PPT"><b>PowerPoint Files for University Faculty</b></a></h2>
+<p>
+The PDF files in this tutorial contain the complete text of the original
+PowerPoint files, so if your goal is <i>learning</i> this technology, just stick
+with this tutorial. However, as a service to instructors teaching
+full-semester courses at accredited universities, coreservlets.com
+will release the original PowerPoint files for free. Please
+see <a href="http://courses.coreservlets.com/Course-Materials/instructor-materials.html">the instructor materials page</a>
+for details.
+</p><!-- #EndLibraryItem -->
+<h1 class="book_part"><a class="accordionLink" href="#More-Info" name="More-Info"><b>More Information</b></a></h1>
+<div><!-- #BeginLibraryItem "/Library/MoreInfoTable.lbi" --><table align="center">
+
+<tr valign="top"><td> <!-- Left column -->
+<fieldset><legend>Java</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://docs.oracle.com/javase/7/docs/api/" 
+         target="_blank">Java SE 7 API</a></li>
+  <li><a href="http://download.java.net/jdk8/docs/api/" 
+         target="_blank">Java SE 8 API</a></li>
+  <li><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" 
+         target="_blank">Java SE Downloads for Windows, Linux, &amp; Solaris</a></li>
+  <li><a href="http://support.apple.com/kb/DL1573" 
+         target="_blank">Java SE Downloads for MacOS 10.6</a></li>      
+  <li><a href="http://docs.oracle.com/javaee/6/api/" 
+         target="_blank">Java EE 6 API.</a>
+		  Includes the servlet 3.0, JSP 2.2, and JSF 2.0 APIs.</li>	 
+  <li><a href="http://www.oracle.com/technetwork/java/javaee/tech/index.html" 
+         target="_blank">Java EE 6 Technologies.</a>
+		  Includes servlet 3.0, JSP 2.2, JSTL 1.2, and JSF 2.0 specifications</li>
+  <li><a href="http://download.oracle.com/javaee/5/api/" 
+         target="_blank">Java EE 5 API.</a>
+		  Includes the servlet 2.5, JSP 2.1, and JSF 1.1 APIs.</li>		
+  <li><a href="http://courses.coreservlets.com/Course-Materials/java.html">
+      Java 7 Programming Tutorial</a></li>
+  <li><a href="http://www.coreservlets.com/java-8-tutorial/">
+      Java 8 Tutorial: Lambdas, Streams, &amp; More</a></li>
+  <li><a href="http://courses.coreservlets.com/java-training.html">
+      Java 7 &amp; 8 Training Courses</a></li>
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#java">
+      Recommended Java Programming Books</a></li>
+  <li><a href="http://www.apl.jhu.edu/~hall/java/" target="_blank">
+      General Java Programming Resources</a></li>
+</ul>
+</fieldset>
+<br/>
+<fieldset><legend>JSF (JavaServer Faces)</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+      JSF 2 Tutorial (with Eclipse)</a></li>
+  <li><a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+      PrimeFaces Tutorial</a></li>
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.1/"
+         target="_blank">JSF 2.1 Documentation Home</a></li>
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.1/javadocs/index.html"
+         target="_blank">JSF 2.1 Java API</a></li>
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.1/vdldocs/facelets/index.html"
+         target="_blank">JSF 2.1 Facelets Tags API</a></li>    
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.1/managed-bean-javadocs/index.html"
+         target="_blank">JSF 2.1 Managed Beans Annotations API</a></li>
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.0/javadocs/index.html"
+         target="_blank">JSF 2.0 Java API</a></li>
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.0/vdldocs/facelets/index.html"
+         target="_blank">JSF 2.0 Facelets Tags API</a></li>    
+  <li><a href="http://javaserverfaces.java.net/nonav/docs/2.0/managed-bean-javadocs/index.html"
+         target="_blank">JSF 2.0 Managed Beans Annotations API</a></li>
+  <li><a href="http://javaserverfaces-spec-public.java.net/"
+         target="_blank">JSF 2 Specifications</a></li>
+  <li><a href="http://primefaces.org/"
+         target="_blank">PrimeFaces Home Page</a></li> 
+  <li><a href="http://www.jboss.org/richfaces"
+         target="_blank">RichFaces Home Page</a></li>
+  <li><a href="http://docs.oracle.com/cd/E17802_01/j2ee/j2ee/javaserverfaces/1.2/docs/api/" 
+         target="_blank">JSF 1.2 Java API</a></li>
+  <li><a href="http://docs.oracle.com/javaee/5/javaserverfaces/1.2/docs/tlddocs/" 
+         target="_blank">JSF 1.2 Tag Library API</a></li>
+  <li><a href="http://wiki.apache.org/myfaces/" 
+         target="_blank">Apache MyFaces Documentation</a></li>
+  <li><a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+      JSF 2 Tutorial (plus PrimeFaces Intro)</a> </li>
+  <li><a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+      JSF 1 Tutorial.</a></li>
+  <li><a href="http://courses.coreservlets.com/jsf-training.html">
+      JSF 2.<i>x</i> Training Courses (optionally with PrimeFaces)</a></li>
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#jsf">
+      Recommended JSF Books</a></li>
+</ul>
+</fieldset>
+<br/>
+<fieldset><legend>Servlets &amp; JSP</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://docs.coreservlets.com/servlet-3.0-api/" 
+         target="_blank">Servlet 3.0, JSP 2.2, and EL 2.2 API.</a> 
+		 Supported by Tomcat 7.<i>x</i>.</li>
+  <li><a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/tomcat-7-with-eclipse.html" 
+         target="_blank">Tutorial on setting up Tomcat 7 and Integrating it with Eclipse</a></li>
+  <li><a href="http://docs.oracle.com/cd/E17802_01/products/products/servlet/2.5/docs/servlet-2_5-mr2/" 
+         target="_blank">Servlet 2.5 API.</a> 
+		 Supported by Tomcat 6.<i>x</i>.</li>
+  <li><a href="http://docs.oracle.com/cd/E17802_01/products/products/jsp/2.1/docs/jsp-2_1-pfd2/" 
+         target="_blank">JSP 2.1 API.</a>
+		 Supported by Tomcat 6.<i>x</i>.</li>
+  <li><a href="http://jakarta.apache.org/tomcat/tomcat-5.5-doc/servletapi/" 
+         target="_blank">Servlet 2.4 API.</a>
+		 Supported by Tomcat 5.<i>x</i> and 6.<i>x</i>.</li>
+  <li><a href="http://jakarta.apache.org/tomcat/tomcat-5.5-doc/jspapi/" 
+         target="_blank">JSP 2.0 API.</a>
+		 Supported by Tomcat 5.<i>x</i> and 6.<i>x</i>.</li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+      Beginning/Intermediate Servlet and JSP Tutorial</a></li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+      Advanced Servlet and JSP Tutorial</a></li>
+  <li><a href="http://courses.coreservlets.com/servlet+jsp-training.html">
+      Servlet and JSP Training Courses</a></li>
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#servlets+jsp">
+      Recommended Servlet &amp; JSP Books</a></li>
+</ul>
+</fieldset>
+
+</td>
+<td> <!-- Right column -->
+<fieldset><legend>Ajax, GWT, &amp; JavaScript</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://code.google.com/webtoolkit/overview.html" 
+         target="_blank">Top-Level GWT Docs Page</a></li>
+  <li><a href="http://google-web-toolkit.googlecode.com/svn/javadoc/1.5/index.html" 
+         target="_blank">GWT Java API</a></li>
+  <li><a href="http://www.w3schools.com/jsref/" 
+         target="_blank">JavaScript Reference: Core Objects</a></li>
+  <li><a href="http://www.w3schools.com/htmldom/dom_reference.asp" 
+         target="_blank">JavaScript Reference: HTML DOM</a></li>
+  <li><a href="http://docs.jquery.com/Main_Page" 
+         target="_blank">jQuery API</a></li>
+  <li><a href="http://jqueryui.com/demos/" 
+         target="_blank">jQuery UI Docs</a></li>
+  <li><a href="http://github.com/madrobby/scriptaculous/wikis" 
+         target="_blank">Script.aculo.us API</a></li>
+  <li><a href="http://www.prototypejs.org/api" 
+         target="_blank">Prototype API</a></li>
+  <li><a href="http://api.dojotoolkit.org/" 
+         target="_blank">Dojo API</a></li>
+  <li><a href="http://extjs.com/deploy/dev/docs/" 
+         target="_blank">Ext JS API</a></li>
+  <li><a href="http://developer.yahoo.com/yui/docs/" 
+         target="_blank">YUI API</a></li>
+  <li><a href="http://code.google.com/closure/" 
+         target="_blank">Google Closure Home</a></li>       
+  <li><a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+      Ajax Tutorial (includes jQuery, Dojo, and other JavaScript Frameworks)</a></li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+      GWT 2 Tutorial</a></li>
+  <li><a href="http://courses.coreservlets.com/ajax-training.html">
+      Ajax Training Courses (with jQuery, etc.)</a></li>
+  <li><a href="http://courses.coreservlets.com/gwt-training.html">
+      GWT 2 Training Courses</a></li>
+  <li>Recommended Ajax-Related Books: 
+      <a href="http://resources.coreservlets.com/java-ee-books.html#ajax">Ajax</a>,
+      <a href="http://resources.coreservlets.com/java-ee-books.html#gwt">GWT</a>,
+      <a href="http://resources.coreservlets.com/java-ee-books.html#javascript">Core JavaScript</a>,
+      <a href="http://resources.coreservlets.com/java-ee-books.html#javascript-frameworks">JavaScript Frameworks</a>,
+      <a href="http://resources.coreservlets.com/java-ee-books.html#html+css">HTML, XHTML, &amp; CSS</a>.</li>
+</ul>
+</fieldset>
+<br/>
+<fieldset><legend>Spring, Hibernate, &amp; JPA</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://static.springsource.org/spring/docs/3.0.x/javadoc-api/" 
+         target="_blank">Spring 3.0 API</a></li>
+  <li><a href="http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/" 
+         target="_blank">Spring 3.0 Reference Manual</a></li>      
+  <li><a href="http://static.springframework.org/spring/docs/2.5.x/api/index.html" 
+         target="_blank">Spring 2.5 API</a></li>
+  <li><a href="http://static.springframework.org/spring/docs/2.5.x/reference/index.html" 
+         target="_blank">Spring 2.5 Reference Manual</a></li>
+  <li><a href="http://static.springframework.org/spring/docs/2.5.x/reference/index.html" 
+         target="_blank">Top-Level Hibernate Docs Page</a></li>
+  <li><a href="http://docs.oracle.com/javaee/5/api/javax/persistence/package-summary.html" 
+         target="_blank">JPA API</a></li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+      Spring Framework Tutorial</a></li>
+  <li><a href="http://courses.coreservlets.com/spring-training.html">
+      Spring Training Courses</a></li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+      Hibernate and JPA Tutorial</a></li>  
+  <li><a href="http://courses.coreservlets.com/hibernate-training.html">
+      Hibernate Training Courses</a></li> 
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#spring">
+      Recommended Spring Books</a></li>
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#hibernate">
+      Recommended Hibernate Books</a></li>
+</ul>
+</fieldset>
+<br/>
+<fieldset><legend>Struts</legend>
+<ul style="margin-top: 5px; margin-bottom: 5px">
+  <li><a href="http://struts.apache.org/1.x/userGuide/index.html" 
+         target="_blank">Struts 1.x Developer and User Guides</a></li>
+  <li><a href="http://struts.apache.org/struts-action/struts-core/apidocs/index.html" 
+         target="_blank">Struts 1.x API</a></li>
+  <li><a href="http://struts.apache.org/2.x/" 
+         target="_blank">Struts 2 Overview</a></li>
+  <li><a href="http://struts.apache.org/2.x/docs/guides.html" 
+         target="_blank">Struts 2 Developer's Guide</a></li>
+  <li><a href="http://struts.apache.org/2.x/struts2-core/apidocs/index.html" 
+         target="_blank">Struts 2 API</a></li>
+  <li><a href="http://courses.coreservlets.com/Course-Materials/struts.html">
+      Struts Tutorial</a></li>
+  <li><a href="http://resources.coreservlets.com/java-ee-books.html#struts">
+      Recommended Struts Books</a></li>
+</ul>
+</fieldset>
+</td>
+</tr></table><!-- #EndLibraryItem --><br/>
+</div>  <!-- Accordion content for more-info -->
+
+</div>  <!-- Overall accordion-div -->
+		
+
+
+</td>
+<!-- End Main Content -->
+
+<!-- Begin Right Sidebar -->
+<td id="sidebar_right" nowrap="nowrap">
+<div style="border-right: #533859 1px solid; border-left: #533859 1px solid; border-bottom: #533859 2px solid;">
+<div id="announcements"><font color="yellow">2014 AND<br/>2015 Courses</font></div>
+
+<p id="announcements_intro">
+Too few developers for<br/>
+onsite courses? Try<br/>
+our public courses in MD,<br/>
+co-sponsored by Johns<br/>
+Hopkins "Engineering<br/>
+for Professionals"<br/>
+<font color="red">&nbsp;&nbsp;(Updated Schedule)</font>
+</p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/jsf2/">
+JSF2: Modern Web <br/>Apps in Java</a><br/>
+(with PrimeFaces)</p>
+<p class="course_info"><font color="blue">November 10-14 2014</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/hadoop/">
+Hadoop: Big-Data<br/>Apps in the Cloud</a></p>
+<p class="course_info"><font color="blue">February 23-27 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java8/">
+Java 8 Mini-Course:<br/>
+Lambdas &amp; Streams</a></p>
+<p class="course_info"><font color="blue">January 22-23 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java/">
+Java Programming:<br/>A Crash Course</a></p>
+<p class="course_info"><font color="blue">January 26-30 2015</font></p>
+
+<p class="course_title"><a href="http://courses.coreservlets.com/">
+Customized<br/>
+On-Site Training</a>
+</p>
+<p class="course_info"><font color="blue">Courses at<br/> <i>YOUR</i> Location</font><br/>
+&nbsp;&#8226; Customized content<br/>
+&nbsp;&#8226; Flexible dates<br/>
+&nbsp;&#8226; Any country</p>
+</div><p>&nbsp;</p>
+</td>
+<!-- End Right Sidebar -->
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td id="copyright" colspan="7">
+&copy; 2015 coreservlets.com 
+| Design by <a href="http://www.tbiq.com/designedby.html" target="_blank">TBIQ</a> 
+| Java hosting from <a href="http://www.kattare.com/hosting-pricing-chart.kvws?ref=martyhall" target="_blank">Kattare</a></td>
+<td>&nbsp;</td>
+</tr>  
+</table>
+</div>
+</body></html>
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Reading a text file into an array</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Text Files and Arrays in PHP</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>There is another option you can use to place lines of text into an array. In 
+  the technique below, we're using the <a href="php7p5.html">explode( )</a> string 
+  function to create an array from each line of text. Here's the code (this assumes 
+  that you've been following along from <a href="php10p1.html">the previous sections</a>):</P>
+<P class="TextIndent1">&lt;?PHP</P>
+<p class="indent_big">$file_handle = fopen(&quot;dictionary.txt&quot;, &quot;rb&quot;);</p>
+<p class="indent_big">while (!feof($file_handle) ) {</p>
+<p class="indent_bigger">$line_of_text = fgets($file_handle);<br>
+  $parts = explode('=', $line_of_text);</p>
+<p class="indent_bigger">print $parts[0] . $parts[1]. &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_big">}</p>
+<p class="indent_big">fclose($file_handle);</p>
+<p class="TextIndent1">?&gt;</p>
+<P> The lines to examine are in blue; the rest you have met before (get a file 
+  handle, loop round, use <b>fgets</b> to read the line). The first line to note 
+  is this:</P>
+<P class="indent_big_no_bold">$parts = <b>explode(</b> '=', $line_of_text <b>)</b>;</P>
+<p>If you remember the string section, you'll also be familiar with the explode 
+  function. It splits a line of text, based on whatever you have provided for 
+  the separator. In our code, we have used the equals sign ( = ) as a separator. 
+  This is because each line in the dictionary.txt file looks like this:</p>
+<p class="TextIndent3">AAS = Alive and smiling</p>
+<p>When the explode function is executed, the variable called <b>$parts</b> will 
+  be an array. In our text file there will only be two positions in the array, 
+  one for each half of the equals sign.</p>
+<p>We then print out both parts of the array with this:</p>
+<p class="TextIndent3">print $parts[0] . $parts[1]. &quot;&lt;BR&gt;&quot;;</p>
+<p>So <b>$parts[0]</b> will hold the abbreviation (AAS) and <b>$parts[1]</b> will 
+  hold the meaning.</p>
+<p>The next time round the while loop, the second line will be read from the text 
+  file. Exactly the same thing happens, so the line will be split again, and placed 
+  into an array. This is a good technique to use, if you want to split each line 
+  and do something different with each part of the line.<br>
+</p>
+<p>&nbsp;</p>
+<p>In the next part, we'll take a look at File Locations, and how to work with 
+  them.</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php10p6.html">&lt;-- Back One Page</a> | <a href="php10p8.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

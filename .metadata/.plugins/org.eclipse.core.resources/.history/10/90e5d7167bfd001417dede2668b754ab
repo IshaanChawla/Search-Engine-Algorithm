@@ -1,0 +1,72 @@
+public class ZoneIndexing
+{
+	private double[] tagcounts;
+	private String[] tags;
+	private int totalcount;
+	public ZoneIndexing()
+	{
+		tags = new String[]{"<h1>","<h2>","<h3>","<h4>","<h5>","<p>","<td header","<a href","<a target","<th","<li","<code>","<div"};
+		tagcounts = new double[]{0,0,0,0,0,0,0,0};
+		totalcount = 0;
+	}
+	public void computeratios(String text)
+	{
+		Kmp a = new Kmp();
+		int j = 0,k = 0;
+		for(String i : tags)
+		{
+			if(k<5)
+				j=0;
+			else if(k == 5)
+				j=1;
+			else if(k == 6 || k == 7)
+				j=2;
+			else
+				j = k-5;
+			tagcounts[j] += a.kmpzonesearch(text,i);
+			k++;
+		}
+		for(j=0;j<8;j++)
+			totalcount += tagcounts[j];
+		for(j=0;j<8;j++)
+			tagcounts[j] /= totalcount;
+	}
+	public double getzoneweight(String s)
+	{
+		int j=0,k=0;
+		if(s.equals("<title>"))
+			return 2;
+		for(String i : tags)
+		{
+			if(k<5)
+				j=0;
+			else if(k == 5)
+				j=1;
+			else if(k == 6 || k == 7)
+				j=2;
+			else
+				j = k-5;
+			if(s.contains(i))
+				return tagcounts[j];
+			k++;
+		}
+		return 0;
+	}
+	public String[] gettagarray()
+	{
+		return tags;
+	}
+	public double gettotalcount()
+	{
+		return totalcount;
+	}
+	public void fetchvalues(String index)
+	{
+		AccessFile af = new AccessFile();
+		BtreeNode bn = af.fetchzone(index);
+		if(bn != null)
+		{
+			
+		}
+	}
+}

@@ -1,0 +1,37 @@
+import java.net.*;						//URL class and URLConnection Class
+import java.io.*;						//URL Connection class throws a IOException. For the bufferedreader class 
+public class GetSrcPage 
+{
+	public String getsrc(String url) throws IOException
+	{
+		URL webpage = new URL(url);
+		URLConnection wpc = webpage.openConnection();
+		BufferedReader in = new BufferedReader(new InputStreamReader(wpc.getInputStream(),"UTF-8"));
+		String input;
+		StringBuilder str = new StringBuilder();
+		while((input = in.readLine())!= null)
+			str.append(input + "\n");
+		in.close();
+		return str.toString();
+	}
+	/*public static void main(String args[])
+	{
+		String url = new String("https://docs.oracle.com/javase/tutorial/java/data/buffers.html"),t;
+		try
+		{
+			t = getsrc(url);
+			File f = new File("web1.txt");
+			boolean bool = f.createNewFile();
+			if(bool == true)
+			{
+				PrintWriter out = new PrintWriter("web1.txt");
+				out.println(t);
+				out.close();
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		};
+	}*/
+}

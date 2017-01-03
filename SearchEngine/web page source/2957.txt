@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Structures - Learn C - Free Interactive C Tutorial</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="description" content="Learn-C.org is a free interactive C tutorial for people who want to learn C, fast."/>
+<meta name="keywords" content="Learn,C,Tutorial,Interactive,Free"/>
+<meta name="google-site-verification" content="cXWj61RCtO3fVP24Y7CO-nX0ba30tgdJYY8GGBactLI"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:title" content="Structures - Learn C - Free Interactive C Tutorial"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="http://learn-c.org/"/>
+<meta property="og:image" content="http://learn-c.org/static/img/logos/learn-c.png"/>
+<link rel="stylesheet" href="/static/css/codemirror.css">
+<link rel="stylesheet" href="/static/css/theme/monokai.css">
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-responsive.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/learnpython.css"/>
+<script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="navbar navbar-static-top" style="margin-bottom: 10px">
+<div class="navbar-inner">
+<div class="container">
+<a class="brand" href="/" style="padding: 4px 10px"><img src="/static/img/logos/learn-c.png" style="height: 32px;"/></a>
+<div class="social hidden-phone" style="margin-top: 10px; display: inline-block; float: left">
+ 
+<div class="addthis_toolbox addthis_default_style " style="width: 400px; margin-left: 20px">
+<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+<a class="addthis_button_tweet"></a>
+<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+<a class="addthis_counter addthis_pill_style"></a>
+</div>
+<script type="text/javascript">
+                    var addthis_config = {"data_track_clickback":true};
+                    var addthis_share = {"url": "http://learn-c.org" };
+                </script>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4dafdfe6039782b1"></script>
+ 
+ 
+</div>
+<ul class="nav pull-right">
+<li><a href="/about">About</a></li>
+ 
+</ul>
+</div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+<div class="span8">
+<ul class="nav nav-pills">
+<li><a href="http://www.learnpython.org">Python</a></li>
+<li><a href="http://www.learnjavaonline.org">Java</a></li>
+<li class="active"><a href="http://www.learn-c.org">C</a></li>
+ 
+<li><a href="http://www.learn-js.org">JavaScript</a></li>
+<li><a href="http://www.learn-php.org">PHP</a></li>
+<li><a href="http://www.learnshell.org">Shell</a></li>
+<li><a href="http://www.learncs.org">C#</a></li>
+ 
+<li><a href="/recruit-coders-jobs">Jobs</a></li>
+</ul>
+</div>
+<div class="span4">
+<ul class="nav nav-pills pull-right">
+<li><a href="/de/"><img src="/static/img/flags/de.png"/></a></li>
+<li class="active"><a href="/en/"><img src="/static/img/flags/en.png"/></a></li>
+<li><a href="/pl/"><img src="/static/img/flags/pl.png"/></a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="container" id="main">
+<div class="row">
+<div class="span10" style="padding-right: 10px; box-sizing: border-box;">
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    google_ad_slot = "7782329453";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<ul class="breadcrumb" style="margin-top: 10px">
+<li><a href="/en/Welcome">Welcome</a> <span class="divider">/</span></li>
+<li class="active">Structures</li>
+</ul>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn pull-left" href="/en/Pointers"> <i class="icon-chevron-left"></i> Previous Tutorial</a>
+<a class="btn pull-right" href="/en/Function_arguments_by_reference">Next Tutorial <i class="icon-chevron-right"></i></a>
+</div>
+<span id="inner-text">
+<h1>Structures</h1>
+<p>C structures are special, large variables which contain several named variables inside. Structures are the basic foundation for objects and classes in C++. Structures are used for:</p>
+<ul>
+<li>Serialization of data</li>
+<li>Passing multiple arguments in and out of functions through a single argument</li>
+<li>Data structures such as linked lists, binary trees, and more</li>
+</ul>
+<p>The most basic example of structures are <strong>points</strong>, which are a single entity that contains two variables - <code>x</code> and <code>y</code>. Let's define a point in a two-dimensional point:</p>
+<pre><code>struct point {
+    int x;
+    int y;
+}
+</code></pre>
+<p>Now, let's define a new point, and use it. Assume the function <code>draw</code> receives a point and draws it on a screen. Without structs, using it would require two arguments - each for every coordinate:</p>
+<pre><code>/* draws a point at 10, 5 */
+int x = 10;
+int y = 5;
+draw(x, y);
+</code></pre>
+<p>Using structs, we can pass a point argument:</p>
+<pre><code>/* draws a point at 10, 5 */
+struct point p;
+p.x = 10;
+p.y = 5;
+draw(p);
+</code></pre>
+<p>To access the point's variables, we use the dot <code>.</code> operator. </p>
+<h3>Typedefs</h3>
+<p>Typedefs allow us to define types with a different name - which can come in handy when dealing with structs and pointers. In this case, we'd want to get rid of the long definition of a point structure. We can use the following syntax to remove the <code>struct</code> keyword from each time we want to define a new point:</p>
+<pre><code>typedef struct {
+    int x;
+    int y;
+} point;
+</code></pre>
+<p>This will allow us to define a new point like this:</p>
+<pre><code>point p;
+</code></pre>
+<p>Structures can also hold pointers - which allows them to hold strings, or pointers to other structures as well - which is their real power. For example, we can define a vehicle structure in the following manner:</p>
+<pre><code>typedef struct {
+    char * brand;
+    int model;
+} vehicle;
+</code></pre>
+<p>Since brand is a char pointer, the vehicle type can contain a string (which, in this case, indicates the brand of the vehicle).</p>
+<pre><code>vehicle mycar;
+mycar.brand = "Ford";
+mycar.model = 2007;
+</code></pre>
+<h2>Exercise</h2>
+<p>Define a new data structure, named "person", which contains a string (pointer to char) called <code>name</code>, and an integer called <code>age</code>.</p>
+</span>
+<button id="start-exercise" class="btn btn-success" onclick="toggleMinimize(true)"><div class="icon-play icon-white" style="padding-right: 10px"></div> Start Exercise</button>
+<script>
+                $(function(){
+                    toggleMinimize();
+                })
+            </script>
+<hr/>
+<div class="clearfix" style="margin-top: 10px; margin-bottom: 10px;">
+<a class="btn btn-primary pull-left" href="/en/Pointers"><i class="icon-chevron-left icon-white"></i> Previous Tutorial</a>
+<a class="btn btn-primary pull-right" href="/en/Function_arguments_by_reference">Next Tutorial <i class="icon-chevron-right icon-white"></i></a>
+</div>
+<hr/>
+<div class="hidden-phone">
+ 
+ 
+<iframe src="https://www.skillfeed.com/related_courses?border=yes&search=yes&title=Related Tutorials&head=center&keyword=c%20programming&affiliate_code=67577" width="800" height="255" frameborder="0" style="margin-left: -10px"></iframe>
+ 
+ 
+<div>
+<script type="text/javascript"><!--
+                    google_ad_client = "ca-pub-3723950136133694";
+                    /* Learn Python Bottom */
+                    // google_ad_slot = "7782329453";
+
+                    /* Learn Python Long Bottom */
+                    google_ad_slot = "7062365450";
+                    google_ad_width = 728;
+                    google_ad_height = 90;
+                    //-->
+                </script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+</div>
+<script type="text/javascript" src="https://www.spoj.com/banner.js"></script>
+</div>
+</div>
+<div class="span2 hidden-phone" style="margin-left: 0">
+<div id="google-ad-right">
+ 
+<div style="margin-bottom: 10px">
+<script>
+                        google_ad_client = "ca-pub-3723950136133694";
+                        google_ad_slot = "6624688330";
+                        google_ad_width = 160;
+                        google_ad_height = 600;
+                    </script>
+<script src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+                    </script>
+</div>
+<div style="margin-bottom: 10px">
+<script type="text/javascript" src="http://ap.lijit.com/www/delivery/fpi.js?z=283190&u=learnpython&width=160&height=600"></script>
+</div>
+<div style="margin-left: 5px;">
+<a href="https://digitalocean.com/"><img src="/static/img/banners/digital-ocean.png"></a>
+</div>
+ 
+ 
+</div>
+</div>
+</div>
+</div>
+<footer>
+<div class="container">
+<div class="row">
+<div class="span6">
+<h5 style="line-height: 28px">
+Code Window
+<span style="float: right;">
+<button id="run-button" class="btn btn-success" onclick="execute()"><div class="icon-play icon-white" style="padding-right: 10px"></div>Run</button>
+<button id="reset-button" onclick="reset()" class="btn btn-primary">Reset</button>
+<button id="solution-button" onclick="showSolution()" class="btn btn-primary">Solution</button>
+</span>
+</h5>
+</div>
+<div class="span6">
+<div style="width: 100%; height: 100%">
+<h5 style="line-height: 28px">
+Output Window
+<span style="float: right">
+<button id="expected-output-button" class="btn btn-primary" onclick="showExpected()">Expected Output</button>
+<button id="minimize-button" class="btn" onclick="toggleMinimize()">Minimize Code Window</button>
+</span>
+</h5>
+</div>
+</div>
+</div>  
+<div class="row" id="footer-toggle">
+<div class="span6">
+<textarea id="code" style="width: 100%; height: 210px">#include &lt;stdio.h&gt;
+
+/* define the person struct here using the typedef syntax */
+
+int main() {
+    person john;
+
+    /* testing code */
+    john.name = &#34;John&#34;;
+    john.age = 27;
+    printf(&#34;%s is %d years old.&#34;, john.name, john.age);
+}</textarea>
+</div>
+<div class="span6">
+ 
+<div id="loading" style="">
+Executing, please wait...
+</div>
+<textarea id="output" style="width: 475px; height: 210px"></textarea>
+<div style="background: rgba(255,255,255,0.1); margin-top: -20px; text-align: right; font-size: 10px; color: white; z-index: inherit; position: relative; line-height: 20px; padding-right: 5px;">
+Powered by <a target="_blank" href="http://sphere-engine.com/">Sphere Engine &trade;</a>
+</div>
+</div>
+</div>
+</div>  
+<div class="container">
+<div class="row">
+<div class="span12">
+<div class="pull-right" style="padding-top: 3px">
+<a href="http://www.dmca.com/Protection/Status.aspx?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" title="DMCA"> <img src="/static/img/dmca_protected_sml_120ad.png?ID=fd56e7e2-9e1f-43cc-be7c-e1023cb5781c" alt="DMCA.com"/></a>
+</div>
+<div class="copyright">Copyright &copy; Learn-C.org. Read our <a href='/tos'>Terms of Use</a> and <a href='/privacy'>Privacy Policy</a></div>
+</div>
+</div>
+</div>
+</footer>
+<script src="http://s.univide.com/t.js?pid=1&pcid=acb7c1c4766b00b5d1322f05f043f651"></script>
+<script src="/static/js/codemirror/codemirror.js"></script>
+<script src="/static/js/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="/static/js/codemirror/mode/clike/clike.js"></script>
+<script src="/static/js/codemirror/mode/python/python.js"></script>
+<script src="/static/js/codemirror/mode/perl/perl.js"></script>
+<script src="/static/js/codemirror/mode/php/php.js"></script>
+<script src="/static/js/codemirror/mode/javascript/javascript.js"></script>
+<script src="/static/js/codemirror/mode/ruby/ruby.js"></script>
+<script src="/static/js/codemirror/mode/shell/shell.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootbox.min.js"></script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22741967-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<script>
+    $(function() {
+        $("#sign-in").click(function() {
+            var email = $("#email").val();
+            var password = $("#password").val();
+
+            $.ajax({
+                url: "/signin",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    if (data.status == "success") {
+                        document.location.refresh();
+                    } else {
+                        $("#status").text("E-mail or password combination invalid.")
+                    }
+                }
+            })
+        });
+
+        $("#sign-up").click(function() {
+
+        });
+    });
+</script>
+<script>
+        var domainData = {"container": "#include <stdio.h>\n\nint main() {\n{code}\nreturn 0;\n}\n", "sender": "Learn-C.org <admin@learn-c.org>", "language": "c", "twitter": "@learnc", "namespace": "learn-c.org", "language_uppercase": "C", "container_word": "main()", "styled_domain": "Learn-C.org", "analytics": "UA-22741967-3", "contact_email": "admin@learn-c.org", "copyright": "Copyright &copy; Learn-C.org. ", "logo": "/static/img/logos/learn-c.png", "support_email": "support@learn-c.org", "favicon": "favicon-learn-c.ico", "full_url": "http://learn-c.org", "container_indent": "    ", "default_code": "/* Welcome to the Interactive C Tutorial.\nStart by choosing a chapter and\nwrite your code in this window. */\n\n#include <stdio.h>\n\nint main() {\n    printf(\"Hello, World!\");\n    return 0;\n}\n    "};
+        var nextChapter = "/en/Function_arguments_by_reference";
+        var previousChapter = "/en/Pointers";
+        var backChapter = "/en/Welcome";
+        var tutorialData = {"code": "#include <stdio.h>\n\n/* define the person struct here using the typedef syntax */\n\nint main() {\n    person john;\n\n    /* testing code */\n    john.name = \"John\";\n    john.age = 27;\n    printf(\"%s is %d years old.\", john.name, john.age);\n}", "page_title": "Structures", "links": [], "text": "<p>C structures are special, large variables which contain several named variables inside. Structures are the basic foundation for objects and classes in C++. Structures are used for:</p>\n<ul>\n<li>Serialization of data</li>\n<li>Passing multiple arguments in and out of functions through a single argument</li>\n<li>Data structures such as linked lists, binary trees, and more</li>\n</ul>\n<p>The most basic example of structures are <strong>points</strong>, which are a single entity that contains two variables - <code>x</code> and <code>y</code>. Let's define a point in a two-dimensional point:</p>\n<pre><code>struct point {\n    int x;\n    int y;\n}\n</code></pre>\n<p>Now, let's define a new point, and use it. Assume the function <code>draw</code> receives a point and draws it on a screen. Without structs, using it would require two arguments - each for every coordinate:</p>\n<pre><code>/* draws a point at 10, 5 */\nint x = 10;\nint y = 5;\ndraw(x, y);\n</code></pre>\n<p>Using structs, we can pass a point argument:</p>\n<pre><code>/* draws a point at 10, 5 */\nstruct point p;\np.x = 10;\np.y = 5;\ndraw(p);\n</code></pre>\n<p>To access the point's variables, we use the dot <code>.</code> operator. </p>\n<h3>Typedefs</h3>\n<p>Typedefs allow us to define types with a different name - which can come in handy when dealing with structs and pointers. In this case, we'd want to get rid of the long definition of a point structure. We can use the following syntax to remove the <code>struct</code> keyword from each time we want to define a new point:</p>\n<pre><code>typedef struct {\n    int x;\n    int y;\n} point;\n</code></pre>\n<p>This will allow us to define a new point like this:</p>\n<pre><code>point p;\n</code></pre>\n<p>Structures can also hold pointers - which allows them to hold strings, or pointers to other structures as well - which is their real power. For example, we can define a vehicle structure in the following manner:</p>\n<pre><code>typedef struct {\n    char * brand;\n    int model;\n} vehicle;\n</code></pre>\n<p>Since brand is a char pointer, the vehicle type can contain a string (which, in this case, indicates the brand of the vehicle).</p>\n<pre><code>vehicle mycar;\nmycar.brand = \"Ford\";\nmycar.model = 2007;\n</code></pre>\n<h2>Exercise</h2>\n<p>Define a new data structure, named \"person\", which contains a string (pointer to char) called <code>name</code>, and an integer called <code>age</code>.</p>", "solution": "#include <stdio.h>\n\ntypedef struct {\n    char * name;\n    int age;\n} person;\n\nint main() {\n    person john;\n\n    /* testing code */\n    john.name = \"John\";\n    john.age = 27;\n    printf(\"%s is %d years old.\", john.name, john.age);\n}", "is_tutorial": true, "previous_chapter": "Pointers", "output": "John is 27 years old.", "next_chapter": "Function_arguments_by_reference", "back_chapter": "Welcome"};
+    </script>
+<script src="/static/js/learnpython.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+import java.io.*;
+public class Btree 
+{
+	private BtreeNode root;
+	public static int t = 51;
+	public Btree()
+	{
+		root = null;
+	}	
+	public void insert(String kw,File f)
+	{
+		if(root == null)
+		{
+			root = new BtreeNode(t,true);
+			root.keys[root.count].keyword = kw;
+			root.keys[root.count].pointer = f;
+			root.count++;
+		}
+		else
+		{
+			if(root.count == 2*t - 1)
+			{
+				BtreeNode s = new BtreeNode(t,false);
+				s.child[s.count] = root;
+				s.splitchild(0,root,t);
+				int i = 0;
+				if(s.keys[0].keyword.compareTo(kw)<0)
+					i++;
+				s.child[i].insertNonFull(kw,f,t);
+			}
+			else
+				root.insertNonFull(kw,f,t);
+		}
+	}
+	public BtreeNode search(String kw)
+	{
+		int i = 0;
+	    while (i < count && keys[i].keyword.compareTo(kw)<0)
+	        i++;
+	    if (keys[i] == k)
+	        return this;
+	    if (leaf == true)
+	        return NULL;
+	    return C[i]->search(k);
+	}
+}

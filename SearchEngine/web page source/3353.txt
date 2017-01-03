@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Print the table out</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">Output the database tables</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p6.html">here</a>.</i></p>
+<p>&nbsp;</p>
+<p>The next thing to do is to print out all the information we stored in our <a href="php17p4.html">2D 
+  array</a>. We're printing it out in a table.</p>
+<p>The technique is the same as the one in for the forumTest.php page - just print 
+  out your HTML table headers, and loop round for the table rows and table data 
+  tags. Here's just one line from the loop:</p>
+<p class="TextIndent3">print $tdStart . $postData[$i]['member'] . $tdEnd;</p>
+<p>We print out the TD start tag, and the TD end tag. In between that, we have 
+  this:</p>
+<p class="TextIndent3">$postData[$i]['member']</p>
+<p>To print out a value from the 2D array, just refer to its position in the array, 
+  and the key you want to print. The position is coming from the loop ($i). The 
+  key is member.</p>
+<p>Examine the rest of the for loop that prints out the table. See if you can 
+  understand what's going on. Especially this rather long line (split into three 
+  lines on these pages):</p>
+<p class="TextIndent2">print $tdStart . $hrefStart . &quot;=&quot; . $postData[$i]['threadID'] 
+  . &quot;&amp;forum=&quot; . $forum . &quot;&amp;pageID=0&quot; . &quot;&gt;&quot; 
+  . $postData[$i]['threadTopic'] . $hrefEnd . $tdEnd;</p>
+<p>An important part of the line above is this:</p>
+<p class="TextIndent3">&quot;&amp;pageID=0&quot;</p>
+<p>As you may have realised, the whole line prints out the hyperlink. If you hold 
+  your mouse over a hyperlink on the pageThread.php page, you'll see something 
+  like this:</p>
+<p class="indent_big">pageReply.php?rID=1&amp;forum=secWP&amp;pageID=0</p>
+<p>This means that we are trying to pass three things to a page called pageReply.php. 
+  We're trying to pass the following three variables:</p>
+<p align="center"><b>rID<br>
+  forum<br>
+  pageID</b></p>
+<p>The values in the variables are <b>1</b>, <b>secWP</b>, and <b>0</b>. You'll 
+  see how they work in the next section. But the <b>pageID</b> is used to display 
+  the links that will take a user to say page 1 of the replies, or page 2 of the 
+  replies (if there is a page 2), page 3, page 4, etc. We're passing a value of 
+  zero because this is the first page of the replies.</p>
+<p>The final part of the pageThread.php code is this:</p>
+<p class="TextIndent1">if ($nonMember == '') {</p>
+<p class="TextIndent3">print &quot;&lt;P align = center&gt;&quot; . $replyHTML 
+  . &quot;&lt;/P&gt;&quot;;</p>
+<p class="TextIndent1">}<br>
+  else {</p>
+<p class="TextIndent3">print &quot;&lt;P align = center&gt;&quot; . $nonMember 
+  . &quot;&lt;/P&gt;&quot;;<br>
+  print &quot;&lt;P align = center&gt;&quot; . &quot;&lt;A HREF = login.php&gt;Login 
+  Here&lt;/A&gt;&quot; . &quot;&lt;/P&gt;&quot;;</p>
+<p class="TextIndent1">}</p>
+<p>This just tests what is inside of the variable we set up at the top of the 
+  page. If $nonMember is blank, then we can print out the hyperlink to allow the 
+  member to post a new topic. If it's not blank, then we can display some HTML 
+  asking the user to login in. You can also add a link to register, if you like. 
+  We did this in a previous section, so we won't cover it here.</p>
+<p>But that's it! That's the code to display all the posts in your forum. </p>
+<p>There is however, a problem. Supppose your forum is really large. If so, you'd 
+  need to spread the posts over more than one page. That way a user can click 
+  onto page 2 of the posts, page 3, etc. You'll see how to do this in the next 
+  section, which explains how to write the code for displaying the replies to 
+  a post - we'll definitely be needing that <b>pageID</b>!</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p6.html">&lt;-- Back One Page</a> | <a href="php17p8.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

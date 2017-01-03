@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>How to make a web crawler in under 50 lines of Python code</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css?v=30e0f76571" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-25699647-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+
+    <link rel="canonical" href="http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/" />
+    
+    <meta property="og:site_name" content="'Net Instructions" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="How to make a web crawler in under 50 lines of Python code" />
+    <meta property="og:description" content="Interested to learn how Google, Bing, or Yahoo work? Wondering what it takes to crawl the web, and what a simple web crawler looks like? In under 50 lines of Python (version 3) code, here&#x27;s a simple web crawler! (The..." />
+    <meta property="og:url" content="http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/" />
+    <meta property="article:published_time" content="2011-09-24T15:00:16.000Z" />
+    <meta property="article:modified_time" content="2013-06-06T12:41:42.000Z" />
+    <meta property="article:tag" content="How-To" />
+    <meta property="article:tag" content="Programming" />
+    <meta property="article:tag" content="Python" />
+    <meta property="article:tag" content="Python 3" />
+    <meta property="article:tag" content="Tutorial" />
+    <meta property="article:tag" content="Web Crawler" />
+    <meta property="article:tag" content="Web Spider" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="How to make a web crawler in under 50 lines of Python code" />
+    <meta name="twitter:description" content="Interested to learn how Google, Bing, or Yahoo work? Wondering what it takes to crawl the web, and what a simple web crawler looks like? In under 50 lines of Python (version 3) code, here&#x27;s a simple web crawler! (The..." />
+    <meta name="twitter:url" content="http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "'Net Instructions",
+    "author": {
+        "@type": "Person",
+        "name": "Stephen",
+        "url": "http://www.netinstructions.com/author/stephen",
+        "sameAs": null,
+        "description": null
+    },
+    "headline": "How to make a web crawler in under 50 lines of Python code",
+    "url": "http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/",
+    "datePublished": "2011-09-24T15:00:16.000Z",
+    "dateModified": "2013-06-06T12:41:42.000Z",
+    "keywords": "How-To, Programming, Python, Python 3, Tutorial, Web Crawler, Web Spider",
+    "description": "Interested to learn how Google, Bing, or Yahoo work? Wondering what it takes to crawl the web, and what a simple web crawler looks like? In under 50 lines of Python (version 3) code, here&#x27;s a simple web crawler! (The..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.6" />
+    <link rel="alternate" type="application/rss+xml" title="&#x27;Net Instructions" href="http://www.netinstructions.com/rss/" />
+</head>
+<body class="post-template tag-how-to tag-programming tag-python tag-python-3 tag-tutorial tag-web-crawler tag-web-spider nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="http://www.netinstructions.com/">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="http://www.netinstructions.com/rss/">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post tag-how-to tag-programming tag-python tag-python-3 tag-tutorial tag-web-crawler tag-web-spider">
+
+        <header class="post-header">
+            <h1 class="post-title">How to make a web crawler in under 50 lines of Python code</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2011-09-24">24 September 2011</time>  on <a href="/tag/how-to/">How-To</a>, <a href="/tag/programming/">Programming</a>, <a href="/tag/python/">Python</a>, <a href="/tag/python-3/">Python 3</a>, <a href="/tag/tutorial/">Tutorial</a>, <a href="/tag/web-crawler/">Web Crawler</a>, <a href="/tag/web-spider/">Web Spider</a>
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>Interested to learn how Google, Bing, or Yahoo work? Wondering what it takes to crawl the web, and what a simple web crawler looks like? In under 50 lines of Python (version 3) code, here's a simple web crawler! (The full source with comments is at the bottom of this article).</p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2011/09/python-simple-web-crawler-ide-code.png"><img class="aligncenter size-full wp-image-73" title="python-simple-web-crawler-ide-code" alt="" src="http://www.netinstructions.com/wp-content/uploads/2011/09/python-simple-web-crawler-ide-code.png" width="652" height="853" /></a></p>
+
+<p>And let's see how it is run. Notice that you enter in a starting website, a word to find, and the maximum number of pages to search through.</p>
+
+<p><a href="http://www.netinstructions.com/wp-content/uploads/2011/09/python-simple-web-crawler-in-action-console.png"><img class="aligncenter size-full wp-image-74" title="python-simple-web-crawler-in-action-console" alt="" src="http://www.netinstructions.com/wp-content/uploads/2011/09/python-simple-web-crawler-in-action-console.png" width="685" height="502" /></a>  </p>
+
+<h2>Okay, but how does it work?</h2>  
+
+<p>Let's first talk about what a web crawler's purpose is. As described on the <a title="The definition of a web crawler" href="http://en.wikipedia.org/wiki/Web_crawler">Wikipedia page</a>, a web crawler is a program that browses the World Wide Web in a methodical fashion collecting information. <strong>What sort of information does a web crawler collect?</strong> Typically two things:  </p>
+
+<ul>  
+    <li><strong>Web page content</strong> (the text and multimedia on a page)</li>
+    <li><strong>Links</strong> (to other web pages on the same website, or to other websites entirely)</li>
+</ul>  
+
+<p>Which is exactly what this little "robot" does. It starts at the website that you type into the spider() function and looks at all the content on that website. This particular robot doesn't examine any multimedia, instead it is just looking for "text/html" as described in the code. Each time it visits a web <em>page</em> it collects two sets of data: All the <strong>text</strong> on the page, and all the <strong>links</strong> on the page. If the word isn't found in the text on the page, the robot takes the next link in its collection and repeats the process, again collecting the text and the set of links on the next page. Again and again, repeating the process, until the robot has either found the word or has runs into the limit that you typed into the spider() function.  </p>
+
+<h2>Is this how Google works?</h2>  
+
+<p>Sort of. Google has a whole fleet of web crawlers constantly crawling the web, and crawling is a big part of discovering new content (or keeping up to date with websites that are constantly changing or adding new stuff). However you probably noticed that this search took awhile to complete, maybe a few seconds. On more difficult search words it might take even longer. There's another big component to search engines called <strong>indexing<em>. </em></strong>Indexing is what you do with all the data that the web crawler collects. Indexing means that you parse (go through and analyze) the web page content and create a big collection (think database or table) of <strong>easily accessible and quickly retrievable </strong>information. So when you visit Google and type in "kitty cat", your search word is going straight* to the collection of data that has already been crawled, parsed, and analyzed. In fact, your search results are already sitting there waiting for that one magic phrase of "kitty cat" to unleash them. That's why you can get over 14 million results within 0.14 seconds.</p>
+
+<p><em>*Your search terms actually visit a number of databases simultaneously such as spell checkers, translation services, analytic and tracking servers, etc.</em>  </p>
+
+<h2>Let's look at the code in more detail!</h2>  
+
+<p>The following code should be fully functional for Python 3.x. It was written and tested with Python 3.2.2 in September 2011. Go ahead and copy+paste this into your Python IDE and run it or modify it!  </p>
+
+<pre class="brush: python; gutter: true">from html.parser import HTMLParser  
+from urllib.request import urlopen  
+from urllib import parse
+
+# We are going to create a class called LinkParser that inherits some
+# methods from HTMLParser which is why it is passed into the definition
+class LinkParser(HTMLParser):
+
+    # This is a function that HTMLParser normally has
+    # but we are adding some functionality to it
+    def handle_starttag(self, tag, attrs):
+        # We are looking for the begining of a link. Links normally look
+        # like &lt;a href=&quot;www.someurl.com&quot;&gt;&lt;/a&gt;
+        if tag == &#039;a&#039;:
+            for (key, value) in attrs:
+                if key == &#039;href&#039;:
+                    # We are grabbing the new URL. We are also adding the
+                    # base URL to it. For example:
+                    # www.netinstructions.com is the base and
+                    # somepage.html is the new URL (a relative URL)
+                    #
+                    # We combine a relative URL with the base URL to create
+                    # an absolute URL like:
+                    # www.netinstructions.com/somepage.html
+                    newUrl = parse.urljoin(self.baseUrl, value)
+                    # And add it to our colection of links:
+                    self.links = self.links + [newUrl]
+
+    # This is a new function that we are creating to get links
+    # that our spider() function will call
+    def getLinks(self, url):
+        self.links = []
+        # Remember the base URL which will be important when creating
+        # absolute URLs
+        self.baseUrl = url
+        # Use the urlopen function from the standard Python 3 library
+        response = urlopen(url)
+        # Make sure that we are looking at HTML and not other things that
+        # are floating around on the internet (such as
+        # JavaScript files, CSS, or .PDFs for example)
+        if response.getheader(&#039;Content-Type&#039;)==&#039;text/html&#039;:
+            htmlBytes = response.read()
+            # Note that feed() handles Strings well, but not bytes
+            # (A change from Python 2.x to Python 3.x)
+            htmlString = htmlBytes.decode(&quot;utf-8&quot;)
+            self.feed(htmlString)
+            return htmlString, self.links
+        else:
+            return &quot;&quot;,[]
+
+# And finally here is our spider. It takes in an URL, a word to find,
+# and the number of pages to search through before giving up
+def spider(url, word, maxPages):  
+    pagesToVisit = [url]
+    numberVisited = 0
+    foundWord = False
+    # The main loop. Create a LinkParser and get all the links on the page.
+    # Also search the page for the word or string
+    # In our getLinks function we return the web page
+    # (this is useful for searching for the word)
+    # and we return a set of links from that web page
+    # (this is useful for where to go next)
+    while numberVisited &lt; maxPages and pagesToVisit != [] and not foundWord:
+        numberVisited = numberVisited +1
+        # Start from the beginning of our collection of pages to visit:
+        url = pagesToVisit[0]
+        pagesToVisit = pagesToVisit[1:]
+        try:
+            print(numberVisited, &quot;Visiting:&quot;, url)
+            parser = LinkParser()
+            data, links = parser.getLinks(url)
+            if data.find(word)&gt;-1:
+                foundWord = True
+                # Add the pages that we visited to the end of our collection
+                # of pages to visit:
+                pagesToVisit = pagesToVisit + links
+                print(&quot; **Success!**&quot;)
+        except:
+            print(&quot; **Failed!**&quot;)
+    if foundWord:
+        print(&quot;The word&quot;, word, &quot;was found at&quot;, url)
+    else:
+        print(&quot;Word never found&quot;)</pre>
+
+<p>Magic!</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="/author/stephen/">Stephen</a></h4>
+
+                    <p>Read <a href="/author/stephen/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/share?text=How%20to%20make%20a%20web%20crawler%20in%20under%2050%20lines%20of%20Python%20code&amp;url=http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://www.netinstructions.com/how-to-make-a-web-crawler-in-under-50-lines-of-python-code/"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+            <div class=disqusbox>
+                <div>
+                    <hr />
+                </div>
+                <p><strong>View or post Comments</strong></p>
+            </div>
+            <div id="disqus_thread">
+                <form onsubmit="my.loadDisqus(); return false;" class="formBlock">
+                    <input class="disqusButton" type="submit" value="Load Comments">
+                </form>
+            </div>
+            <script type="text/javascript">
+                var disqus_shortname = 'netinstructions';
+                var disqus_identifier = '';
+
+                var my = my || {};
+                my.loadDisqus = function() {
+                    var dsq = document.createElement('script');
+                    dsq.type = 'text/javascript';
+                    dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                };
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story no-cover" href="/how-i-taught-myself-to-program-and-which-language/">
+        <section class="post">
+            <h2>How I taught myself to program (and which languages in what order)</h2>
+            <p>Interested in learning to program and write code? Wondering what programming language you should teach yourself? Curious how other&hellip;</p>
+        </section>
+    </a>
+    <a class="read-next-story prev no-cover" href="/everything-you-need-to-get-a-website-up-and-running/">
+        <section class="post">
+            <h2>Everything you need to get a website up and running</h2>
+            <p>We live in 2011, complete with computers and the ever present internet and world wide web. Nearly everything has&hellip;</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="http://www.netinstructions.com">&#x27;Net Instructions</a> &copy; 2011-2015</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script src="/public/jquery.min.js?v=30e0f76571"></script>
+
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js?v=30e0f76571"></script>
+    <script type="text/javascript" src="/assets/js/index.js?v=30e0f76571"></script>
+
+</body>
+</html>
+

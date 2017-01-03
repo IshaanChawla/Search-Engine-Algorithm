@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<title>HBM explained: Can stacked memory give AMD the edge it needs? | Ars Technica</title>
+    <script type="text/javascript">
+    ars = {"ASSETS":"http:\/\/cdn.arstechnica.net\/wp-content\/themes\/arstechnica\/assets","HOME_URL":"http:\/\/arstechnica.com","LOGIN_URL":"https:\/\/arstechnica.com\/services\/login-desktop.html?v=1","CIVIS":"\/civis","THEME":"dark","VIEW":"mobile","MOBILE":true,"PREMIER":false,"LOGGED":false,"ENV":"production","AD":{"kw":["default"],"zone":"default","queue":[]},"TOTAL":68269,"UNREAD":0,"RECENT":[667145,667169,667195,667045,666893,666081,667125,667117,667053,667055,666259,667025,666597,666987,666883,666761,666767,666757,666777,666581,666705,666679,666665,663693,666629],"LOGINS":true,"CROSS":false,"GEOALERTS":true,"PARSELY":"arstechnica.com","COMMENTS":true,"HOMEPAGE":false,"COUNTRY":"us","SITE":1,"READY":[],"SHOW_ADS":true,"IMG_PROXY":"https:\/\/cdn.arstechnica.net\/i\/","CATEGORY":"information-technology"};
+  </script>
+
+
+  <!--[if lte IE 8]><script type="text/javascript" src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/js/modernizr/modernizr.js"></script><![endif]-->
+
+      <link rel="stylesheet" type="text/css" media="all" href="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/css/ars.min.55e632421d8225142fe8df15cdfe2a20.css" />
+  
+    <link rel="stylesheet" type="text/css" media="all" href="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/css/mobile-new.css" />
+
+      <link rel="alternate" type="application/rss+xml" href="http://feeds.arstechnica.com/arstechnica/index/" />
+  <link rel="shortcut icon" href="https://cdn.arstechnica.net/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="https://cdn.arstechnica.net/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/ars-ios-icon.png" />
+  <link rel="icon" sizes="192x192" href="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/material-ars.png" />
+
+    <meta name="application-name" content="Ars Technica"/>
+  <meta name="msapplication-starturl" content="http://arstechnica.com/"/>
+  <meta name="msapplication-tooltip" content="Ars Technica: Serving the technologist for 1.2 decades"/>
+  <meta name="msapplication-task" content="name=News;action-uri=http://arstechnica.com/;icon-uri=https://cdn.arstechnica.net/favicon.ico"/>
+  <meta name="msapplication-task" content="name=Features;action-uri=http://arstechnica.com/features/;icon-uri=https://cdn.arstechnica.net/ie-jump-menu/jump-features.ico"/>
+  <meta name="msapplication-task" content="name=OpenForum;action-uri=http://arstechnica.com/civis/;icon-uri=https://cdn.arstechnica.net/ie-jump-menu/jump-forum.ico"/>
+  <meta name="msapplication-task" content="name=Subscribe;action-uri=http://arstechnica.com/subscriptions/;icon-uri=https://cdn.arstechnica.net/ie-jump-menu/jump-subscribe.ico"/>
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="advertising" content="ask" />
+  <meta property="fb:admins" content="592156917" />
+
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="theme-color" content="#000000" />
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- cache hit 1274:single/meta:721a3ad5f3b4e4027c1d38dc6e7dc112 -->
+<meta name='parsely-page' content='{"title":"HBM explained: Can stacked memory give AMD the edge it needs?","link":"http:\/\/arstechnica.com\/information-technology\/2015\/05\/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters\/","type":"post","author":"Mark Walton","post_id":666581,"pub_date":"2015-05-19T19:00:34Z","section":"Technology Lab","tags":["amd","hardware","hbm","high-bandwidth-memory","pc-gaming","type: report"],"image_url":"http:\/\/cdn.arstechnica.net\/wp-content\/uploads\/2015\/05\/14326234016_dfb618a603_o-150x150.jpg"}'>
+<meta name='parsely-metadata' content='{"type":"report","title":"HBM explained: Can stacked memory give AMD the edge it needs?","post_id":666581,"lower_deck":"HBM brings a huge 1024-bit-wide bus with 512GB\/sec on tap, plus lower power usage.","image_url":"http:\/\/cdn.arstechnica.net\/wp-content\/uploads\/2015\/05\/14326234016_dfb618a603_o-150x150.jpg","listing_image_url":"http:\/\/cdn.arstechnica.net\/wp-content\/uploads\/2015\/05\/14326234016_dfb618a603_o-300x150.jpg"}'>
+
+<link rel="canonical" href="https://arstechnica.co.uk/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/" />
+
+<link rel="shorturl" href="http://ars.to/1FrmS10" />
+
+<meta name="description" content="HBM brings a huge 1024-bit-wide bus with 512GB/sec on tap, plus lower power usage." />
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/">
+<meta name="twitter:title" content="HBM explained: Can stacked memory give AMD the edge it needs?">
+<meta name="twitter:description" content="HBM brings a huge 1024-bit-wide bus with 512GB/sec on tap, plus lower power usage.">
+
+<meta name="twitter:site" content="@arstechnica">
+<meta name="twitter:domain" content="arstechnica.com">
+
+<meta property="og:site_name" content="Ars Technica" />
+
+<meta name="twitter:image:src" content="http://cdn.arstechnica.net/wp-content/uploads/2015/05/14326234016_dfb618a603_o-640x427.jpg">
+<meta name="twitter:image:width" content="640">
+<meta name="twitter:image:height" content="427">
+
+<meta name="twitter:creator" content="@markalexwalton">
+
+<meta property="og:url" content="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/" />
+<meta property="og:title" content="HBM explained: Can stacked memory give AMD the edge it needs?" />
+<meta property="og:image" content="http://cdn.arstechnica.net/wp-content/uploads/2015/05/14326234016_dfb618a603_o-640x427.jpg" />
+<meta property="og:description" content="HBM brings a huge 1024-bit-wide bus with 512GB/sec on tap, plus lower power usage." />
+<meta property="og:type" content="article" />
+      <script type="text/javascript" src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/js/omniture/mbox.js"></script>
+  </head>
+<body class="single single-post postid-666581 single-format-standard mobile-view dark blog-us">
+    <div class="qual-sponsor"><img src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/sponsor/qualcomm-presented-white.png"></div>
+  <div id="container">
+            <aside id="ad-top">
+          
+<div id="topBanner320x50_frame"></div>
+<script type="text/javascript">
+ars.AD.queue.push(['topBanner', {sz: '320x50', kws: ["top"], collapse: true}]);
+</script>
+
+        </aside>
+
+ 
+   
+<script type="text/javascript">
+  document.domain = location.hostname.split('.').slice(-2).join('.');
+</script>
+
+<header id="mobile-masthead" class="">
+  <div class="masthead-center-wrap">
+        <h1><a href="http://arstechnica.com"><img src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/logo.png" alt="Ars Technica"></a></h1>
+    <div class="post-link-older">
+      <a href="http://arstechnica.com/tech-policy/2015/05/pre-thoughtcrime-russian-think-tank-app-catches-protestors-before-they-protest/" rel="prev"><span class="arrow">&larr;</span></a>    </div>
+    <div class="post-link-newer">
+      <a href="http://arstechnica.com/business/2015/05/youtube-kids-app-has-sex-drugs-and-program-length-ads-advocacy-groups-say/" rel="next"><span class="arrow">&rarr;</span></a>    </div>
+  </div>
+
+  <div class="sliding-trigger" id="burger-time" data-menu="main-menu"><div id="burger"><div></div><div></div><div></div></div></div>
+  <div class="sliding-trigger" id="little-head" data-menu="profile-menu">
+    <div>0</div>
+  </div>
+</header>
+
+<!-- Begin sliding main menu -->
+<div class="sliding-container" id="main-menu">
+  <div class="sliding-contents">
+    <div class="sliding-contents-scroll">
+      <form action="/search" method="GET">
+        <input type="text" name="q" id="search-top" placeholder="Search…">
+      </form>
+      <nav id="mobile-primary">
+        <ul>
+          <li><a href="/civis/">Forum</a></li>
+          <li><a href="/information-technology/">IT</a></li>
+          <li><a href="/gadgets/">Gadgets</a></li>
+          <li><a href="/business/">Business</a></li>
+          <li><a href="/security/">Security</a></li>
+          <li><a href="/tech-policy/">Tech Policy</a></li>
+          <li><a href="/apple/">Apple</a></li>
+          <li><a href="/gaming/">Gaming</a></li>
+          <li><a href="/science/">Science</a></li>
+          <li><a href="/cars/">Cars</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-options">
+        <h2 class="subheading" id="full-site"><a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?view=grid&amp;comments=1">View Full Site</a></h2>
+      </div>
+      <div class="mobile-site-toggle">
+                <!-- cache hit 1274:header/site-toggle:f8ff57a97275618649c08b2cce8f06a6 -->  <ul class="site-toggle">
+      <li class="site-1 selected"><a href="http://arstechnica.com/?return">Ars Technica</a></li>
+      <li class="site-3"><a href="http://arstechnica.co.uk">Ars Technica UK</a></li>
+    </ul>
+              </div>
+      
+<ul id="theme-switch">
+    <li class="light ">
+      <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?mobile_theme=light&amp;comments=1"><span class="subheading">Dark on light</span></a>
+    </li>
+  <li class="dark active">
+      <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?mobile_theme=dark&amp;comments=1"><span class="subheading">Light on dark</span></a>
+    </li>
+</ul>
+    </div>
+  </div>
+</div>
+<!-- End sliding main menu -->
+
+<!-- Begin sliding profile -->
+<div class="sliding-container" id="profile-menu">
+  <div class="sliding-contents">
+    <div class="sliding-contents-scroll">
+              
+<iframe name="mobile-login" id="mobile-login" src="http://arstechnica.com/services/logins.php?return=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1"  width="100%" frameborder="0" scrolling="no"></iframe>
+          </div>
+  </div>
+</div>
+<!-- End sliding profile -->
+
+    <section id="content">
+<!-- cache hit 1274:home/toppost:f3fda06d4fb35e8aa360e369ff702613 -->
+
+<h1 id="archive-head" class="subheading thick-divide-bottom">
+	<a href="http://arstechnica.com/information-technology/">	<span class="archive-name">Technology Lab</span>
+		<span class="divider"> / </span>
+	<span class="archive-desc">Information Technology</span>
+		</a></h1>
+
+<script type="text/javascript">
+  ars.ARTICLE = {"url":"http:\/\/arstechnica.com\/information-technology\/2015\/05\/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters\/","short_url":"http:\/\/ars.to\/1FrmS10","title":"HBM explained: Can stacked memory give AMD the edge it needs?","author":483933,"id":666581,"topic":1283277,"pages":2,"current_page":1,"superscroll":true,"promoted":[],"single_page":false,"comments":87,"fullwidth":false};
+</script>
+
+<article itemscope itemtype="http://schema.org/NewsArticle" class="standalone comments-open">
+	<header>
+		<h1 class="heading" itemprop="headline">HBM explained: Can stacked memory give AMD the edge it needs?</h1>
+		<h2 class="standalone-deck" itemprop="description">HBM brings a huge 1024-bit-wide bus with 512GB/sec on tap, plus lower power usage.</h2>
+    		<div class="post-meta">
+      
+  <p class="byline" itemprop="author creator" itemscope itemtype="http://schema.org/Person">
+  by     <a itemprop="url" href="http://arstechnica.com/author/mark_walton/" rel="author"><span itemprop="name">Mark Walton</span></a>
+     (UK)  -  <span class="date" data-time="1432062034">May 19, 2015 7:00 pm UTC</span>
+  </p>
+
+			<div class="mobile-meta-controls">
+                  <a class="bookmark bookmark-login" href="http://arstechnica.com/civis/ucp.php?mode=login&return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1">Login to bookmark</a>
+          <a title="53 posters participating" class="comment-count" href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1"><span>87</span></a>
+
+			</div>
+		</div>
+
+	</header>
+	<section id="article-guts">
+		<div itemprop="articleBody" class="article-content clearfix">
+    
+<figure class="intro-image image center full-width" style="width:640px">
+      <img src="http://cdn.arstechnica.net/wp-content/uploads/2015/05/14326234016_dfb618a603_o-640x427.jpg" width="640" height="427">
+  
+    <figcaption class="caption">
+	
+			<div class="caption-credit">
+							<a rel="nofollow" href="https://flic.kr/p/nPXGfL">Flickr</a>
+				</div>
+	  </figcaption>
+  </figure>
+
+
+
+
+    <p>At <a href="http://arstechnica.co.uk/gadgets/2015/05/amd-admits-it-cant-be-the-cheaper-solution-will-refocus-on-performance/">AMD's Financial Analyst Day earlier this month</a> (which was actually more interesting than it initially sounds), AMD finally confirmed that it was looking to use high-bandwidth memory (HBM) in an upcoming high-end GPU product. Unfortunately, the company gave away few specifics, other than that HBM uses a form of 3D stacked memory, and that it'll (of course) vastly increase performance while still reducing power consumption.</p>
+<p>Stacked memory itself isn't an entirely new technology, but AMD's implementation—which gives its GPUs access to much more memory bandwidth—is a big step forward for a graphics card market that's rapidly approaching the limits of GDDR5. With Nvidia also looking to incorporate a form of HBM in its <a href="http://blogs.nvidia.com/blog/2015/03/17/pascal/">2016 Pascal architecture</a>, you're going to be hearing a lot more about this new memory technology over the coming year.</p>
+<h2>Why do we need HBM?</h2>
+<p>A suitable replacement for the hard-working, but ageing synchronous dynamic random-access memory (SDRAM) standard has been a long time coming. While the current DDR3 memory standards—as well as offshoots like GDDR5—have been serving the CPU and GPU well, they're starting to show signs of being based on early-'90s technology. Essentially, each revision of SDRAM makes use of the same double data rate (DDR) principle as the original technology, which syncs memory to a system bus (allowing it to queue up one process while waiting for another), and also transfers data on both the rise and fall of the clock signal in order to work twice as fast.</p>
+<p>DDR2 further refined this idea by running its internal clock at half the speed of the data bus. This trick not only allowed it to produce a total of four data transfers per internal clock cycle (effectively running twice as fast as DDR), but the slower clock speed also reduced the voltage requirement to 1.8v. DDR3 halved the internal clock again, resulting in a quadrupled clock signal for even faster performance and increased transfer rates of up to 17GB/sec per module, and 1.5v of operating voltage. The latest all singing, all dancing DDR4 memory (currently <a href="http://arstechnica.com/gadgets/2014/08/haswell-e-arrives-bringing-a-999-8-core-desktop-cpu-with-it/">limited to the X99 chipset</a>) makes use of a new bus, higher clock speeds, and denser chips in order to reach its maximum transfer rate of 25.6GB/sec per module, and a lower 1.2v of operating voltage.</p>
+<p>DDR4's lower power consumption and higher density will benefit mobile devices and server farms, but from a performance point of view, there's not much to write home about. While there's long been talk of hitting <a href="http://arstechnica.com/gadgets/2008/12/analysis-more-than-16-cores-may-well-be-pointless/">the so-called "memory wall"</a> (where the execution bandwidth of a CPU is limited by memory bandwidth) at around 16 CPU cores, that's not currently much of an issue for the desktop, where a lower latency is currently preferred over a high-bandwidth solution. In the GPU world, though, bandwidth is king, which is why you often see another type of SDRAM in graphics cards.</p>
+<p>On graphics cards, SDRAM is known as GDDR5, which is an offshoot of DDR3 optimised for graphics use. The aim with graphics memory is to make it as wide and as fast as possible to cope with massive chunks of data like textures and data sets for compute work moving in and out of it, especially when working at higher resolutions like 4K where large textures are common. Compared to the 64-bit-wide interface of standard DDR3 memory, GDDR5 goes as wide as a 512-bit interface. Because GPUs are highly parallelised, latency is far less of an issue, so GDDR5 trades higher latency for higher bandwidth. As an example, AMD's R9 290X graphics card sports a <em>total</em> memory bandwidth of up to 352GB per second. Even the fastest DDR4 memory running in a quad-channel configuration would only hit just over 100GB/sec.</p>
+<p>The trouble with GDDR5 is that the wide buses it uses require more chips and take up more physical space, which isn't ideal when graphics cards are already rather large. Increasing power consumption isn't an option either, particularly when cooling a GPU like the R9 290X with its 300-watt TDP already presents challenges. Both of these issues also spell trouble for the mobile world, small form factor desktops, and servers, where space and power consumption (as well as cooling options) come at a premium.</p>
+<figure class="image left large full-width" style="width:640px"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/gddr5.jpg" class="enlarge" data-height="1976" data-width="3680"><img src="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/gddr5-640x344.jpg" width="640" height="344" srcset="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/gddr5-1280x687.jpg 2x"></a><figcaption class="caption"><div class="caption-text"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/gddr5.jpg" class="enlarge" data-height="1976" data-width="3680">Enlarge</a></div> <div class="caption-credit">AMD</div></figcaption></figure>
+<p>As AMD's chart above illustrates, the company believes GDDR5 is about to hit the point where it pulls so much power away from the GPU, overall performance drops. To put it another way, let's say you have a fixed amount of power consumption that you can effectively keep cool, about 200 watts or so. If GDDR5 uses 50 watts of that power, you're left with 150 watts for the GPU. If you could dramatically reduce the power consumption of the memory to 10 watts, while maintaining the same level of performance, you could then pump 40 watts back into the GPU and gain more compute.</p>
+<p>The solution, then, to better desktop performance, and something more mobile-friendly, is a memory system that takes up less physical space, has a higher bandwidth, and uses far less power. Or, as AMD puts it, a technology that ups the bandwidth-per-watt and the bandwidth-per-square-millimetre of die space. This is what the company thinks it's cracked with HBM.</p>
+<h2>How does HBM work?</h2>
+<p>One of the solutions to increasing the speed and/or bandwidth of a particular component is to integrate it onto the CPU or GPU die. Floating point units, northbridge units, and even GPUs have all found their way directly onto CPUs over the years. Things are a little tricky with DRAM. Traditionally, memory integrated onto a CPU die comes in the form of static random-access memory (SRAM), which is used for things like internal caches. The trouble with SRAM is that, while it's extremely high-bandwidth, it's also extremely expensive (it takes up a large amount of die space). Caches tend to be measured in the low kilobytes or megabytes, rather than the multiple gigabytes seen on graphics cards.</p>
+<figure class="image left large full-width" style="width:640px"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/interposer.jpg" class="enlarge" data-height="1966" data-width="3676"><img src="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/interposer-640x342.jpg" width="640" height="342" srcset="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/interposer-1280x685.jpg 2x"></a><figcaption class="caption"><div class="caption-text"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/interposer.jpg" class="enlarge" data-height="1966" data-width="3676">Enlarge</a></div> <div class="caption-credit">AMD</div></figcaption></figure>
+<p>Intel's had a bash at integrating DRAM onto its CPUs in the form of on-package (not on-die) eDRAM, which is part of the company's Crystalwell Iris Pro graphics. It's also used in Microsoft's Xbox 360 and Nintendo Wii U to supplement system memory. However, eDRAM is still an expensive proposition, and once again, there are significant space limitations on the amount of memory that can be integrated. Still, moving the memory closer to the CPU or GPU does dramatically increase the bandwidth and performance, and that's the mechanic that HBM exploits.</p>
+<p>HBM is a new, stacked memory design manufactured by Hynix (with other companies jumping on board later) that brings the DRAM as close as possible to the logic die. In a traditional setup, the individual DRAM chips are placed side by side, and connected to the GPU via long copper traces on a PCB. HBM, on the other hand, stacks the memory chips on top of each other, dramatically reducing the overall footprint required, allowing for the use of extremely wide data buses and much slower clock speeds in order to hit the required levels of performance. With HBM, instead of buses being hundreds of bits wide, they can be <em>thousands</em> of bits wide, and because everything is so close, the power consumption per transported bit is much lower.</p>
+<figure class="image left large full-width" style="width:640px"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/hbm-stack.jpg" class="enlarge" data-height="1990" data-width="3668"><img src="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/hbm-stack-640x347.jpg" width="640" height="347" srcset="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/hbm-stack-1280x694.jpg 2x"></a><figcaption class="caption"><div class="caption-text"><a href="http://cdn.arstechnica.net/wp-content/uploads/sites/3/2015/05/hbm-stack.jpg" class="enlarge" data-height="1990" data-width="3668">Enlarge</a></div> <div class="caption-credit">AMD</div></figcaption></figure>
+<p>Stacked chip designs have been around for a little while, but AMD's implementation makes use of two key pieces of technology in order to connect the memory together and get it to talk to the GPU: through silicon vias (TSVs), and a silicon interposer. As shown in the diagram above, the silicon interposer is essentially a small circuit board that sits on top of the entire GPU package substrate and routes signals from the simpler logic of the memory through to the more complex logic of the GPU. With the stacks of memory now sat directly beside the GPU, the traces to connect them are far shorter, enabling the use of much wider buses.</p>
+<p>Connecting the stack of DRAM dies to the interposer are TSVs. This is a fine pitch interconnect that's poked directly through the stack of DRAM all the way down to logic die (the controller). In AMD's implementation, the logic is actually distributed across the DRAM stack and a logic die, which is then connected to the interposer with more TSVs. The company notes that, because of the use of a TSV, the memory die has to be very thin—much thinner than usual. The entire stack—the interposer, the logic die, the four DRAM dies—comes in at around 100 microns thick, or as thin as a piece of paper, which is an impressive feat of engineering no matter how you slice it.</p>
+    		</div>
+    <div class="article-expander">
+      <p><a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/">Expand full story</a></p>
+    </div>
+            <nav class="page-numbers subheading">Page: <span class="numbers">
+      1 <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/2/">2</a> <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/2/"><span class="next">Next <span class="arrow">&rarr;</span></span></a>      </span></nav>
+      	</section>
+
+  <div id="article-footer-wrap">
+
+	<section id="comments-area">
+		
+		<a name="comments-bar"></a>
+		<div class="comments-bar">
+      <a class="subheading comments-read-link" href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1"><span class="text">Reader comments</span> <span class="comment-count"><span proptype>87</span></span></a>
+		</div>
+        <div id="comments-container">
+<!-- HBM explained: Can stacked memory give AMD the edge it needs? -->
+<h2 class="comments-header subheading thick-divide-top thin-divide-bottom">
+  87 Reader Comments
+  
+</h2>
+
+<div class="pager comments-pager thin-divide-bottom">
+  <a class="subheading post-reply" href="#reply">Post a reply</a>
+
+  <aside class="comment-pagination">
+  <ul class="subheading">
+	<li>Page:</li>
+    <li class="selected">1</li><li><a rel='nofollow' href='?comments=1&amp;start=40'>2</a></li><li><a rel='nofollow' href='?comments=1&amp;start=80'>3</a></li></ul><div class="subheading next-page">&nbsp;<a rel='nofollow' href='?comments=1&amp;start=40'>Next&nbsp;<span class="arrow">&rarr;</span></a></div>
+	</aside>
+</div>
+
+<ol id="comments" data-topic-id="1283277" data-forum-id="2" data-total-posts="87" data-page-start="0">
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="14"
+  data-post-negative="0"
+  data-post-positive="14"
+  data-post-id="29048869" data-poster-id="488865" id="comment-29048869">
+  <header class="byline">
+    
+    <span class="author" data-post-author="ajmiles"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=488865&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">ajmiles</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29048869&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29048869#comment-29048869" title="2015-05-19T07:23:52-05:00" class="timeago datetime">Tue May 19, 2015 6:23 am</a>
+        
+          <span class="highlight newbie-highlight">New Poster</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      Are you sure about DDR4 only hitting 10GB/s? That sounds like it's out by at least a factor of 4. Under what circumstances are those figures correct?
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048869" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+14</span>
+        | +<span class="vote-positive">14</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048869" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">2 posts | registered <time class="reg-date">May 19, 2015</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="22"
+  data-post-negative="0"
+  data-post-positive="22"
+  data-post-id="29048889" data-poster-id="466481" id="comment-29048889">
+  <header class="byline">
+    
+    <span class="author" data-post-author="mrseb"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=466481&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">mrseb</a></span><span class="rank">Ars UK Editor</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29048889&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29048889#comment-29048889" title="2015-05-19T07:31:45-05:00" class="timeago datetime">Tue May 19, 2015 6:31 am</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29048869#p29048869" class="postlink" rel="nofollow">ajmiles</a> wrote:</div><div class="quotecontent">Are you sure about DDR4 only hitting 10GB/s? That sounds like it's out by at least a factor of 4. Under what circumstances are those figures correct?</div><br /><br />I think that's probably meant to be 100GB/sec? Will fix it, thanks!
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048889" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+22</span>
+        | +<span class="vote-positive">22</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048889" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">399 posts | registered <time class="reg-date">Dec 17, 2014</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="22"
+  data-post-negative="0"
+  data-post-positive="22"
+  data-post-id="29048891" data-poster-id="163245" id="comment-29048891">
+  <header class="byline">
+    
+    <span class="author" data-post-author="rolphus"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=163245&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">rolphus</a></span><span class="rank">Ars Scholae Palatinae</span><a class="subscriber" href="/subscriptions/">et Subscriptor</a>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29048891&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29048891#comment-29048891" title="2015-05-19T07:33:16-05:00" class="timeago datetime">Tue May 19, 2015 6:33 am</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29048869#p29048869" class="postlink" rel="nofollow">ajmiles</a> wrote:</div><div class="quotecontent">Are you sure about DDR4 only hitting 10GB/s? That sounds like it's out by at least a factor of 4. Under what circumstances are those figures correct?</div><br />According to <a href="http://ark.intel.com/products/82930/Intel-Core-i7-5960X-Processor-Extreme-Edition-20M-Cache-up-to-3_50-GHz" class="postlink" rel="nofollow">Intel's info</a> on the DDR4 i7-5960X, quad-channel DDR4-2133 hits 68GB/sec, or 17GB/channel. DDR4 goes up to 3400MHz at the moment, for a total of 108GB/sec across 4 channels, or 27GB/channel.<br /><br />So I suspect this is all talking per-channel.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048891" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+22</span>
+        | +<span class="vote-positive">22</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048891" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1110 posts | registered <time class="reg-date">Aug 18, 2005</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="24"
+  data-post-negative="0"
+  data-post-positive="24"
+  data-post-id="29048903" data-poster-id="488865" id="comment-29048903">
+  <header class="byline">
+    
+    <span class="author" data-post-author="ajmiles"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=488865&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">ajmiles</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29048903&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29048903#comment-29048903" title="2015-05-19T07:38:49-05:00" class="timeago datetime">Tue May 19, 2015 6:38 am</a>
+        
+          <span class="highlight newbie-highlight">New Poster</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      While it's true that the WiiU uses eDRAM (as did the Xbox 360), the Xbox One doesn't, it has eSRAM instead, which is by definition not DRAM.<br /><br />(EDIT: removed an extra 'not')
+      
+        <p class="edited">Last edited by <a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=488865&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">ajmiles</a> on Tue May 19, 2015 6:46 am</p>
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048903" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+24</span>
+        | +<span class="vote-positive">24</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048903" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">2 posts | registered <time class="reg-date">May 19, 2015</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="32"
+  data-post-negative="0"
+  data-post-positive="32"
+  data-post-id="29048943" data-poster-id="466481" id="comment-29048943">
+  <header class="byline">
+    
+    <span class="author" data-post-author="mrseb"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=466481&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">mrseb</a></span><span class="rank">Ars UK Editor</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29048943&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29048943#comment-29048943" title="2015-05-19T07:45:23-05:00" class="timeago datetime">Tue May 19, 2015 6:45 am</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29048903#p29048903" class="postlink" rel="nofollow">ajmiles</a> wrote:</div><div class="quotecontent">While it's true that the WiiU uses eDRAM (as did the Xbox 360), the Xbox One doesn't, it has eSRAM instead, which is not by definition not DRAM.</div><br /><br />Ah yes, thanks; changed it to say '360'.<br /><br />Off-topic: Have we started to see the benefits of the Xbox One's use of eSRAM? I always thought that was an interesting point of divergence between the PS4 and Xbone.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048943" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+32</span>
+        | +<span class="vote-positive">32</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29048943" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">399 posts | registered <time class="reg-date">Dec 17, 2014</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="35"
+  data-post-negative="-2"
+  data-post-positive="37"
+  data-post-id="29050141" data-poster-id="100237" id="comment-29050141">
+  <header class="byline">
+    
+    <span class="author" data-post-author="MalEbenSo"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=100237&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">MalEbenSo</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29050141&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29050141#comment-29050141" title="2015-05-19T10:44:46-05:00" class="timeago datetime">Tue May 19, 2015 9:44 am</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      &quot;The entire stack [...]comes in at around 100 microns thick, or as thin as a piece of paper, which is an impressive feat of engineering no matter how you slice it.&quot;<br /><br />Pun intended? <br /><br />Either way, thanks for a good laugh, Mark.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050141" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+35</span>
+        | +<span class="vote-positive">37</span> / <span class="vote-negative">-2</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050141" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">59 posts | registered <time class="reg-date">Apr 27, 2006</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="87"
+  data-post-negative="-1"
+  data-post-positive="88"
+  data-post-id="29050401" data-poster-id="466481" id="comment-29050401">
+  <header class="byline">
+    
+    <span class="author" data-post-author="mrseb"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=466481&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">mrseb</a></span><span class="rank">Ars UK Editor</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29050401&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29050401#comment-29050401" title="2015-05-19T11:26:34-05:00" class="timeago datetime">Tue May 19, 2015 10:26 am</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050301#p29050301" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Dear Ars,<br /><br />While I understand the neeed to have &quot;contextual pictures&quot;, could you <span style="font-weight: bold">please</span> explain what on earth these <a href="http://www.tyan.com/archive/support/html/memory_s5102.html" class="postlink" rel="nofollow">decades-old DDR 333 memory modules</a> (PC2700) are supposed to illustrate?<br /><br />Seriously. This is a website for techies. Shamelessly grabbing some old garbage from the nearest bulk-image-pusher is not what we expect. The chips on the photo are from around 2000 or 2002 for sure. That was a whopping 13-15 years ago for crying out loud.<br /><br />If you don't have an image that makes sense, please (please!) consider not using one!<br /><br />But better: Use a picture that actually matters and is a meaningful part of the story!</div><br /><br />You know, I thought about changing the picture to something a bit more modern, but decided it really wasn't important. It's a story about memory! The picture makes you think of memory!<br /><br />There also aren't any cool pics of HBM or HMC yet! (But if you have a recommended photo to use instead, let me know and I'll look into it.)
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050401" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+87</span>
+        | +<span class="vote-positive">88</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050401" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">399 posts | registered <time class="reg-date">Dec 17, 2014</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="47"
+  data-post-negative="-4"
+  data-post-positive="51"
+  data-post-id="29050453" data-poster-id="197771" id="comment-29050453">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Wheels Of Confusion"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=197771&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Wheels Of Confusion</a></span><span class="rank">Ars Praefectus</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29050453&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29050453#comment-29050453" title="2015-05-19T11:33:30-05:00" class="timeago datetime">Tue May 19, 2015 10:33 am</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050301#p29050301" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Dear Ars,<br /><br />While I understand the neeed to have &quot;contextual pictures&quot;, could you <span style="font-weight: bold">please</span> explain what on earth these <a href="http://www.tyan.com/archive/support/html/memory_s5102.html" class="postlink" rel="nofollow">decades-old DDR 333 memory modules</a> (PC2700) are supposed to illustrate?</div><br />&quot;Stacked memory.&quot; <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">The chips on the photo are from around 2000 or 2002 for sure. That was a whopping 13-15 years ago for crying out loud.</div><br />HBM isn't going to be DDR3/4 either, so what's the point of complaining about using old RAM standards that doesn't apply to newer ones?
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050453" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+47</span>
+        | +<span class="vote-positive">51</span> / <span class="vote-negative">-4</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29050453" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">12987 posts | registered <time class="reg-date">Jan 17, 2009</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="4"
+  data-post-negative="-1"
+  data-post-positive="5"
+  data-post-id="29051493" data-poster-id="250084" id="comment-29051493">
+  <header class="byline">
+    
+    <span class="author" data-post-author="TAFKAP"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=250084&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">TAFKAP</a></span><span class="rank">Seniorius Lurkius</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051493&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051493#comment-29051493" title="2015-05-19T13:55:52-05:00" class="timeago datetime">Tue May 19, 2015 12:55 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      How many TLAs per article are involved? Does it have LRF support?
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051493" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+4</span>
+        | +<span class="vote-positive">5</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051493" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">39 posts | registered <time class="reg-date">Feb 25, 2010</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="-6"
+  data-post-negative="-9"
+  data-post-positive="3"
+  data-post-id="29051687" data-poster-id="192806" id="comment-29051687">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Ostracus"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=192806&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Ostracus</a></span><span class="rank">Ars Praefectus</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051687&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051687#comment-29051687" title="2015-05-19T14:19:45-05:00" class="timeago datetime">Tue May 19, 2015 1:19 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">Plus, there are massive physical space savings over GDDR5: 1GB of GDDR5 takes up 672mm sq of space versus a 1GB stack of HBM that takes up just 35mm sq. This means you're likely to see much smaller form factors for graphics cards. AMD says its first-generation design will feature a PCB that's 50 percent smaller than the PCB in a R9 290X—just think what that might mean for dual-GPU designs or mobile graphics cards</div><br /><br />Always wondered why the other side of the video card is so underutilized?<br /><br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent"> If GDDR5 uses 50 watts of that power, you're left with 150 watts for the GPU. If you could dramatically reduce the power consumption of the memory to 10 watts, while maintaining the same level of performance, you could then pump 40 watts back into the GPU and gain more compute.</div><br /><br />Sounds like the answer (indirectly) to AMDs process problems.<br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">The entire stack—the interposer, the logic die, the four DRAM dies—comes in at around 100 microns thick, or as thin as a piece of paper, which is an impressive feat of engineering no matter how you slice it.</div><br /><br />Practically a paper cut.<br /><br /><br />BTW the DDR operations description reminds me of symbol space in communications.
+      
+        <p class="edited">Last edited by <a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=192806&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Ostracus</a> on Tue May 19, 2015 1:26 pm</p>
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051687" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total neg">-6</span>
+        | +<span class="vote-positive">3</span> / <span class="vote-negative">-9</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051687" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">19763 posts | registered <time class="reg-date">Oct 22, 2008</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="12"
+  data-post-negative="-1"
+  data-post-positive="13"
+  data-post-id="29051715" data-poster-id="336336" id="comment-29051715">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Akemi"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=336336&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Akemi</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051715&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051715#comment-29051715" title="2015-05-19T14:25:57-05:00" class="timeago datetime">Tue May 19, 2015 1:25 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <span style="font-style: italic">Even then, perhaps you'll need to be running games in 1440p or even 4K to notice the difference.</span><br /><br />Even if that is the case.  So long as performance overall is solid (and with a massive reduction in overall PCB size, will fit easily in smaller form factor cases) it will at least serve to push prices down on cards like the 980 GTX and AMD's own 290 series cards.  So, that's still a win for the multitude of folks interested in 1080p gaming for the foreseeable future.  <br /><br />Though it's a shame the rumors were true about AMD's next high end part only being 4GB.  4GB is going to be pushing it for people really interested in 4K gaming, making the current 12GB Titan X the main single card contender at the moment, and possibly the rest of this year.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051715" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+12</span>
+        | +<span class="vote-positive">13</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051715" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">3160 posts | registered <time class="reg-date">Apr 24, 2012</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="49"
+  data-post-negative="-3"
+  data-post-positive="52"
+  data-post-id="29051723" data-poster-id="197771" id="comment-29051723">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Wheels Of Confusion"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=197771&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Wheels Of Confusion</a></span><span class="rank">Ars Praefectus</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051723&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051723#comment-29051723" title="2015-05-19T14:26:43-05:00" class="timeago datetime">Tue May 19, 2015 1:26 pm</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050453#p29050453" class="postlink" rel="nofollow">Wheels Of Confusion</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050301#p29050301" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Dear Ars,<br /><br />While I understand the neeed to have &quot;contextual pictures&quot;, could you <span style="font-weight: bold">please</span> explain what on earth these <a href="http://www.tyan.com/archive/support/html/memory_s5102.html" class="postlink" rel="nofollow">decades-old DDR 333 memory modules</a> (PC2700) are supposed to illustrate?</div><br />&quot;Stacked memory.&quot; <br /><br />The stacked-memory architecture described in the article is completely and utterly unrelated to DDR memory modules from 2000. Feel free to skim the original <a href="http://www.jedec.org/standards-documents/docs/jesd-79f" class="postlink" rel="nofollow">specifications from JEDEC</a>. <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">The chips on the photo are from around 2000 or 2002 for sure. That was a whopping 13-15 years ago for crying out loud.</div><br />HBM isn't going to be DDR3/4 either, so what's the point of complaining about using old RAM standards that doesn't apply to newer ones?</div><br />The image attached to an article is meant - presumably - to provide additional context or value. Or at the very least humor, as seen in many of <a href="http://arstechnica.com/author/aurich-lawson/" class="postlink" rel="nofollow">Aurich Lawsons</a> absolutely brilliant pieces.</div><br />And here, we have pictures of DIMMs that have been <span style="font-style: italic">stacked</span> on top of each other. Stacked. Get it? <br />If your complaint is that the sticks are old and can't represent the whiz-bang new HBM tech, then using a more modern DDRx implementation wouldn't have made any sense either because HBM isn't based on DDR standards. <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's.</div><br />I'm pretty sure you are missing the point here. <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">Or a picture of a Lada in an article about Googles self-driving vehicles.</div><br />Maybe if the Lada had a goofy-looking robot in the driver's seat or something. Otherwise it's not a valid analogy. <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent"> The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template ithout adding to the story.</div><br />Show us on the doll where the mean ol' picture hurt you.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051723" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+49</span>
+        | +<span class="vote-positive">52</span> / <span class="vote-negative">-3</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051723" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">12987 posts | registered <time class="reg-date">Jan 17, 2009</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment star read"
+  data-post-score="72"
+  data-post-negative="0"
+  data-post-positive="72"
+  data-post-id="29051725" data-poster-id="62257" id="comment-29051725">
+  <header class="byline">
+    
+    <span class="author" data-post-author="ElectricBlue"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=62257&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">ElectricBlue</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051725&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051725#comment-29051725" title="2015-05-19T14:26:44-05:00" class="timeago datetime">Tue May 19, 2015 1:26 pm</a>
+        
+          <span class="highlight reader-fav">Reader Fav</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050453#p29050453" class="postlink" rel="nofollow">Wheels Of Confusion</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050301#p29050301" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Dear Ars,<br /><br />While I understand the neeed to have &quot;contextual pictures&quot;, could you <span style="font-weight: bold">please</span> explain what on earth these <a href="http://www.tyan.com/archive/support/html/memory_s5102.html" class="postlink" rel="nofollow">decades-old DDR 333 memory modules</a> (PC2700) are supposed to illustrate?</div><br />&quot;Stacked memory.&quot; <br /><br />The stacked-memory architecture described in the article is completely and utterly unrelated to DDR memory modules from 2000. Feel free to skim the original <a href="http://www.jedec.org/standards-documents/docs/jesd-79f" class="postlink" rel="nofollow">specifications from JEDEC</a>. <br /><br /><div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">The chips on the photo are from around 2000 or 2002 for sure. That was a whopping 13-15 years ago for crying out loud.</div><br />HBM isn't going to be DDR3/4 either, so what's the point of complaining about using old RAM standards that doesn't apply to newer ones?</div><br />The image attached to an article is meant - presumably - to provide additional context or value. Or at the very least humor, as seen in many of <a href="http://arstechnica.com/author/aurich-lawson/" class="postlink" rel="nofollow">Aurich Lawsons</a> absolutely brilliant pieces.<br /><br />Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's. Or a picture of a Lada in an article about Googles self-driving vehicles. The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template without adding to the story.<br /><br />Without some of Aurichs wizardry there is no added value at all to a 15 year old semi-random stock photo.</div><br /><br />hmmm interesting, what's your hot take on this image?<br /><img src="http://ic.pics.livejournal.com/gailcarriger/13852475/71645/71645_original.jpg" alt="Image" />
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051725" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+72</span>
+        | +<span class="vote-positive">72</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051725" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1058 posts | registered <time class="reg-date">Jul 6, 2003</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="5"
+  data-post-negative="0"
+  data-post-positive="5"
+  data-post-id="29051809" data-poster-id="182871" id="comment-29051809">
+  <header class="byline">
+    
+    <span class="author" data-post-author="David Crowell"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=182871&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">David Crowell</a></span><span class="rank">Ars Centurion</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051809&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051809#comment-29051809" title="2015-05-19T14:37:22-05:00" class="timeago datetime">Tue May 19, 2015 1:37 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051493#p29051493" class="postlink" rel="nofollow">TAFKAP</a> wrote:</div><div class="quotecontent">How many TLAs per article are involved? Does it have LRF support?</div><br /><br /><br />I LRF'd
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051809" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+5</span>
+        | +<span class="vote-positive">5</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051809" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">253 posts | registered <time class="reg-date">Aug 7, 2005</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="13"
+  data-post-negative="-23"
+  data-post-positive="36"
+  data-post-id="29051871" data-poster-id="141371" id="comment-29051871">
+  <header class="byline">
+    
+    <span class="author" data-post-author="SplatMan_DK"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=141371&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">SplatMan_DK</a></span><span class="rank">Ars Scholae Palatinae</span><a class="subscriber" href="/subscriptions/">et Subscriptor</a>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051871&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051871#comment-29051871" title="2015-05-19T14:46:49-05:00" class="timeago datetime">Tue May 19, 2015 1:46 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="https://arstechnica.co.uk/civis/viewtopic.php?p=29051725#p29051725" class="postlink" rel="nofollow">ElectricBlue</a> wrote:</div><div class="quotecontent">hmmm interesting, what's your hot take on this image?<br /><div style="padding: 3px;">
+  <div style="margin-bottom: 3px; font-weight: bold;" onclick="var q = $(this).parent().find('.quotecontent > div');q.toggle();$(this).find('span').html(q.is(':visible')?'hide':'show');return false;">
+    <b>Spoiler: </b>
+    <span style="color: #FF5B00; cursor: pointer;">show</span>
+  </div>
+  <div class="quotecontent">
+    <div style="display: none;">
+      <img src="http://ic.pics.livejournal.com/gailcarriger/13852475/71645/71645_original.jpg" alt="Image" />
+    </div>
+  </div>
+</div></div><br />It's great! I upvoted it. :-)<br /><br />Shouldn't it have been a glass of water though? ;-)<br /><br />It is clear from the massive downvotes that I am in a minority. People are apparently not annoyed at all with pictures in news articles that serve no other purpose that to satisfy a CMS template. I made a similar complaint to a local newspaper last week when they posted a &quot;contextual picture&quot; of IE 6 on Windows XP ... in an article describing how to install Google Chrome on Windows 7 and 8.<br /><br />But ok then. I will take my defeat like a man, and silently hope nonsensical pictures doesn't become as widespread on Ars as it is elsewhere. I promise I won't mention it again.<br /><br /><br /><br />Edit: Wow, downvotes on my declaration of defeat? Kick on a guy while he's on the floor, will ya'? :-)
+      
+        <p class="edited">Last edited by <a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=141371&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">SplatMan_DK</a> on Tue May 19, 2015 2:08 pm</p>
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051871" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+13</span>
+        | +<span class="vote-positive">36</span> / <span class="vote-negative">-23</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051871" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1007 posts | registered <time class="reg-date">Sep 5, 2007</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="15"
+  data-post-negative="-1"
+  data-post-positive="16"
+  data-post-id="29051873" data-poster-id="330960" id="comment-29051873">
+  <header class="byline">
+    
+    <span class="author" data-post-author="tayhimself"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=330960&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">tayhimself</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051873&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051873#comment-29051873" title="2015-05-19T14:47:07-05:00" class="timeago datetime">Tue May 19, 2015 1:47 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's. Or a picture of a Lada in an article about Googles self-driving vehicles. The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template without adding to the story.</div><br /><br />I +1'd for mention of RLL. Clearly a curmudgeon that knows what he's talking about. Don't down vote just because SplatMan_DK is the Grinch.<br /><br />Getting back to the subject of the article, how will the DRAM chips get cooled adequately? I'm concerned because they're so close to a very hot GPU, stacked on top of each other reducing surface area, and will be on smaller cards with smaller coolers.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051873" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+15</span>
+        | +<span class="vote-positive">16</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051873" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1923 posts | registered <time class="reg-date">Feb 22, 2012</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="12"
+  data-post-negative="0"
+  data-post-positive="12"
+  data-post-id="29051921" data-poster-id="259962" id="comment-29051921">
+  <header class="byline">
+    
+    <span class="author" data-post-author="phoenix_rizzen"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=259962&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">phoenix_rizzen</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051921&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051921#comment-29051921" title="2015-05-19T14:52:27-05:00" class="timeago datetime">Tue May 19, 2015 1:52 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051873#p29051873" class="postlink" rel="nofollow">tayhimself</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's. Or a picture of a Lada in an article about Googles self-driving vehicles. The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template without adding to the story.</div><br /><br />I +1'd for mention of RLL. Clearly a curmudgeon that knows what he's talking about. Don't down vote just because SplatMan_DK is the Grinch.<br /><br />Getting back to the subject of the article, how will the DRAM chips get cooled adequately? I'm concerned because they're so close to a very hot GPU, stacked on top of each other reducing surface area, and will be on smaller cards with smaller coolers.</div><br /><br />Integrated heat spreaders that cover the DRAM and the GPU itself, allowing for a consistent connection to a heatsink/fan.  There's more details in the <a href="http://anandtech.com/show/9266/amd-hbm-deep-dive" class="postlink" rel="nofollow">anandtech article</a>.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051921" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+12</span>
+        | +<span class="vote-positive">12</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051921" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">852 posts | registered <time class="reg-date">Jun 9, 2010</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="15"
+  data-post-negative="-1"
+  data-post-positive="16"
+  data-post-id="29051923" data-poster-id="380159" id="comment-29051923">
+  <header class="byline">
+    
+    <span class="author" data-post-author="MPerz"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=380159&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">MPerz</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051923&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051923#comment-29051923" title="2015-05-19T14:52:28-05:00" class="timeago datetime">Tue May 19, 2015 1:52 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29050401#p29050401" class="postlink" rel="nofollow">mrseb</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29050301#p29050301" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Dear Ars,<br /><br />While I understand the neeed to have &quot;contextual pictures&quot;, could you <span style="font-weight: bold">please</span> explain what on earth these <a href="http://www.tyan.com/archive/support/html/memory_s5102.html" class="postlink" rel="nofollow">decades-old DDR 333 memory modules</a> (PC2700) are supposed to illustrate?<br /><br />Seriously. This is a website for techies. Shamelessly grabbing some old garbage from the nearest bulk-image-pusher is not what we expect. The chips on the photo are from around 2000 or 2002 for sure. That was a whopping 13-15 years ago for crying out loud.<br /><br />If you don't have an image that makes sense, please (please!) consider not using one!<br /><br />But better: Use a picture that actually matters and is a meaningful part of the story!</div><br /><br />You know, I thought about changing the picture to something a bit more modern, but decided it really wasn't important. It's a story about memory! The picture makes you think of memory!<br /><br />There also aren't any cool pics of HBM or HMC yet! (But if you have a recommended photo to use instead, let me know and I'll look into it.)</div><br /><br />It really does bring back memories.<br /><br /><br /><br />Hey, wait a...
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051923" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+15</span>
+        | +<span class="vote-positive">16</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051923" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">90 posts | registered <time class="reg-date">May 30, 2013</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="8"
+  data-post-negative="0"
+  data-post-positive="8"
+  data-post-id="29051931" data-poster-id="336336" id="comment-29051931">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Akemi"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=336336&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Akemi</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051931&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051931#comment-29051931" title="2015-05-19T14:53:12-05:00" class="timeago datetime">Tue May 19, 2015 1:53 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051873#p29051873" class="postlink" rel="nofollow">tayhimself</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's. Or a picture of a Lada in an article about Googles self-driving vehicles. The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template without adding to the story.</div><br /><br />I +1'd for mention of RLL. Clearly a curmudgeon that knows what he's talking about. Don't down vote just because SplatMan_DK is the Grinch.<br /><br />Getting back to the subject of the article, how will the DRAM chips get cooled adequately? I'm concerned because they're so close to a very hot GPU, stacked on top of each other reducing surface area, and will be on smaller cards with smaller coolers.</div><br /><br /><br />Lower power requirements.  Less voltage automatically means less heat.  Then there's the fact that the memory can run at a lower frequency to achieve that nice 512GB/sec of bandwidth (yet another heat reduction).  Thank you 1024-bit bus.<br /><br />Anyhow, with a good heatpipe type cooler, I see no reason why AMD can't do something like what EVGA has done on their series of 980 GTX cards (proximity to the GPU aside).  EVGA's coolers are some of the best OEM air coolers for GPU's in a long time.  Virtually silent, and consistently cooler than their competition.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051931" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+8</span>
+        | +<span class="vote-positive">8</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051931" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">3160 posts | registered <time class="reg-date">Apr 24, 2012</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="4"
+  data-post-negative="-1"
+  data-post-positive="5"
+  data-post-id="29051937" data-poster-id="141371" id="comment-29051937">
+  <header class="byline">
+    
+    <span class="author" data-post-author="SplatMan_DK"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=141371&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">SplatMan_DK</a></span><span class="rank">Ars Scholae Palatinae</span><a class="subscriber" href="/subscriptions/">et Subscriptor</a>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051937&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051937#comment-29051937" title="2015-05-19T14:54:35-05:00" class="timeago datetime">Tue May 19, 2015 1:54 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.co.uk/civis/viewtopic.php?p=29051873#p29051873" class="postlink" rel="nofollow">tayhimself</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051565#p29051565" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent">Posting a picture of 15 year old SDRAM chips in an article about future stacked memory technology is like putting a picture of an old-school RLL disk in an article about modern SSD's. Or a picture of a Lada in an article about Googles self-driving vehicles. The picture ends up being a poor piece of &quot;filler&quot; content that only satisfies the CMS template without adding to the story.</div><br /><br />I +1'd for mention of RLL. Clearly a curmudgeon that knows what he's talking about. Don't down vote just because SplatMan_DK is the Grinch.<br /><br />Getting back to the subject of the article, how will the DRAM chips get cooled adequately? I'm concerned because they're so close to a very hot GPU, stacked on top of each other reducing surface area, and will be on smaller cards with smaller coolers.</div><br />Thanks :-)<br /><br />And back on topic: There is a <a href="http://www.cs.utah.edu/wondp/eckert.pdf" class="postlink" rel="nofollow">somewhat related paper here</a>, if you're interested. It does focus on PIM modules (which has simple processing abilities in addition to storage), but the findings should still be valid.<br /><br />Conclusion: Heat should be manageable with either passive heatsinks or reductions in power usage (which reduces heat).
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051937" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+4</span>
+        | +<span class="vote-positive">5</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051937" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1007 posts | registered <time class="reg-date">Sep 5, 2007</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="1"
+  data-post-negative="-1"
+  data-post-positive="2"
+  data-post-id="29051941" data-poster-id="192806" id="comment-29051941">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Ostracus"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=192806&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Ostracus</a></span><span class="rank">Ars Praefectus</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051941&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051941#comment-29051941" title="2015-05-19T14:55:45-05:00" class="timeago datetime">Tue May 19, 2015 1:55 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051871#p29051871" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="https://arstechnica.co.uk/civis/viewtopic.php?p=29051725#p29051725" class="postlink" rel="nofollow">ElectricBlue</a> wrote:</div><div class="quotecontent">hmmm interesting, what's your hot take on this image?<br /><div style="padding: 3px;">
+  <div style="margin-bottom: 3px; font-weight: bold;" onclick="var q = $(this).parent().find('.quotecontent > div');q.toggle();$(this).find('span').html(q.is(':visible')?'hide':'show');return false;">
+    <b>Spoiler: </b>
+    <span style="color: #FF5B00; cursor: pointer;">show</span>
+  </div>
+  <div class="quotecontent">
+    <div style="display: none;">
+      <img src="http://ic.pics.livejournal.com/gailcarriger/13852475/71645/71645_original.jpg" alt="Image" />
+    </div>
+  </div>
+</div></div><br />It's great! I upvoted it. :-)<br /><br />Shouldn't it have been a glass of water though? ;-)<br /><br />It is clear from the massive downvotes that I am in a minority. People are apparently not annoyed at all with pictures in news articles that serve no other purpose that to satisfy a CMS template. I made a similar complaint to a local newspaper last week when they posted a &quot;contextual picture&quot; of IE 6 on Windows XP ... in an article describing how to install Google Chrome on Windows 7 and 8.<br /><br />But ok then. I will take my defeat like a man, and silently hope nonsensical pictures doesn't become as widespread on Ars as it is elsewhere. I promise I won't mention it again.</div><br /><br /><br />It served it's purpose, and didn't take away from the meat of the article. Now unfortunately the question posed in the title remains unanswered. Especially when AMD isn't the only one using the technology.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051941" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+1</span>
+        | +<span class="vote-positive">2</span> / <span class="vote-negative">-1</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051941" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">19763 posts | registered <time class="reg-date">Oct 22, 2008</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="6"
+  data-post-negative="0"
+  data-post-positive="6"
+  data-post-id="29051961" data-poster-id="427235" id="comment-29051961">
+  <header class="byline">
+    
+    <span class="author" data-post-author="brothermichigan"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=427235&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">brothermichigan</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29051961&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29051961#comment-29051961" title="2015-05-19T14:59:26-05:00" class="timeago datetime">Tue May 19, 2015 1:59 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      This may be somewhat tangential to the article, but what exactly is it about placing memory (and the associated logic) closer to the CPU/GPU that lowers power consumption so drastically? I can't imagine it's something so simple as the resistance of the actual traces or anything like that, so is it something like maintaining integrity of the clock signal?
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051961" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+6</span>
+        | +<span class="vote-positive">6</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29051961" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">13 posts | registered <time class="reg-date">Mar 13, 2014</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="12"
+  data-post-negative="0"
+  data-post-positive="12"
+  data-post-id="29052055" data-poster-id="401899" id="comment-29052055">
+  <header class="byline">
+    
+    <span class="author" data-post-author="weblionx"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=401899&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">weblionx</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052055&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052055#comment-29052055" title="2015-05-19T15:12:14-05:00" class="timeago datetime">Tue May 19, 2015 2:12 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051961#p29051961" class="postlink" rel="nofollow">brothermichigan</a> wrote:</div><div class="quotecontent">This may be somewhat tangential to the article, but what exactly is it about placing memory (and the associated logic) closer to the CPU/GPU that lowers power consumption so drastically? I can't imagine it's something so simple as the resistance of the actual traces or anything like that, so is it something like maintaining integrity of the clock signal?</div><br />In this case not needing more pins on the chip to access external memory means they can use wider buses at slower clock-speeds. There's also less worry about parallel data lines not being synchronized over longer distances, although that's not particularly power related.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052055" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+12</span>
+        | +<span class="vote-positive">12</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052055" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">84 posts | registered <time class="reg-date">Oct 21, 2013</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="13"
+  data-post-negative="0"
+  data-post-positive="13"
+  data-post-id="29052057" data-poster-id="312711" id="comment-29052057">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Gibborim"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=312711&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Gibborim</a></span><span class="rank">Ars Centurion</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052057&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052057#comment-29052057" title="2015-05-19T15:12:25-05:00" class="timeago datetime">Tue May 19, 2015 2:12 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051873#p29051873" class="postlink" rel="nofollow">tayhimself</a> wrote:</div><div class="quotecontent">Getting back to the subject of the article, how will the DRAM chips get cooled adequately? I'm concerned because they're so close to a very hot GPU, stacked on top of each other reducing surface area, and will be on smaller cards with smaller coolers.</div><br /><br />There are a few advantages of this setup to consider:<br /><br />(Remember, Power = Heat)<br /><br />1.  The memory consumes less power because of easier clocking constraints.<br />2.  You purportedly need less memory because of how easy it is to make the bus super wide when it is in the same package as the GPU.<br />3.  No traces need to be routed outside the GPU package.  The less distance data needs to be moved, the less power used.<br />4.  More efficient/economical to cool one chip.<br /><br /><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051961#p29051961" class="postlink" rel="nofollow">brothermichigan</a> wrote:</div><div class="quotecontent">This may be somewhat tangential to the article, but what exactly is it about placing memory (and the associated logic) closer to the CPU/GPU that lowers power consumption so drastically? I can't imagine it's something so simple as the resistance of the actual traces or anything like that, so is it something like maintaining integrity of the clock signal?</div><br /><br />It is really just the greatest when you don't need to rout huge buses out of the package.  If it doesn't need to leave the package, the bus can be much wider and slower.
+      
+        <p class="edited">Last edited by <a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=312711&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Gibborim</a> on Tue May 19, 2015 2:18 pm</p>
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052057" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+13</span>
+        | +<span class="vote-positive">13</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052057" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">215 posts | registered <time class="reg-date">Sep 3, 2011</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="8"
+  data-post-negative="0"
+  data-post-positive="8"
+  data-post-id="29052069" data-poster-id="65378" id="comment-29052069">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Rage(X)"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=65378&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Rage(X)</a></span><span class="rank">Seniorius Lurkius</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052069&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052069#comment-29052069" title="2015-05-19T15:14:20-05:00" class="timeago datetime">Tue May 19, 2015 2:14 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><b>Quote:</b></div><div class="quotecontent">While the current DDR3 memory standards—as well as offshoots like GDDR5—have been serving the CPU and GPU well, they're starting to show signs of being based on early-'90s technology.</div><br /><br />Hopefully as time progresses we'll see enough signs to be able to determine if they are in fact based on early 1990s technology.  I remain skeptical... /s
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052069" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+8</span>
+        | +<span class="vote-positive">8</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052069" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">29 posts | registered <time class="reg-date">Dec 6, 2005</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="12"
+  data-post-negative="0"
+  data-post-positive="12"
+  data-post-id="29052071" data-poster-id="401899" id="comment-29052071">
+  <header class="byline">
+    
+    <span class="author" data-post-author="weblionx"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=401899&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">weblionx</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052071&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052071#comment-29052071" title="2015-05-19T15:14:58-05:00" class="timeago datetime">Tue May 19, 2015 2:14 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051687#p29051687" class="postlink" rel="nofollow">Ostracus</a> wrote:</div><div class="quotecontent">Always wondered why the other side of the video card is so underutilized?</div><br />Probably not enough board space to run traces combined with the increased manufacturing costs. You need ground and power, and all those data lines passing between chips and over and around each other. Then to actually put components on the other side you need to basically glue them on the back so they don't fall off when you run the entire board through the solder waveflow oven. As a note I have actually seen some graphics cards with spots for chips on the back, but never seen one with them actually populated.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052071" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+12</span>
+        | +<span class="vote-positive">12</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052071" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">84 posts | registered <time class="reg-date">Oct 21, 2013</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="4"
+  data-post-negative="-6"
+  data-post-positive="10"
+  data-post-id="29052103" data-poster-id="313330" id="comment-29052103">
+  <header class="byline">
+    
+    <span class="author" data-post-author="RFT"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=313330&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">RFT</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052103&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052103#comment-29052103" title="2015-05-19T15:20:58-05:00" class="timeago datetime">Tue May 19, 2015 2:20 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051871#p29051871" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="https://arstechnica.co.uk/civis/viewtopic.php?p=29051725#p29051725" class="postlink" rel="nofollow">ElectricBlue</a> wrote:</div><div class="quotecontent">hmmm interesting, what's your hot take on this image?<br /><div style="padding: 3px;">
+  <div style="margin-bottom: 3px; font-weight: bold;" onclick="var q = $(this).parent().find('.quotecontent > div');q.toggle();$(this).find('span').html(q.is(':visible')?'hide':'show');return false;">
+    <b>Spoiler: </b>
+    <span style="color: #FF5B00; cursor: pointer;">show</span>
+  </div>
+  <div class="quotecontent">
+    <div style="display: none;">
+      <img src="http://ic.pics.livejournal.com/gailcarriger/13852475/71645/71645_original.jpg" alt="Image" />
+    </div>
+  </div>
+</div></div><br />It's great! I upvoted it. :-)<br /><br />Shouldn't it have been a glass of water though? ;-)<br /><br />It is clear from the massive downvotes that I am in a minority. People are apparently not annoyed at all with pictures in news articles that serve no other purpose that to satisfy a CMS template. I made a similar complaint to a local newspaper last week when they posted a &quot;contextual picture&quot; of IE 6 on Windows XP ... in an article describing how to install Google Chrome on Windows 7 and 8.<br /><br />But ok then. I will take my defeat like a man, and silently hope nonsensical pictures doesn't become as widespread on Ars as it is elsewhere. I promise I won't mention it again.<br /><br /><br /><br />Edit: Wow, downvotes on my declaration of defeat? Kick on a guy while he's on the floor, will ya'? :-)</div><br /><br />For what it's worth, I also dislike the random filler pictures that do nothing more than to evoke the content of the article. For one, it leads to situations where you grab the picture  of someone who has nothing to do with the article, and who doesn't want to be associated with it. For two, it just seems sloppy. As others mentioned, it's not a big deal. However, it does stick out in the overall quality of the articles. It's a little bit like reading a hard-hitting expose on working conditions in some electronic factories, but to have the lead image be from stockphotos.com of some posed factory workers.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052103" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+4</span>
+        | +<span class="vote-positive">10</span> / <span class="vote-negative">-6</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052103" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">994 posts | registered <time class="reg-date">Sep 7, 2011</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="3"
+  data-post-negative="0"
+  data-post-positive="3"
+  data-post-id="29052111" data-poster-id="330960" id="comment-29052111">
+  <header class="byline">
+    
+    <span class="author" data-post-author="tayhimself"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=330960&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">tayhimself</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052111&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052111#comment-29052111" title="2015-05-19T15:21:29-05:00" class="timeago datetime">Tue May 19, 2015 2:21 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29052071#p29052071" class="postlink" rel="nofollow">weblionx</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051687#p29051687" class="postlink" rel="nofollow">Ostracus</a> wrote:</div><div class="quotecontent">Always wondered why the other side of the video card is so underutilized?</div><br />Probably not enough board space to run traces combined with the increased manufacturing costs. You need ground and power, and all those data lines passing between chips and over and around each other. Then to actually put components on the other side you need to basically glue them on the back so they don't fall off when you run the entire board through the solder waveflow oven. As a note I have actually seen some graphics cards with spots for chips on the back, but never seen one with them actually populated.</div><br />My Geforce FX5900 did although I haven't seen it done recently, and the 5900 was a bit of a failure. <!-- m --><a class="postlink" href="http://ixbtlabs.com/articles2/gffx/gffx-16.html">http://ixbtlabs.com/articles2/gffx/gffx-16.html</a><!-- m -->
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052111" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+3</span>
+        | +<span class="vote-positive">3</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052111" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">1923 posts | registered <time class="reg-date">Feb 22, 2012</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment contro read"
+  data-post-score="-3"
+  data-post-negative="-22"
+  data-post-positive="19"
+  data-post-id="29052205" data-poster-id="279854" id="comment-29052205">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Azethoth666"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=279854&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Azethoth666</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052205&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052205#comment-29052205" title="2015-05-19T15:35:35-05:00" class="timeago datetime">Tue May 19, 2015 2:35 pm</a>
+        
+          <span class="highlight controversial">Controversial</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29052103#p29052103" class="postlink" rel="nofollow">RFT</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29051871#p29051871" class="postlink" rel="nofollow">SplatMan_DK</a> wrote:</div><div class="quotecontent"><div class="quotetitle"><a href="https://arstechnica.co.uk/civis/viewtopic.php?p=29051725#p29051725" class="postlink" rel="nofollow">ElectricBlue</a> wrote:</div><div class="quotecontent">hmmm interesting, what's your hot take on this image?<br /><div style="padding: 3px;">
+  <div style="margin-bottom: 3px; font-weight: bold;" onclick="var q = $(this).parent().find('.quotecontent > div');q.toggle();$(this).find('span').html(q.is(':visible')?'hide':'show');return false;">
+    <b>Spoiler: </b>
+    <span style="color: #FF5B00; cursor: pointer;">show</span>
+  </div>
+  <div class="quotecontent">
+    <div style="display: none;">
+      <img src="http://ic.pics.livejournal.com/gailcarriger/13852475/71645/71645_original.jpg" alt="Image" />
+    </div>
+  </div>
+</div></div><br />It's great! I upvoted it. :-)<br /><br />Shouldn't it have been a glass of water though? ;-)<br /><br />It is clear from the massive downvotes that I am in a minority. People are apparently not annoyed at all with pictures in news articles that serve no other purpose that to satisfy a CMS template. I made a similar complaint to a local newspaper last week when they posted a &quot;contextual picture&quot; of IE 6 on Windows XP ... in an article describing how to install Google Chrome on Windows 7 and 8.<br /><br />But ok then. I will take my defeat like a man, and silently hope nonsensical pictures doesn't become as widespread on Ars as it is elsewhere. I promise I won't mention it again.<br /><br /><br /><br />Edit: Wow, downvotes on my declaration of defeat? Kick on a guy while he's on the floor, will ya'? :-)</div><br /><br />For what it's worth, I also dislike the random filler pictures that do nothing more than to evoke the content of the article. For one, it leads to situations where you grab the picture  of someone who has nothing to do with the article, and who doesn't want to be associated with it. For two, it just seems sloppy. As others mentioned, it's not a big deal. However, it does stick out in the overall quality of the articles. It's a little bit like reading a hard-hitting expose on working conditions in some electronic factories, but to have the lead image be from stockphotos.com of some posed factory workers.</div><br />Omfg shut up the both of you already.<br /><br />Better yet start your own website that focuses on ethics in click bait photos on the index page of technical websites.<br /><br />Here is your hashtag: #ethicsinstupidshitnobodycaresabout<br /><br />Has this site become too popular? The signal to noise in the comments is plummeting.<br /><br />PS yeah I'm feeding so pls downvote
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052205" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total neg">-3</span>
+        | +<span class="vote-positive">19</span> / <span class="vote-negative">-22</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052205" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">719 posts | registered <time class="reg-date">Jan 20, 2011</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment  read"
+  data-post-score="0"
+  data-post-negative="0"
+  data-post-positive="0"
+  data-post-id="29052215" data-poster-id="486783" id="comment-29052215">
+  <header class="byline">
+    
+    <span class="author" data-post-author="alwilly"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=486783&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">alwilly</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052215&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052215#comment-29052215" title="2015-05-19T15:36:27-05:00" class="timeago datetime">Tue May 19, 2015 2:36 pm</a>
+        
+          <span class="highlight newbie-highlight">New Poster</span>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      Do.  Want.<br /><br />Time to take the next year and plan a new build <img src="//cdn.arstechnica.net/civis/images/smilies/smile.png" alt=":)" title="Smile" /><br /><br />I have a purely Intel/Nvidia build now but I'm thinking AMD next, with all the nice DX12 stuff coming ahead.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052215" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total">0</span>
+        | +<span class="vote-positive">0</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052215" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">3 posts | registered <time class="reg-date">May 5, 2015</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="2"
+  data-post-negative="0"
+  data-post-positive="2"
+  data-post-id="29052311" data-poster-id="179298" id="comment-29052311">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Ignus Fast"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=179298&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Ignus Fast</a></span><span class="rank">Wise, Aged Ars Veteran</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052311&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052311#comment-29052311" title="2015-05-19T15:49:38-05:00" class="timeago datetime">Tue May 19, 2015 2:49 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      I still remember bending back the clock pin (Maybe one other - faded memory) and soldering RAM chips piggyback in my Atari ST to double the RAM...  The past still haunts us.  <img src="//cdn.arstechnica.net/civis/images/smilies/smile.png" alt=":)" title="Smile" />
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052311" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+2</span>
+        | +<span class="vote-positive">2</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052311" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">197 posts | registered <time class="reg-date">Oct 4, 2004</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="-4"
+  data-post-negative="-4"
+  data-post-positive="0"
+  data-post-id="29052331" data-poster-id="94360" id="comment-29052331">
+  <header class="byline">
+    
+    <span class="author" data-post-author="H2O Rip"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=94360&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">H2O Rip</a></span><span class="rank">Ars Scholae Palatinae</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052331&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052331#comment-29052331" title="2015-05-19T15:52:47-05:00" class="timeago datetime">Tue May 19, 2015 2:52 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      Any word on crossfire compatibility with existing cards?  Thinking putting a 390x in with my R290 might be ideal for my next upgrade.<br /><br />Also if you have a dual GPU card with 4 on each, having an 8GB card isn't too shabby.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052331" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total neg">-4</span>
+        | +<span class="vote-positive">0</span> / <span class="vote-negative">-4</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052331" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">793 posts | registered <time class="reg-date">Sep 21, 2007</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="-4"
+  data-post-negative="-4"
+  data-post-positive="0"
+  data-post-id="29052335" data-poster-id="475123" id="comment-29052335">
+  <header class="byline">
+    
+    <span class="author" data-post-author="SmokeTest"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=475123&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">SmokeTest</a></span><span class="rank">Wise, Aged Ars Veteran</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052335&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052335#comment-29052335" title="2015-05-19T15:53:55-05:00" class="timeago datetime">Tue May 19, 2015 2:53 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      Eh, I'm not very excited. Most applications aren't starved for more bandwidth. The only place this will actually be felt is at the ultra high end, where people are running multiple GPUs to push staggeringly huge resolutions.<br /><br />I'm one of those people, but still. Most people game at 1080p, and GDDR5 is just fine for that. Call me back when we see the revolution in display resolution that will make this important to the average guy.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052335" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total neg">-4</span>
+        | +<span class="vote-positive">0</span> / <span class="vote-negative">-4</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052335" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">112 posts | registered <time class="reg-date">Feb 19, 2015</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment  read"
+  data-post-score="0"
+  data-post-negative="0"
+  data-post-positive="0"
+  data-post-id="29052355" data-poster-id="401899" id="comment-29052355">
+  <header class="byline">
+    
+    <span class="author" data-post-author="weblionx"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=401899&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">weblionx</a></span><span class="rank">Smack-Fu Master, in training</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052355&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052355#comment-29052355" title="2015-05-19T15:55:52-05:00" class="timeago datetime">Tue May 19, 2015 2:55 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      I wonder if stacking RAM on top of a low power CPU might be possible in the future. Get 100MB+ of close cache and it might make low power chips more competitive.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052355" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total">0</span>
+        | +<span class="vote-positive">0</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052355" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">84 posts | registered <time class="reg-date">Oct 21, 2013</time></span>
+    </footer>
+  </li>
+
+<li class="thin-divide-bottom comment neutral read"
+  data-post-score="1"
+  data-post-negative="0"
+  data-post-positive="1"
+  data-post-id="29052473" data-poster-id="197771" id="comment-29052473">
+  <header class="byline">
+    
+    <span class="author" data-post-author="Wheels Of Confusion"><a href="http://arstechnica.com/civis/memberlist.php?mode=viewprofile&amp;u=197771&amp;sid=a54425152b1d2bde6e6a69b43fb782f4">Wheels Of Confusion</a></span><span class="rank">Ars Praefectus</span>
+      <aside class="icons">
+        
+          <a href="?comments=1&amp;post=29052473&amp;mode=quote#reply" class='quotelink icon' title="Reply">reply</a>
+        
+        <a href="http://arstechnica.com/information-technology/2015/05/the-tech-behind-hbm-why-amds-high-bandwidth-memory-matters/?comments=1&post=29052473#comment-29052473" title="2015-05-19T16:21:33-05:00" class="timeago datetime">Tue May 19, 2015 3:21 pm</a>
+        
+        <span class="hidden-icon-start"></span>
+        
+      </aside>
+    </header>
+    <div class="body">
+      <div class="quotetitle"><a href="http://arstechnica.com/civis/viewtopic.php?p=29052355#p29052355" class="postlink" rel="nofollow">weblionx</a> wrote:</div><div class="quotecontent">I wonder if stacking RAM on top of a low power CPU might be possible in the future. Get 100MB+ of close cache and it might make low power chips more competitive.</div><br />I don't know that low-power chips are cache-starved. The bigger you make the cache, regardless of the technology used, the longer it takes to search and retrieve.
+      
+    </div>
+    <footer>
+      <aside class="vote">
+        
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052473" class="vote_login vote_up_login" title="Login to vote up">up</a>
+        (
+        <span class="vote-total pos">+1</span>
+        | +<span class="vote-positive">1</span> / <span class="vote-negative">0</span>
+        )
+        <a href="http://arstechnica.com/civis/ucp.php?mode=login&amp;return_to=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F%3Fcomments%3D1%26amp%3Bstart%3D0%23comment-29052473" class="vote_login vote_down_login" title="Login to vote down">down</a>
+        
+      </aside>
+      <span class="userinfo">12987 posts | registered <time class="reg-date">Jan 17, 2009</time></span>
+    </footer>
+  </li>
+
+</ol>
+
+<div class="pager comments-pager thin-divide-bottom">
+  <a class="subheading post-reply" href="#reply">Post a reply</a>
+
+  <aside class="comment-pagination">
+  <ul class="subheading">
+	<li>Page:</li>
+    <li class="selected">1</li><li><a rel='nofollow' href='?comments=1&amp;start=40'>2</a></li><li><a rel='nofollow' href='?comments=1&amp;start=80'>3</a></li></ul><div class="subheading next-page">&nbsp;<a rel='nofollow' href='?comments=1&amp;start=40'>Next&nbsp;<span class="arrow">&rarr;</span></a></div>
+	</aside>
+</div>
+
+</div><div id="comments-posting-container" class="thick-divide-bottom"><p id="reply">You must <a href="/civis/ucp.php?mode=login" class="vote_login">login or create an account</a> to comment.</p></div>    	</section>
+	
+  <aside class="thin-divide-bottom">
+    <ul class="share-buttons">
+
+  <li class="share-facebook">
+    <a href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F" target="_blank" data-dialog="400:368">
+      <span class="share-text">Share</span>
+            <div class="share-count-container">
+        <div class="share-count">-</div>
+      </div>
+          </a>
+  </li>
+  <li class="share-twitter">
+    <a href="https://twitter.com/share?text=HBM+explained%3A+Can+stacked+memory+give+AMD+the+edge+it+needs%3F&url=http%3A%2F%2Fars.to%2F1FrmS10" target="_blank" data-dialog="364:250">
+      <span class="share-text">Tweet</span>
+            <div class="share-count-container">
+        <div class="share-count">-</div>
+      </div>
+          </a>
+  </li>
+  <li class="share-google">
+    <a href="https://plus.google.com/share?url=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F" target="_blank" data-dialog="485:600">
+      <span class="share-text">Google</span>
+            <div class="share-count-container">
+        <div class="share-count">-</div>
+      </div>
+          </a>
+  </li>
+  <li class="share-reddit">
+    <a href="https://www.reddit.com/submit?url=http%3A%2F%2Farstechnica.com%2Finformation-technology%2F2015%2F05%2Fthe-tech-behind-hbm-why-amds-high-bandwidth-memory-matters%2F&title=HBM+explained%3A+Can+stacked+memory+give+AMD+the+edge+it+needs%3F" target="_blank">
+      <span class="share-text">Reddit</span>
+            <div class="share-count-container">
+        <div class="share-count">-</div>
+      </div>
+          </a>
+  </li>
+</ul>
+    </aside>
+
+    <!-- cache hit 1274:single/author:a60d0cef7b246dccec31877d702d4648 -->  	<section class="article-author clearfix-redux">
+    				<a href="/author/mark_walton"><img width="47" height="47" src="http://cdn.arstechnica.net/wp-content/uploads/2015/04/headshot2_profile.jpg"></a>
+    		    
+		<p><a href="/author/mark_walton" class="author-name">Mark Walton</a>  / Mark is Gaming and Hardware Editor at Ars Technica UK by day, and keen musician by night. He hails from the UK, the home of ARM, heavy metal, and superior chocolate.</p>
+				<a href="https://twitter.com/markalexwalton" class="twitter-link">@markalexwalton on Twitter</a>
+			</section>
+  
+  
+      <table class="post-links thick-divide-top thin-divide-bottom clearfix-redux" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <td width="50%" class="subheading older">
+		    <a href="http://arstechnica.com/tech-policy/2015/05/pre-thoughtcrime-russian-think-tank-app-catches-protestors-before-they-protest/" rel="prev"><span class="arrow">&larr;</span> Older Story</a>      </td>
+      <td class="subheading newer">
+		    <a href="http://arstechnica.com/business/2015/05/youtube-kids-app-has-sex-drugs-and-program-length-ads-advocacy-groups-say/" rel="next">Newer Story <span class="arrow">&rarr;</span></a>      </td>
+    </table>
+
+    <footer id="article-footer">
+    <h2 class="subheading notched">You May Also Like</h2>
+    <ul id="recommendations" class="clearfix-redux"></ul>
+  </footer>
+
+
+<div id="interstitial1x1_frame"></div>
+<script type="text/javascript">
+ars.AD.queue.push(['interstitial', {sz: '1x1', kws: ["interstitial"], collapse: true}]);
+</script>
+
+
+  </div>
+</article>
+
+
+		</section>
+        <footer id="page-footer">
+            
+<div id="bottomBanner320x51_frame"></div>
+<script type="text/javascript">
+ars.AD.queue.push(['bottomBanner', {sz: '320x51', kws: ["bottom"], collapse: true}]);
+</script>
+
+      			<nav id="footer-nav">
+				<div class="nav-section">
+				</div>
+			</nav>
+	          <p style="text-align:center;margin-top:30px;margin-bottom:0"><a href="http://condenast.com"><img src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/condenast-logo.png" width="131" height="19"></a></p>
+
+			<div id="copyright-terms">
+			© 2015 Condé Nast. All rights reserved<br>
+			Use of this Site constitutes acceptance of our <a href="http://www.condenast.com/privacy-policy" target="_blank">User Agreement</a> (effective 1/2/14) and <a href="http://www.condenast.com/privacy-policy#privacypolicy" target="_blank">Privacy Policy</a> (effective 1/2/14), and <a href="/amendment-to-conde-nast-user-agreement-privacy-policy/">Ars Technica Addendum (effective 5/17/2012)</a><br>
+			<a href="http://www.condenast.com/privacy-policy#privacypolicy-california" target="_blank">Your California Privacy Rights</a><br>
+			The material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except with the prior written permission of Condé Nast.<br><br>
+			<a href="http://www.condenast.com/privacy-policy#privacypolicy-optout" target="_blank">Ad Choices</a><img width="10" height="10" border="0" src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/images/ad_choices_arrow.png">
+			</div> 
+
+		</footer>
+	</div>
+
+       <script type="text/javascript" src="//www.google.com/jsapi?autoload={'modules':[{'name':'search','version':'1','packages':[],'language':'en'}]}"></script>
+  
+		<script type="text/javascript" src="http://cdn.arstechnica.net/wp-content/themes/arstechnica/assets/js/ars.min.fa3f2a2955955a36f7a0ef8fd6eaa538.js"></script>
+	
+  
+<!-- what the christ -->
+
+<script type="text/javascript" src="//www.googletagservices.com/tag/js/gpt.js"></script>
+<script type="text/javascript" src="http://cdn.arstechnica.net/ads/js/cn.dart.bun.min.js"></script>
+
+<script type="text/javascript">
+(function() {
+  if ("CN" in window) {
+
+    if (ars.MOBILE && "UAParser" in window) {
+      var ua = new UAParser();
+      if (ua.getOS().name == "Android" && ua.getBrowser().name == "Chrome") {
+        return;
+      }
+    }
+
+    CN.site.init({
+      code:  "ars",
+      title: "Ars",
+      name:  ars.MOBILE ? "ars.mobile" : "ars",
+      env:   ars.ENV === "production" ? "PROD" : "DEV",
+      debug: ars.ENV !== "production"
+    });
+    CN.dart.init({
+      site: CN.site.name + '.dart',
+      zone: ars.AD.zone,
+      kws: ars.AD.kw,
+      gptCallback: function(e) { ars.sda.ad_loaded(e); }
+    });
+    CN.dart.getCommon()["domDelay"]["defaultVal"] = 100;
+
+    for (var i=0; i < ars.AD.queue.length; i++) {
+      var ad = ars.AD.queue[i]
+        , id = ad[0]
+        , args = ad[1];
+      if ($('#' + id + args.sz + "_frame").length)
+        CN.dart.call(id, args);
+    }
+
+    ars.AD.queue = [];
+  }
+})();
+</script>
+
+<script type="text/javascript">
+CN.ad.polar.article = function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n      <span style=\"width:50px; height:50px; overflow:hidden; display:inline-block; float:left; margin:2px 10px 5px 0\">\n        <img src=\""
+    + escapeExpression(((stack1 = ((stack1 = depth0.image),stack1 == null || stack1 === false ? stack1 : stack1.href)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "\" style=\"float:none; margin:0; height:50px; width:auto;\" />\n      </span>\n    ";
+  return buffer;
+  }
+
+  buffer += "<li>\n  <a href=\"";
+  if (stack1 = helpers.link) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.link; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n    <h2 style=\"color:#00A3D3;\">Sponsored by: <span style=\"text-transform:none;\">"
+    + escapeExpression(((stack1 = ((stack1 = depth0.sponsor),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
+    + "</span></h2>\n    ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.image),stack1 == null || stack1 === false ? stack1 : stack1.href), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n    <h1 class=\"heading\">";
+  if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
+  else { stack2 = depth0.title; stack2 = typeof stack2 === functionType ? stack2.apply(depth0) : stack2; }
+  buffer += escapeExpression(stack2)
+    + "</h1>\n  </a>\n</li>";
+  return buffer;
+};
+</script>
+
+  
+  <!-- cache hit 1274:single/javascript-footer:bf1c61d2872fef1c1fefbc47b705262a -->
+        
+
+
+
+      <noscript><a href="http://www.omniture.com" title="Web Analytics"><img src="http://condenast.112.2o7.net/b/ss/condenet-dev/1/H.15.1--NS/0" height="1" width="1" border="0" alt="" /></a></noscript>
+
+  <!-- Google Analytics start -->
+	<script type="text/javascript">
+	var _gaq = _gaq || [];
+  _gaq.push(
+    ['_setAccount', 'UA-31997-1'],
+    ['_setCustomVar', 1, 'view', "mobile"],
+    ['_setCustomVar', 2, 'theme', "dark"],
+    ['_setCustomVar', 3, 'logged_in', "false"],
+    ['_setCustomVar', 4, 'show_comments', "true"],
+    ['_setCustomVar', 5, 'is_premier', "false"],
+    ['_trackPageview']
+  );
+	(function() {
+	  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+	</script>
+  <!-- Google Analytics end -->
+
+  <!-- Parse.ly start -->
+	<script type="text/javascript">
+  (function(d) {
+    var site = "arstechnica.com",
+    b = d.body,
+    e = d.createElement("div");
+    e.innerHTML = '<span id="parsely-cfg" data-parsely-site="'+site+'"></span>';
+    e.id = "parsely-root";
+    e.style.display = "none";
+    b.appendChild(e);
+  })(document);
+
+  (function(s, p, d) {
+    var h=d.location.protocol, i=p+"-"+s,
+    e=d.getElementById(i), r=d.getElementById(p+"-root"),
+    u=h==="https:"?"d1z2jf7jlzjs58.cloudfront.net"
+      :"static."+p+".com";
+    if (e) return;
+    e = d.createElement(s); e.id = i; e.async = true;
+    e.src = h+"//"+u+"/p.js"; r.appendChild(e);
+  })("script", "parsely", document);
+	</script>
+  <!-- Parse.ly end -->
+
+  <!-- Adobe Tag Mgr. -->
+  <script type="text/javascript">_satellite.pageBottom();</script>  
+  
+  </body>
+</html>
+

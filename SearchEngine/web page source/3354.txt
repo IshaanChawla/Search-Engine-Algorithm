@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The pageReply Code</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">The pageReply.php page</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Foruml tutorial. The first part is here: 
+  <a href="php16p1.html">Build your own Forum</a>, along with all the files you 
+  need. The previous lesson is <a href="php17p7.html">here</a>.</i></p>
+<p>&nbsp;</p>
+<p>The code for the <b>pageReply.php</b> page is a little bit longer than the 
+  others. This page has to do the following:</p>
+<ul>
+  <li> Check if the user is a member. If so, display a link so they can post a 
+    reply.</li>
+  <li>Set up some functions to handle the SQL</li>
+  <li>GET the post and the forum section that the user is replying to</li>
+  <li>GET the pageID just in case there is more than 1 page of replies, allowing 
+    us to set hyperlinks for each page</li>
+  <li>Display information about the original post</li>
+  <li>Display which member posted</li>
+  <li>Find out which members replied</li>
+  <li>Display all the replies, but limit them to ten replies per page </li>
+</ul>
+<p>When a user clicks on a Post, they will see this page:</p>
+<p align="center"> <a href="#" onClick ="DoPopUp('images/forum5.jpg', 730, 560);return false"> 
+  Reply to a Post</a> (opens in a new window 125K)</p>
+<P>This is the page we're now going to examine.</P>
+<p>The code that checks if the user is a member or not is the same code for the 
+  previous section. After the functions, though, we need to GET the data that 
+  was passed by the previous page. This is the data in the <b>rID</b> variable, 
+  the forum variable, and <b>pageID</b> variable:</p>
+<p class="indent_small">if ($_SERVER['REQUEST_METHOD'] == 'GET') {</p>
+<p class="indent_big">$secCode = '';<br>
+  $postID = '';</p>
+<p class="indent_big">if (isset($_GET['rID'])) {</p>
+<p class="indent_bigger">$postID = $_GET['rID'];<br>
+  $secCode = $_GET['forum'];<br>
+  $pageID = $_GET['pageID'];</p>
+<p class="indent_big">}</p>
+<p class="indent_small">}</p>
+<p>Here, we're checking to see if the page was loaded using the GET method. If 
+  it was, we first set a variable called $secCode and a variable called $postID 
+  to blank strings. We then test to see if the rID variable has been set. If so, 
+  we can get the information that was handed by the previous pages:</p>
+<p class="indent_big">$postID = $_GET['rID'];<br>
+  $secCode = $_GET['forum'];<br>
+  $pageID = $_GET['pageID'];</p>
+<p>The code after that, you've already met in the previous section: Test to see 
+  if secCode is blank, build up some HTML for the reply link, and open a connection 
+  to the database.</p>
+<p>If the database is found, we first need to find out how many people relied 
+  to a Post:</p>
+<p class="indent_big">$repCode = getReplySQL($secCode);<br>
+  $repCode = $repCode . &quot;'&quot; . $postID . &quot;'&quot;;</p>
+<p class="indent_big">$result = mysql_query($repCode);<br>
+  $totalRows = mysql_num_rows($result);</p>
+<p>First, we make a call to one of the functions at the top of the page. This 
+  returns some SQL. The second line adds the postID to the SQL. When the SLQ is 
+  executed on the third line, we'll have all the replies for a particular post. 
+  The forth line tells us how many replies there are in total. We're putting this 
+  into a variable called <b>$totalRows</b>.</p>
+<p>If the <b>$totalRows</b> is not zero, then we can get some more SQL. Since 
+  we're only going to be displaying ten links per pages, we can limit the data 
+  we pull from the replies table. After all, there's no sense in getting all the 
+  replies, if we're not going to be displaying all of them. To limit the number 
+  of replies, we have this:</p>
+<p class="indent_big">$repCode = getReplySQL($secCode);<br>
+  $repCode = $repCode . &quot;'&quot; . $postID . &quot;'&quot; . &quot; LIMIT 
+  &quot; . $pageID . &quot;, 10&quot;;</p>
+<p>The first line again makes a call to the functions at the top of the page. 
+  This gets some SQL that we can use against the reply tables.</p>
+<p>The second line is where we're building up some SQL to limit the number of 
+  replies that will be pulled from the table. The first part of the second line 
+  just adds the <b>$postID</b> to the SQL:</p>
+<p class="TextIndent3">$repCode = $repCode . &quot;'&quot; . $postID . &quot;'&quot;</p>
+<p>The rest of the line is where we're limiting the results:</p>
+<p class="TextIndent3">LIMIT &quot; . $pageID . &quot;, 10&quot;;</p>
+<p>The SQL command LIMIT, as its name suggests, allows you to limit the number 
+  of results that you pull from a table. Take this SQL as an example:</p>
+<p class="indent_big">SELECT * FROM tblReply LIMIT 0 10</p>
+<p>The first number after LIMIT is which record from the table you want to start 
+  at. The number zero means start pulling data from the first record in the table. 
+  The second number says how many records you want to grab. </p>
+<p>In our code, the start value is coming from the variable called <b>$pageID</b>. 
+  This is passed to the code when a hyperlink is clicked. It started off as zero, 
+  if you remember, because this will be the first page of results. If we wanted 
+  to start pulling data from row number 11, as we do if there is more than 10 
+  replies, then we need to change the value in the variable called <b>$pageID</b>. 
+  This values gets changed later, as you'll see. You can then add it to the hyperlinks.</p>
+<p>We can then execute the SQL, and put the data from the table into an array:</p>
+<p class="indent_small">$result = mysql_query($repCode);<br>
+  $numRows = mysql_num_rows($result);</p>
+<p class="indent_small">if ($result) {</p>
+<p class="indent_big">for ($i = 0; $i &lt; $numRows; ++$i) {</p>
+<p class="indent_bigger">$replyData[$i] = mysql_fetch_array($result);</p>
+<p class="indent_big">}</p>
+<p class="indent_small">}</p>
+<p>Notice how the loop goes from 0 to <b>$numRows</b>. Inside of the loop, we're 
+  putting each row from the table into an array called $replyData. </p>
+<p>But we also need to find out how many links are needed. If there are 11 replies 
+  to a post, we need 2 links. Clicking the second link will take you to the second 
+  page of replies. If we had 21 replies, we'd need three links - 10 on the first 
+  2 pages, and 1 on the third. The code that counts how many links are needed 
+  is this:</p>
+<p class="indent_big">$cnt = count($replyData);<br>
+  $linkNum = floor($totalRows / 10);</p>
+<p>The first line just counts how many replies are in the array. We pass this 
+  to a variable called $cnt for use later in the code.</p>
+<p>The next line divides the number of rows by 10. We use the floor( ) function 
+  to get rid of any &quot;point something&quot; at the end. 11 divided by 10, 
+  for example, would give us 1.1. We don't need the .1 at the end, so floor( ) 
+  will strip this off.</p>
+<p>The next bit of code gets information about the thread:</p>
+<p class="indent_big">$result = mysql_query($posCode);<br>
+  $numRows = mysql_num_rows($result);</p>
+<p class="indent_big">if ($numRows == 1) {</p>
+<p class="indent_bigger">$db_field = mysql_fetch_assoc($result);<br>
+  $topic = $db_field['threadTopic'];<br>
+  $postText = $db_field['postText'];<br>
+  $datePosted = $db_field['datePosted'];<br>
+  $memPost = $db_field['memberID'];</p>
+<p class="indent_big">}</p>
+<p>We first execute the SQL we set up at the top of the code. This returns the 
+  original Post. But we need to check if a row is returned. If a row is returned 
+  then we fetch it back as an array:</p>
+<p class="indent_big">$db_field = mysql_fetch_assoc($result);</p>
+<p>The variable $db_field will then hold the fields from the Posts table. The 
+  next four lines return the threadTopic, the posText, the datePosted, and the 
+  memberID. These are all fields in the post tables. We then put theses into variables 
+  of their own:</p>
+<p class="indent_big">$db_field = mysql_fetch_assoc($result);<br>
+  $topic = $db_field['threadTopic'];<br>
+  $postText = $db_field['postText'];<br>
+  $datePosted = $db_field['datePosted'];<br>
+  $memPost = $db_field['memberID'];</p>
+<p>We can then use these variables later in the code.</p>
+<p>To find out which member posted the thread, we have this:</p>
+<p class="indent_small">$memSQL = &quot;SELECT * from members WHERE memberID = 
+  '$memPost'&quot;;<br>
+  $result = mysql_query($memSQL);</p>
+<p class="indent_small">if ($result) {</p>
+<p class="indent_big">$db_field = mysql_fetch_assoc($result);<br>
+  $postName = $db_field['username'];</p>
+<p class="indent_small">}</p>
+<p>This is the same code you met in the previous section. We use SQL to pull the 
+  record from the members table WHERE there is a match on the memberID fields. 
+  This is then placed into a variable called $postName.</p>
+<p>To find out which members replied to the post, we have this code:</p>
+<p class="indent_small">for ($i = 0; $i &lt; $cnt; ++$i) {</p>
+<p class="indent_big">$memb = $replyData[$i]['memberID'];<br>
+  $memSQL = &quot;SELECT * from members WHERE memberID = '$memb'&quot;;<br>
+  $result2 = mysql_query($memSQL);</p>
+<p class="indent_big">if ($result2) {</p>
+<p class="indent_bigger">$db_field = mysql_fetch_assoc($result2);<br>
+  $memName = $db_field['username'];<br>
+  $replyData[$i]['member'] = $memName;</p>
+<p class="indent_big">}</p>
+<p class="indent_small">}</p>
+<p>What we're doing here is looping round the <b>$replyData</b> array. This is 
+  the array we set up earlier that holds information about the replies. We just 
+  want the memberID. We then execute some SQL on the members table WHERE there 
+  is a match on the memberID field. Once we find a match, we add a new key to 
+  the $replyData array:</p>
+<p class="indent_big">$memName = $db_field['username'];<br>
+  $replyData[$i]['member'] = $memName;</p>
+<p>The next thing we do is to print the links out, so that users can go to other 
+  pages. As a reminder, here's the links we want to print out:</p>
+<p align="center"><img src="images/forum5a.jpg" width="200" height="86" alt="The forum links" border="1"></p>
+<p align="left">Hold your mouse over these links and you'll see this in the status 
+  bar:</p>
+<p align="center"><img src="images/forum19.jpg" width="400" height="139" alt="The status bar for page 2" border="1"></p>
+<p align="left">Or this, for Page 1:</p>
+<p align="center"><img src="images/forum19a.jpg" width="380" height="136" alt="The status bar for page 1" border="1"></p>
+<p align="left">The only thing to change here is the <b>pageID</b>. If you click 
+  Page 1, <b>pageID</b> is zero. This is because you want to pull records 0 to 
+  10 from the replies. For page 2, <b>pageID</b> is 10. You can then use this 
+  number to pull records number 11 onwards. Here's the code that does that:</p>
+<p align="left" class="TextIndent2">$linkCount = 0;<br>
+  $pageCount = 1;</p>
+<p class="TextIndent2">for ($i = 0; $i &lt;= $linkNum; ++$i) {</p>
+<p class="TextIndent3">$linkPages = &quot;&lt;A HREF = pageReply.php?rID=&quot; 
+  . $postID . &quot;&amp;forum=&quot; . $secCode;</p>
+<p class="TextIndent3">$linkPages = $linkPages . &quot;&amp;pageID=&quot; . $linkCount 
+  . &quot;&gt;Page &quot; . $pageCount . &quot;&lt;/A&gt;&quot;;</p>
+<p class="TextIndent3">print $linkPages . &quot; &quot;;<br>
+  $linkCount = $linkCount + 10;<br>
+  $pageCount++;</p>
+<p class="TextIndent2">}</p>
+<p>The variable <b>$linkNum</b> holds the number of pages that are needed. What 
+  we're doing here is looping round and creating links. The links are printed 
+  out with:</p>
+<p class="indent_big">print $linkPages . &quot; &quot;;</p>
+<p>But the two lines above this are where the hyperlinks get built. Study the 
+  code and see if you can work out how it works. Compare the address in the status 
+  bar, with the code in the loop. Here's the status bar (concentrate on everything 
+  after pageReply.php):</p>
+<p> </p>
+<p>And here's the two lines in the code that builds the link:</p>
+<p class="TextIndent2">$linkPages = &quot;&lt;A HREF = pageReply.php?rID=&quot; 
+  . $postID . &quot;&amp;forum=&quot; . $secCode;</p>
+<p class="TextIndent2">$linkPages = $linkPages . &quot;&amp;pageID=&quot; . $linkCount 
+  . &quot;&gt;Page &quot; . $pageCount . &quot;&lt;/A&gt;&quot;;</p>
+<p><br>
+  Finally, we can then print out the HTML table, using all the information we 
+  have gathered so far. Again, study the code. You should, by now, be able to 
+  figure out what's going on. But we're just looping round printing table data.</p>
+<p>The only thing that remains now is to look at the code for posting a reply, 
+  and for adding a new post to the forum. We'll do that next.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php17p7.html">&lt;-- Back One Page</a> | <a href="php17p9.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

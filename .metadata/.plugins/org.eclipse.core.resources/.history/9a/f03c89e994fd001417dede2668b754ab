@@ -1,0 +1,317 @@
+import java.io.*;
+public class AccessFile 
+{
+	public static Btree[] btreerootarray;
+	public static Btree websrc,zone;
+	public void loadbtree(Btree tree,int mode)
+	{
+		char c = '0';
+		String path = new String("./btree files/");
+		String filename;
+		if(mode >=0 && mode<10)
+		{
+			c = (char)(mode + 48);
+			filename = "" + c + ".txt";
+		}
+		else if(mode>=10 && mode <37)
+		{
+			c = (char)(mode+87);
+			filename = "" + c + ".txt";
+		}
+		else if(mode == -1)
+			filename = new String("websrc.txt");
+		else
+			filename = new String("zone.txt");
+		try
+		{
+			File file = new File(path + filename);
+			if(file.exists())
+			{
+				BufferedReader br = new BufferedReader(new FileReader(path+filename));
+				String line;
+				String newpath = null;
+				while((line=br.readLine()) != null)
+				{
+					if(mode >=0)
+						newpath = new String("./keywords/" + line.charAt(0) + "/" + line + ".txt");
+					else if(mode == -1)
+						newpath = new String("./web page source/" + line + ".txt");
+					else
+						newpath = new String("./zone index files/" + line + ".txt");
+					File f = new File(newpath);
+					tree.insert(line, f);
+				}
+				br.close();
+			}
+		}
+		catch(Exception e)
+		{
+		}
+	}
+	public void makebtrees()
+	{
+		btreerootarray = new Btree[37];
+		for(int i=0;i<37;i++)
+		{
+			btreerootarray[i] = new Btree();
+			loadbtree(btreerootarray[i],i);
+			btreerootarray[i].traversal();
+		}
+		websrc = new Btree();
+		loadbtree(websrc,-1);
+		zone = new Btree();
+		loadbtree(zone,-2);
+	}
+	private BtreeNode checkexistance(String keyword,int index)
+	{
+		return btreerootarray[index].search(keyword);
+	}
+	public void addkeyword(String keyword, double weight, String url)
+	{
+		StringBuilder path = new StringBuilder("./keywords/");
+		String block = new String(url + " " + weight);
+		int index = 0;
+		char cfolder = keyword.charAt(0);
+		if((cfolder>=97 && cfolder<=122) || (cfolder>=48 && cfolder<=57))
+		{
+			String s = "" + cfolder + '/';
+			path.append(s);
+			if(cfolder>=48 && cfolder<=57)
+				index = (int)cfolder - 48;
+			else if(cfolder>=97 && cfolder<=122)
+				index = (int)cfolder - 87;
+		}
+		else
+		{
+			path.append("misc/");
+			index = 36;
+		}
+		BtreeNode x = checkexistance(keyword,index);
+		path.append(keyword + ".txt");
+		String newpath = path.toString();
+		if(x == null)
+		{
+			try
+			{
+				File newfile = new File(newpath);
+				boolean bool = newfile.createNewFile();
+				if(bool == true)
+				{
+					PrintWriter out = new PrintWriter(newpath);
+					out.print(block);
+					out.close();
+				}
+				btreerootarray[index].traversal();
+				System.out.println("--------------");
+				btreerootarray[index].insert(keyword,newfile);
+				makebtreefile(keyword,0);
+			}
+			catch(Exception e)
+			{
+			};
+		}
+		else
+		{
+			try
+			{
+				BufferedReader br = new BufferedReader(new FileReader(newpath));
+				String line = new String();
+				StringBuilder sb = new StringBuilder();
+				int z = 0,num = 0;
+				while((line = br.readLine()) != null)
+				{
+					int i = 0,y = 0;
+					while(line.charAt(i) != ' ')
+						i++;
+					y = Integer.parseInt(line.substring(i+1));
+					if(y<weight && z == 0)
+					{
+						z=1;
+						sb.append("\n" + block);
+					}
+					if(num != 0)
+						sb.append("\n" + line);
+					else
+					{
+						num = 1;
+						sb.append(line);
+					}
+				}
+				if(z == 0)
+					sb.append("\n" + block);
+				br.close();
+				PrintWriter out = new PrintWriter(newpath);
+				out.print(sb);
+				out.close();
+			 }
+			 catch(Exception e)
+			 {
+			 };
+		}	 
+	}
+	@SuppressWarnings("finally")
+	public String urlindexfile(String url)
+	{
+		String path = new String("./urlindex.txt");
+		File file = new File(path);
+		String s = null;
+		try
+		{
+			if(!(file.exists() && !file.isDirectory()))
+			{
+				String block = new String("1                       \n1 " + url);
+				boolean bool = file.createNewFile();
+				if(bool == true)
+				{
+					PrintWriter out = new PrintWriter(path);
+					out.print(block);
+					out.close();
+				}
+				s = "" + '1';
+			}
+			else
+			{
+				BufferedReader br = new BufferedReader(new FileReader(path));
+				String line = br.readLine();
+				int k = 0;
+				while(line.charAt(k) != ' ')
+					k++;
+				int y = Integer.parseInt(line.substring(0,k));
+				y++;
+				while((line = br.readLine()) != null)
+				{
+					k=0;
+					while(line.charAt(k) != ' ')
+						k++;
+					String checkurl = new String(line.substring(k+1));
+					if(checkurl.compareTo(url) == 0)
+					{
+						br.close();
+						throw new Exception("URL Exists");
+					}
+				}
+				br.close();
+				
+				String block = new String("\n" + y + " " +url);
+				
+				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path, true)));
+				out.print(block);
+				out.close();
+				
+				RandomAccessFile f = new RandomAccessFile(new File(path), "rw");
+				s = "" + y;
+				f.seek(0);
+				f.write(s.getBytes());
+				f.close();
+			}
+		}
+		catch(Exception e)
+		{
+				System.out.println(e);
+		}
+		finally
+		{
+			return s;
+		}
+	}
+	public void makesrcfile(String index, String t)
+	{
+		try
+		{
+			String path = new String("./web page source/");
+			File f = new File(path + index + ".txt");
+			boolean bool = f.createNewFile();
+			if(bool == true)
+			{
+				PrintWriter out = new PrintWriter(path + index + ".txt");
+				out.println(t);
+				out.close();
+				websrc.insert(index, f);
+				makebtreefile(index,1);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		};
+	}
+	public void makebtreefile(String output,int mode)
+	{
+		String path = new String("./btree files/");
+		String filename;
+		if(mode == 0)
+			filename = "" + output.charAt(0) + ".txt";
+		else if(mode == 1)
+			filename = new String("websrc.txt");
+		else
+			filename = new String("zone.txt");
+		try
+		{
+			File file = new File(path + filename);
+			if(!(file.exists() && !file.isDirectory()))
+			{
+				boolean bool = file.createNewFile();
+				if(bool == true)
+				{
+					PrintWriter out = new PrintWriter(file);
+					out.print(output);
+					out.close();
+				}
+			}
+			else
+			{
+				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
+				out.print("\n" + output);
+				out.close();
+			}
+		}
+		catch(Exception e)
+		{
+		}
+	}
+	public void zoneindexfiles(ZoneIndexing table,String index)
+	{
+		String path = new String("./zone index files/" + index + ".txt");
+		try
+		{
+			File file = new File(path);
+			if(!(file.exists() && !file.isDirectory()))
+			{
+				boolean bool = file.createNewFile();
+				if(bool == true)
+				{
+					String[] str = table.gettagarray();
+					StringBuilder sb = new StringBuilder();
+					for(String i : str)
+					{
+						double d = table.getzoneweight(i);
+						sb.append(d+"\n");
+					}
+					PrintWriter out = new PrintWriter(path);
+					out.print(sb.toString());
+					out.close();
+					zone.insert(index, file);
+					makebtreefile(index,2);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+		};
+	}
+	public File fetchzone(String index)
+	{
+		BtreeNode bn = zone.search(index);
+		File file = null;
+		if(bn != null)
+		{
+			int i = 0;
+		    while (i < bn.count && bn.keys[i].keyword.compareTo(index)<0)
+		    	i++;
+		    if(i<2*bn.t-1)
+		    	if (bn.keys[i].keyword == index)
+		    		file = bn.keys[i].pointer;
+		}
+		return file;
+	}
+}

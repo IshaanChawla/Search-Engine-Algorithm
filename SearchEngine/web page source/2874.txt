@@ -1,0 +1,1140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>C Tutorial &#8211; The if and switch statement | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="C Tutorial &#8211; The if and switch statement" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,633] -->
+<meta name="description"  content="In this C programming language tutorial we take a look at the &quot;if statement&quot; and &quot;switch statement&quot;. Both are used to alter the flow of a program if a specified" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; C Tutorial &#8211; The if and switch statement Comments Feed" href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; variables and constants' href='http://www.codingunit.com/c-tutorial-variables-and-constants' />
+<link rel='next' title='C Tutorial &#8211; for loop, while loop, break and continue' href='http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=160' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-160">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">
+		C Tutorial &#8211; The if and switch statement</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>In this C programming language tutorial we take a look at the &#8220;if statement&#8221; and &#8220;switch statement&#8221;. Both are used to alter the flow of a program if a specified test condition is true.</p>
+<h2>Boolean Operators</h2>
+<p>Before we can take a look at test conditions we have to know what Boolean operators are. They are called Boolean operators because they give you either true or false when you use them to test a condition. The greater than sign &#8220;&gt;&#8221;<br />
+for instance is a Boolean operator. <span id="more-160"></span> In the table below you see all the Boolean operators:</p>
+<table style="height: 276px;" border="1" cellspacing="0" cellpadding="2" width="305">
+<colgroup>
+<col width="138"></col>
+</colgroup>
+<tbody>
+<tr>
+<td width="81">==</td>
+<td width="138">Equal</td>
+</tr>
+<tr>
+<td width="81">!</td>
+<td width="138">Not</td>
+</tr>
+<tr>
+<td width="81">!=</td>
+<td width="138">Not equal</td>
+</tr>
+<tr>
+<td width="81">&gt;</td>
+<td width="138">Greater than</td>
+</tr>
+<tr>
+<td width="81">&lt;</td>
+<td width="138">Less than</td>
+</tr>
+<tr>
+<td width="81">&gt;=</td>
+<td width="138">Greater than or equal</td>
+</tr>
+<tr>
+<td width="81">&lt;=</td>
+<td width="138">Less than or equal</td>
+</tr>
+<tr>
+<td width="81">&amp;&amp;</td>
+<td width="138">And</td>
+</tr>
+<tr>
+<td width="81">||</td>
+<td width="138">Or</td>
+</tr>
+</tbody>
+</table>
+<h2>The if statement</h2>
+<p>The if statement can be used to test conditions so that we can alter the flow of a program. In other words: if a specific statement is true, execute this instruction. If not true, execute this instruction. So lets take a look at an example:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+
+		int mynumber;
+
+		scanf("%d",&amp;mynumber);
+		if ( mynumber == 10 )
+			printf("Is equal\n");
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p>In the example above the user can input a number. The number is stored in the variable mynumber.<br />
+Now take a look at the &#8220;if statement&#8221;: if the number stored in the variable mynumber is equal to ten, then print &#8220;is equal&#8221; on the screen. Simple, isn&#8217;t it. If the number is not equal to ten, then nothing gets printed.</p>
+<p>Now take another look at the &#8220;if statement&#8221;: look at the placement of the semi-colon. As you can see there is no semi-colon behind the &#8220;if statement&#8221;. If there is just one instruction (if the statement is true), you can place it after the<br />
+&#8220;if statement&#8221; (with an indentation). Are multiple instructions necessary then you will have to use curly brackets, like so:</p>
+<div id="cl">
+<pre><code>
+	if ( mynumber == 10)
+	{
+		printf("is equal\n");
+		printf("closing program\n");
+	}
+
+	</code></pre>
+</div>
+<p>Now we like to also print something if the &#8220;if statement&#8221; is not equal. We could do this by adding another &#8220;if statement&#8221; but there is an easier / better way. Which is using the so called &#8220;else statement&#8221; with the &#8220;if statement&#8221;.</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+		int mynumber;
+		scanf("%d",&amp;mynumber);
+
+		if ( mynumber == 10 )
+		{
+			printf("Is equal\n");
+			printf("Closing program\n");
+		}
+		else
+		{
+			printf("Not equal\n");
+			printf("Closing program\n");
+		}
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> Take a look at the placement of the curly brackets and how the indentations are placed.<br />
+This is all done to make reading easier and to make less mistakes in large programs.</p>
+<h2>Nested if statements</h2>
+<p>If you use an &#8220;if statement&#8221; in an &#8220;if statement&#8221; it is called nesting. Nesting &#8220;if statements&#8221; can make a program very complex, but sometimes there is no other way. So use it wisely. Take a look at a nested &#8220;if statement&#8221; example below:</p>
+<div id="cl">
+<pre><code>
+	#include&lt;stdio.h&gt;
+
+	int main()
+	{
+		int grade;
+
+		scanf("%d",&amp;grade);
+		if ( grade &lt;= 10 )
+		{
+			printf("YOU DID NOT STUDY.\n");
+			printf("YOU FAILED ! \n");
+		}
+		else
+		{
+			if ( grade &lt; 60 ) 			{ 				printf("You failed \n"); 				printf("Study harder\n"); 			} 			else 			{ 				if ( grade &gt;= 60 )
+					printf("YOU PASSED ! \n");
+			}
+		}
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> Again take a look at the placing of the curly brackets and the placing of the indentations.</p>
+<p>So let&#8217;s walk through the example above: If the grade is equal or below ten, you did not study. If the grade is above ten, the program will go into the &#8220;else statement&#8221;. In the &#8220;else statement&#8221; there is another &#8220;if statement&#8221; (this is nesting).<br />
+This &#8220;if statement&#8221; checks the grade again. If the grade is below sixty, you must study harder. In the &#8220;else statement&#8221; from this &#8220;if statement&#8221; there is another &#8220;if statement&#8221;. It checks whether the grade is above or equal to sixty. If it is, you passed the test.</p>
+<h2>Multiple condition testing</h2>
+<p>It is possible to test two or more conditions at once in an &#8220;if statement&#8221; with the use of the AND (&amp;&amp;) operator. Example:</p>
+<div id="cl">
+<pre><code>
+	if ( a &gt; 10 &amp;&amp; b &gt; 20 &amp;&amp; c &lt; 10 )
+	</code></pre>
+</div>
+<p>If a is greater then ten and b is greater then twenty and c is smaller then ten, do something. So all three conditions must be true, before something happens.</p>
+<p>With the OR ( || ) operator you can test if one of two conditions are true. Example:</p>
+<div id="cl">
+<pre><code>
+	if ( a = 10 || b &lt; 20 )
+	</code></pre>
+</div>
+<p>If a equals ten or b is smaller then twenty then do something. So if a or b is true, something happens.</p>
+<h2>The switch statement</h2>
+<p>The switch statement is almost the same as an &#8220;if statement&#8221;. The switch statement can have many conditions. You start the switch statement with a condition. If one of the variable equals the condition, the instructions are executed. It is also possible to add a default. If none of the variable equals the condition the default will be executed. See the<br />
+example below:</p>
+<div id="cl">
+<pre><code>
+      #include&lt;stdio.h&gt;
+
+	int main()
+
+	{
+		char myinput;
+
+		printf("Which option will you choose:\n");
+		printf("a) Program 1 \n");
+		printf("b) Program 2 \n");
+		scanf("%c", &amp;myinput);
+
+		switch (myinput)
+		{
+			case 'a':
+			 		printf("Run program 1\n");
+			 		break;
+			case 'b':
+				{
+			 		printf("Run program 2\n");
+					printf("Please Wait\n");
+					break;
+				}
+			default:
+					printf("Invalid choice\n");
+					break;
+		}
+		return 0;
+	}
+
+</code></pre>
+</div>
+<p><strong><strong>Note:</strong></strong> break is used to exit the switch. See the next tutorial for more details.</p>
+<p>That&#8217;s all for this tutorial.</p>
+<p>We encourage you to make your own programs or to make changes in the example programs. This is the only way you can learn programming C. Make little programs, the more the better. <strong>Have fun!</strong></p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-the-if-and-switch-statement/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=C Tutorial &#8211; The if and switch statement http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 25 responses to &#8220;C Tutorial &#8211; The if and switch statement&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-1976">
+
+            			<cite>Vipandeep</cite> on <small>December 8th, 2010</small>:
+			
+			<p>Can we have If statement in Switch case?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-1979">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>December 9th, 2010</small>:
+			
+			<p>Sure you can, for example:<br />
+<code><br />
+#include&lt;stdio.h&gt;</p>
+<p>	int main()<br />
+	{<br />
+		char myinput;<br />
+                int i=5;<br />
+		printf("Which option will you choose:\n");<br />
+		printf("a) Program 1 \n");<br />
+		printf("b) Program 2 \n");<br />
+		scanf("%c", &#038;myinput);</p>
+<p>		switch (myinput)<br />
+		{<br />
+			case 'a':<br />
+			 		printf("Run program 1\n");<br />
+                                        if( i == 5) {<br />
+                                                printf("OK\n");<br />
+                                        }<br />
+			 		break;<br />
+			case 'b':<br />
+				{<br />
+			 		printf("Run program 2\n");<br />
+					printf("Please Wait\n");<br />
+					break;<br />
+				}<br />
+			default:<br />
+					printf("Invalid choice\n");<br />
+					break;<br />
+		}<br />
+		return 0;<br />
+	}</p>
+<p></code></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3571">
+
+            			<cite>yankpascal</cite> on <small>July 5th, 2011</small>:
+			
+			<p>i like it</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3603">
+
+            			<cite>venkatrao</cite> on <small>July 21st, 2011</small>:
+			
+			<p>excellent</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3691">
+
+            			<cite>reshma</cite> on <small>August 14th, 2011</small>:
+			
+			<p>y didnt you use curly braces in case <strong>a</strong>&#8230;you have just opened only for <strong>b</strong>?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3692">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>August 14th, 2011</small>:
+			
+			<p>@reshma: you are right. Using curly braces in a case statement is a matter of coding style, because most compilers allow different variations. In this case the <strong>b</strong> statement has multiple printf statements and <strong>a </strong> has not. Therefore<strong> b</strong>  has curly braces and <strong>a</strong> has not. Just as you can do with the if statement, where you use curly braces if there is more than one statement that needs to be run if the if statement is valid. </p>
+<p>You can try it yourself, make little programs and see what is allowed by the compiler. But whatever style you choose (no curly braces, only with multiple statements you use curly braces or always curly braces) try to be consistent, especially if you work with different people on the same code!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3806">
+
+            			<cite>Omar</cite> on <small>September 30th, 2011</small>:
+			
+			<p>is it possivle to use multiple conditions in switch ..cases! ??<br />
+eg if (i7)<br />
+how we do this in switch ??</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4381">
+
+            			<cite>Sean</cite> on <small>December 30th, 2011</small>:
+			
+			<p>when using if or else if, can i initialize something instead of printing? (probably a dumb question, but meh)</p>
+<p>e.g.<br />
+if (number == 1)<br />
+    int  identifier = &#8220;value1&#8243;;<br />
+   else if (number == 2)<br />
+    int  identifier = &#8220;value2&#8243;;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4491">
+
+            			<cite>Emma Cummin</cite> on <small>February 16th, 2012</small>:
+			
+			<p>Hi there,</p>
+<p>I have tried to write a similar program, but for some reason whatever number I enter results in the default &#8220;Invalid choice&#8221; being displayed.  Can anyone please shed any light on why this may be?</p>
+<p>Thanks,<br />
+Emma</p>
+<p>CODE:</p>
+<p>#include</p>
+<p>int main()</p>
+<p>{<br />
+int mynumber;</p>
+<p>printf (&#8220;Please choose a digit between 0 and 9 &#8230;\n&#8221;);<br />
+scanf (&#8220;%d&#8221;, &amp;mynumber);</p>
+<p>switch (mynumber)<br />
+{<br />
+    case &#8216;0&#8217;:<br />
+            printf (&#8220;That&#8217;s extremely boring.\n&#8221;);<br />
+            break;<br />
+    case &#8216;1&#8217;:<br />
+    case &#8216;9&#8217;:<br />
+            printf (&#8220;You chose a perfect square.\n&#8221;);<br />
+            break;<br />
+    case &#8216;2&#8217;:<br />
+            printf (&#8220;You chose the smallest prime number.\n&#8221;);<br />
+            break;<br />
+    case &#8216;3&#8217;:<br />
+    case &#8216;5&#8217;:<br />
+    case &#8216;7&#8217;:<br />
+            printf (&#8220;You chose a prime number.\n&#8221;);<br />
+            break;<br />
+    case &#8216;4&#8217;:<br />
+    case &#8216;6&#8217;:<br />
+    case &#8216;8&#8217;:<br />
+            printf (&#8220;You chose an even number.\n&#8221;);<br />
+            break;<br />
+    default:<br />
+            printf (&#8220;Invalid choice.\n&#8221;);<br />
+}</p>
+<p>return 0;</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4492">
+
+            			<cite>Emma Cummin</cite> on <small>February 16th, 2012</small>:
+			
+			<p>PS.  The start actually reads #include&lt;stdio.h&gt;.  Apologies.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4493">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>February 16th, 2012</small>:
+			
+			<p>@Emma: you should remove the &#8216; &#8216; characters in your example (for instance &#8216;0&#8217; should become 0). Below you&#8217;ll find a source example that should work. Also you better use scanf_s, if have put it in the example. Good luck!</p>
+<p>#include&lt;stdio.h&gt;</p>
+<p>int main() {</p>
+<p>int mynumber;</p>
+<p>printf(&#8220;Please choose a digit between 0 and 9 &#8230;\n&#8221;);<br />
+//<br />
+//scanf (&#8220;%d&#8221;, &amp;mynumber);<br />
+//Better use scanf_s, prevents buffer overloading<br />
+scanf_s(&#8220;%d&#8221;, &amp;mynumber, 1);</p>
+<p>switch (mynumber) {<br />
+   case 0:<br />
+           printf (&#8220;That&#8217;s extremely boring.\n&#8221;);<br />
+           break;<br />
+   case 1:<br />
+   case 9:<br />
+           printf (&#8220;You chose a perfect square.\n&#8221;);<br />
+           break;<br />
+   case 2:<br />
+           printf (&#8220;You chose the smallest prime number.\n&#8221;);<br />
+           break;<br />
+   case 3:<br />
+   case 5:<br />
+   case 7:<br />
+           printf (&#8220;You chose a prime number.\n&#8221;);<br />
+           break;<br />
+   case 4:<br />
+   case 6:<br />
+   case 8:<br />
+           printf (&#8220;You chose an even number.\n&#8221;);<br />
+           break;<br />
+   default:<br />
+           printf (&#8220;Invalid choice.\n&#8221;);<br />
+   }<br />
+return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4544">
+
+            			<cite>Eug</cite> on <small>March 7th, 2012</small>:
+			
+			<p>i got a part of programming of a c language for my microcontroller. i know it&#8217;s a bit different. ignore some part of my programming. i wanna ask if i can use switch statement for the if/else statement part? and also is it faster and use less space (space is crucial for my application)?<br />
+//==========		==========include==========			==========//<br />
+#include ;<br />
+__CONFIG ( 0x3F32 );</p>
+<p>//==========		==========define==========			==========//</p>
+<p>#define servo4		RB4				// define servo motors<br />
+#define servo3		RB5<br />
+#define servo2		RB6<br />
+#define servo1		RB7</p>
+<p>#define vdown 		RD2				// define buttons<br />
+#define vup 		RD3<br />
+#define right 		RD4<br />
+#define left 		RD5<br />
+#define down 		RD6<br />
+#define up 		RD7</p>
+<p>//==========		==========global variable==========		==========//</p>
+<p>unsigned int m1;<br />
+unsigned int m2;<br />
+unsigned int m3;<br />
+unsigned int m4;<br />
+unsigned int counter;<br />
+unsigned int p=12;						// pull<br />
+unsigned int r=17;						// release<br />
+unsigned int c=0;						// center (no pulse to servo motor)</p>
+<p>//==========		==========main function==========		==========//</p>
+<p>void main(void)<br />
+{<br />
+	while (1)<br />
+	{<br />
+		if(up==0 &amp;&amp; down==1 &amp;&amp; left==1 &amp;&amp; right==1 &amp;&amp; vup==1 &amp;&amp; vdown==1)		//up<br />
+		{<br />
+			GIE=1;<br />
+			m1=p;<br />
+			m2=p;<br />
+			m3=r;<br />
+			m4=r;<br />
+			continue;<br />
+		}<br />
+		else if(up==1 &amp;&amp; down==0 &amp;&amp; left==1 &amp;&amp; right==1 &amp;&amp; vup==1 &amp;&amp; vdown==1)	//down<br />
+		{<br />
+			GIE=1;<br />
+			m1=r;<br />
+			m2=r;<br />
+			m3=p;<br />
+			m4=p;<br />
+			continue;<br />
+		}<br />
+		else if(up==1 &amp;&amp; down==1 &amp;&amp; left==0 &amp;&amp; right==1 &amp;&amp; vup==1 &amp;&amp; vdown==1)	//left<br />
+		{<br />
+			GIE=1;<br />
+			m1=r;<br />
+			m2=p;<br />
+			m3=p;<br />
+			m4=r;<br />
+			continue;<br />
+		}<br />
+		else if(up==1 &amp;&amp; down==1 &amp;&amp; left==1 &amp;&amp; right==0 &amp;&amp; vup==1 &amp;&amp; vdown==1)	//right<br />
+		{<br />
+			GIE=1;<br />
+			m1=p;<br />
+			m2=r;<br />
+			m3=r;<br />
+			m4=p;<br />
+			continue;<br />
+		}<br />
+		else if(up==1 &amp;&amp; down==1 &amp;&amp; left==1 &amp;&amp; right==1 &amp;&amp; vup==0 &amp;&amp; vdown==1)	//vertical up<br />
+		{<br />
+			GIE=1;<br />
+			m1=p;<br />
+			m2=p;<br />
+			m3=p;<br />
+			m4=p;<br />
+			continue;<br />
+		}<br />
+		else if(up==1 &amp;&amp; down==1 &amp;&amp; left==1 &amp;&amp; right==1 &amp;&amp; vup==1 &amp;&amp; vdown==0)	//vertical down<br />
+		{<br />
+			GIE=1;<br />
+			m1=r;<br />
+			m2=r;<br />
+			m3=r;<br />
+			m4=r;<br />
+			continue;<br />
+		}<br />
+		GIE=0;<br />
+	}</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5502">
+
+            			<cite>FMMK</cite> on <small>November 14th, 2012</small>:
+			
+			<p>Here is an example of a simple &#8220;multiple choice&#8221; program I made for those who are interested. It might clarify some of your questions:</p>
+<p>CODE:</p>
+<p>#include</p>
+<p>int main ()<br />
+{</p>
+<p>	char userInput;</p>
+<p>	printf(&#8220;Which is the largest object?\n&#8221;);</p>
+<p>	scanf(&#8220;%c&#8221;, &amp;userInput);<br />
+	//Switch is kind of like the if statement:<br />
+	switch (userInput)<br />
+	{</p>
+<p>		case &#8216;a':<br />
+			{<br />
+			printf(&#8220;Incorrect!\n&#8221;);<br />
+			break;<br />
+			}<br />
+		case &#8216;b':<br />
+			{<br />
+			printf(&#8220;Incorrect!\n&#8221;);<br />
+			break;<br />
+			}<br />
+		case &#8216;c':<br />
+			{<br />
+			printf(&#8220;Incorrect!\n&#8221;);<br />
+			break;<br />
+			}<br />
+		case &#8216;d':<br />
+			{<br />
+			printf(&#8220;Correct\n&#8221;);<br />
+			break;<br />
+			}<br />
+		default:<br />
+			printf(&#8220;a)A Truck\n&#8221;);<br />
+			printf(&#8220;b)A Peanut\n&#8221;);<br />
+			printf(&#8220;c)An Elephant\n&#8221;);<br />
+			printf(&#8220;d)The moon\n&#8221;);<br />
+		  	break;<br />
+	} </p>
+<p>	return 0;<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5505">
+
+            			<cite>FMMK</cite> on <small>November 16th, 2012</small>:
+			
+			<p>IGNORE THE CODE ABOVE ^ (It has errors)</p>
+<p>Here is another &#8220;Multiple Choice&#8221; example that should work:</p>
+<p>CODE:</p>
+<p>#include</p>
+<p>int main ()<br />
+{</p>
+<p>    char MyInput;</p>
+<p>    printf(&#8220;What is 2 + 2?\n a)1\n b)2\n c)3\n d)4\n Answer:&#8221;);</p>
+<p>    scanf(&#8220;%c&#8221;, &amp;MyInput);</p>
+<p>    stdin;</p>
+<p>    switch (MyInput)</p>
+<p>    {<br />
+        {<br />
+        case &#8216;a':<br />
+            printf(&#8220;Incorrect\n&#8221;);</p>
+<p>        }</p>
+<p>            break;<br />
+        {<br />
+        case &#8216;b':<br />
+            printf(&#8220;Incorrect\n&#8221;);</p>
+<p>        }<br />
+            break;</p>
+<p>        case &#8216;c':<br />
+        {    printf(&#8220;Incorrect&#8221;);</p>
+<p>        }<br />
+            break;</p>
+<p>        case &#8216;d':<br />
+        {    printf(&#8220;Correct!\n&#8221;);<br />
+            if (MyInput == &#8216;d&#8217;)<br />
+            {<br />
+                printf(&#8220;You are AWSOME!!!\n&#8221;);<br />
+            }</p>
+<p>        }<br />
+            break;<br />
+        default:<br />
+            printf(&#8220;Not a valid choice&#8221;);</p>
+<p>    }</p>
+<p>    return 0;</p>
+<p>}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5506">
+
+            			<cite>FMMK</cite> on <small>November 16th, 2012</small>:
+			
+			<p>Make sure this is there: ( #include) &#8212; I don&#8217;t know why it doesn&#8217;t get printed out on this site. Strange.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6536">
+
+            			<cite>Mohamed F.</cite> on <small>February 23rd, 2013</small>:
+			
+			<p>Hi, Nice Tutorial, one of the best i have seen till now <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+<p>PS : The Nested If Example, there is a hidden part of the code that wasn&#8217;t displayed correctly in the page &#8220;far on the right side&#8221; ,you should check it.</p>
+<p>Regards,</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6715">
+
+            			<cite>Adam</cite> on <small>April 10th, 2013</small>:
+			
+			<p>How does the program know which case it is using?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6968">
+
+            			<cite>Zeefan</cite> on <small>May 27th, 2013</small>:
+			
+			<p>@Adam<br />
+The &#8216;a&#8217; after the word case, the one which is in single quotes is the keyword the computer will look for. If you type in a and enter, it will execute case a.<br />
+What I would like to know is if I can make it so, that different words can execute the same case, for example if I want the word &#8220;pie&#8221; to execute one of the cases, and I also want it so, if I typed in &#8220;Pie&#8221; instead (upper case P) it still executes the case. I thought it would be something like:<br />
+ case (&#8216;pie&#8217; || &#8216;Pie&#8217;):<br />
+But it seems I was wrong&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7574">
+
+            			<cite><a href='http://f' rel='external nofollow' class='url'>ProfRubik</a></cite> on <small>July 26th, 2013</small>:
+			
+			<p>hey guys im having a problem&#8230;..</p>
+<p>what am i going to input if i want my program to Continue if the first statement is true then close if the second statement is true????</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7802">
+
+            			<cite>Matt F</cite> on <small>August 12th, 2013</small>:
+			
+			<p>Basically ive been working on a switch case within a switch case.<br />
+List of stuff<br />
+1,2,3 are the options<br />
+IF/when you select 1/2/3 it adds a correct variable to character data and does a print.<br />
+Do you want to keep this selection?<br />
+y/n<br />
+if no, starts over and lets you pick again. If you pick y, it breaks and starts the next piece of code. How would I go about that?</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7884">
+
+            			<cite>Pamela</cite> on <small>August 31st, 2013</small>:
+			
+			<p>Mode of Payment: </p>
+<p>A/a – Cash		no additional<br />
+B/b – installment	plus 5%<br />
+C/c – Credit card	plus 2%	</p>
+<p>how can i program this using switch statement please help me? Thank.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8444">
+
+            			<cite>K.Revathy</cite> on <small>October 11th, 2013</small>:
+			
+			<p>now i completely understand about the switch stmt and if stmt .such a easier explanation to understand.Thanksss alottt&#8230;&#8230;&#8230;.!!!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8760">
+
+            			<cite>lwanga joseph</cite> on <small>October 17th, 2013</small>:
+			
+			<p>can i use operators in c switch statements?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8900">
+
+            			<cite>JOSEPH</cite> on <small>October 24th, 2013</small>:
+			
+			<p>Keep up the spirit of educating the world.<br />
+U make the future of future programmers.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-10474">
+
+            			<cite>john paul</cite> on <small>April 11th, 2014</small>:
+			
+			<p>Please help me at line 25 printf wont show </p>
+<p>           #include<br />
+#include </p>
+<p>int main()</p>
+<p>{<br />
+    char choice;<br />
+    int num=10;<br />
+    printf(&#8220;Welcome to My Video Rental&#8221;);<br />
+    printf(&#8220;What do you want to do? \n\n&#8221;);<br />
+    printf(&#8220;a. Rent a Movie\n&#8221;);<br />
+    printf(&#8220;b. Return a Movie\n\n&#8221;);<br />
+    printf(&#8220;Enter choice: \n\n&#8221;);</p>
+<p>    choice = getch();</p>
+<p>    switch(choice)<br />
+       {<br />
+         case &#8216;a':</p>
+<p>                     printf(&#8220;want movie do you like to rent?\n&#8221; );<br />
+	printf(&#8220;1.don jon\n&#8221;);<br />
+	printf(&#8220;2.battleship\n&#8221;);<br />
+	printf(&#8220;3.wolf of wall street\n&#8221;);<br />
+	printf(&#8220;4.insidious\n&#8221;);<br />
+	printf(&#8220;5.perks of being a wall flower\n&#8221;);<br />
+	            if( num &lt; 5 ){<br />
+        printf(&quot;thank you for renting our movies!&quot;);   &lt;&#8212;&#8212;(line 25)<br />
+	 }<br />
+	 break;</p>
+<p>   case &#039;b&#039; :<br />
+      printf(&quot;thank you for returning our movie videos\n&quot; );<br />
+      break;</p>
+<p>         default:<br />
+              {<br />
+                  printf(&quot;Error! Choice not found.&quot;);<br />
+              }</p>
+<p>   getch();</p>
+<p>    }<br />
+       }</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.643 seconds. -->
+</body>
+</html>
+

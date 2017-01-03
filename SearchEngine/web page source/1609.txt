@@ -1,0 +1,1395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>7.9 &#8212; The stack and the heap &laquo; Learn C++</title>
+	<link rel="shortcut icon" href="http://www.learncpp.com/blog/wp-content/ata-images/learncpp.ico" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.learncpp.com/blog/xmlrpc.php" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Feed" href="http://www.learncpp.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; Comments Feed" href="http://www.learncpp.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Learn C++ &raquo; 7.9 &#8212; The stack and the heap Comments Feed" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.learncpp.com\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='crayon-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/css/min/crayon.min.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-theme-familiar-learncppcom-css'  href='http://www.learncpp.com/blog/wp-content/uploads/crayon-syntax-highlighter/themes/familiar-learncppcom/familiar-learncppcom.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='crayon-font-monaco-css'  href='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/fonts/monaco.css?ver=2.7.1' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/_inc/genericons/genericons/genericons.css?ver=3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='jetpack_css-css'  href='http://www.learncpp.com/blog/wp-content/plugins/jetpack/css/jetpack.css?ver=3.5.3' type='text/css' media='all' />
+<!-- This site uses the Google Analytics by Yoast plugin v5.4.2 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2173612-1']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery.js?ver=1.11.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxCheckClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"12738d6e92"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/checkclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var AjaxUpdateClicks = {"ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","nonce":"441c3b4826"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/updateclicks.js?ver=4.2.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var CrayonSyntaxSettings = {"version":"2.7.1","is_admin":"0","ajaxurl":"http:\/\/www.learncpp.com\/blog\/wp-admin\/admin-ajax.php","prefix":"crayon-","setting":"crayon-setting","selected":"crayon-setting-selected","changed":"crayon-setting-changed","special":"crayon-setting-special","orig_value":"data-orig-value","debug":""};
+var CrayonSyntaxStrings = {"copy":"Press %s to Copy, %s to Paste","minimize":"Click To Expand Code"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/crayon-syntax-highlighter/js/min/crayon.min.js?ver=2.7.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var clientcfmonitor = {"client_ip":"1.23.162.176","clickcount":"8","bannedperiod":"1","preurl":"http:\/\/www.learncpp.com\/blog\/wp-content\/plugins\/adsense-click-fraud-monitoring\/clickupdate.php","firstclickdate":[[""],[""]],"updatedVisitCount":"0","isblockedcount":"0","customclass":"cf_monitor","firstclick":"false","disablead":"false","currentURL":"\/cpp-tutorial\/79-the-stack-and-the-heap\/"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/adsense-click-fraud-monitoring/js/check_min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/themes/atahualpa/js/DD_roundies.js?ver=0.0.2a'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.learncpp.com/blog/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.learncpp.com/blog/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='7.8 &#8212; Function Pointers' href='http://www.learncpp.com/cpp-tutorial/78-function-pointers/' />
+<link rel='next' title='7.10 &#8212; Recursion' href='http://www.learncpp.com/cpp-tutorial/710-recursion/' />
+<link rel='canonical' href='http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/' />
+<link rel='shortlink' href='http://www.learncpp.com/?p=120' />
+<script type="text/javascript">
+    window._mNHandle = window._mNHandle || {};
+    window._mNHandle.queue = window._mNHandle.queue || [];
+    medianet_versionId = "121199"; 
+    (function() {
+        var sct = document.createElement("script"),
+        sctHl = document.getElementsByTagName("script")[0],
+        isSSL = 'https:' == document.location.protocol;
+        sct.type = "text/javascript";
+        sct.src = (isSSL ? 'https:' : 'http:') + '//contextual.media.net/dmedianet.js?cid=8CUIE2148' + (isSSL ? '&https=1' : '')+'';
+        sct.async = "async";
+        sctHl.parentNode.insertBefore(sct, sctHl);
+    })();
+</script>
+<!-- wpSolution Code -->
+        <script type="text/javascript">
+            function wpSolutionToggle(solution, link, showtext, hidetext) {
+                if (solution.style.display != 'none') {
+                    solution.style.display = 'none';
+                    link.innerHTML = showtext;
+                    link.className = 'solution_link_show';
+                } else {
+                    solution.style.display = 'block';
+                    link.innerHTML = hidetext;
+                    link.className = 'solution_link_hide';
+                }
+            }
+          </script>
+<style type='text/css'>img#wpstats{display:none}</style><style type="text/css">body{text-align:center;margin:0;padding:0;font-family:verdana,arial,sans-serif;font-size:13px;line-height:1.4;color:#000000;background:#bbb;padding-bottom:20px}a:link,a:visited,a:active{color:#365DA0;font-weight:bold;text-decoration:none;}a:hover{color:#365DA0;font-weight:bold;text-decoration:underline}ul,ol,dl,p,h1,h2,h3,h4,h5,h6{margin-top:10px;margin-bottom:10px;padding-top:0;padding-bottom:0;}ul ul,ul ol,ol ul,ol ol{margin-top:0;margin-bottom:0}code,pre{font-family:"Courier New",Courier,monospace;font-size:1em}pre{overflow:auto;word-wrap:normal;padding-bottom:1.5em;overflow-y:hidden;width:99%}abbr[title],acronym[title]{border-bottom:1px dotted}hr{display:block;height:2px;border:none;margin:0.5em auto;color:#cccccc;background-color:#cccccc}table{font-size:1em;}div.post,ul.commentlist li,ol.commentlist li{word-wrap:break-word;}pre,.wp_syntax{word-wrap:normal;}div#wrapper{text-align:center;margin-left:auto;margin-right:auto;display:block;width:100%}div#container{padding:20px;box-shadow:0 0 15px #333;-moz-box-shadow:0 0 15px #333;width:auto;margin-left:auto;margin-right:auto;text-align:left;display:block}table#layout{font-size:100%;width:100%;table-layout:fixed}.colone{width:200px}.colone-inner{width:10px}.coltwo{width:100% }.colthree-inner{width:10px}.colthree{width:200px}div#header.full-width{width:100%}div#header,td#header{width:auto;padding:0}table#logoarea,table#logoarea tr,table#logoarea td{margin:0;padding:0;background:none;border:0}table#logoarea{width:100%;border-spacing:0px}img.logo{display:block;margin:0 10px 0 0}td.logoarea-logo{width:1%}h1.blogtitle,h2.blogtitle{ display:block;margin:0;padding:0;letter-spacing:-1px;line-height:1.0em;font-size:200%;text-transform:uppercase;font-smooth:always}h1.blogtitle a:link,h1.blogtitle a:visited,h1.blogtitle a:active,h2.blogtitle a:link,h2.blogtitle a:visited,h2.blogtitle a:active{ text-decoration:none;color:#000000;font-weight:normal;font-smooth:always}h1.blogtitle a:hover,h2.blogtitle a:hover{ text-decoration:none;color:#AC161B;font-weight:normal}p.tagline{margin:0;padding:0;font-size:1.2em;font-weight:normal;color:#444}td.feed-icons{white-space:nowrap;}div.rss-box{height:1%;display:block;padding:10px 0 10px 10px;margin:0;width:280px}a.comments-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:22px;display:block;text-decoration:none;float:right;white-space:nowrap}a.comments-icon:link,a.comments-icon:active,a.comments-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment-gray.png) no-repeat scroll center left}a.comments-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/comment.png) no-repeat scroll center left}a.posts-icon{height:22px;line-height:22px;margin:0 5px 0 0;padding-left:20px;display:block;text-decoration:none;float:right;white-space:nowrap}a.posts-icon:link,a.posts-icon:active,a.posts-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss-gray.png) no-repeat scroll center left}a.posts-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/rss.png) no-repeat scroll center left}a.email-icon{height:22px;line-height:22px;margin:0 5px 0 5px;padding-left:24px;display:block;text-decoration:none;float:right;white-space:nowrap}a.email-icon:link,a.email-icon:active,a.email-icon:visited{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email-gray.png) no-repeat scroll center left}a.email-icon:hover{background:transparent url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/email.png) no-repeat scroll center left}td.search-box{height:1%}div.searchbox{height:35px;border-bottom:0;width:200px;margin:0;padding:0}div.searchbox-form{margin:5px 10px 5px 10px}div.horbar1,div.horbar2{font-size:1px;clear:both;display:block;position:relative;padding:0;margin:0}div.horbar1{height:0px;background:#ffffff;border-top:dashed 1px #cccccc}div.horbar2{height:0px;background:#ffffff;border-bottom:dashed 1px #cccccc}div.header-image-container-pre{position:relative;margin:0;padding:0;height:150px;}div.header-image-container{position:relative;margin:0;padding:0;height:150px;}div.codeoverlay{position:absolute;top:0;left:0;width:100%;height:100%}div.clickable{position:absolute;top:0;left:0;z-index:3;margin:0;padding:0;width:100%;height:150px;}a.divclick:link,a.divclick:visited,a.divclick:active,a.divclick:hover{width:100%;height:100%;display:block;text-decoration:none}td#left{vertical-align:top;padding-right:10px}td#left-inner{vertical-align:top;padding-right:10px}td#right{vertical-align:top;padding-left:10px}td#right-inner{vertical-align:top;padding-left:10px}td#middle{vertical-align:top;width:100%;background:#fff;padding-left:15px!important;padding-right:15px!important;border:solid 4px #eee}div#footer.full-width{width:100%}div#footer,td#footer{width:auto;background-color:#f7f7f7;border:solid 4px #eee;padding:10px;text-align:center;color:#888;font-size:11px;margin-left:220px;margin-right:220px;margin-top:20px;width:auto!important}div#footer a:link,div#footer a:visited,div#footer a:active,td#footer a:link,td#footer a:visited,td#footer a:active{text-decoration:none;color:#777777;font-weight:normal}div#footer a:hover,td#footer a:hover{text-decoration:none;color:#777777;font-weight:normal}div.widget{display:block;width:auto;font-size:12px;margin:0 0 10px 0;padding:10px;border:solid 4px #eee;background:#fff}div.widget-title{display:block;width:auto}div.widget-title h3,td#left h3.tw-widgettitle,td#right h3.tw-widgettitle,td#left ul.tw-nav-list,td#right ul.tw-nav-list{padding:0;margin:0;font-size:0.9em;text-align:center;font-weight:normal;text-transform:uppercase;letter-spacing:1px;color:#333;border-bottom:solid 1px #eee;padding-bottom:10px;margin-bottom:10px}div.widget ul,div.textwidget{display:block;width:auto;background:#fff}div.widget select{width:98%;margin-top:5px;}div.widget ul{list-style-type:none;margin:0;padding:0;width:auto}div.widget ul li{display:block;margin:2px 0 2px 0px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget ul li:hover,div.widget ul li.sfhover{display:block;width:auto;border-left:solid 0px #000000;}div.widget ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li:hover,div.widget ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget ul li ul li ul li{margin:2px 0 2px 5px;padding:0 0 0 0px;border-left:solid 0px #CCCCCC;}div.widget ul li ul li ul li:hover,div.widget ul li ul li ul li.sfhover{border-left:solid 0px #000000;}div.widget a:link,div.widget a:visited,div.widget a:active,div.widget td a:link,div.widget td a:visited,div.widget td a:active,div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active{text-decoration:none;font-weight:normal;color:#365DA0;font-weight:normal;}div.widget ul li ul li a:link,div.widget ul li ul li a:visited,div.widget ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget ul li ul li ul li a:link,div.widget ul li ul li ul li a:visited,div.widget ul li ul li ul li a:active{color:#365DA0;font-weight:normal;}div.widget a:hover,div.widget ul li a:hover{color:#365DA0;}div.widget ul li ul li a:hover{color:#365DA0;}div.widget ul li ul li ul li a:hover{color:#365DA0;}div.widget ul li a:link,div.widget ul li a:visited,div.widget ul li a:active,div.widget ul li a:hover{display:inline}* html div.widget ul li a:link,* html div.widget ul li a:visited,* html div.widget ul li a:active,* html div.widget ul li a:hover{height:1%; } div.widget_nav_menu ul li,div.widget_pages ul li,div.widget_categories ul li{border-left:0 !important;padding:0 !important}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:active,div.widget_pages ul li a:link,div.widget_pages ul li a:visited,div.widget_pages ul li a:active,div.widget_categories ul li a:link,div.widget_categories ul li a:visited,div.widget_categories ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:hover,div.widget_categories ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li a:link,div.widget_nav_menu ul li ul li a:visited,div.widget_nav_menu ul li ul li a:active,div.widget_pages ul li ul li a:link,div.widget_pages ul li ul li a:visited,div.widget_pages ul li ul li a:active,div.widget_categories ul li ul li a:link,div.widget_categories ul li ul li a:visited,div.widget_categories ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li a:hover,div.widget_pages ul li ul li a:hover,div.widget_categories ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li ul li ul li a:link,div.widget_nav_menu ul li ul li ul li a:visited,div.widget_nav_menu ul li ul li ul li a:active,div.widget_pages ul li ul li ul li a:link,div.widget_pages ul li ul li ul li a:visited,div.widget_pages ul li ul li ul li a:active,div.widget_categories ul li ul li ul li a:link,div.widget_categories ul li ul li ul li a:visited,div.widget_categories ul li ul li ul li a:active{padding:0 0 0 0px;border-left:solid 0px #CCCCCC}div.widget_nav_menu ul li ul li ul li a:hover,div.widget_pages ul li ul li ul li a:hover,div.widget_categories ul li ul li ul li a:hover{border-left:solid 0px #000000;}div.widget_nav_menu ul li a:link,div.widget_nav_menu ul li a:active,div.widget_nav_menu ul li a:visited,div.widget_nav_menu ul li a:hover,div.widget_pages ul li a:link,div.widget_pages ul li a:active,div.widget_pages ul li a:visited,div.widget_pages ul li a:hover{display:block !important}div.widget_categories ul li a:link,div.widget_categories ul li a:active,div.widget_categories ul li a:visited,div.widget_categories ul li a:hover{display:inline !important}table.subscribe{width:100%}table.subscribe td.email-text{padding:0 0 5px 0;vertical-align:top}table.subscribe td.email-field{padding:0;width:100%}table.subscribe td.email-button{padding:0 0 0 5px}table.subscribe td.post-text{padding:7px 0 0 0;vertical-align:top}table.subscribe td.comment-text{padding:7px 0 0 0;vertical-align:top}div.post,div.page{display:block;margin:0 0 30px 0;padding-top:20px}div.sticky{background:#eee url('<?php bloginfo('template_directory');?>/images/sticky.gif') 99% 5% no-repeat;border:dashed 1px #cccccc;padding:10px}div.post-kicker{margin:0 0 5px 0}div.post-kicker a:link,div.post-kicker a:visited,div.post-kicker a:active{color:#999;text-decoration:none;text-transform:uppercase;letter-spacing:1px}div.post-kicker a:hover{color:#cc0000}div.post-headline{}div.post-headline h1,div.post-headline h2{ margin:0; padding:0;padding:0;margin:0;font-size:1.7em}div.post-headline h2 a:link,div.post-headline h2 a:visited,div.post-headline h2 a:active,div.post-headline h1 a:link,div.post-headline h1 a:visited,div.post-headline h1 a:active{}div.post-headline h2 a:hover,div.post-headline h1 a:hover{}div.post-byline{margin:5px 0 10px 0;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-byline a:link,div.post-byline a:visited,div.post-byline a:active{}div.post-byline a:hover{}div.post-bodycopy{}div.post-bodycopy p{margin:1em 0;padding:0;display:block}div.post-pagination{}div.post-footer{clear:both;display:block;color:#999;text-transform:uppercase;letter-spacing:1px;font-size:11px}div.post-footer a:link,div.post-footer a:visited,div.post-footer a:active{color:#999;font-weight:normal;text-decoration:none}div.post-footer a:hover{color:#333;font-weight:normal;text-decoration:underline}div.post-kicker img,div.post-byline img,div.post-footer img{border:0;padding:0;margin:0 0 -1px 0;background:none}span.post-ratings{display:inline-block;width:auto;white-space:nowrap}div.navigation-top{border-top:solid 4px #eee;padding:8px 0}div.navigation-middle{margin:10px 0 20px 0;padding:8px 0;border-top:solid 4px #eee;border-bottom:solid 4px #eee}div.navigation-bottom{margin:20px 0 0 0;padding:10px 0 0 0;border-top:solid 4px #eee}div.navigation-comments-above{margin:0 0 10px 0;padding:5px 0 5px 0}div.navigation-comments-below{margin:0 0 10px 0;padding:5px 0 5px 0}div.older{float:left;width:48%;text-align:left;margin:0;padding:0}div.newer{float:right;width:48%;text-align:right;margin:0;padding:0;}div.older-home{float:left;width:44%;text-align:left;margin:0;padding:0}div.newer-home{float:right;width:44%;text-align:right;margin:0;padding:0;}div.home{float:left;width:8%;text-align:center;margin:0;padding:0}form,.feedburner-email-form{margin:0;padding:0;}fieldset{border:1px solid #cccccc;width:auto;padding:0.35em 0.625em 0.75em;display:block;}legend{color:#000000;background:#f4f4f4;border:1px solid #cccccc;padding:2px 6px;margin-bottom:15px;}form p{margin:5px 0 0 0;padding:0;}div.xhtml-tags p{margin:0}label{margin-right:0.5em;font-family:arial;cursor:pointer;}input.text,input.textbox,input.password,input.file,input.TextField,textarea{padding:3px;color:#000000;border-top:solid 1px #333333;border-left:solid 1px #333333;border-right:solid 1px #999999;border-bottom:solid 1px #cccccc;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/inputbackgr.gif) top left no-repeat}textarea{width:96%;}input.inputblur{color:#777777;width:95%}input.inputfocus{color:#000000;width:95%}input.highlight,textarea.highlight{background:#e8eff7;border-color:#37699f}.button,.Button,input[type=submit]{padding:0 2px;height:24px;line-height:16px;background-color:#777777;color:#ffffff;border:solid 2px #555555;font-weight:bold}input.buttonhover{padding:0 2px;cursor:pointer;background-color:#6b9c6b;color:#ffffff;border:solid 2px #496d49}form#commentform input#submit{ padding:0 .25em; overflow:visible}form#commentform input#submit[class]{width:auto}form#commentform input#submit{padding:4px 10px 4px 10px;font-size:1.2em;line-height:1.5em;height:36px}table.searchform{width:100%}table.searchform td.searchfield{padding:0;width:100%}table.searchform td.searchbutton{padding:0 0 0 5px}table.searchform td.searchbutton input{padding:0 0 0 5px}blockquote{height:1%;display:block;clear:both;color:#555555;padding:1em 1em;background:#f4f4f4;border:solid 1px #e1e1e1}blockquote blockquote{height:1%;display:block;clear:both;color:#444444;padding:1em 1em;background:#e1e1e1;border:solid 1px #d3d3d3}div.post table{border-collapse:collapse;margin:10px 0}div.post table caption{width:auto;margin:0 auto;background:#eeeeee;border:#999999;padding:4px 8px;color:#666666}div.post table th{background:#888888;color:#ffffff;font-weight:bold;font-size:90%;padding:4px 8px;border:solid 1px #ffffff;text-align:left}div.post table td{padding:4px 8px;background-color:#ffffff;border-bottom:1px solid #dddddd;text-align:left}div.post table tfoot td{}div.post table tr.alt td{background:#f4f4f4}div.post table tr.over td{background:#e2e2e2}#calendar_wrap{padding:0;border:none}table#wp-calendar{width:100%;font-size:90%;border-collapse:collapse;background-color:#ffffff;margin:0 auto}table#wp-calendar caption{width:auto;background:#eeeeee;border:none;;padding:3px;margin:0 auto;font-size:1em}table#wp-calendar th{border:solid 1px #eeeeee;background-color:#999999;color:#ffffff;font-weight:bold;padding:2px;text-align:center}table#wp-calendar td{padding:0;line-height:18px;background-color:#ffffff;border:1px solid #dddddd;text-align:center}table#wp-calendar tfoot td{border:solid 1px #eeeeee;background-color:#eeeeee}table#wp-calendar td a{display:block;background-color:#eeeeee;width:100%;height:100%;padding:0}div#respond{margin:25px 0;padding:25px;background:#eee;-moz-border-radius:8px;-khtml-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}p.thesetags{margin:10px 0}h3.reply,h3#reply-title{margin:0;padding:0 0 10px 0}ol.commentlist{margin:15px 0 25px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ol.commentlist li{padding:15px 10px;display:block;height:1%;margin:0;background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ol.commentlist li.alt{display:block;height:1%;background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ol.commentlist li.authorcomment{display:block;height:1%;background-color:#D8D8FA}ol.commentlist span.authorname{font-weight:bold;font-size:110%}ol.commentlist span.commentdate{color:#666666;font-size:90%;margin-bottom:5px;display:block}ol.commentlist span.editcomment{display:block}ol.commentlist li p{margin:2px 0 5px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}textarea#comment{width:98%;margin:10px 0;display:block}ul.commentlist{margin:15px 0 15px 0;list-style-type:none;padding:0;display:block;border-top:dotted 1px #cccccc}ul.commentlist ul{margin:0;border:none;list-style-type:none;padding:0}ul.commentlist li{padding:0; margin:0;display:block;clear:both;height:1%;}ul.commentlist ul.children li{ margin-left:30px}ul.commentlist div.comment-container{padding:10px;margin:0}ul.children div.comment-container{background-color:transparent;border:dotted 1px #ccc;padding:10px;margin:0 10px 8px 0; border-radius:5px}ul.children div.bypostauthor{}ul.commentlist li.thread-even{background-color:#FFFFFF;border-bottom:dotted 1px #cccccc}ul.commentlist li.thread-odd{background-color:#EEEEEE;border-bottom:dotted 1px #cccccc}ul.commentlist div.bypostauthor{background-color:#D8D8FA}ul.children div.bypostauthor{border:dotted 1px #BFBCFB}ul.commentlist span.authorname{font-size:110%}div.comment-meta a:link,div.comment-meta a:visited,div.comment-meta a:active,div.comment-meta a:hover{font-weight:normal}div#cancel-comment-reply{margin:-5px 0 10px 0}div.comment-number{float:right;font-size:2em;line-height:2em;font-family:georgia,serif;font-weight:bold;color:#ddd;margin:-10px 0 0 0;position:relative;height:1%}div.comment-number a:link,div.comment-number a:visited,div.comment-number a:active{color:#ccc}.page-numbers{padding:2px 6px;border:solid 1px #000000;border-radius:6px}span.current{background:#ddd}a.prev,a.next{border:none}a.page-numbers:link,a.page-numbers:visited,a.page-numbers:active{text-decoration:none;color:#365DA0;border-color:#365DA0}a.page-numbers:hover{text-decoration:none;color:#365DA0;border-color:#365DA0}div.xhtml-tags{display:none}abbr em{border:none !important;border-top:dashed 1px #aaa !important;display:inline-block !important;background:url(http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/commentluv.gif) 0% 90% no-repeat;margin-top:8px;padding:5px 5px 2px 20px !important;font-style:normal}p.subscribe-to-comments{margin-bottom:10px}div#gsHeader{display:none;}div.g2_column{margin:0 !important;width:100% !important;font-size:1.2em}div#gsNavBar{border-top-width:0 !important}p.giDescription{font-size:1.2em;line-height:1 !important}p.giTitle{margin:0.3em 0 !important;font-size:1em;font-weight:normal;color:#666}div#wp-email img{border:0;padding:0}div#wp-email input,div#wp-email textarea{margin-top:5px;margin-bottom:2px}div#wp-email p{margin-bottom:10px}input#wp-email-submit{ padding:0; font-size:30px; height:50px; line-height:50px; overflow:visible;}img.WP-EmailIcon{ vertical-align:text-bottom !important}.tw-accordion .tw-widgettitle,.tw-accordion .tw-widgettitle:hover,.tw-accordion .tw-hovered,.tw-accordion .selected,.tw-accordion .selected:hover{ background:transparent !important; background-image:none !important}.tw-accordion .tw-widgettitle span{ padding-left:0 !important}.tw-accordion h3.tw-widgettitle{border-bottom:solid 1px #ccc}.tw-accordion h3.selected{border-bottom:none}td#left .without_title,td#right .without_title{ margin-top:0;margin-bottom:0}ul.tw-nav-list{border-bottom:solid 1px #999;display:block;margin-bottom:5px !important}td#left ul.tw-nav-list li,td#right ul.tw-nav-list li{padding:0 0 1px 0;margin:0 0 -1px 5px; border:solid 1px #ccc;border-bottom:none;border-radius:5px;border-bottom-right-radius:0;border-bottom-left-radius:0;background:#eee}td#left ul.tw-nav-list li.ui-tabs-selected,td#right ul.tw-nav-list li.ui-tabs-selected{ background:none;border:solid 1px #999;border-bottom:solid 1px #fff !important}ul.tw-nav-list li a:link,ul.tw-nav-list li a:visited,ul.tw-nav-list li a:active,ul.tw-nav-list li a:hover{padding:0 8px !important;background:none;border-left:none !important;outline:none}td#left ul.tw-nav-list li.ui-tabs-selected a,td#left li.ui-tabs-selected a:hover,td#right ul.tw-nav-list li.ui-tabs-selected a,td#right li.ui-tabs-selected a:hover{ color:#000000; text-decoration:none;font-weight:bold;background:none !important;outline:none}td#left .ui-tabs-panel,td#right .ui-tabs-panel{ margin:0; padding:0}img{border:0}#dbem-location-map img{ background:none !important}.post img{padding:5px;border:solid 1px #dddddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}.post img.size-full{max-width:96%;width:auto;margin:5px 0 5px 0}div.post img[class~=size-full]{height:auto;}.post img.alignleft{float:left;margin:10px 10px 5px 0;}.post img.alignright{float:right;margin:10px 0 5px 10px;}.post img.aligncenter{display:block;margin:10px auto}.aligncenter,div.aligncenter{ display:block; margin-left:auto; margin-right:auto}.alignleft,div.alignleft{float:left;margin:10px 10px 5px 0}.alignright,div.alignright{ float:right; margin:10px 0 5px 10px}div.archives-page img{border:0;padding:0;background:none;margin-bottom:0;vertical-align:-10%}.wp-caption{max-width:96%;width:auto 100%;height:auto;display:block;border:1px solid #dddddd;text-align:center;background-color:#f3f3f3;padding-top:4px;margin:10px 0 0 0;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}* html .wp-caption{height:100%;}.wp-caption img{ margin:0 !important; padding:0 !important; border:0 none !important}.wp-caption p.wp-caption-text{font-size:0.8em;line-height:13px;padding:2px 4px 5px;margin:0;color:#666666}img.wp-post-image{float:left;border:0;padding:0;background:none;margin:0 10px 5px 0}img.wp-smiley{ float:none;border:none !important;margin:0 1px -1px 1px;padding:0 !important;background:none !important}img.avatar{float:left;display:block;margin:0 8px 1px 0;padding:3px;border:solid 1px #ddd;background-color:#f3f3f3;-moz-border-radius:3px;-khtml-border-radius:3px;-webkit-border-radius:3px;border-radius:3px}#comment_quicktags{text-align:left;padding:10px 0 2px 0;display:block}#comment_quicktags input.ed_button{background:#f4f4f4;border:2px solid #cccccc;color:#444444;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px}#comment_quicktags input.ed_button_hover{background:#dddddd;border:2px solid #666666;color:#000000;margin:2px 4px 2px 0;width:auto;padding:0 4px;height:24px;line-height:16px;cursor:pointer}#comment_quicktags #ed_strong{font-weight:bold}#comment_quicktags #ed_em{font-style:italic}@media print{body{background:white;color:black;margin:0;font-size:10pt !important;font-family:arial,sans-serif;}div.post-footer{line-height:normal !important;color:#555 !important;font-size:9pt !important}a:link,a:visited,a:active,a:hover{text-decoration:underline !important;color:#000}h2{color:#000;font-size:14pt !important;font-weight:normal !important}h3{color:#000;font-size:12pt !important;}#header,#footer,.colone,.colone-inner,.colthree-inner,.colthree,.navigation,.navigation-top,.navigation-middle,.navigation-bottom,.wp-pagenavi-navigation,#comment,#respond,.remove-for-print{display:none}td#left,td#right,td#left-inner,td#right-inner{width:0;display:none}td#middle{width:100% !important;display:block}*:lang(en) td#left{ display:none}*:lang(en) td#right{ display:none}*:lang(en) td#left-inner{ display:none}*:lang(en) td#right-inner{ display:none}td#left:empty{ display:none}td#right:empty{ display:none}td#left-inner:empty{ display:none}td#right-inner:empty{ display:none}}ul.rMenu,ul.rMenu ul,ul.rMenu li,ul.rMenu a{display:block;margin:0;padding:0}ul.rMenu,ul.rMenu li,ul.rMenu ul{list-style:none}ul.rMenu ul{display:none}ul.rMenu li{position:relative;z-index:1}ul.rMenu li:hover{z-index:999}ul.rMenu li:hover > ul{display:block;position:absolute}ul.rMenu li:hover{background-position:0 0} ul.rMenu-hor li{float:left;width:auto}ul.rMenu-hRight li{float:right}ul.sub-menu li,ul.rMenu-ver li{float:none}.clearfix:after{ content:".";display:block;height:0;clear:both;visibility:hidden}.clearfix{min-width:0;display:inline-block;display:block}* html .clearfix{height:1%;}.clearboth{clear:both;height:1%;font-size:1%;line-height:1%;display:block;padding:0;margin:0}.page-id-8 .post-headline{display:none;} div.useCode{background:linear-gradient(#FFFF66,#CCCC00);border-radius:8px;padding-left:10px;padding-right:10px;padding-top:2px;padding-bottom:2px;font-size:10pt;text-align:left;display:inline-block;font-weight:550;}td#header{padding-bottom:15px;}td#middle{padding:0}div.searchbox-form{margin:5px 0 15px 5px}div#menu1 ul.rMenu{background:transparent;border:none}div#imagecontainer{border-top:solid 0px #333;border-bottom:solid 5px #333;}div.widget ul li{padding:1px 5px 1px 12px !important;background:url('<?php bloginfo('template_directory');?>/images/bullets/round-gray.gif') no-repeat 0 7px}ul.rMenu-hor ul,ul.rMenu-hRight ul{margin-top:0px;}ul.rMenu-hor li{margin-bottom:0px;margin-top:0px;margin-left:0px;}ul.rMenu-hor{padding-left:0px;}ul.rMenu-ver li{margin-top:0xp;}div#menu1 ul.rMenu li a,div#menu2 ul.rMenu li a{padding:6px 10px}div#menu1 ul.rMenu li{margin-right:5px}div#menu1 ul.rMenu li li{margin-right:0}div#menu1 ul.rMenu li,div#menu1 ul.rMenu li a{-webkit-border-top-left-radius:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-topleft:5px;-moz-border-radius-topright:5px;border-top-left-radius:5px;border-top-right-radius:5px}div#menu1 ul.rMenu li li,div#menu1 ul.rMenu li li a{-webkit-border-top-left-radius:0;-webkit-border-top-right-radius:0;-moz-border-radius-topleft:0;-moz-border-radius-topright:0;border-top-left-radius:0;border-top-right-radius:0}div#menu2{ border:dashed 1px #ffffff}ul{list-style-position:inside}</style>
+<script type="text/javascript">
+//<![CDATA[
+
+
+
+/* JQUERY */
+jQuery(document).ready(function(){ 
+    
+   
+  
+
+	/* jQuery('ul#rmenu').superfish(); */
+	/* jQuery('ul#rmenu').superfish().find('ul').bgIframe({opacity:false}); */
+ 
+	/* For IE6 */
+	if (jQuery.browser.msie && /MSIE 6\.0/i.test(window.navigator.userAgent) && !/MSIE 7\.0/i.test(window.navigator.userAgent) && !/MSIE 8\.0/i.test(window.navigator.userAgent)) {
+
+		/* Max-width for images in IE6 */		
+		var centerwidth = jQuery("td#middle").width(); 
+		
+		/* Images without caption */
+		jQuery(".post img").each(function() { 
+			var maxwidth = centerwidth - 10 + 'px';
+			var imgwidth = jQuery(this).width(); 
+			var imgheight = jQuery(this).height(); 
+			var newimgheight = (centerwidth / imgwidth * imgheight) + 'px';	
+			if (imgwidth > centerwidth) { 
+				jQuery(this).css({width: maxwidth}); 
+				jQuery(this).css({height: newimgheight}); 
+			}
+		});
+		
+		/* Images with caption */
+		jQuery("div.wp-caption").each(function() { 
+			var captionwidth = jQuery(this).width(); 
+			var maxcaptionwidth = centerwidth + 'px';
+			var captionheight = jQuery(this).height();
+			var captionimgwidth =  jQuery("div.wp-caption img").width();
+			var captionimgheight =  jQuery("div.wp-caption img").height();
+			if (captionwidth > centerwidth) { 
+				jQuery(this).css({width: maxcaptionwidth}); 
+				var newcaptionheight = (centerwidth / captionwidth * captionheight) + 'px';
+				var newcaptionimgheight = (centerwidth / captionimgwidth * captionimgheight) + 'px';
+				jQuery(this).css({height: newcaptionheight}); 
+				jQuery("div.wp-caption img").css({height: newcaptionimgheight}); 
+				}
+		});
+		
+		/* sfhover for LI:HOVER support in IE6: */
+		jQuery("ul li").
+			hover( function() {
+					jQuery(this).addClass("sfhover")
+				}, 
+				function() {
+					jQuery(this).removeClass("sfhover")
+				} 
+			); 
+
+	/* End IE6 */
+	}
+	
+	
+	
+	/* Since 3.7.8: Auto resize videos (embed and iframe elements) 
+	TODO: Parse parent's dimensions only once per layout column, not per video
+	*/
+	function bfa_resize_video() {
+		jQuery('embed, iframe').each( function() {
+			var video = jQuery(this),
+			videoWidth = video.attr('width'); // use the attr here, not width() or css()
+			videoParent = video.parent(),
+			videoParentWidth = parseFloat( videoParent.css( 'width' ) ),
+			videoParentBorder = parseFloat( videoParent.css( 'border-left-width' ) ) 
+										+  parseFloat( videoParent.css( 'border-right-width' ) ),
+			videoParentPadding = parseFloat( videoParent.css( 'padding-left' ) ) 
+										+  parseFloat( videoParent.css( 'padding-right' ) ),
+			maxWidth = videoParentWidth - videoParentBorder - videoParentPadding;
+
+			if( videoWidth > maxWidth ) {
+				var videoHeight = video.attr('height'),
+				videoMaxHeight = ( maxWidth / videoWidth * videoHeight );
+				video.attr({ width: maxWidth, height: videoMaxHeight });
+			} 
+
+		});	
+	}
+	bfa_resize_video();
+	jQuery(window).resize( bfa_resize_video );
+
+		
+	jQuery(".post table tr").
+		mouseover(function() {
+			jQuery(this).addClass("over");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("over");
+		});
+
+	
+	jQuery(".post table tr:even").
+		addClass("alt");
+
+	
+	jQuery("input.text, input.TextField, input.file, input.password, textarea").
+		focus(function () {  
+			jQuery(this).addClass("highlight"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("highlight"); 
+		})
+	
+	jQuery("input.inputblur").
+		focus(function () {  
+			jQuery(this).addClass("inputfocus"); 
+		}).
+		blur(function () { 
+			jQuery(this).removeClass("inputfocus"); 
+		})
+
+		
+
+	
+	jQuery("input.button, input.Button, input#submit").
+		mouseover(function() {
+			jQuery(this).addClass("buttonhover");
+		}).
+		mouseout(function() {
+			jQuery(this).removeClass("buttonhover");
+		});
+
+	/* toggle "you can use these xhtml tags" */
+	jQuery("a.xhtmltags").
+		click(function(){ 
+			jQuery("div.xhtml-tags").slideToggle(300); 
+		});
+
+	/* For the Tabbed Widgets plugin: */
+	jQuery("ul.tw-nav-list").
+		addClass("clearfix");
+
+		
+	
+});
+
+//]]>
+</script>
+
+<!--[if IE 6]>
+<script type="text/javascript">DD_roundies.addRule("a.posts-icon, a.comments-icon, a.email-icon, img.logo");</script>
+<![endif]-->
+
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="7.9 -- The stack and the heap" />
+<meta property="og:url" content="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/" />
+<meta property="og:description" content="The memory a program uses is typically divided into four different areas: The code area, where the compiled program sits in memory. The globals area, where global variables are stored. The heap, wh..." />
+<meta property="article:published_time" content="2007-08-11T00:56:12+00:00" />
+<meta property="article:modified_time" content="2007-08-11T00:56:12+00:00" />
+<meta property="article:author" content="http://www.learncpp.com/author/alex/" />
+<meta property="og:site_name" content="Learn C++" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/next.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/up.png" />
+<meta property="og:image" content="http://www.learncpp.com/images/CppTutorial/prev.png" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:image" content="http://www.learncpp.com/images/CppTutorial/next.png?w=240" />
+<meta name="twitter:card" content="summary" />
+</head>
+<body class="single single-post postid-120 single-format-standard category-cpp-tutorial">
+
+		<!-- Full Width Header -->
+		<div id="header" class="full-width">
+		<div id="imagecontainer-pre" class="header-image-container-pre">    <div id="imagecontainer" class="header-image-container" style="background: url('http://www.learncpp.com/blog/wp-content/ata-images/header/LearnCppHeader3_800.jpg') top center no-repeat;"></div><div class="clickable"><a class="divclick" title="Learn C++" href ="http://www.learncpp.com/">&nbsp;</a></div><div class="codeoverlay"></div></div>		</div>
+		<!-- / Full Width Header -->
+<div id="wrapper">
+<div id="container">
+<table id="layout" border="0" cellspacing="0" cellpadding="0">
+<colgroup>
+<col class="colone" /><col class="coltwo" />
+<col class="colthree" /></colgroup> 
+
+	<!-- Main Body -->	
+	<tr id="bodyrow">
+
+				<!-- Left Sidebar -->
+		<td id="left">
+
+			<div id="text-2" class="widget widget_text">			<div class="textwidget"><ul>
+<li><a href="/"><big><big>Main Page</big></big></a>
+<li><a href="
+/featured-articles/">Featured Articles</a>
+</ul>
+<hr>
+<ul>
+<li><a href="/site-news/find-something-wrong/">Report an Issue</a>
+<li><a href="/about/">About / Contact</a>
+<li><a href="/about/#Support">Support LearnCpp</a>
+</ul>
+</div>
+		</div><div id="text-3" class="widget widget_text"><div class="widget-title"><h3>Search</h3></div>			<div class="textwidget"><!-- SiteSearch Google -->
+<form method="get" action="http://www.google.com/custom" target="google_window">
+<table border="0" bgcolor="#ffffff">
+<tr><td nowrap="nowrap" valign="top" align="center">
+
+<!--<br/>-->
+<input type="hidden" name="domains" value="LearnCpp.com"></input>
+<label for="sbi" style="display: none">Enter your search terms</label>
+<input type="text" name="q" size="16" maxlength="255" value="" id="sbi"></input>
+</td></tr>
+<tr>
+<td nowrap="nowrap">
+<table>
+<tr>
+<td>
+<input type="hidden" name="sitesearch" value="www.LearnCpp.com" checked id="ss1"></input>
+<label for="ss1" title="Search LearnCpp.com"></label></td>
+</tr>
+</table>
+<label for="sbb" style="display: none">Submit search form</label>
+<input type="submit" name="sa" value="Google Search" id="sbb"></input>
+<input type="hidden" name="client" value="pub-0588844875925051"></input>
+<input type="hidden" name="forid" value="1"></input>
+<input type="hidden" name="channel" value="7774154974"></input>
+<input type="hidden" name="ie" value="ISO-8859-1"></input>
+<input type="hidden" name="oe" value="ISO-8859-1"></input>
+<input type="hidden" name="safe" value="active"></input>
+<input type="hidden" name="flav" value="0000"></input>
+<input type="hidden" name="sig" value="q6fLrjobHHgL00cW"></input>
+</td></tr></table>
+</form>
+<!-- SiteSearch Google --></div>
+		</div>    
+<!-- 
+	Plugin: Custom Meta Widget	Plugin URL: http://shinraholdings.com/plugins/custom-meta-widget/-->
+
+
+	<div id="custommetawidget-2" class="widget customMetaWidget">	<div class="widget-title"><h3>Meta</h3></div>	<ul>
+	
+	
+    <li><a href="http://www.learncpp.com/blog/wp-login.php">Log in</a></li>	
+	</ul>
+    
+	</div><div id="text-9" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "2780990843";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Left Sidebar - Wide Skyscraper -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+		</td>
+		<!-- / Left Sidebar -->
+		
+				
+
+		<!-- Main Column -->
+		<td id="middle">
+
+    
+		
+	<div class='code-block code-block-1' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0588844875925051";
+/* Content Page Top Large */
+google_ad_slot = "7945645163";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>	
+								<div class="post-120 post type-post status-publish format-standard hentry category-cpp-tutorial odd" id="post-120">
+						<div class="post-headline">		<h1>7.9 &#8212; The stack and the heap</h1>
+		</div>		<div class="post-byline">By Alex, on August 10th, 2007</div>		<div class="post-bodycopy clearfix"><p>The memory a program uses is typically divided into four different areas:</p>
+<ul>
+<li>The code area, where the compiled program sits in memory.
+<li>The globals area, where global variables are stored.
+<li>The heap, where dynamically allocated variables are allocated from.
+<li>The stack, where parameters and local variables are allocated from.
+</ul>
+<p>There isn&#8217;t really much to say about the first two areas.  The heap and the stack are where most of the interesting stuff takes place, and those are the two that will be the focus of this section.</p>
+<p><strong>The heap</strong></p>
+<p>The heap (also known as the &#8220;free store&#8221;) is a large pool of memory used for dynamic allocation.  In C++, when you use the new operator to allocate memory, this memory is assigned from the heap.</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7524e4183929743903" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7524e4183929743903-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7524e4183929743903-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7524e4183929743903-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pValue</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// pValue is assigned 4 bytes from the heap</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7524e4183929743903-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pArray</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-sy">[</span><span class="crayon-cn">10</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// pArray is assigned 40 bytes from the heap</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0013 seconds] -->
+<p></p>
+<p>Because the precise location of the memory allocated is not known in advance, the memory allocated has to be accessed indirectly -- which is why new returns a pointer.  You do not have to worry about the mechanics behind the process of how free memory is located and allocated to the user.  However, it is worth knowing that sequential memory requests may not result in sequential memory addresses being allocated!</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7524e4193260549199" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7524e4193260549199-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7524e4193260549199-2">2</div><div class="crayon-num" data-line="crayon-555d7524e4193260549199-3">3</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7524e4193260549199-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pValue1</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7524e4193260549199-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-o">*</span><span class="crayon-v">pValue2</span><span class="crayon-h"> </span><span class="crayon-o">=</span><span class="crayon-h"> </span><span class="crayon-r">new</span><span class="crayon-h"> </span><span class="crayon-t">int</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7524e4193260549199-3"><span class="crayon-c">// pValue1 and pValue2 may not have sequential addresses</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0008 seconds] -->
+<p></p>
+<p>When a dynamically allocated variable is deleted, the memory is &#8220;returned&#8221; to the heap and can then be reassigned as future allocation requests are received.</p>
+<p>The heap has advantages and disadvantages:<br />
+1) Allocated memory stays allocated until it is specifically deallocated (beware memory leaks).<br />
+2) Dynamically allocated memory must be accessed through a pointer.<br />
+3) Because the heap is a big pool of memory, large arrays, structures, or classes should be allocated here.</p>
+<p><strong>The stack</strong></p>
+<p>The call stack (usually referred to as &#8220;the stack&#8221;) has a much more interesting role to play.  Before we talk about the call stack, which refers to a particular portion of memory, let&#8217;s talk about what a stack is.</p>
+<p>Consider a stack of plates in a cafeteria.  Because each plate is heavy and they are stacked, you can really only do one of three things:<br />
+1) Look at the surface of the top plate<br />
+2) Take the top plate off the stack<br />
+3) Put a new plate on top of the stack</p>
+<p>In computer programming, a stack is a container that holds other variables (much like an array).  However, whereas an array lets you access and modify elements in any order you wish, a stack is more limited.  The operations that can be performed on a stack are identical to the ones above:</p>
+<p>1) Look at the top item on the stack (usually done via a function called top())<br />
+2) Take the top item off of the stack (done via a function called pop())<br />
+3) Put a new item on top of the stack (done via a function called push())</p>
+<p>A stack is a last-in, first-out (LIFO) structure.  The last item pushed onto the stack will be the first item popped off.  If you put a new plate on top of the stack, anybody who takes a plate from the stack will take the plate you just pushed on first.  Last on, first off.  As items are pushed onto a stack, the stack grows larger -- as items are popped off, the stack grows smaller.</p>
+<p>The plate analogy is a pretty good analogy as to how the call stack works, but we can actually make an even better analogy.  Consider a bunch of mailboxes, all stacked on top of each other.  Each mailbox can only hold one item, and all mailboxes start out empty.  Furthermore, each mailbox is nailed to the mailbox below it, so the number of mailboxes can not be changed.  If we can&#8217;t change the number of mailboxes, how do we get a stack-like behavior?</p>
+<p>First, we use a marker (like a post-it note) to keep track of where the bottom-most empty mailbox is.  In the beginning, this will be the lowest mailbox.  When we push an item onto our mailbox stack, we put it in the mailbox that is marked (which is the first empty mailbox), and move the marker up one mailbox.  When we pop an item off the stack, we move the marker down one mailbox and remove the item from that mailbox.  Anything below the marker is considered &#8220;on the stack&#8221;.  Anything at the marker or above the marker is not on the stack.</p>
+<p>This is almost exactly analogous to how the call stack works.  The call stack is a fixed-size chunk of sequential memory addresses.  The mailboxes are memory addresses, and the &#8220;items&#8221; are pieces of data (typically either variables or addreses).  The &#8220;marker&#8221; is a register (a small piece of memory) in the CPU known as the stack pointer.  The stack pointer keeps track of where the top of the stack currently is.</p>
+<p>The only difference between our hypothetical mailbox stack and the call stack is that when we pop an item off the call stack, we don&#8217;t have to erase the memory (the equivalent of emptying the mailbox).  We can just leave it to be overwritten by the next item pushed to that piece of memory.  Because the stack pointer will be below that memory location, we know that memory location is not on the stack.</p>
+<p>So what do we push onto our call stack?  Parameters, local variables, and&#8230; function calls.</p>
+<p><strong>The stack in action</strong></p>
+<p>Because parameters and local variables essentially belong to a function, we really only need to consider what happens on the stack when we call a function.  Here is the sequence of steps that takes place when a function is called:</p>
+<ol>
+<li>The address of the instruction beyond the function call is pushed onto the stack.  This is how the CPU remembers where to go after the function returns.
+<li>Room is made on the stack for the function&#8217;s return type.  This is just a placeholder for now.
+<li>The CPU jumps to the function&#8217;s code.
+<li>The current top of the stack is held in a special pointer called the stack frame.  Everything added to the stack after this point is considered &#8220;local&#8221; to the function.
+<li>All function arguments are placed on the stack.
+<li>The instructions inside of the function begin executing.
+<li>Local variables are pushed onto the stack as they are defined.
+</ol>
+<p>When the function terminates, the following steps happen:</p>
+<ol>
+<li>The function&#8217;s return value is copied into the placeholder that was put on the stack for this purpose.
+<li>Everything after the stack frame pointer is popped off.  This destroys all local variables and arguments.
+<li>The return value is popped off the stack and is assigned as the value of the function.  If the value of the function isn&#8217;t assigned to anything, no assignment takes place, and the value is lost.
+<li>The address of the next instruction to execute is popped off the stack, and the CPU resumes execution at that instruction.
+</ol>
+<p>Typically, it is not important to know all the details about how the call stack works.  However, understanding that functions are effectively pushed on the stack when they are called and popped off when they return gives you the fundamentals needed to understand recursion, as well as some other concepts that are useful when debugging.</p>
+<p><strong>Stack overflow</strong></p>
+<p>The stack has a limited size, and consequently can only hold a limited amount of information.  If the program tries to put too much information on the stack, stack overflow will result.  <strong>Stack overflow</strong> happens when all the memory in the stack has been allocated -- in that case, further allocations begin overflowing into other sections of memory.</p>
+<p>Stack overflow is generally the result of allocating too many variables on the stack, and/or making too many nested function calls (where function A calls function B calls function C calls function D etc&#8230;)  Overflowing the stack generally causes the program to crash.</p>
+<p>Here is an example program that causes a stack overflow.  You can run it on your system and watch it crash:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7524e41a1051391908" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7524e41a1051391908-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7524e41a1051391908-2">2</div><div class="crayon-num" data-line="crayon-555d7524e41a1051391908-3">3</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7524e41a1051391908-4">4</div><div class="crayon-num" data-line="crayon-555d7524e41a1051391908-5">5</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7524e41a1051391908-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-e">main</span><span class="crayon-sy">(</span><span class="crayon-sy">)</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7524e41a1051391908-2"><span class="crayon-sy">{</span></div><div class="crayon-line" id="crayon-555d7524e41a1051391908-3"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-v">nStack</span><span class="crayon-sy">[</span><span class="crayon-cn">100000000</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7524e41a1051391908-4"><span class="crayon-h">&nbsp;&nbsp;&nbsp;&nbsp;</span><span class="crayon-st">return</span><span class="crayon-h"> </span><span class="crayon-cn">0</span><span class="crayon-sy">;</span></div><div class="crayon-line" id="crayon-555d7524e41a1051391908-5"><span class="crayon-sy">}</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0007 seconds] -->
+<p></p>
+<p>This program tries to allocate a huge array on the stack.  Because the stack is not large enough to handle this array, the array allocation overflows into portions of memory the program is not allowed to use.  Consequently, the program crashes.</p>
+<p>The stack has advantages and disadvantages:</p>
+<ul>
+<li>Memory allocated on the stack stays in scope as long as it is on the stack.  It is destroyed when it is popped off the stack.
+<li>All memory allocated on the stack is known at compile time.  Consequently, this memory can be accessed directly through a variable.
+<li>Because the stack is relatively small, it is generally not a good idea to do anything that eats up lots of stack space.  This includes allocating large arrays, structures, and classes, as well as heavy recursion.
+</ul>
+<table border=0 cellpadding=3>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/710-recursion/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/next.png" align=middle> 7.10 -- Recursion</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/#Chapter7" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/up.png" align=middle> Index</a>
+</td>
+</tr>
+<tr>
+<td>
+        <a href="http://www.learncpp.com/cpp-tutorial/78-function-pointers/" style="text-decoration:none"><img src="http://www.learncpp.com/images/CppTutorial/prev.png" align=middle> 7.8 -- Function Pointers</a>
+</td>
+</tr>
+</table>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/?share=email" target="_blank" title="Click to email this to a friend"><span>Email</span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-120" class="share-facebook sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/?share=facebook" target="_blank" title="Share on Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-120" class="share-twitter sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/?share=twitter" target="_blank" title="Click to share on Twitter"><span>Twitter</span></a></li><li class="share-google-plus-1"><a rel="nofollow" data-shared="sharing-google-120" class="share-google-plus-1 sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/?share=google-plus-1" target="_blank" title="Click to share on Google+"><span>Google</span></a></li><li class="share-pinterest"><a rel="nofollow" data-shared="sharing-pinterest-120" class="share-pinterest sd-button share-icon" href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/?share=pinterest" target="_blank" title="Click to share on Pinterest"><span>Pinterest</span></a></li><li class="share-end"></li></ul></div></div></div><div class='code-block code-block-2' style='float:left;margin:8px 8px 8px 0px;'><div class="cf_monitor">
+<div id="171844866">
+    <script type="text/javascript">
+    try {
+        window._mNHandle.queue.push(function () {
+		    window._mNDetails.loadTag("171844866", "336x280", "171844866");
+		    });
+		}
+    catch (error) {}
+	</script>
+</div>
+</div></div></div>						<div class="post-footer"><img src="http://www.learncpp.com/blog/wp-content/themes/atahualpa/images/icons/folder-gray.gif" alt="" /> <a class="cpp-tutorial" href="http://www.learncpp.com/category/cpp-tutorial/" title="View all posts in C++ Tutorial">C++ Tutorial</a>   | <a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/print/" title="Print This Post" rel="nofollow"><img class="WP-PrintIcon" src="http://www.learncpp.com/blog/wp-content/plugins/wp-print/images/printer_famfamfam.gif" alt="Print This Post" title="Print This Post" style="border: 0px;" /></a>&nbsp;<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/print/" title="Print This Post" rel="nofollow">Print This Post</a></div>		</div><!-- / Post -->	
+						
+	
+			
+
+	<a name="comments"></a><!-- named anchor for skip links -->
+	<h3 id="comments">39 comments to 7.9 &#8212; The stack and the heap</h3>
+
+	
+	<!-- Comment List -->
+	<ul class="commentlist">
+		
+			<li class="comment even thread-even depth-1 clearfix" id="comment-5857">
+		<div id="div-comment-5857" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/0195bf75f2f76e29b4f52f919e1cec59?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Abhishek</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-5857">
+		January 11, 2008 at 5:57 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=5857#respond' onclick='return addComment.moveForm( "comment-5857", "5857", "respond", "120" )' aria-label='Reply to Abhishek'> &middot; Reply</a></span>		 
+		</div>
+		<p>Where can I find the stack in my CPU box?<br />
+Is it a separate hardware or just a space in RAM or Hard disk?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor odd alt depth-2 clearfix" id="comment-5864">
+		<div id="div-comment-5864" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-5864">
+		January 11, 2008 at 8:10 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=5864#respond' onclick='return addComment.moveForm( "comment-5864", "5864", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>According to <a href="http://en.wikipedia.org/wiki/Stack-based_memory_allocation" onclick="_gaq.push(['_trackEvent', 'outbound-comment', 'http://en.wikipedia.org/wiki/Stack-based_memory_allocation', 'Wikipedia']);" rel="nofollow">Wikipedia</a>, &#8220;In most modern computer systems, each thread has a reserved region of memory referred to as its stack&#8221;.  So it&#8217;s just RAM memory being used in a stack-like manner.  As soon as the thread/program is killed, that memory can be reused for other stuff.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1 clearfix" id="comment-10265">
+		<div id="div-comment-10265" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/610e617df852214cfe41e0914a4112a5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Tom</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-10265">
+		March 24, 2008 at 7:52 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=10265#respond' onclick='return addComment.moveForm( "comment-10265", "10265", "respond", "120" )' aria-label='Reply to Tom'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex -</p>
+<p>Good description of the stack. A few minor corrections:</p>
+<p>&#8220;The plate analogy is <b>a</b> pretty good analogy&#8221;</p>
+<p>Under &#8220;The stack in action&#8221;, items 5 &amp; 6 need periods at the end of the sentences.</p>
+<p>Under &#8220;When the function terminates&#8230;&#8221;:</p>
+<p>&#8220;The <b>address of the</b> next instruction to execute is popped off the stack, and the CPU resumes execution at that instruction.&#8221;</p>
+<p>Keep up the good work!</p>
+<p>[ Thanks! -Alex ]</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-12951">
+		<div id="div-comment-12951" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/ab6f74596f82d109cdaee932d06cd05e?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/ab6f74596f82d109cdaee932d06cd05e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jeff</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-12951">
+		April 24, 2008 at 2:05 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=12951#respond' onclick='return addComment.moveForm( "comment-12951", "12951", "respond", "120" )' aria-label='Reply to Jeff'> &middot; Reply</a></span>		 
+		</div>
+		<p>Alex,</p>
+<p>This is a really good section, very helpful for me!  Quick question:</p>
+<p>Other than writing a function or program to test limits until it crashes, is there an easier to way to determine the size, or amount of memory, allocated to the call stack for a particular program?  Wouldn&#8217;t knowing this in advance help to avoid stack overflow in more complex programs?</p>
+<p>Thanks,<br />
+Jeff</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-13002">
+		<div id="div-comment-13002" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-13002">
+		April 24, 2008 at 6:24 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=13002#respond' onclick='return addComment.moveForm( "comment-13002", "13002", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I won&#8217;t say there isn&#8217;t a way to determine the stack size, but I&#8217;m not aware of how to do it.</p>
+<p>In reality, the stack is large enough that it&#8217;s generally not an issue as long as you&#8217;re aware that you should use dynamic allocation for anything that requires a large amount of memory.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-31579">
+		<div id="div-comment-31579" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">som shekhar</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-31579">
+		November 4, 2008 at 12:08 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=31579#respond' onclick='return addComment.moveForm( "comment-31579", "31579", "respond", "120" )' aria-label='Reply to som shekhar'> &middot; Reply</a></span>		 
+		</div>
+		<p>Since malloc also allocates the size dynamically but it does on stack??? why?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-31636">
+		<div id="div-comment-31636" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-31636">
+		November 4, 2008 at 10:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=31636#respond' onclick='return addComment.moveForm( "comment-31636", "31636", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I don&#8217;t understand the question.  Malloc allocates memory on the heap.  For those of you who don&#8217;t know what malloc is, it&#8217;s the old C-style way of dynamically allocating memory.  In C++, it is essentially deprecated in favor of the new operator.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-31653">
+		<div id="div-comment-31653" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/23490d73ae5456568478541137e2a812?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">som shekhar</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-31653">
+		November 5, 2008 at 3:18 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=31653#respond' onclick='return addComment.moveForm( "comment-31653", "31653", "respond", "120" )' aria-label='Reply to som shekhar'> &middot; Reply</a></span>		 
+		</div>
+		<p>Sorry its not malloc ..its alloca..<br />
+i guess alloca dynamically creates memory on stack?</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-4 clearfix" id="comment-31816">
+		<div id="div-comment-31816" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-31816">
+		November 8, 2008 at 11:25 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=31816#respond' onclick='return addComment.moveForm( "comment-31816", "31816", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It appears that way.  I&#8217;ve never used alloca.  It&#8217;s not part of standard C either, so I would avoid it&#8217;s use.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-35475">
+		<div id="div-comment-35475" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/dc0ed0012055c31bc221698289cfaeff?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dc0ed0012055c31bc221698289cfaeff?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.learncpp.com' rel='external nofollow' class='url'>lalit</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-35475">
+		December 23, 2008 at 2:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=35475#respond' onclick='return addComment.moveForm( "comment-35475", "35475", "respond", "120" )' aria-label='Reply to lalit'> &middot; Reply</a></span>		 
+		</div>
+		<p>hello Alex,<br />
+ who decides the amount of memory among stack,heap,global &amp; code allocated on ram &amp;<br />
+on what baises.<br />
+ thxs.</p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-35920">
+		<div id="div-comment-35920" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-35920">
+		December 29, 2008 at 8:38 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=35920#respond' onclick='return addComment.moveForm( "comment-35920", "35920", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>I believe the OS is responsible for these things.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-37067">
+		<div id="div-comment-37067" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://developa2z.tk' rel='external nofollow' class='url'>absk007</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-37067">
+		January 11, 2009 at 8:16 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=37067#respond' onclick='return addComment.moveForm( "comment-37067", "37067", "respond", "120" )' aria-label='Reply to absk007'> &middot; Reply</a></span>		 
+		</div>
+		<p>The bold word should be &#8220;last&#8221;.<br />
+Read the paragraph.</p>
+<p><cite>A stack is a last-in, first-out (LIFO) structure. The last item pushed onto the stack will be the first item popped off. If you put a new plate on top of the stack, anybody who takes a plate from the stack will take the plate you just pushed on <b>first</b>. Last on, first off. As items are pushed onto a stack, the stack grows larger — as items are popped off, the stack grows smaller.</cite></p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-37107">
+		<div id="div-comment-37107" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-37107">
+		January 11, 2009 at 2:55 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=37107#respond' onclick='return addComment.moveForm( "comment-37107", "37107", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>It is correct as written.  If I put a new plate on top of a stack of plates, it &#8220;buries&#8221; all of the other plates.  When someone comes along to take a plate, they will take the plate I just put on first because its the one on top.  So the LAST plate I put on is the FIRST one taken off.</p>
+		</div>
+<ul class="children">
+		<li class="comment odd alt depth-3 clearfix" id="comment-84248">
+		<div id="div-comment-84248" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/04013835ceca97413715799d15804883?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/04013835ceca97413715799d15804883?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.answerpond.com' rel='external nofollow' class='url'>Question</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-84248">
+		May 6, 2010 at 8:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=84248#respond' onclick='return addComment.moveForm( "comment-84248", "84248", "respond", "120" )' aria-label='Reply to Question'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great article.  I believe absk007 is correct though.  The words &#8220;last&#8221; and &#8220;first&#8221; refer to the perspective of when the item is pushed on or popped off the stack.  So the way it is currently phrased, the word should be changed to &#8220;last&#8221;. </p>
+<p><cite>&#8220;&#8230;anybody who takes a plate from the stack will take the plate you just pushed on <b>last</b>&#8220;.</cite></p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-4 clearfix" id="comment-92601">
+		<div id="div-comment-92601" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/3a8617d4777b58148c43f419bda211a3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a8617d4777b58148c43f419bda211a3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">MattRMunson</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-92601">
+		September 24, 2010 at 7:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=92601#respond' onclick='return addComment.moveForm( "comment-92601", "92601", "respond", "120" )' aria-label='Reply to MattRMunson'> &middot; Reply</a></span>		 
+		</div>
+		<p>Actually, the best way to phrase this would be</p>
+<p>“…anybody who takes a plate from the stack will FIRST take the plate you just pushed on.“</p>
+<p>however, since the sentence says &#8220;a plate&#8221;, singular, you could actually get away with just </p>
+<p>“…anybody who takes a plate from the stack will take the plate you just pushed on.“</p>
+<p>or perhaps better,</p>
+<p>&#8220;the first person who takes a plate from the stack will take the plate you just pushed on.“</p>
+<p>or </p>
+<p>&#8220;the next person who takes a plate from the stack will take the plate you just pushed on.“</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-37068">
+		<div id="div-comment-37068" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/8a4924b04ad0fa95cb4c53a0da3f6c25?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://developa2z.tk' rel='external nofollow' class='url'>absk007</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-37068">
+		January 11, 2009 at 8:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=37068#respond' onclick='return addComment.moveForm( "comment-37068", "37068", "respond", "120" )' aria-label='Reply to absk007'> &middot; Reply</a></span>		 
+		</div>
+		<p>What do you mean by &#8220;register in the CPU&#8221;?<br />
+Please simplify..</p>
+<p><cite>The “marker” is a <b>register in the CPU</b> known as the stack pointer.</cite></p>
+		</div>
+<ul class="children">
+		<li class="comment byuser comment-author-alex bypostauthor even depth-2 clearfix" id="comment-37109">
+		<div id="div-comment-37109" class="clearfix comment-container bypostauthor">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/a4e62d28c29f6c864923207d4c17993b?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://www.tarindel.com' rel='external nofollow' class='url'>Alex</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-37109">
+		January 11, 2009 at 2:58 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=37109#respond' onclick='return addComment.moveForm( "comment-37109", "37109", "respond", "120" )' aria-label='Reply to Alex'> &middot; Reply</a></span>		 
+		</div>
+		<p>A register is just a small piece of memory inside the CPU that the CPU uses to perform its tasks.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-65238">
+		<div id="div-comment-65238" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c65f0ed9274dc88344ad11665303327f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c65f0ed9274dc88344ad11665303327f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Chris</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-65238">
+		July 29, 2009 at 5:35 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=65238#respond' onclick='return addComment.moveForm( "comment-65238", "65238", "respond", "120" )' aria-label='Reply to Chris'> &middot; Reply</a></span>		 
+		</div>
+		<p>I think the advantages and disadvantages lists should mention the fact that heap allocation is significantly slower than stack allocation. So for relatively short lists of data, it is better to put them on the stack.</p>
+<p>You may also want to show an example of stack allocation like you do for the heap.</p>
+<p>For example:</p>
+<p></p><!-- Crayon Syntax Highlighter v2.7.1 -->
+
+		<div id="crayon-555d7524e7d31376003985" class="crayon-syntax crayon-theme-familiar-learncppcom crayon-font-monaco crayon-os-pc print-yes notranslate" data-settings=" no-popup minimize scroll-mouseover wrap" style=" margin-top: 12px; margin-bottom: 12px; font-size: 12px !important; line-height: 15px !important;">
+		
+			<div class="crayon-plain-wrap"></div>
+			<div class="crayon-main" style="">
+				<table class="crayon-table">
+					<tr class="crayon-row">
+				<td class="crayon-nums " data-settings="show">
+					<div class="crayon-nums-content" style="font-size: 12px !important; line-height: 15px !important;"><div class="crayon-num" data-line="crayon-555d7524e7d31376003985-1">1</div><div class="crayon-num crayon-striped-num" data-line="crayon-555d7524e7d31376003985-2">2</div></div>
+				</td>
+						<td class="crayon-code"><div class="crayon-pre" style="font-size: 12px !important; line-height: 15px !important; -moz-tab-size:4; -o-tab-size:4; -webkit-tab-size:4; tab-size:4;"><div class="crayon-line" id="crayon-555d7524e7d31376003985-1"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-t">value</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// value is assigned 4 bytes from the stack</span></div><div class="crayon-line crayon-striped-line" id="crayon-555d7524e7d31376003985-2"><span class="crayon-t">int</span><span class="crayon-h"> </span><span class="crayon-t">array</span><span class="crayon-sy">[</span><span class="crayon-cn">10</span><span class="crayon-sy">]</span><span class="crayon-sy">;</span><span class="crayon-h"> </span><span class="crayon-c">// array is assigned 40 bytes from the stack</span></div></div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+<!-- [Format Time: 0.0006 seconds] -->
+<p></p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-69989">
+		<div id="div-comment-69989" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/19c72679b8a311e15f1b9de3650f4280?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/19c72679b8a311e15f1b9de3650f4280?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Shai</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-69989">
+		October 9, 2009 at 1:42 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=69989#respond' onclick='return addComment.moveForm( "comment-69989", "69989", "respond", "120" )' aria-label='Reply to Shai'> &middot; Reply</a></span>		 
+		</div>
+		<p>Great post, but there was something I noticed in this part of the text:</p>
+<p>&#8221;<br />
+The heap has advantages and disadvantages:<br />
+1) Allocated memory stays allocated until it is specifically deallocated (beware memory leaks).<br />
+2) Dynamically allocated memory must be accessed through a pointer.<br />
+3) Because the heap is a big pool of memory, large arrays, structures, or classes should be allocated here.<br />
+&#8221;</p>
+<p>The 3rd part isn&#8217;t really a disadvantage or an advantage, just an attribute.<br />
+If you want it to be an advantage you need to change the phrasing to</p>
+<p>&#8220;Because the heap is a big pool of memory, large arrays, structures, or classes COULD be allocated THERE.</p>
+<p>That sounds more like an advantage.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-90377">
+		<div id="div-comment-90377" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/bd0670a2e95ece0462a271cad94fc0bc?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/bd0670a2e95ece0462a271cad94fc0bc?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Piyush</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-90377">
+		August 15, 2010 at 11:24 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=90377#respond' onclick='return addComment.moveForm( "comment-90377", "90377", "respond", "120" )' aria-label='Reply to Piyush'> &middot; Reply</a></span>		 
+		</div>
+		<p>Why can&#8217;t we make stack as long as heap, if size becomes an issue in case of stacks?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-91060">
+		<div id="div-comment-91060" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/07919e64cf6715d571b01c5e58808c2c?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/07919e64cf6715d571b01c5e58808c2c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">dospy</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-91060">
+		August 29, 2010 at 12:20 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=91060#respond' onclick='return addComment.moveForm( "comment-91060", "91060", "respond", "120" )' aria-label='Reply to dospy'> &middot; Reply</a></span>		 
+		</div>
+		<p>my stack capacity is 258500 ? ( i am on windows, 2gb ram, i dono if it matters anyways )<br />
+code:</p>
+<p>#include &gt;iostream&lt;  //this looks funny, but the forum wont let me use &quot;&#8221;</p>
+<p>#define STACK_CAPACITY 258500</p>
+<p>struct MyStruct<br />
+{<br />
+	int nArray[STACK_CAPACITY];<br />
+};<br />
+int main()<br />
+{<br />
+	MyStruct anStruct;</p>
+<p>	char nChar;<br />
+	cin.get(nChar);</p>
+<p>	return 0;<br />
+}</p>
+<p>i have changed the value of STACK_CAPACITY until it reaches the limit,<br />
+when i reached 258500, the program crashed when delcaring nChar</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-91636">
+		<div id="div-comment-91636" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/ff9f13e048ce8aa148ba72be526946db?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/ff9f13e048ce8aa148ba72be526946db?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ashwani</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-91636">
+		September 8, 2010 at 12:34 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=91636#respond' onclick='return addComment.moveForm( "comment-91636", "91636", "respond", "120" )' aria-label='Reply to ashwani'> &middot; Reply</a></span>		 
+		</div>
+		<p>why in stack first out &amp; last in takes place?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-93722">
+		<div id="div-comment-93722" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/cbd2994070ffe6b3ed0fa48ca07497c8?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/cbd2994070ffe6b3ed0fa48ca07497c8?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Jeff</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-93722">
+		October 14, 2010 at 8:00 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=93722#respond' onclick='return addComment.moveForm( "comment-93722", "93722", "respond", "120" )' aria-label='Reply to Jeff'> &middot; Reply</a></span>		 
+		</div>
+		<p>The parameters that are stacked are those of the calling function, not the called function. That way the return from the called function returns the state of the calling function. These are stacked prior to stacking the return address and value.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-95128">
+		<div id="div-comment-95128" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/55eddb03eeaf352cd86f04eaafe12131?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/55eddb03eeaf352cd86f04eaafe12131?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">SWEngineer</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-95128">
+		January 24, 2011 at 1:56 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=95128#respond' onclick='return addComment.moveForm( "comment-95128", "95128", "respond", "120" )' aria-label='Reply to SWEngineer'> &middot; Reply</a></span>		 
+		</div>
+		<p>When mentioned the following:</p>
+<p>&#8230;anybody who takes a plate from the stack will take the plate you just pushed on &#8220;first&#8221;.</p>
+<p>Shouldn&#8217;t &#8220;first&#8221; here be &#8220;last&#8221;?</p>
+<p>Thanks.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-95129">
+		<div id="div-comment-95129" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/55eddb03eeaf352cd86f04eaafe12131?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/55eddb03eeaf352cd86f04eaafe12131?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">SWEngineer</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-95129">
+		January 24, 2011 at 2:24 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=95129#respond' onclick='return addComment.moveForm( "comment-95129", "95129", "respond", "120" )' aria-label='Reply to SWEngineer'> &middot; Reply</a></span>		 
+		</div>
+		<p>Simple well explained tutorial.</p>
+<p>Thanks.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-95149">
+		<div id="div-comment-95149" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/d06a1350c60a2e762779e8c20d787176?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/d06a1350c60a2e762779e8c20d787176?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">ratep90</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-95149">
+		February 2, 2011 at 8:19 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=95149#respond' onclick='return addComment.moveForm( "comment-95149", "95149", "respond", "120" )' aria-label='Reply to ratep90'> &middot; Reply</a></span>		 
+		</div>
+		<p>Does this mean main() local variables are also on stack?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-96389">
+		<div id="div-comment-96389" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f57d7e2c4f2a652c20d987d2ddbf4d5f?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f57d7e2c4f2a652c20d987d2ddbf4d5f?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">cyberlynxs</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-96389">
+		November 15, 2011 at 11:48 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=96389#respond' onclick='return addComment.moveForm( "comment-96389", "96389", "respond", "120" )' aria-label='Reply to cyberlynxs'> &middot; Reply</a></span>		 
+		</div>
+		<p>nice explanation</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-96393">
+		<div id="div-comment-96393" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/ce544098ade6c9ec8119e073312c351e?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/ce544098ade6c9ec8119e073312c351e?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">shorawitz</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-96393">
+		November 16, 2011 at 7:23 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=96393#respond' onclick='return addComment.moveForm( "comment-96393", "96393", "respond", "120" )' aria-label='Reply to shorawitz'> &middot; Reply</a></span>		 
+		</div>
+		<p>I&#8217;m surprised this hasn&#8217;t been asked yet, but being a relative noob&#8230; I&#8217;m wondering what would be considered &#8221; large arrays, structures, or classes&#8221;?  What would a reasonable threshold be?</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-96593">
+		<div id="div-comment-96593" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/f60876d43056f0765bcfac205a077219?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/f60876d43056f0765bcfac205a077219?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Megan</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-96593">
+		December 9, 2011 at 11:12 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=96593#respond' onclick='return addComment.moveForm( "comment-96593", "96593", "respond", "120" )' aria-label='Reply to Megan'> &middot; Reply</a></span>		 
+		</div>
+		<p>All of these tutorials are excellent - and this one in particular!  I can&#8217;t tell you how many sites I&#8217;ve looked at to figure out the difference between the stack/heap and how the stack works, but this makes it so clear!</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-96737">
+		<div id="div-comment-96737" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/466eb2c6776e583b4772d87939a98024?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/466eb2c6776e583b4772d87939a98024?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">donbright</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-96737">
+		December 23, 2011 at 5:08 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=96737#respond' onclick='return addComment.moveForm( "comment-96737", "96737", "respond", "120" )' aria-label='Reply to donbright'> &middot; Reply</a></span>		 
+		</div>
+		<p>awesome article!</p>
+<p>the stack size is set on unix with the &#8216;ulimit&#8217; command, which often uses &#8216;getrlimit&#8217; &amp; other functions internally. </p>
+<p>see also http://rtomaszewski.blogspot.com/2011/04/what-does-my-bash-ulimit-function-use.html</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-98205">
+		<div id="div-comment-98205" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/75aeaea59178a778b256c7435a652fd5?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/75aeaea59178a778b256c7435a652fd5?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">junker</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-98205">
+		February 27, 2013 at 9:15 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=98205#respond' onclick='return addComment.moveForm( "comment-98205", "98205", "respond", "120" )' aria-label='Reply to junker'> &middot; Reply</a></span>		 
+		</div>
+		<p>&#8220;Local variables are pushed onto the stack as they are defined.&#8221;</p>
+<p>Defined, or declared? Other things I read say declared.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-98296">
+		<div id="div-comment-98296" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/9fee890fff0bed51ae3a0e909f0cea2d?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/9fee890fff0bed51ae3a0e909f0cea2d?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://ezo-log.xaa.pl/' rel='external nofollow' class='url'>Ezo</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-98296">
+		April 2, 2013 at 6:34 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=98296#respond' onclick='return addComment.moveForm( "comment-98296", "98296", "respond", "120" )' aria-label='Reply to Ezo'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi. You can add another advantage of stack - it&#8217;s fast. Stack will be cached primarily so it&#8217;s faster than other memory places.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-239332">
+		<div id="div-comment-239332" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c8496c09464f85147b81152926d3d039?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c8496c09464f85147b81152926d3d039?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">bassel</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-239332">
+		December 13, 2014 at 7:39 pm</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=239332#respond' onclick='return addComment.moveForm( "comment-239332", "239332", "respond", "120" )' aria-label='Reply to bassel'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex. great tutorial indeed.</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-251568">
+		<div id="div-comment-251568" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://1.gravatar.com/avatar/dfca50e786584292ec33e51c61d4c01c?s=65&#038;d=mm&#038;r=g' srcset='http://1.gravatar.com/avatar/dfca50e786584292ec33e51c61d4c01c?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Samir</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-251568">
+		February 19, 2015 at 4:34 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=251568#respond' onclick='return addComment.moveForm( "comment-251568", "251568", "respond", "120" )' aria-label='Reply to Samir'> &middot; Reply</a></span>		 
+		</div>
+		<p>Hi Alex,<br />
+Thank you much for such insightful tutorial which is a very good point to start C++ I think.</p>
+<p>I have a question regarding accessing local variables and arguments. From your explanation it looks like we can only access content of the stack based on LIFO mechanism. That means that only last value can be accessed without destroying values on the heap. To access other values on the heap we need to destroy other variables above them.<br />
+However since we can access local variables in any order and even change their values without affecting each other I assume there should be mechanism in addition to LIFO that allow working with local variables.<br />
+I would say LIFO is used for creating function call related staff including local variables and other mechanism is used for working with them.</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-252074">
+		<div id="div-comment-252074" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">machello</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-252074">
+		April 5, 2015 at 11:26 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=252074#respond' onclick='return addComment.moveForm( "comment-252074", "252074", "respond", "120" )' aria-label='Reply to machello'> &middot; Reply</a></span>		 
+		</div>
+		<p>Each function call creates new activation record or stack frame. The stack frame contains number of local variables, parameters and the return address that the called function needs in order to return to the calling function. After the stack frame is popped, all variables in the stack frame are destroyed. Rigorously speaking, they are not destroyed. The stack pointer points to the new highest active stack frame. The destroyed stack is marked as garbage.</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1 clearfix" id="comment-251751">
+		<div id="div-comment-251751" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://2.gravatar.com/avatar/87d25f970c178de6ce27ebf1d1001904?s=65&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/87d25f970c178de6ce27ebf1d1001904?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">Janez</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-251751">
+		March 8, 2015 at 8:33 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=251751#respond' onclick='return addComment.moveForm( "comment-251751", "251751", "respond", "120" )' aria-label='Reply to Janez'> &middot; Reply</a></span>		 
+		</div>
+		<p>I think there is a mistake:<br />
+&quot;2. Room is made on the stack for the function’s return &lt;em&gt;type&lt;/em&gt;. This is just a placeholder for now.&quot;</p>
+<p>Shouldn&#8217;t it be value?</p>
+<p>I have one more question. How does the CPU knows where is the placeholder for the return value? (This question is actually pretty similar as Samir&#8217;s)</p>
+		</div>
+<ul class="children">
+		<li class="comment even depth-2 clearfix" id="comment-252075">
+		<div id="div-comment-252075" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/6ff20ff721df080a003f5113a5059de3?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">machello</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-252075">
+		April 5, 2015 at 11:36 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=252075#respond' onclick='return addComment.moveForm( "comment-252075", "252075", "respond", "120" )' aria-label='Reply to machello'> &middot; Reply</a></span>		 
+		</div>
+		<p>Stack frame makes room for the return address that the called function needs in order to return to the calling function. Return specific value is really in no use (for the e.g. recursive function call mechanism).</p>
+		</div>
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1 clearfix" id="comment-252214">
+		<div id="div-comment-252214" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/c527e56974d6108c084d9234f8f53265?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/c527e56974d6108c084d9234f8f53265?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname">charlie Vertech</span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-252214">
+		April 22, 2015 at 4:51 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=252214#respond' onclick='return addComment.moveForm( "comment-252214", "252214", "respond", "120" )' aria-label='Reply to charlie Vertech'> &middot; Reply</a></span>		 
+		</div>
+		<p>Problem using large array.<br />
+Get the &quot;XXX.exe has stopped working error.&nbsp;&nbsp;<br />
+Very simple C++ program with a large string array.<br />
+Program works well for a few cycles.</p>
+<p>Suspect that large array is the problem but cannot seem to implement to heap as outlined.<br />
+Using Code::Blocks, W7OS, gnuC++ compiler.</p>
+<p>Any thoughts? An example with my array name &quot;deck&quot; might be helpful.</p>
+<p>Charlie</p>
+		</div>
+</li><!-- #comment-## -->
+		<li class="comment even thread-even depth-1 clearfix" id="comment-252466">
+		<div id="div-comment-252466" class="clearfix comment-container">
+		<div class="comment-author vcard">
+		<img alt='' src='http://0.gravatar.com/avatar/365cb63b80c5b811fced2340e8951cfc?s=65&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/365cb63b80c5b811fced2340e8951cfc?s=130&amp;d=mm&amp;r=g 2x' class='avatar avatar-65 photo' height='65' width='65' />		<span class="authorname"><a href='http://any' rel='external nofollow' class='url'>PAWAN</a></span>
+		</div>
+				<div class="comment-meta commentmetadata">
+		<a href="http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/#comment-252466">
+		May 14, 2015 at 10:51 am</a>
+        <span class="comment-reply-link"><a class='comment-reply-link' href='/cpp-tutorial/79-the-stack-and-the-heap/?replytocom=252466#respond' onclick='return addComment.moveForm( "comment-252466", "252466", "respond", "120" )' aria-label='Reply to PAWAN'> &middot; Reply</a></span>		 
+		</div>
+		<p>How to allocate memory dynamically for<br />
+Struct SAMPLE {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int *ids;<br />
+};</p>
+<p>After allocating memory dynamically<br />
+I want the above structure should become like<br />
+Struct SAMPLE {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int count;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int ids[10];<br />
+};</p>
+<p>How to allocate memory dynamically to obtain structure like this</p>
+		</div>
+</li><!-- #comment-## -->
+	
+	</ul>
+	<!-- / Comment List -->
+
+	
+
+
+
+						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="/cpp-tutorial/79-the-stack-and-the-heap/#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://www.learncpp.com/blog/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p><input class="text author" id="author" name="author" type="text" value="" size="30" tabindex="1" />&nbsp;&nbsp;<label for="author"><strong>Name </strong> (required)</label></p>
+<p><input class="text email" id="email" name="email" type="text" value="" size="30"  tabindex="2" />&nbsp;&nbsp;<label for="email"><strong>Email</strong> (will not be published) (required)</label></p>
+<p><input class="text url" id="url" name="url" type="text" value="" size="30"  tabindex="3" />&nbsp;&nbsp;<label for="url">Website</label></p>
+<p class="aiowps-captcha"><label>Please enter an answer in digits:</label><div class="aiowps-captcha-equation"><strong>four &#43; eighteen = <input type="hidden" name="aiowps-captcha-string-info" id="aiowps-captcha-string-info" value="MTQzMjE4ODE5N3R5bTdtZjVxZ3o3ZGJwYWozMW04MjI=" /><input type="hidden" name="aiowps-captcha-temp-string" id="aiowps-captcha-temp-string" value="1432188197" /><input type="text" size="2" length="2" id="aiowps-captcha-answer" name="aiowps-captcha-answer" value="" /></strong></div></p>												<p><textarea name="comment" id="comment" rows="10" cols="10" tabindex="4"></textarea></p>						<div class="useCode">Put C++ code inside [code][/code] tags to use the syntax highlighter</div>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='120' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b7a0af32cd" /></p>		<p class="antispam-group antispam-group-q" style="clear: both;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input type="hidden" name="antspm-a" class="antispam-control antispam-control-a" value="2015" />
+			<input type="text" name="antspm-q" class="antispam-control antispam-control-q" value="3.5" />
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input type="text" name="antspm-e-email-url-website" class="antispam-control antispam-control-e" value="" />
+		</p>
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="7"/></p>					</form>
+							</div><!-- #respond -->
+			<div class='code-block code-block-7' style='margin:8px 0px;'><div class="cf_monitor">
+<div id="Content Below Comment">
+    <script type="text/javascript">
+    var width = 0;
+    if (document.getElementById('middle'))
+        width = document.getElementById('middle').clientWidth;
+    else
+        width = document.innerWidth;
+
+    if (width >= 768)
+    {
+        try {
+            window._mNHandle.queue.push(function () {
+		        window._mNDetails.loadTag("Content Below Comment", "728x90", "287758258");
+		        });
+		    }
+        catch (error) {}
+    }
+	</script>
+</div>
+</div></div>		
+    
+
+</td>
+<!-- / Main Column -->
+
+<!-- Right Inner Sidebar -->
+
+<!-- Right Sidebar -->
+<td id="right">
+
+	<div id="text-7" class="widget widget_text">			<div class="textwidget"><div class="cf_monitor">
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript">
+    google_ad_client = "ca-pub-0588844875925051";
+    google_ad_slot = "0955932809";
+    google_ad_width = 160;
+    google_ad_height = 600;
+</script>
+<!-- Post - Right Sidebar - Wide Sky -->
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div></div>
+		</div>
+</td>
+<!-- / Right Sidebar -->
+
+</tr>
+<!-- / Main Body -->
+
+
+</table><!-- / layout -->
+</div><!-- / container -->
+</div><!-- / wrapper -->
+		<!-- Full Width Footer -->
+		<div id="footer" class="full-width">
+    LearnCpp.com -- Teaching you how to program in C++ since May 25, 2007.&nbsp;&nbsp;Copyright &copy; 2015 <a href="http://www.learncpp.com/">Learn C++</a> - All Rights Reserved<br />Powered by <a href="http://wordpress.org/">WordPress</a> &amp; <a href="http://forum.bytesforall.com/">Atahualpa</a>    
+    
+    
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"http:\/\/www.learncpp.com\/cpp-tutorial\/79-the-stack-and-the-heap\/":120};
+		window.WPCOM_jetpack = true;
+				window.WPCOM_site_ID = 3928254;
+			</script>
+	<div id="sharing_email" style="display: none;">
+		<form action="/cpp-tutorial/79-the-stack-and-the-heap/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" />
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+			
+			<img style="float: right; display: none" class="loading" src="http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Send Email" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div>
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-google-plus-1' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomgoogle-plus-1', 'menubar=1,resizable=1,width=480,height=550' );
+				return false;
+			});
+		});
+		</script>
+							<script type="text/javascript">
+			jQuery(document).on('ready', function(){
+				jQuery('body').on('click', 'a.share-pinterest', function(e){
+					e.preventDefault();
+
+					// Load Pinterest Bookmarklet code
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = window.location.protocol + "//assets.pinterest.com/js/pinmarklet.js?r=" + ( Math.random() * 99999999 );
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+
+					// Trigger Stats
+					var s = document.createElement("script");
+					s.type = "text/javascript";
+					s.src = this + ( this.toString().indexOf( '?' ) ? '&' : '?' ) + 'js_only=1';
+					var x = document.getElementsByTagName("script")[0];
+					x.parentNode.insertBefore(s, x);
+				});
+			});
+			</script>
+		<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/akismet/_inc/form.js?ver=3.1.1'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-includes/js/comment-reply.min.js?ver=4.2.2'></script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/anti-spam/js/anti-spam-3.5.js'></script>
+<script type='text/javascript' src='http://s0.wp.com/wp-content/js/devicepx-jetpack.js?ver=201521'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.learncpp.com/blog/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js?ver=3.5.3'></script>
+<script type='text/javascript' src='http://stats.wp.com/e-201521.js' async defer></script>
+<script type='text/javascript'>
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:3.5.3',blog:'3928254',post:'120',tz:'-8',srv:'www.learncpp.com'} ]);
+	_stq.push([ 'clickTrackerInit', '3928254', '120' ]);
+</script>
+		</div>
+		<!-- / Full Width Footer -->
+
+</body>
+</html>
+<!-- Dynamic page generated in 0.798 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-05-20 22:03:17 -->
+
+<!-- Compression = gzip -->
+<!-- super cache -->
+

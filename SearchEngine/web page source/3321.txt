@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Reading records from a MySQL database</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">MySQL databases - read a record with PHP</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<P>To read records from a database, the technique is usually to loop round and 
+  find the ones you want. To specify which records you want, you use something 
+  called SQL. This stands for Structured Query Language. This is a natural, non-coding 
+  language that uses words like SELECT and WHERE. At it's simplest level, it's 
+  fairly straightforward. But the more complex the database, the more trickier 
+  the SQL is. We'll start with something simple though.</P>
+<p>What we want to do, now that we have a connection to our database, is to read 
+  all the records, and print them out to the page. Here's some new code, added 
+  to <a href="php13p1.html">the PHP script you already have</a>. The new lines 
+  are in blue:</p>
+<p class="TextIndent2">&lt;?PHP</p>
+<p class="indent_small">$user_name = &quot;root&quot;;<br>
+  $password = &quot;&quot;;<br>
+  $database = &quot;addressbook&quot;;<br>
+  $server = &quot;127.0.0.1&quot;;</p>
+<p class="indent_small">$db_handle = mysql_connect($server, $user_name, $password);<br>
+  $db_found = mysql_select_db($database, $db_handle);</p>
+<p class="indent_small">if ($db_found) {</p>
+<p class="indent_big_blue">$SQL = &quot;SELECT * FROM tb_address_book&quot;;<br>
+  $result = mysql_query($SQL);</p>
+<p class="indent_big_blue">while ( $db_field = mysql_fetch_assoc($result) ) {</p>
+<p class="indent_bigger_blue">print $db_field['ID'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['First_Name'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Surname'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Address'] . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_big_blue">}</p>
+<p class="indent_big">mysql_close($db_handle);</p>
+<p class="indent_small">}<br>
+  else {</p>
+<p class="indent_big">print &quot;Database NOT Found &quot;;<br>
+  mysql_close($db_handle);</p>
+<p class="indent_small">}</p>
+<p class="TextIndent2">?&gt;</p>
+<p>Before we go through the new code to see what's happening, run your script. 
+  You should find that the address you added in <a href="php12p4.html">a previous 
+  section</a> is printed out. (We only have one record at the moment.)</p>
+<p class="indent_big">1<br>
+  Test<br>
+  Name<br>
+  12 Test Street</p>
+<p>The first line in the new code is this:</p>
+<p class="indent_big">$SQL = &quot;SELECT * FROM tb_address_book&quot;;</p>
+<p>The $SQL is just a normal variable. But we're putting into it a long string. 
+  This is a SQL statement. Here's a brief run down on SQL.</p>
+<p>&nbsp;</p>
+<h3>Structured Query Language</h3>
+<p>SQL (pronounced SEEKwel), is a way to query and manipulate databases. The basics 
+  are quite easy to learn. If you want to grab all of the records from a table 
+  in a database, you use the <b>SELECT</b> word. Like this:</p>
+<p class="TextIndent3">SELECT * FROM Table_Name</p>
+<p>SQL is not case sensitive, so the above line could be written:</p>
+<p class="TextIndent3">Select * From Table_Name</p>
+<p>But your SQL statements are easier to read if you type the keywords in uppercase 
+  letters. The keywords in the lines above are <b>SELECT</b> and <b>FROM</b>. 
+  The asterisk (*) means &quot;All Records&quot;. <b>Table_Name</b> is the name 
+  of a table in your database. So the whole line reads:</p>
+<p class="TextIndent3">&quot;SELECT all the records FROM the table called Table_Name&quot;</p>
+<p>You don&#146;t have to select all the records from your database. You can just 
+  select the columns that you need. For example, if we wanted to select just the 
+  first name and surname columns from this table, we can specify that in our SQL 
+  String:</p>
+<p class="TextIndent3">&quot;SELECT First_Name, Surname FROM tb_address_book&quot;;</p>
+<p>When this SQL statement is executed, only the <b>First_Name</b> and <b>Surname</b> 
+  columns from the database will be returned.</p>
+<p>There are a lot more SQL commands to get used to, and you'll meet more of them 
+  as you go along. For now, we're just selecting all the records from our table.</p>
+<p>&nbsp;</p>
+<h4>Back to the Code</h4>
+<p>The first line of our code, then, was this:</p>
+<p class="TextIndent3">$SQL = &quot;SELECT * FROM tb_address_book&quot;;</p>
+<p>SO we have a SQL statement, but we need to pass it to another inbuilt function: 
+</p>
+<p class="TextIndent3">mysql_query( )</p>
+<p>The <b>mysql_query</b>( ) function is used to send a SQL query to your database. 
+  If you have typed out your SQL correctly, then the function will return a value. 
+  This value will be true, false, or a file handle. Because we're using the <b>SELECT</b> 
+  keyword, the value returned by will be a file handle. In our code, the line 
+  was this:</p>
+<p class="indent_big_no_bold">$result = <b>mysql_query(</b> $SQL <b>)</b>;</p>
+<p>The file handle returned in our <b>$result</b> variable just points to the 
+  results. It doesn't actually bring anything back. To bring back the data, we 
+  had this inside a while loop:</p>
+<p class="indent_big_no_bold">$db_field = <b>mysql_fetch_assoc(</b> $result <b>)</b>;</p>
+<p>The inbuilt function we're using to bring results back is this:</p>
+<p class="indent_big_no_bold"><b>mysql_fetch_assoc(</b> $result <b>)</b></p>
+<p>The <b>assoc</b> part means Associative. As in &quot;associative array&quot;. 
+  So we're asking that the results be brought back in an array format. In between 
+  the round brackets of <b>mysql_fetch_assoc</b> we have typed the name of our 
+  file handle &#150; the one that was pointing to the results of SQL statement.</p>
+<p>Remember: an associative array is one where the keys are text. So it's this 
+  format:</p>
+<p class="indent_bigger">Array['One'] = <br>
+  Array['Two'] =<br>
+  Array['Three]' =</p>
+<p>And not this:</p>
+<p class="indent_bigger">Array[1] = <br>
+  Array[2] =<br>
+  Array[3] =</p>
+<p>When the <b>mysql_fetch_assoc</b> function returns an array, we're putting 
+  it all into a variable called <b>$db_field</b>. The Key part of the array is 
+  all the Column names from our database tables. This is done automatically for 
+  you. So the array format will be this:</p>
+<p class="indent_big_no_bold"><b>$db_field[</b>Column_Name<b>]</b> = <b>Value</b></p>
+<p>The reason why you're doing this is so that you can loop round the array and 
+  access the values from the table. Here's our loop, without anything between 
+  the round brackets:</p>
+<p class="TextIndent1">while ( ) {</p>
+<p class="indent_big">print $db_field['ID'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['First_Name'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Surname'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Address'] . &quot;&lt;BR&gt;&quot;;</p>
+<p class="TextIndent1">}</p>
+<p>So we're printing whatever the value is in the array position <b>$db_field['</b>ID<b>'],</b> 
+  <b>$db_field['</b>First_Name<b>']</b>, <b>$db_field['</b>Surname<b>']</b> and 
+  <b>$db_field['</b>Address<b>']</b>. We're also adding a HTML line break at the 
+  end, just for printing purposes.</p>
+<p>If all that is confusing, just remember the format:</p>
+<p class="indent_big_no_bold"><b>Array_Name[</b>Table_Coulmn_Name<b>]</b> = <b>Value_From_Record</b></p>
+<p>Our whole while loop, then, is this:</p>
+<p class="TextIndent1">while ($db_field = mysql_fetch_assoc($result) ) {</p>
+<p class="indent_big">print $db_field['ID'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['First_Name'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Surname'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Address'] . &quot;&lt;BR&gt;&quot;;</p>
+<p class="TextIndent1">}</p>
+<p>Because that is a bit complex, let's go through the steps we've used to access 
+  the records from our table:</p>
+<OL>
+  <LI>Set up a SQL Statement that can be used to get the records from the database 
+    table</LI>
+  <LI>Use mysql_query() to bring back the records we've specified in Step 1</LI>
+  <LI>Use mysql_fetch_assoc() to set up an array. The array will contain all the 
+    records that were returned in Step 2</LI>
+  <LI>Loop round all the data in the array using a While loop</LI>
+</OL>
+<p>Step 1 was this, in the code: </p>
+<p class="TextIndent3">$SQL = &quot;SELECT * FROM tb_address_book&quot;;</p>
+<p>Step 2 was this:</p>
+<p class="TextIndent3">$result = mysql_query($SQL);</p>
+<p>Step 3 was this:</p>
+<p class="TextIndent3">$db_field = mysql_fetch_assoc($result)</p>
+<p>And Step 4 was this:</p>
+<p class="TextIndent1">while ($db_field = mysql_fetch_assoc($result) ) {</p>
+<p class="indent_big">print $db_field['ID'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['First_Name'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Surname'] . &quot;&lt;BR&gt;&quot;;<br>
+  print $db_field['Address'] . &quot;&lt;BR&gt;&quot;;</p>
+<p class="TextIndent1">}</p>
+<p>&nbsp;</p>
+<p>If you're still confused, study the code and go over this section. In the next 
+  section, we'll adapt the code to add more records to our database table.</p>
+</SECTION></ARTICLE></SECTION> <FOOTER> 
+<p align="right"><a href="php13p1.html">&lt;-- Back One Page</a> | <a href="php13p3.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

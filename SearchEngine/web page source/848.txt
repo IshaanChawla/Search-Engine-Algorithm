@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html itemscope itemtype="http://schema.org/QAPage">
+<head>
+
+<title>ssl - How to fix &#39;logjam&#39; vulnerability in Apache (httpd) - Server Fault</title>
+    <link rel="shortcut icon" href="//cdn.sstatic.net/serverfault/img/favicon.ico?v=b7dd95e61b8b">
+    <link rel="apple-touch-icon image_src" href="//cdn.sstatic.net/serverfault/img/apple-touch-icon.png?v=6c3100d858bb">
+    <link rel="search" type="application/opensearchdescription+xml" title="Server Fault" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@ServerFault" />
+    <meta name="twitter:domain" content="serverfault.com"/>
+    <meta property="og:type" content="website" />
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="http://cdn.sstatic.net/serverfault/img/apple-touch-icon@2.png?v=9b1f48ae296b&a" />
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="How to fix &#39;logjam&#39; vulnerability in Apache (httpd)" />
+    <meta name="twitter:description" property="og:description" itemprop="description" content="Recently, a new vulnerability in Diffie-Hellman, informally referred to as &#39;logjam&#39; has been published, for which this page has been put together suggesting how to counter the vulnerability:
+
+
+  We..." />
+    <meta property="og:url" content="http://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd"/>
+    <link rel="canonical" href="http://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd" />
+
+    
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//cdn.sstatic.net/Js/stub.en.js?v=ba7715597402"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.sstatic.net/serverfault/all.css?v=7ce7932fa9b0">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question &#39;How to fix &#39;logjam&#39; vulnerability in Apache (httpd)&#39;" href="/feeds/question/693241">
+            <meta name="twitter:app:country" content="US" />
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:iphone" content="871299723" />
+            <meta name="twitter:app:url:iphone" content="se-zaphod://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd" />
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS" />
+            <meta name="twitter:app:id:ipad" content="871299723" />
+            <meta name="twitter:app:url:ipad" content="se-zaphod://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd" />
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:4,shownCommentCount:4,highlightColor:'#F3F1D9',backgroundColor:'#FFF',questionId:693241});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('2', '693241');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text'); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.ready(function () {
+            StackExchange.realtime.init('wss://qa.sockets.stackexchange.com,ws://qa.sockets.stackexchange.com');
+            StackExchange.realtime.subscribeToReputationNotifications('2');
+                StackExchange.realtime.subscribeToTopBarNotifications('2');
+        });
+    </script>
+    <script>
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1432151028,"networkMetaHostname":"meta.stackexchange.com","routeName":"Questions/Show","styleCode":true,"enableUserHovercards":true,"snippets":{"enabled":false,"domain":"stacksnippets.net"},"site":{"name":"Server Fault","description":"Q&A for system and network administrators","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LcDNwYAAAAAAG_X1rC8kTtLBP6XS2Ym1N0n9kSY","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"enableSocialMediaInSharePopup":true},"user":{"fkey":"38bada1d97ddfff353cb69a5eae3a2a3","isAnonymous":true}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"567198e2272a","js/moderator.en.js":"fc7ac8a4ab67","js/full-anon.en.js":"7a74a601b05b","js/full.en.js":"ecd5383237ff","js/wmd.en.js":"539d33051ace","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"5faaefde3284","js/help.en.js":"1f82ef88ce5b","js/tageditor.en.js":"9c54855bf167","js/tageditornew.en.js":"51c70ea25031","js/inline-tag-editing.en.js":"de80429b1816","js/revisions.en.js":"e12fec389eab","js/review.en.js":"d8130056b47f","js/tagsuggestions.en.js":"b278f9a0b23b","js/post-validation.en.js":"0601c2b1380b","js/explore-qlist.en.js":"b5ce0a2a9966","js/events.en.js":"80f349f8b9fd","js/keyboard-shortcuts.en.js":"1a19511f380b","js/external-editor.en.js":"e058d904366f"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+    
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+    
+    
+</head>
+<body class="question-page new-topbar">
+    <noscript><div id="noscript-padding"></div></noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+
+
+
+
+<div class="topbar">
+    <div class="topbar-wrapper">
+
+        <div class="js-topbar-dialog-corral">
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="//serverfault.com">current community</a></h3>
+    </div>
+    <div class="modal-content current-site-container">
+        <ul class="current-site">
+                <li>
+                        <div class="related-links">
+            <a href="http://chat.stackexchange.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:6 })"
+>chat</a>
+                    <a href="http://blog.serverfault.com" class="js-gps-track"     data-gps-track="site_switcher.click({ item_type:7 })"
+>blog</a>
+            </div>
+
+
+
+
+    <a href="//serverfault.com"
+       class="current-site-link site-link js-gps-track"
+       data-id="2"
+       data-gps-track="
+        site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-serverfault" title="Server Fault"></div>
+        Server Fault
+    </a>
+
+                </li>
+                <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    
+
+
+
+    <a href="http://meta.serverfault.com"
+       class="site-link js-gps-track"
+       data-id="78"
+       data-gps-track="
+            site.switch({ target_site:78, item_type:3 }),
+        site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-serverfaultmeta" title="Meta Server Fault"></div>
+        Meta Server Fault
+    </a>
+
+                </li>
+                            <li class="related-site">
+                        <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                    <a class="site-link js-gps-track"
+                       href="//careers.stackoverflow.com?utm_source=serverfault.com&amp;utm_medium=site-ui&amp;utm_campaign=multicollider"
+                            data-gps-track="site_switcher.click({ item_type:9 })"
+>
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Stack Overflow Careers
+                    </a>
+                </li>
+        </ul>
+    </div>
+    
+    <div class="header" id="your-communities-header">
+        <h3>
+your communities        </h3>
+            
+    </div>
+    <div class="modal-content" id="your-communities-section">
+            
+            <div class="call-to-login">
+<a href="https://serverfault.com/users/signup?returnurl=http%3a%2f%2fserverfault.com%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:10 })"
+>Sign up</a> or <a href="https://serverfault.com/users/login?returnurl=http%3a%2f%2fserverfault.com%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd" class="login-link js-gps-track"     data-gps-track="site_switcher.click({ item_type:11 })"
+>log in</a> to customize your list.
+            </div>
+    </div>
+    
+    <div class="header">
+        <h3><a href="//stackexchange.com/sites">more stack exchange communities</a></h3>
+    </div>
+    <div class="modal-content">
+            <div class="child-content"></div>
+    </div>
+</div>
+        </div>
+
+        <div class="network-items">
+
+            <a href="//stackexchange.com"
+               class="topbar-icon icon-site-switcher yes-hover js-site-switcher-button js-gps-track"
+               data-gps-track="site_switcher.show"
+               title="A list of all 144 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+
+        </div>
+
+        <div class="topbar-links">
+
+                <div class="links-container">
+                <span class="topbar-menu-links">
+                                <a href="https://serverfault.com/users/signup?returnurl=http%3a%2f%2fserverfault.com%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd" class="login-link">sign up</a>
+                                <a href="https://serverfault.com/users/login?returnurl=http%3a%2f%2fserverfault.com%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd" class="login-link">log in</a>
+
+                        <a href="/tour">tour</a>
+                            <a href="#" class="icon-help js-help-button" title="Help Center and other resources">
+        help
+        <span class="triangle"></span>
+    </a>
+    <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="//meta.serverfault.com" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                            Meta
+                            <span class="item-summary">
+                                Discuss the workings and policies of this site
+                            </span>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+
+                    </span>
+                </div>
+
+            <div class="search-container">
+                <form id="search" action="/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="search" value="" tabindex="1" autocomplete="off" maxlength="240" />
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+    </script>
+
+    <div class="container">
+        <div id="header">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="/">
+                    Server Fault
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs">
+                    <ul>
+                        <li class="youarehere"><a id="nav-questions" href="/questions">Questions</a></li>
+                        <li><a id="nav-tags" href="/tags">Tags</a></li>
+                        <li><a id="nav-users" href="/users">Users</a></li>
+                        <li><a id="nav-badges" href="/help/badges">Badges</a></li>
+                        <li><a id="nav-unanswered" href="/unanswered">Unanswered</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion"  href="/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content">
+            
+
+<div itemscope itemtype="http://schema.org/Question">
+    <link itemprop="image" href="//cdn.sstatic.net/serverfault/img/apple-touch-icon.png?v=6c3100d858bb">
+			<!--googleoff: all-->
+
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+            <a href="/tour" id="tell-me-more" class="button">Take the 2-minute tour</a>
+            <span id="close"><a title="click to dismiss">&times;</a></span>
+        </span>
+        <div id="blurb">
+            Server Fault is a question and answer site for system and network administrators. It&#39;s 100% free, no registration required.
+        </div>        
+    </div>
+    <script>
+        $('#tell-me-more').click(function () {
+            var clickSource = $("body").attr("class") + '-mini';
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("question-page")) {
+                clickSource = 'questionpagemini';
+            } else if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+            }
+
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("aboutpage.click", { aboutclick_location: clickSource } , true);
+            });
+        });
+        $('#herobox-mini #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "close" }, true);
+            });
+            $.cookie("hero", "none", { path: "/", expires: 365 });
+            var $hero = $("#herobox-mini");
+            $hero.slideUp('fast', function () { $hero.remove(); });
+            return false;
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+                <h1 itemprop="name"><a href="/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd" class="question-hyperlink">How to fix &#39;logjam&#39; vulnerability in Apache (httpd)</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question" data-questionid="693241"  id="question">
+
+    <script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8278,"adzerk1849503391",4).setZone(49) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk1849503391">
+            </div>    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="693241">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">16</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#" title="This is a favorite question (click again to undo)">favorite</a>
+        <div class="favoritecount"><b>1</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>Recently, a new vulnerability in Diffie-Hellman, informally referred to as 'logjam' has been published, for which <a href="https://weakdh.org/sysadmin.html">this page</a> has been put together suggesting how to counter the vulnerability:</p>
+
+<blockquote>
+  <p>We have three recommendations for correctly deploying Diffie-Hellman
+  for TLS:</p>
+  
+  <ol>
+  <li><strong>Disable Export Cipher Suites.</strong> Even though modern browsers no longer
+  support export suites, the FREAK and Logjam attacks allow a
+  man-in-the-middle attacker to trick browsers into using export-grade
+  cryptography, after which the TLS connection can be decrypted. Export
+  ciphers are a remnant of 1990s-era policy that prevented strong
+  cryptographic protocols from being exported from United States. No
+  modern clients rely on export suites and there is little downside in
+  disabling them. </li>
+  <li><strong>Deploy (Ephemeral) Elliptic-Curve Diffie-Hellman
+  (ECDHE).</strong> Elliptic-Curve Diffie-Hellman (ECDH) key exchange avoids all
+  known feasible cryptanalytic attacks, and modern web browsers now
+  prefer ECDHE over the original, finite field, Diffie-Hellman. The
+  discrete log algorithms we used to attack standard Diffie-Hellman
+  groups do not gain as strong of an advantage from precomputation, and
+  individual servers do not need to generate unique elliptic curves.</li>
+  <li><strong>Generate a Strong, Unique Diffie Hellman Group</strong>. A few fixed groups are
+  used by millions of servers, which makes them an optimal target for
+  precomputation, and potential eavesdropping. Administrators should
+  generate unique, 2048-bit or stronger Diffie-Hellman groups using
+  "safe" primes for each website or server.</li>
+  </ol>
+</blockquote>
+
+<p>What are the best-practice steps I should take to secure my server as per the above recommendations? </p>
+    </div>
+    <div class="post-taglist">
+        <a href="/questions/tagged/apache-2.2" class="post-tag" title="show questions tagged &#39;apache-2.2&#39;" rel="tag">apache-2.2</a> <a href="/questions/tagged/ssl" class="post-tag" title="show questions tagged &#39;ssl&#39;" rel="tag">ssl</a> <a href="/questions/tagged/apache-2.4" class="post-tag" title="show questions tagged &#39;apache-2.4&#39;" rel="tag">apache-2.4</a> <a href="/questions/tagged/httpd" class="post-tag" title="show questions tagged &#39;httpd&#39;" rel="tag">httpd</a> <a href="/questions/tagged/vulnerability" class="post-tag" title="show questions tagged &#39;vulnerability&#39;" rel="tag">vulnerability</a> 
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/q/693241" title="short permalink to this question" class="short-link" id="link-post-693241">share</a><span class="lsep">|</span><a href="/posts/693241/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info user-hover">
+    <div class="user-action-time">
+        <a href="/posts/693241/revisions" title="show all edits to this post">edited <span title="2015-05-20 11:44:34Z" class="relativetime">7 hours ago</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/256877/be77y"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/4b78a914367c7fe93e90cc0ced005325?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/256877/be77y">BE77Y</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,102</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="19 bronze badges"><span class="badge3"></span><span class="badgecount">19</span></span>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2015-05-20 09:34:33Z" class="relativetime">10 hours ago</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/187011/christophe-de-troyer"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/7f0251000ccaade065dde90c38e9525e?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/187011/christophe-de-troyer">Christophe De Troyer</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">183</span><span title="7 bronze badges"><span class="badge3"></span><span class="badgecount">7</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-693241" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="0"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-855086" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Please try to enter the relevant information into the question. As it is, if the targets of the links were to disappear, the entire question will be incomprehensible and useless.</span>
+                &ndash;&nbsp;
+                    <a href="/users/120438/jenny-d"
+                       title="14635 reputation"
+                       class="comment-user">Jenny D</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 09:54:34Z" class="relativetime-clean">9 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855088" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Valid point,  I will do that asap!</span>
+                &ndash;&nbsp;
+                    <a href="/users/187011/christophe-de-troyer"
+                       title="183 reputation"
+                       class="comment-user owner">Christophe De Troyer</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 09:58:30Z" class="relativetime-clean">9 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855130" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">And my downvote is now converted to an upvote. Thanks for making the effort!</span>
+                &ndash;&nbsp;
+                    <a href="/users/120438/jenny-d"
+                       title="14635 reputation"
+                       class="comment-user">Jenny D</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 11:44:18Z" class="relativetime-clean">7 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855136" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">All credit goes to BE77Y!</span>
+                &ndash;&nbsp;
+                    <a href="/users/187011/christophe-de-troyer"
+                       title="183 reputation"
+                       class="comment-user owner">Christophe De Troyer</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 11:56:52Z" class="relativetime-clean">7 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-693241" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link disabled-link "
+                   title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments."
+                   >add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href=# onclick=""></a>
+        </div>         
+    </td>
+</tr>        </table>
+</div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								1 Answer
+                                <span style="display:none;" itemprop="answerCount">1</span>
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+        <a href="/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+        <a class="youarehere" href="/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+
+
+  
+<a name="693244"></a>
+<div id="answer-693244" class="answer accepted-answer" data-answerid="693244"  itemscope itemtype="http://schema.org/Answer" itemprop="acceptedAnswer">
+
+    <table>
+        <tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input type="hidden" name="_id_" value="693244">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">19</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>From the <a href="https://weakdh.org/sysadmin.html">article you linked</a>, there are three recommended steps to protect yourself against this vulnerability.</p>
+
+<blockquote>
+  <ol>
+  <li><strong>Disable Export Cipher Suites</strong></li>
+  </ol>
+</blockquote>
+
+<p>Dealt with in the configuration changes we'll make in 2. below (<code>!EXPORT</code> near the end of the <code>SSLCipherSuite</code> line is how we'll disable export cipher suites)</p>
+
+<blockquote>
+  <ol start="2">
+  <li><strong>Deploy (Ephemeral) Elliptic-Curve Diffie-Hellman (ECDHE)</strong></li>
+  </ol>
+</blockquote>
+
+<p>For this, you need to edit a few settings in your Apache config files - namely <code>SSLProtocol</code>, <code>SSLCipherSuite</code>, <code>SSLHonorCipherOrder</code> to have a "best-practices" setup. Something like the following will suffice:</p>
+
+<pre><code>SSLProtocol             all -SSLv2 -SSLv3
+
+SSLCipherSuite          ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA
+
+SSLHonorCipherOrder     on
+</code></pre>
+
+<p>Note: as for which <code>SSLCipherSuite</code> setting to use, this is always changing, and it is a good idea to consult resources such as <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Recommended_configurations">this one</a> to check for the latest recommended configuration.</p>
+
+<blockquote>
+  <p><strong>3. Generate a Strong, Unique Diffie Hellman Group</strong></p>
+</blockquote>
+
+<p>To do so, you can run</p>
+
+<p><code>openssl dhparam -out dhparams.pem 2048</code>.</p>
+
+<p>Note that this will put significant load on the server whilst the params are generated - you can always get around this potential issue by generating the params on another machine and using <code>scp</code> or similar to transfer them onto the server in question for use. </p>
+
+<p>To use these newly-generated <code>dhparams</code> in Apache, from the <a href="https://httpd.apache.org/docs/current/ssl/ssl_faq.html">Apache Documentation</a>:</p>
+
+<blockquote>
+  <p>To generate custom DH parameters, use the openssl dhparam command.
+  Alternatively, you can <strong>append the following</strong> standard 1024-bit DH
+  parameters from RFC 2409, section 6.2 <strong>to the respective
+  SSLCertificateFile file</strong>: </p>
+</blockquote>
+
+<p>(emphasis mine)</p>
+
+<p>which is then followed by a standard 1024-bit DH parameter. From this we can infer that the custom-generated DH parameters may simply be appended to the relevant <code>SSLCertificateFile</code> in question.</p>
+
+<p>To do so, run something similar to the following: </p>
+
+<p><code>cat /path/to/custom/dhparam &gt;&gt; /path/to/sslcertfile</code></p>
+
+<p>Alternatively, as per the <a href="https://weakdh.org/sysadmin.html">Apache subsection</a> of the article you originally linked, you may also specify the custom dhparams file you have created if you prefer not to alter the certificate file itself, thusly: </p>
+
+<p><code>SSLOpenSSLConfCmd DHParameters "/path/to/dhparams.pem"</code></p>
+
+<p>in whichever Apache config(s) are relevant to your particular SSL/TLS implementation - generally in <code>conf.d/ssl.conf</code>or <code>conf.d/vhosts.conf</code> but this will differ depending on how you have configured Apache.</p>
+
+<p>It is worth noting that, as per <a href="https://wiki.mozilla.org/Security/Server_Side_TLS#Apache">this link</a>, </p>
+
+<blockquote>
+  <p>Before Apache 2.4.7, the DH parameter is always set to 1024 bits and
+  is not user configurable. This has been fixed in mod_ssl 2.4.7 that
+  Red Hat has backported into their RHEL 6 Apache 2.2 distribution with
+  httpd-2.2.15-32.el6</p>
+</blockquote>
+
+<p>You should check whether your Apache version is later than these version numbers depending on your distribution, and if not - update it if at all possible. </p>
+
+<p>Once you have performed the above steps to update your configuration, and restarted the Apache service to apply the changes, you should check that the configuration is as-desired by running the tests on <a href="https://www.ssllabs.com/ssltest/">SSLLabs</a> and on <a href="https://weakdh.org/sysadmin.html">the article</a> related to this particular vulnerability. </p>
+    </div>
+    <table class="fw">
+    <tr>
+    <td class="vt">
+<div class="post-menu"><a href="/a/693244" title="short permalink to this answer" class="short-link" id="link-post-693244">share</a><span class="lsep">|</span><a href="/posts/693244/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="/posts/693244/revisions" title="show all edits to this post">edited <span title="2015-05-20 13:01:22Z" class="relativetime">6 hours ago</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2015-05-20 09:50:16Z" class="relativetime">9 hours ago</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="/users/256877/be77y"><div class="gravatar-wrapper-32"><img src="https://www.gravatar.com/avatar/4b78a914367c7fe93e90cc0ced005325?s=32&amp;d=identicon&amp;r=PG" alt="" width="32" height="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="/users/256877/be77y">BE77Y</a><br>
+        <span class="reputation-score" title="reputation score " dir="ltr">1,102</span><span title="1 gold badge"><span class="badge1"></span><span class="badgecount">1</span></span><span title="5 silver badges"><span class="badge2"></span><span class="badgecount">5</span></span><span title="19 bronze badges"><span class="badge3"></span><span class="badgecount">19</span></span>
+    </div>
+</div>
+    </td>
+    </tr>
+    </table>
+</td>
+        </tr>
+        
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-693244" class="comments ">
+		    <table>
+                <tbody data-remaining-comments-count="4"
+                       data-canpost="false"
+                       data-cansee="true"
+                       data-comments-unavailable="false"
+                       data-addlink-disabled="true">
+
+
+
+    <tr id="comment-855097" class="comment ">
+        <td>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thank you for this elaborate answer and edit to my post! I appreciate it very much!</span>
+                &ndash;&nbsp;
+                    <a href="/users/187011/christophe-de-troyer"
+                       title="183 reputation"
+                       class="comment-user owner">Christophe De Troyer</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 10:41:50Z" class="relativetime-clean">9 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855116" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">As for the load put on the server by generating the params, you can always generate them on another machine and the simply scp or even copy-paste the file to the target server. There&#39;s no need to generate the params in production server.</span>
+                &ndash;&nbsp;
+                    <a href="/users/201188/erathiel"
+                       title="395 reputation"
+                       class="comment-user">Erathiel</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 11:26:38Z" class="relativetime-clean">8 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855180" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">After you&#39;ve changed your configuration, you may want to run a check at <a href="https://www.ssllabs.com/ssltest/" rel="nofollow">SSLLabs.com</a> as well just to be sure.</span>
+                &ndash;&nbsp;
+                    <a href="/users/204578/user2428118"
+                       title="105 reputation"
+                       class="comment-user">user2428118</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 12:58:26Z" class="relativetime-clean">6 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855241" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Is there a way to fix this vulnerability in Apache/2.2.22 (Ubuntu 12.04)? I appended dhparams.pem to certificate.crt but <a href="https://weakdh.org/sysadmin.html" rel="nofollow">weakdh.org/sysadmin.html</a> still complains</span>
+                &ndash;&nbsp;
+                    <a href="/users/13038/tersmitten"
+                       title="136 reputation"
+                       class="comment-user">tersmitten</a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 14:59:58Z" class="relativetime-clean">4 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+    <tr id="comment-855301" class="comment ">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of &#39;useful comment&#39; votes received"
+                                      class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@tersmitten That&#39;s a completely separate question to this one.</span>
+                &ndash;&nbsp;
+                    <a href="/users/126632/michael-hampton"
+                       title="89938 reputation"
+                       class="comment-user">Michael Hampton<span class="mod-flair" title="moderator">&#9830;</span></a>
+                <span class="comment-date" dir="ltr"><span title="2015-05-20 16:26:24Z" class="relativetime-clean">3 hours ago</span></span>
+                                                                            </div>
+                    </td>
+    </tr>
+                </tbody>
+		    </table>
+	    </div>
+
+        <div id="comments-link-693244" data-rep=50 data-anon=true>
+
+                <a class="js-add-link comments-link  dno"
+                   title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."
+                   ></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href=# onclick="">show <b>4</b> more comments</a>
+        </div>         
+    </td>
+</tr>    </table>
+</div>
+									<a name='new-answer'></a>
+						<form id="post-form" action="/questions/693241/answer/submit" method="post"  class="post-form">
+						    <input type="hidden" id="post-id" value="693241" />
+                            <input type="hidden" id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" />
+                            <input type="hidden" name="referrer" value="http://stackexchange.com/?page=2"/>
+							<h2 class="space">Your Answer</h2>
+
+
+
+        
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+            // Have to fire editor after snippets, if snippets enabled
+            if (StackExchange.options.snippets.enabled) {
+                StackExchange.using("snippets", function() {
+                    createEditor();
+                });
+            }
+            else {
+                createEditor();
+            }
+        });
+
+        function createEditor() {
+            prepareEditor({
+                heartbeatType: 'answer',
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                ,immediatelyShowMarkdownHelp:true
+                });
+                
+
+        }
+    });  
+</script>
+
+
+<div id="post-editor" class="post-editor">
+
+    <div style="position: relative;">     
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" type="hidden" value="38bada1d97ddfff353cb69a5eae3a2a3">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+							<div style="position: relative;">
+								
+            <div class="form-item dno new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="/users/login?returnurl=%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Stack Exchange</span></p>
+                        </div>
+                    </div>
+                    <input type="hidden" name="manual-openid" class="manual-openid" />
+                    <input type="hidden" name="use-facebook" class="use-facebook" value="false" />
+                    <input type="hidden" name="use-google" class="use-google" value="false" />
+                    <input type="button" class="submit-openid" value="Submit" style="display:none" />
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        StackExchange.openid.initPostLogin('.new-post-login', '%2fquestions%2f693241%2fhow-to-fix-logjam-vulnerability-in-apache-httpd%23new-answer');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" size="30" maxlength="100" value="" tabindex="106" placeholder="required, but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+							</div>
+           
+															<div class="form-submit cbt">
+									<input id="submit-button" type="submit" value="Post Your Answer" tabindex="110">
+									<a href="#" class="discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href='http://stackexchange.com/legal/privacy-policy' target='_blank'>privacy policy</a> and <a href='http://stackexchange.com/legal/terms-of-service' target='_blank'>terms of service</a>.</p>
+<input type="hidden" name="legalLinksShown" value="1" />								</div>
+						</form>
+
+
+
+						<h2 class="bottom-notice" data-loc="1">
+Not the answer you&#39;re looking for?							Browse other questions tagged <a href="/questions/tagged/apache-2.2" class="post-tag" title="show questions tagged &#39;apache-2.2&#39;" rel="tag">apache-2.2</a> <a href="/questions/tagged/ssl" class="post-tag" title="show questions tagged &#39;ssl&#39;" rel="tag">ssl</a> <a href="/questions/tagged/apache-2.4" class="post-tag" title="show questions tagged &#39;apache-2.4&#39;" rel="tag">apache-2.4</a> <a href="/questions/tagged/httpd" class="post-tag" title="show questions tagged &#39;httpd&#39;" rel="tag">httpd</a> <a href="/questions/tagged/vulnerability" class="post-tag" title="show questions tagged &#39;vulnerability&#39;" rel="tag">vulnerability</a>  or <a href="/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+						    <div class="module question-stats">
+			        <table id="qinfo">
+			            <tr>
+			                <td>
+			                    <p class="label-key">asked</p>
+			                </td>
+			                <td style="padding-left: 10px">
+			                    <p class="label-key" title="2015-05-20 09:34:33Z"><b>today</b></p>
+			                </td>
+			            </tr>
+			            <tr>
+			                <td>
+			                    <p class="label-key">viewed</p>
+			                </td>
+
+			                <td style="padding-left: 10px">
+			                    <p class="label-key">
+			                        <b>1554 times</b>
+			                    </p>
+			                </td>
+			            </tr>
+			                <tr>
+			                    <td>
+			                        <p class="label-key">active</p>
+			                    </td>
+			                    <td style="padding-left: 10px">
+			                        <p class="label-key"><b><a href="?lastactivity" class="lastactivity-link" title="2015-05-20 13:01:22Z">today</a></b></p>
+			                    </td>
+			                </tr>
+			        </table>
+			    </div>
+						
+			<script>
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8278,"adzerk862701826",[17,2221]).setZone(50) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow" id="adzerk862701826">
+            </div>  
+        <div id="hireme">
+            <script>
+;(function(i){var a=window.$,d=20,m=2000,f="#sidebar [id^='adzerk'].everyonelovesstackoverflow",l="div#hireme,div.hireme",t=setTimeout,c=i.adurl,r=i.azw,g=i.azt,u=function(){return new Date().getTime()},s=u();function j(x){var y={},z=window.StackExchange,w=decodeURIComponent,A;if(x.length>1){x.substr(1).split("&").forEach(function(B){var C=B.split("=");this[w(C[0])]=w(C[1])},y)}var v=y.ac||y.accountid||(z&&z.options&&z.options.user&&z.options.user.accountId);if(v){y.ac=v}if(!y.tags){A=a(".post-taglist .post-tag").map(function(){return a(this).text()});if(A.length>0){y.tags=Array.prototype.join.call(A,";")}}if(x==="#large"){y.l=1}if(x==="#abort"){y.abort=1}return y}function k(v){return a(v).html().replace(/\s+/g,"").length>0}var b=false;function o(A,w){if(b){return}b=true;var v=a(l),x=document,y=encodeURIComponent;clearTimeout(e);if(v.length>0){if(A.l||a("#careersadsdoublehigh").length>0){A.l=1}var C=v.map(function(G,F){return"d="+F.id}).get().join("&");var E=["l","ip","ac","eng","prov","tags","theme"];var B=Object.keys(A).filter(function(F){return E.indexOf(F)!==-1}).map(function(F){return y(F)+"="+y(A[F])}).join("&");if(B){C+="&"+B}if(w){C+="&azt=true"}var z=u()-s;C+="&lw="+z;var D=x.createElement("script");D.type="text/javascript";D.src=c+(c.indexOf("?")===-1?"?":"&")+C;x.body.appendChild(D);window.calculonPlacerStart=new Date().getTime()}}function q(w){var v=a(w);if(!k(v)){console.log(w);v.remove()}}var n=j(location.hash);if(n.abort){return}var h=null;if(r){h=t(o,g,n,true)}function p(v){if(k(f)){if(h){clearTimeout(h)}o(v)}else{e=t(p,d,v)}}var e=t(p,d,n);t(q,m,l)}).apply(null, [{"azw":false,"azt":2000,"adurl":"//clc.stackoverflow.com/j/p"}]);            </script>
+        </div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="/q/693306" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="/questions/693306/trying-to-mitigate-logjam-on-apache-2-2-16" class="question-hyperlink">Trying to mitigate Logjam on Apache 2.2.16</a>
+</div>			</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer">
+<a href="/q/243411" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">4
+    </div>
+</a><a href="/questions/243411/how-to-troubleshoot-apache-httpd-that-just-went-silent" class="question-hyperlink">How to troubleshoot Apache httpd that just went silent?</a>
+</div>
+<div class="spacer">
+<a href="/q/415112" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">11
+    </div>
+</a><a href="/questions/415112/fixing-beast-vulnerability-on-apache-2-0-running-on-rhel-4" class="question-hyperlink">Fixing BEAST vulnerability on Apache 2.0 running on RHEL 4</a>
+</div>
+<div class="spacer">
+<a href="/q/570224" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/570224/how-do-i-set-up-apache-httpd-as-a-proxy-service-for-https" class="question-hyperlink">How do I set up Apache HTTPD as a proxy service for HTTPS?</a>
+</div>
+<div class="spacer">
+<a href="/q/588535" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">1
+    </div>
+</a><a href="/questions/588535/how-add-ssl-443-to-apache-server-without-virtual-host" class="question-hyperlink">How add SSL/443 to Apache server without virtual host?</a>
+</div>
+<div class="spacer">
+<a href="/q/592781" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/592781/fixing-tls-renegotiation-vulnerability-on-apache-2-2-3" class="question-hyperlink">Fixing TLS renegotiation vulnerability on Apache 2.2.3</a>
+</div>
+<div class="spacer">
+<a href="/q/597641" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">1
+    </div>
+</a><a href="/questions/597641/unable-to-open-logs-in-apache-error-log-debian" class="question-hyperlink">&ldquo;Unable to open logs&rdquo; in apache error log debian</a>
+</div>
+<div class="spacer">
+<a href="/q/602590" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/602590/apache-httpd-pid-file-always-contains-the-wrong-pid" class="question-hyperlink">Apache httpd.pid file always contains the wrong pid</a>
+</div>
+<div class="spacer">
+<a href="/q/607436" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">0
+    </div>
+</a><a href="/questions/607436/fixing-apache-struts-xss-vulnerability" class="question-hyperlink">Fixing Apache Struts XSS vulnerability</a>
+</div>
+<div class="spacer">
+<a href="/q/679337" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/679337/apache-httpd-and-weblogic-configured-for-ssl" class="question-hyperlink">Apache Httpd and Weblogic configured for SSL</a>
+</div>
+<div class="spacer">
+<a href="/q/691200" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">0
+    </div>
+</a><a href="/questions/691200/apache-httpd-mod-deflate-and-mod-expires-not-applied" class="question-hyperlink">Apache HTTPD - mod_deflate and mod_expires not applied?</a>
+</div>
+
+                    </div>
+				</div>
+            
+<div id="hot-network-questions" class="module">
+    <h4>
+        <a href="//stackexchange.com/questions?tab=hot" 
+           class="js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li >
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="http://mathematica.stackexchange.com/questions/83922/i-want-to-construct-a-function-than-the-output-is-sequence" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    I want to construct a function than the output is &quot;Sequence&quot;
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-music" title="Music: Practice &amp; Theory Stack Exchange"></div><a href="http://music.stackexchange.com/questions/32486/truth-behind-mozart-memorizing-miserere-and-then-writing-it-down-later-in-full" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:240 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Truth behind Mozart memorizing Miserere and then writing it down later in full
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/46915/do-companies-see-having-employees-who-live-close-to-the-office-as-an-advantage" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do companies see having employees who live close to the office as an advantage?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="http://rpg.stackexchange.com/questions/62280/how-do-i-read-2d10-as-a-percentage" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How do I read 2d10 as a percentage?
+                </a>
+
+            </li>
+            <li >
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/247550/appropriate-expression-for-trivial-use-of-ocd" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Appropriate expression for trivial use of &#39;OCD&#39;
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="http://tex.stackexchange.com/questions/246016/simple-and-intuitive-tool-for-generating-simple-diagrams" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Simple and intuitive tool for generating simple diagrams
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="http://worldbuilding.stackexchange.com/questions/17484/what-would-the-fortifications-of-an-underwater-city-look-like" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What would the fortifications of an underwater city look like?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-workplace" title="The Workplace Stack Exchange"></div><a href="http://workplace.stackexchange.com/questions/46923/what-to-do-if-youre-asked-to-break-industry-regulations" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:423 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What to do if you&#39;re asked to break industry regulations?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-electronics" title="Electrical Engineering Stack Exchange"></div><a href="http://electronics.stackexchange.com/questions/171417/purpose-of-input-resistor-in-adc-circuit" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:135 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Purpose of input resistor in ADC circuit
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/57239/so-happy-i-am-today-is-it-grammatical" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    &quot;So happy I am today&quot; - is it grammatical?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/57250/english-word-for-a-room-in-a-company-office-that-handles-letters" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    English word for a room in a company office that handles letters
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-english" title="English Language &amp; Usage Stack Exchange"></div><a href="http://english.stackexchange.com/questions/247562/word-for-something-that-showcases-all-the-idiosyncrasies-of-its-time" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:97 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Word for something that showcases all the idiosyncrasies of its time
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-japanese" title="Japanese Language Stack Exchange"></div><a href="http://japanese.stackexchange.com/questions/24413/thank-you-note-to-japanese-professor" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:257 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Thank you note to Japanese professor
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-ell" title="English Language Learners Stack Exchange"></div><a href="http://ell.stackexchange.com/questions/57253/using-the-with-names-of-functions-variables-constants-in-computer-literature" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:481 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Using “the” with names of functions, variables, constants in computer literature
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-serverfault" title="Server Fault"></div><a href="http://serverfault.com/questions/693241/how-to-fix-logjam-vulnerability-in-apache-httpd" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:2 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to fix &#39;logjam&#39; vulnerability in Apache (httpd)
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-unix" title="Unix &amp; Linux Stack Exchange"></div><a href="http://unix.stackexchange.com/questions/204614/run-grep-excluding-a-file-in-a-specific-path" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:106 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Run `grep` excluding a file in a specific path
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-programmers" title="Programmers Stack Exchange"></div><a href="http://programmers.stackexchange.com/questions/284415/short-circuit-evaluation-is-it-bad-practice" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:131 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Short circuit evaluation, is it bad practice?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-scifi" title="Science Fiction &amp; Fantasy Stack Exchange"></div><a href="http://scifi.stackexchange.com/questions/90250/how-did-picard-actually-cause-the-destruction-of-human-kind" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:186 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How did Picard actually cause the destruction of human kind?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-wordpress" title="WordPress Development Stack Exchange"></div><a href="http://wordpress.stackexchange.com/questions/188881/proper-usage-of-wp-is-mobile" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:110 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Proper usage of wp_is_mobile()?
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/30349653/undesired-behavior-of-arraylist-remove-in-java" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Undesired behavior of ArrayList remove() in Java
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-judaism" title="Mi Yodeya"></div><a href="http://judaism.stackexchange.com/questions/59407/midrash-about-god-repeating-words-of-torah" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:248 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Midrash About God Repeating Words of Torah
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-stackoverflow" title="Stack Overflow"></div><a href="http://stackoverflow.com/questions/30350699/multi-dimensional-array-initialization" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:1 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Multi-dimensional array initialization
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-puzzling" title="Puzzling Stack Exchange"></div><a href="http://puzzling.stackexchange.com/questions/15240/murder-of-a-cryptologist" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:559 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Murder of a Cryptologist
+                </a>
+
+            </li>
+            <li class="dno js-hidden">
+                <div class="favicon favicon-chemistry" title="Chemistry Stack Exchange"></div><a href="http://chemistry.stackexchange.com/questions/31751/acid-catalysed-hydration-of-allene" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:431 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Acid catalysed hydration of allene
+                </a>
+
+            </li>
+    </ul>
+
+        <a href="#" 
+           class="show-more js-show-more js-gps-track" 
+           data-gps-track="posts_hot_network.click({ item_type:3, location:11 })">
+            more hot questions
+        </a>
+</div>
+		</div>
+	
+<div id="feed-link">
+    <div id="feed-link-text">
+        <a href="/feeds/question/693241" title="feed of this question and its answers">
+            <span class="feed-icon"></span>question feed
+        </a>
+    </div>
+</div>	<script>
+StackExchange.ready(function(){$.get('/posts/693241/ivc/39ec');});
+</script>
+<noscript>
+    <div><img src="/posts/693241/ivc/39ec" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="/tour">tour</a>
+                    <a href="/help">help</a>
+                    <a href="http://blog.serverfault.com?blb=1">blog</a>
+                        <a href="http://chat.stackexchange.com">chat</a>
+                    <a href="http://data.stackexchange.com">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/work-here">work here</a>
+                    <a href="http://stackexchange.com/mediakit">advertising info</a>
+
+                    <a onclick='StackExchange.switchMobile("on")'>mobile</a>
+                    <b><a href="/contact">contact us</a></b>
+                        <b><a href="http://meta.serverfault.com">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tr>
+            <th colspan=3>
+                Technology
+            </th>
+            <th >
+                Life / Arts
+            </th>
+            <th >
+                Culture / Recreation
+            </th>
+            <th >
+                Science
+            </th>
+            <th >
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="//stackoverflow.com" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="//serverfault.com" title="system and network administrators">Server Fault</a></li>
+                        <li><a href="//superuser.com" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="//webapps.stackexchange.com" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="//askubuntu.com" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="//webmasters.stackexchange.com" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="//gamedev.stackexchange.com" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="//tex.stackexchange.com" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//programmers.stackexchange.com" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="//unix.stackexchange.com" title="users of Linux, FreeBSD and other Un*x-like operating systems.">Unix &amp; Linux</a></li>
+                        <li><a href="//apple.stackexchange.com" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="//wordpress.stackexchange.com" title="WordPress developers and administrators">WordPress Development</a></li>
+                        <li><a href="//gis.stackexchange.com" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="//electronics.stackexchange.com" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="//android.stackexchange.com" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="//security.stackexchange.com" title="Information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="//dba.stackexchange.com" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="//drupal.stackexchange.com" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="//sharepoint.stackexchange.com" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="//ux.stackexchange.com" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="//mathematica.stackexchange.com" title="users of Mathematica">Mathematica</a></li>
+                        <li><a href="//salesforce.stackexchange.com" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (14)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//photo.stackexchange.com" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="//scifi.stackexchange.com" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="//graphicdesign.stackexchange.com" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                        <li><a href="//cooking.stackexchange.com" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="//diy.stackexchange.com" title="contractors and serious DIYers">Home Improvement</a></li>
+                        <li><a href="//money.stackexchange.com" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                        <li><a href="//academia.stackexchange.com" title="academics and those enrolled in higher education">Academia</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (10)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//english.stackexchange.com" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="//skeptics.stackexchange.com" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="//judaism.stackexchange.com" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="//travel.stackexchange.com" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="//christianity.stackexchange.com" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="//gaming.stackexchange.com" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="//bicycles.stackexchange.com" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="//rpg.stackexchange.com" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//math.stackexchange.com" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="//stats.stackexchange.com" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                        <li><a href="//cstheory.stackexchange.com" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="//physics.stackexchange.com" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="//mathoverflow.net" title="professional mathematicians">MathOverflow</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="//stackapps.com" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="//meta.stackexchange.com" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                        <li><a href="//area51.stackexchange.com" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="//careers.stackoverflow.com">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo &#169; 2015 stack exchange inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a> 
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="svnrev">
+                rev 2015.5.20.2600
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">Server Fault works best with JavaScript enabled<img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"></div>
+    </noscript>
+<script>var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script>
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('apache-2.2,ssl,apache-2.4,httpd,vulnerability');; ados_load(); });         
+</script>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m);
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-5620270-2');        
+        
+        ga('set', 'dimension2', '|apache-2.2|ssl|apache-2.4|httpd|vulnerability|');         
+        ga('send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+            qc.async=true;
+            qc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+            s.parentNode.insertBefore(qc, s);
+            var sc=document.createElement('script');
+            sc.async=true;
+            sc.src=(ssl?'https://sb':'http://b') + '.scorecardresearch.com/beacon.js';
+            s.parentNode.insertBefore(sc, s);
+        })();
+        _comscore.push({ c1: "2", c2: "17440561" });
+        _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>            
+    </body>
+</html>
+

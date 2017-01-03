@@ -1,0 +1,57 @@
+public class StringSensitivity 
+{
+	public boolean matchstring(String a,String b)
+	{
+		int x;
+		if(a == b)
+			return true;
+		if(a.equalsIgnoreCase(b))
+			return true;
+		if(a.length() == b.length()+1)
+		{
+			x=a.length();
+			if(a.charAt(a.length()-1) != 's')
+				return false;
+		}
+		else if(b.length() == a.length()+1)
+		{
+			x=b.length();
+			if(b.charAt(b.length()-1) != 's')
+				return false;
+		}
+		else
+			return false;
+		for(int i=0;i<x-1;i++)
+		{
+			int a_ascii = a.charAt(i), b_ascii = b.charAt(i);
+			if(a_ascii != b_ascii && a_ascii != b_ascii - 32 && b_ascii != a_ascii - 32)
+				return false;
+		} 
+		return true;
+	}
+	public String[] allstrings(String a)
+	{
+		String[] str = new String[2];
+		str[0] = a;
+		str[1] = a;
+		if(a.charAt(0)>=97 && a.charAt(0)<=122)
+			str[1] = str[1].substring(0,0) + (char)((int)a.charAt(0) - 32) + str[1].substring(1);
+		return str;
+	}
+	public String[] lowercase(String[] str)
+	{
+		for(String i : str)
+			for(int j=0;j<i.length();j++)
+				if(i.charAt(j)>=65 && i.charAt(j)<=90)
+					i = i.substring(0,j) + (char)((int)i.charAt(j) + 32) + i.substring(j+1);
+		return str;
+	}
+	/*public static void main(String arg[])
+	{
+		String str[] = allstrings("String");
+		for(String i : str)
+		{
+			System.out.println(i);
+		}
+	}*/
+}

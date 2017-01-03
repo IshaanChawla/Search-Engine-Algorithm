@@ -1,0 +1,973 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+		<!-- Copyright (c) NextDawn 2007-2009 All rights reserved -->
+  		<!-- Developed by : www.nextdawn.nl -->
+		<!-- Contact : contact@nextdawn.nl -->
+		
+<head profile="http://gmpg.org/xfn/11">
+<meta name="google-site-verification" content="G5RDgCqtCFBG4cey1sDM72BU7o__Y7tsE-nBe96YcYg" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>First C program, Hello World | CodingUnit Programming Tutorials</title>
+
+    <meta name="description" content="First C program, Hello World" />
+
+    <meta name="generator" content="WordPress 4.2.2" /> <!-- leave this for stats -->
+
+    <script type="text/javascript" src="http://www.codingunit.com/wp-content/themes/codingunit-theme/nextdawn.js"></script>
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/style.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/widgets.css" type="text/css" media="screen" />
+
+    <link rel="shortcut icon" type="image/ico" href="http://www.codingunit.com/wp-content/themes/codingunit-theme/favicon.ico" />
+	<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.codingunit.com/feed/rss" />
+	<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.codingunit.com/feed/atom" />
+		<link rel='archives' title='June 2014' href='http://www.codingunit.com/2014/06' />
+	<link rel='archives' title='June 2013' href='http://www.codingunit.com/2013/06' />
+	<link rel='archives' title='January 2013' href='http://www.codingunit.com/2013/01' />
+	<link rel='archives' title='November 2012' href='http://www.codingunit.com/2012/11' />
+	<link rel='archives' title='June 2012' href='http://www.codingunit.com/2012/06' />
+	<link rel='archives' title='April 2012' href='http://www.codingunit.com/2012/04' />
+	<link rel='archives' title='November 2011' href='http://www.codingunit.com/2011/11' />
+	<link rel='archives' title='February 2011' href='http://www.codingunit.com/2011/02' />
+	<link rel='archives' title='December 2010' href='http://www.codingunit.com/2010/12' />
+	<link rel='archives' title='October 2010' href='http://www.codingunit.com/2010/10' />
+	<link rel='archives' title='June 2010' href='http://www.codingunit.com/2010/06' />
+	<link rel='archives' title='May 2010' href='http://www.codingunit.com/2010/05' />
+	<link rel='archives' title='April 2010' href='http://www.codingunit.com/2010/04' />
+	<link rel='archives' title='March 2010' href='http://www.codingunit.com/2010/03' />
+	<link rel='archives' title='February 2010' href='http://www.codingunit.com/2010/02' />
+	<link rel='archives' title='January 2010' href='http://www.codingunit.com/2010/01' />
+	<link rel='archives' title='November 2009' href='http://www.codingunit.com/2009/11' />
+	<link rel='archives' title='September 2009' href='http://www.codingunit.com/2009/09' />
+	<link rel='archives' title='July 2009' href='http://www.codingunit.com/2009/07' />
+	<link rel='archives' title='September 2007' href='http://www.codingunit.com/2007/09' />
+    <link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials RSS Feed" href="http://www.codingunit.com/feed" />
+    <link rel="pingback" href="http://www.codingunit.com/xmlrpc.php" />
+
+<!--[if IE]>
+<style type="text/css">#sizer {width:expression(document.body.clientWidth > 650 ? "100%" : "100%" );}</style>
+<![endif]-->
+
+
+<!-- All in One SEO Pack 2.2.6.2 by Michael Torbert of Semper Fi Web Design[537,615] -->
+<meta name="description"  content="After talking about the history and compilers it is time to make our first program. We like to make C programs under Linux, so we will use a text editor and the" />
+
+<meta name="keywords"  content="c tutorials" />
+
+<link rel="canonical" href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" />
+<!-- /all in one seo pack -->
+<link rel="alternate" type="application/rss+xml" title="CodingUnit Programming Tutorials &raquo; First C program, Hello World Comments Feed" href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world/feed" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"wpemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/wp-emoji.js?ver=4.2.2","twemoji":"http:\/\/www.codingunit.com\/wp-includes\/js\/twemoji.js?ver=4.2.2"}};
+			( function( window, document, settings ) {
+	var src, ready;
+
+	/**
+	 * Detect if the browser supports rendering emoji or flag emoji. Flag emoji are a single glyph
+	 * made of two characters, so some browsers (notably, Firefox OS X) don't support them.
+	 *
+	 * @since 4.2.0
+	 *
+	 * @param type {String} Whether to test for support of "simple" or "flag" emoji.
+	 * @return {Boolean} True if the browser can render emoji, false if it cannot.
+	 */
+	function browserSupportsEmoji( type ) {
+		var canvas = document.createElement( 'canvas' ),
+			context = canvas.getContext && canvas.getContext( '2d' );
+
+		if ( ! context || ! context.fillText ) {
+			return false;
+		}
+
+		/*
+		 * Chrome on OS X added native emoji rendering in M41. Unfortunately,
+		 * it doesn't work when the font is bolder than 500 weight. So, we
+		 * check for bold rendering support to avoid invisible emoji in Chrome.
+		 */
+		context.textBaseline = 'top';
+		context.font = '600 32px Arial';
+
+		if ( type === 'flag' ) {
+			/*
+			 * This works because the image will be one of three things:
+			 * - Two empty squares, if the browser doesn't render emoji
+			 * - Two squares with 'G' and 'B' in them, if the browser doesn't render flag emoji
+			 * - The British flag
+			 *
+			 * The first two will encode to small images (1-2KB data URLs), the third will encode
+			 * to a larger image (4-5KB data URL).
+			 */
+			context.fillText( String.fromCharCode( 55356, 56812, 55356, 56807 ), 0, 0 );
+			return canvas.toDataURL().length > 3000;
+		} else {
+			/*
+			 * This creates a smiling emoji, and checks to see if there is any image data in the
+			 * center pixel. In browsers that don't support emoji, the character will be rendered
+			 * as an empty square, so the center pixel will be blank.
+			 */
+			context.fillText( String.fromCharCode( 55357, 56835 ), 0, 0 );
+			return context.getImageData( 16, 16, 1, 1 ).data[0] !== 0;
+		}
+	}
+
+	function addScript( src ) {
+		var script = document.createElement( 'script' );
+
+		script.src = src;
+		script.type = 'text/javascript';
+		document.getElementsByTagName( 'head' )[0].appendChild( script );
+	}
+
+	settings.supports = {
+		simple: browserSupportsEmoji( 'simple' ),
+		flag:   browserSupportsEmoji( 'flag' )
+	};
+
+	settings.DOMReady = false;
+	settings.readyCallback = function() {
+		settings.DOMReady = true;
+	};
+
+	if ( ! settings.supports.simple || ! settings.supports.flag ) {
+		ready = function() {
+			settings.readyCallback();
+		};
+
+		if ( document.addEventListener ) {
+			document.addEventListener( 'DOMContentLoaded', ready, false );
+			window.addEventListener( 'load', ready, false );
+		} else {
+			window.attachEvent( 'onload', ready );
+			document.attachEvent( 'onreadystatechange', function() {
+				if ( 'complete' === document.readyState ) {
+					settings.readyCallback();
+				}
+			} );
+		}
+
+		src = settings.source || {};
+
+		if ( src.concatemoji ) {
+			addScript( src.concatemoji );
+		} else if ( src.wpemoji && src.twemoji ) {
+			addScript( src.twemoji );
+			addScript( src.wpemoji );
+		}
+	}
+
+} )( window, document, window._wpemojiSettings );
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.codingunit.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.codingunit.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='C Tutorial &#8211; Compilers (GNU and Visual Studio)' href='http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio' />
+<link rel='next' title='C Tutorial &#8211; variables and constants' href='http://www.codingunit.com/c-tutorial-variables-and-constants' />
+<meta name="generator" content="WordPress 4.2.2" />
+<link rel='shortlink' href='http://www.codingunit.com/?p=139' />
+</head>
+<body>
+
+<div id="sizer">
+<div id="expander">
+
+<div id="newheader">
+    <ul id="headerimage">
+        <li><a href="http://www.codingunit.com/"></a></li>
+    </ul>
+</div>
+
+<div id="navigation">
+    <ul id="nav">
+        <li><a href="http://www.codingunit.com/" title="Home: CodingUnit Programming Tutorials">Home</a></li>
+        <li class="page_item page-item-2"><a href="http://www.codingunit.com/about">About</a></li>
+    </ul>
+	<div id="googlesearch">
+		<form action="http://www.google.com/cse" id="cse-search-box" target="_blank">
+  <div>
+    <input type="hidden" name="cx" value="partner-pub-7868601750853261:s9r1fl-a8sm" />
+    <input type="hidden" name="ie" value="ISO-8859-1" />
+    <input type="text" name="q" size="25" />
+    <input type="submit" name="sa" value="Search" />
+  </div>
+</form>
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
+
+
+
+	</div>
+	<div id="rss">
+		<a href="http://www.codingunit.com/feed" title="Subscribe to CodingUnit Programming Tutorials" class="iconrss">rss posts</a>
+	</div>
+</div>
+
+<div id="wrapper1">
+
+<div class="outer">
+
+<div class="float-wrap">
+
+<div id="column1">
+
+<div class="centerbox">
+
+    <a href="#" name="documentContent"></a>
+  
+	<div class="post" id="post-139">
+		<h1 class="firstheading"><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">
+		First C program, Hello World</a></h1>
+
+			<div class="entry">
+				<div id="watermark">
+					<p>
+After talking about the history and compilers it is time to make our first program. We like to make C programs under Linux, so we will use a text editor and the gnu compiler. But all programs we make in these tutorials will also work under Windows.&nbsp;Remember, the examples included in the C and C++ tutorials are all console programs. That means they use text to communicate. All compilers support the compilation of console programs. Check the user&#8217;s manual of your compiler for more info on how to compile them. (It is not doable for us to write this down for every compiler).<span id="more-139"></span>
+</p>
+<p>
+Open a text editor (vi, emacs, notepad) or make a console project in Visual Studio Express and type the following lines of code (Don&#8217;t use cut/paste, type them. This is better for learning purposes):
+</p>
+<div id="cl">
+	<PRE><CODE><br />
+	#include&lt;stdio.h&gt;</p>
+<p>	int main()<br />
+	{<br />
+		printf(&#8220;Hello World\n&#8221;);<br />
+		return 0;<br />
+	}<br />
+	</CODE></PRE>
+	</div>
+<p>
+Save the program with the name: hello.c
+</p>
+<h2>#include&lt;stdio.h&gt;</h2>
+<p>With this line of code we include a file called stdio.h. (Standard Input/Output header file). This file lets us use certain commands for input or output which we can use in our program. (Look at it as lines of code commands) that have been written for us by someone else). For instance it has commands for input like reading from the keyboard and output commands like printing things on the screen.
+</p>
+<h2>int main()</h2>
+<p>The int is what is called the return value (in this case of the type integer). Where it used for will be explained further down. Every program must have a main(). It is the starting point of every program. The round brackets are there for a<br />
+reason, in a later tutorial it will be explained, but for now it is enough to know that they have to be there.
+</p>
+<h2>{}</h2>
+<p>The two curly brackets (one in the beginning and one at the end) are used to group all commands together. In this case all the commands between the two curly brackets belong to main(). The curly brackets are often used in the C language to group commands together. (To mark the beginning and end of a<br />
+group or function.).
+</p>
+<h2>printf(&#8220;Hello World\n&#8221;);</h2>
+<p>The printf is used for printing things on the screen, in this case the words: Hello World. As you can see the data that is to be printed is put inside round brackets. The words Hello World are inside inverted ommas, because they are what is called a string. (A single letter is called a character and a series of characters is called a string). Strings must always be put between inverted commas. The \n is called an escape sequence. In this case it represents a newline character. After printing something to the screen you usually want to print something on the next line. If there is no \n then a next printf command will print the string on the same line. </p>
+<p>Commonly used escape sequences are: </p>
+<ul>
+<li> \n (newline)</li>
+<li> \t (tab)</li>
+<li> \v (vertical tab)</li>
+<li> \f (new page)</li>
+<li> \b (backspace)</li>
+<li> \r (carriage return)</li>
+</ul>
+<p>
+After the last round bracket there must be a semi-colon. The semi-colon shows that it is the end of the command. (So in the future, don&#8217;t forget to put a semi-colon if a command ended).
+</p>
+<h2>return 0;</h2>
+<p>When we wrote the first line &#8220;int main()&#8221;, we declared that main&nbsp;must return an integer int main(). (int is short for integer which is another word for number). With the command return 0; we can return the value null to the operating system. When you return with a zero you tell the operating system that there were no errors while running the program. (Take a look at <a href="http://www.codingunit.com/c-tutorial-variables-and-constants" title="C tutorial - variables and constants">the C tutorial &#8211; variables and constants</a> for more information on integer variables).
+ </p>
+<h2>Compile</h2>
+<p>If you have typed everything correct there should be no problem to compile your program. After compilation you now should have a hello.exe (Windows) or hello binary (UNIX/Linux). You can now run this program by typing hello.exe (Windows) or ./hello (UNIX/Linux).
+</p>
+<p>
+If everything was done correct, you should now see the words &#8220;Hello World&#8221; printed on the screen.
+</p>
+<p>
+<b>Congratulations!!!!!</b><br /> You have just made your first program in C.
+</p>
+<h2>Comments in your program</h2>
+<p>The Hello World program is a small program that is easy to understand. But a program can contain thousands of&nbsp;lines of code and can be so complex that it is hard for us to understand. To make our lives easier it is possible to write an explanation or comment in a program. This makes it much easier to understand the code. (Even if you did not look at the code for years).These comments will be ignored by the compiler at compilation time.
+</p>
+<p>
+Comments have to be put after // or be placed between /* */ .<br />
+Here is an example of how to comment the Hello World source code :
+</p>
+<div id="cl">
+	<PRE><CODE><br />
+	/*	Description	: Print Hello World on the screen<br />
+		Author		: Your name<br />
+		Date		: 01/01/2007				*/</p>
+<p>	#include&lt;stdio.h&gt;</p>
+<p>	int main()<br />
+	{<br />
+		//Print something and then newline<br />
+		printf(&#8220;Hello World\n&#8221;);<br />
+		return 0;<br />
+	}<br />
+	</CODE></PRE>
+	</div>
+<p></p>
+<h2>Indentation</h2>
+<p>As you can see the printf and return statements have been indented or moved to the right side. This is<br />
+done to make the code more readable. In a program as Hello World, it seems a stupid thing to do. But as the programs become more complex, you will see that it makes the code more readable.
+</p>
+<p>
+So,&nbsp;always use&nbsp;indentations and comments to make the code more readable. It will make your life much easier if the code becomes more complex.</p>
+				</div>
+				
+    <div class="boxedup">
+					<small>
+						This entry was posted in <a href="http://www.codingunit.com/category/c-tutorials" rel="category tag">C Tutorials</a>.
+						You can follow any responses to this entry through the <a href='http://www.codingunit.com/c-tutorial-first-c-program-hello-world/feed'>RSS 2.0</a> feed.
+												
+													Both comments and pings are currently closed.
+
+												
+						<a href="http://twitter.com/home?status=First C program, Hello World http://www.codingunit.com/c-tutorial-first-c-program-hello-world" title="Click to send this page to Twitter!" target="_blank"><img src="http://www.codingunit.com/wp-content/themes/codingunit-theme/images/tweet-this2.png" width="18" height="18" alt="Tweet This!" /> Tweet This!</a><strong> or use </strong>
+<script type="text/javascript" src="http://w.sharethis.com/widget/?tabs=web&amp;charset=utf-8&amp;style=default&amp;publisher=175d6d6f-554e-47d3-97f3-e45eb2d68de7&amp;headerbg=%230997b9"></script><strong> to share this post with others.</strong>						
+					</small>
+				</div>
+
+			</div>
+		</div>
+
+	<div class="boxedup">
+<!-- You can start editing here. -->
+
+	<h3 id="comments">There are currently 52 responses to &#8220;First C program, Hello World&#8221;</h3> 
+        <p>Why not let us know what you think by adding your own comment!</p>
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-460">
+
+            			<cite>saurabh dubey</cite> on <small>January 29th, 2010</small>:
+			
+			<p>hi</p>
+<p>  this article is very helpful for beginners&#8230;</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-942">
+
+            			<cite>Aman</cite> on <small>May 24th, 2010</small>:
+			
+			<p>thanx&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-1485">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>gladys.c</a></cite> on <small>July 15th, 2010</small>:
+			
+			<p>tnx</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3187">
+
+            			<cite>prabhath</cite> on <small>January 9th, 2011</small>:
+			
+			<p>this article good who has not teory prts in c language..tnx&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3247">
+
+            			<cite>rahul</cite> on <small>February 22nd, 2011</small>:
+			
+			<p>i like it. thanks</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3375">
+
+            			<cite><a href='http://imamvvip.wordpress.com' rel='external nofollow' class='url'>Ben</a></cite> on <small>April 26th, 2011</small>:
+			
+			<p>very nice, thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3387">
+
+            			<cite>muditha</cite> on <small>May 6th, 2011</small>:
+			
+			<p>Interesting &amp; encouraging the beginners of C programming.thks a lot.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3413">
+
+            			<cite>Sina</cite> on <small>May 17th, 2011</small>:
+			
+			<p>thanks very much!!!</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3468">
+
+            			<cite>tej</cite> on <small>May 30th, 2011</small>:
+			
+			<p>hi,<br />
+ i found a starting point of c in this articles from  where the c language begins<br />
+i feel good while i go through this one<br />
+thank you.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-3642">
+
+            			<cite>sandeep reddy</cite> on <small>August 2nd, 2011</small>:
+			
+			<p>its a good path to learn C for the beginners&#8230;. great work&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-3802">
+
+            			<cite>anonymous</cite> on <small>September 28th, 2011</small>:
+			
+			<p>awesome, after one year i found a website where i understand the c language so easily.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4442">
+
+            			<cite>Roshan kashyap</cite> on <small>January 30th, 2012</small>:
+			
+			<p>Thanks<br />
+    It is a very good for beginners</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4476">
+
+            			<cite>ali</cite> on <small>February 9th, 2012</small>:
+			
+			<p>thank you<br />
+go a head</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4558">
+
+            			<cite><a href='http://CTutorials' rel='external nofollow' class='url'>bharat</a></cite> on <small>March 13th, 2012</small>:
+			
+			<p>good thanks i read in web site program .i am happy.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-4706">
+
+            			<cite><a href='http://nil' rel='external nofollow' class='url'>Khalid</a></cite> on <small>April 17th, 2012</small>:
+			
+			<p>i like this coding for hello program and inshallah we read further in future.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-4942">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>vikrant</a></cite> on <small>June 5th, 2012</small>:
+			
+			<p>this is very good for beginners</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5172">
+
+            			<cite>sravya</cite> on <small>August 10th, 2012</small>:
+			
+			<p>very useful for the beginers</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5228">
+
+            			<cite>Cynthia</cite> on <small>August 24th, 2012</small>:
+			
+			<p>good one&#8230; Very useful&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5252">
+
+            			<cite>fadhil ally</cite> on <small>September 3rd, 2012</small>:
+			
+			<p>this concept is some how good but it not explained well about return and int</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5261">
+
+            			<cite><a href='http://www.codingunit.com' rel='external nofollow' class='url'>admin</a></cite> on <small>September 6th, 2012</small>:
+			
+			<p>@fadhil ally: we&#8217;ve added some additional information to this tutorial, so return and int will be easier to understand. But we don&#8217;t want to go into to much detail in this tutorial. We want to keep the first one as easy as possible. When you read the next tutorials, everything will be explained in more detail. So I urge you to read on! Good luck.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5374">
+
+            			<cite>manish singla</cite> on <small>October 1st, 2012</small>:
+			
+			<p>thanks<br />
+it is very easy to understand for beginners</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5419">
+
+            			<cite>sagar singh</cite> on <small>October 15th, 2012</small>:
+			
+			<p>very good information of all user<br />
+sagar[DIST]</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5508">
+
+            			<cite>vishnu</cite> on <small>November 16th, 2012</small>:
+			
+			<p>excellent tutorial <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5545">
+
+            			<cite>pooja</cite> on <small>November 20th, 2012</small>:
+			
+			<p>its really easy n very helpful<br />
+thanx <img src="http://www.codingunit.com/wp-includes/images/smilies/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;" /></p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5640">
+
+            			<cite>salman</cite> on <small>December 12th, 2012</small>:
+			
+			<p>thnx&#8217;s!!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5650">
+
+            			<cite>ajay rathore</cite> on <small>December 13th, 2012</small>:
+			
+			<p>thank u</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-5690">
+
+            			<cite>fahad</cite> on <small>December 19th, 2012</small>:
+			
+			<p>i am the beginner in c language,,,,,,i found this website more than just a website&#8230; i think this this is ELECTRONIC TEACHER</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-5913">
+
+            			<cite>sem shemzigwa</cite> on <small>January 5th, 2013</small>:
+			
+			<p>Its helpfull bcoz i learn a lot<br />
+ Thanks.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6098">
+
+            			<cite>segzy</cite> on <small>January 14th, 2013</small>:
+			
+			<p>it is very good and explanatory enough to me. Nice 1</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6417">
+
+            			<cite>newbie01</cite> on <small>February 2nd, 2013</small>:
+			
+			<p>Nice article especially for those wanting to go back to C programming &#8230; like me :(- &#8230; would be nice if there is an option to copy the the code to clipboard though? When I copy and paste from IE, some are getting pasted as special characters :(-</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6534">
+
+            			<cite>surton</cite> on <small>February 23rd, 2013</small>:
+			
+			<p>goodto have</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-6575">
+
+            			<cite>raj swami</cite> on <small>March 6th, 2013</small>:
+			
+			<p>this is helpful..<br />
+bt #include<br />
+header file is also used&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-6662">
+
+            			<cite><a href='http://www.ganeshyadav12345.webs.com' rel='external nofollow' class='url'>GaneshYadav</a></cite> on <small>March 30th, 2013</small>:
+			
+			<p>this is helpful</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7141">
+
+            			<cite><a href='http://ctutorial' rel='external nofollow' class='url'>RAJKUMAR</a></cite> on <small>June 21st, 2013</small>:
+			
+			<p>thankyou&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7142">
+
+            			<cite><a href='http://ctutorial' rel='external nofollow' class='url'>RAJKUMAR YADAV</a></cite> on <small>June 21st, 2013</small>:
+			
+			<p>THANKU &#8230;&#8230;&#8230;&#8230;&#8230;&#8230;..</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7161">
+
+            			<cite><a href='http://google' rel='external nofollow' class='url'>harishma on june 24th,2013</a></cite> on <small>June 24th, 2013</small>:
+			
+			<p>nice to learn&#8230;&#8230;..<br />
+v got the basics easily&#8230;&#8230;.<br />
+tnx for sharing&#8230;&#8230;&#8230;&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7355">
+
+            			<cite><a href='http://cprogram' rel='external nofollow' class='url'>miraul islam</a></cite> on <small>July 14th, 2013</small>:
+			
+			<p>Thanks&amp;very good</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7636">
+
+            			<cite>Binay</cite> on <small>July 29th, 2013</small>:
+			
+			<p>Article is presented in a very nice and easy to understand manner . Thanks</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7682">
+
+            			<cite>Akash</cite> on <small>August 1st, 2013</small>:
+			
+			<p>Very easy to understand</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7698">
+
+            			<cite>person</cite> on <small>August 2nd, 2013</small>:
+			
+			<p>I finally understand it. Best site for learning c</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-7710">
+
+            			<cite>shreyansh</cite> on <small>August 2nd, 2013</small>:
+			
+			<p>thanx!!! this was very helpful for beginners</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-7925">
+
+            			<cite>ashwini</cite> on <small>September 13th, 2013</small>:
+			
+			<p>thank you&#8230;.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8764">
+
+            			<cite>rocky</cite> on <small>October 17th, 2013</small>:
+			
+			<p>Good Program</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-8915">
+
+            			<cite>davy</cite> on <small>October 25th, 2013</small>:
+			
+			<p>indeed it is worthy for begginers</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-8997">
+
+            			<cite><a href='http://www.codingunit.com/c-tutorial-first-c-program-hello-world' rel='external nofollow' class='url'>Ajay</a></cite> on <small>October 30th, 2013</small>:
+			
+			<p>I am including stdio.h header file 2times in same file am not getting any problem, if am including own file like “add.h” 2times its giving an error. what is the problem can anybody explain?</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9418">
+
+            			<cite>Paul Koenen</cite> on <small>January 29th, 2014</small>:
+			
+			<p>Ajay, the reason you can include stdio.h multiple times is due to a condition that is usually included at the top of an INCLUDE file:<br />
+#ifndef _INC_STDIO    &lt;&lt; at the beginning &#8230;.<br />
+#define _INC_STDIO<br />
+&#8230;.<br />
+#endif  &lt;&lt; placed on the last line.</p>
+<p>This effectively keeps the include instructions in stdio.h from only being executed once.  It defines the _INC_STDIO at the start of the first include and turns all future includes into a No-Op.  So your 2nd include of stdio.h is safe, but is not doing anything.</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9738">
+
+            			<cite>prashantsingh</cite> on <small>February 25th, 2014</small>:
+			
+			<p>it very nice for me.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9814">
+
+            			<cite>Pooja</cite> on <small>March 4th, 2014</small>:
+			
+			<p>nice article &#8230;.good job..like it..</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9832">
+
+            			<cite>Chandu</cite> on <small>March 6th, 2014</small>:
+			
+			<p>Its really cool&#8230; I am sure it will be a kick-start for beginners.</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9834">
+
+            			<cite>Chandu</cite> on <small>March 6th, 2014</small>:
+			
+			<p>#include<br />
+int main()<br />
+{<br />
+  printf(&#8221; Hello,Coding Unit!!! Thanks for helping us\n&#8221;);<br />
+}</p>
+		</li>
+
+	
+	
+		<li class="alt" id="comment-9841">
+
+            			<cite>RIFAYATHALI</cite> on <small>March 6th, 2014</small>:
+			
+			<p>very nice article. it really useful to us in basic c programming thanks!!!!!!</p>
+		</li>
+
+	
+	
+		<li class="" id="comment-9888">
+
+            			<cite>Manasa</cite> on <small>March 13th, 2014</small>:
+			
+			<p>very nice.thank you so much&#8230;&#8230;&#8230;</p>
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+</div>
+
+	
+   <div id="back">
+            <a href="#documentContent" title="up to the page content">up to content</a> &raquo;
+    </div>
+</div>
+</div>
+
+<div id="column2">
+<div class="container-left">
+
+							<ul><li class="listHeader"><h2>C Tutorials</h2></li>
+			<hr/>
+																<li><a href="http://www.codingunit.com/the-history-of-the-c-language" rel="bookmark" title="The History of the C Language">The History of the C Language</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-compilers-gnu-and-visual-studio" rel="bookmark" title="C Tutorial &#8211; Compilers (GNU and Visual Studio)">C Tutorial &#8211; Compilers (GNU and Visual Studio)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-first-c-program-hello-world" rel="bookmark" title="First C program, Hello World">First C program, Hello World</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-variables-and-constants" rel="bookmark" title="C Tutorial &#8211; variables and constants">C Tutorial &#8211; variables and constants</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-if-and-switch-statement" rel="bookmark" title="C Tutorial &#8211; The if and switch statement">C Tutorial &#8211; The if and switch statement</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-for-loop-while-loop-break-and-continue" rel="bookmark" title="C Tutorial &#8211; for loop, while loop, break and continue">C Tutorial &#8211; for loop, while loop, break and continue</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-arrays-and-multi-dimensional-arrays" rel="bookmark" title="C Tutorial &#8211; Arrays and Multi-Dimensional Arrays">C Tutorial &#8211; Arrays and Multi-Dimensional Arrays</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-functions-and-global-local-variables" rel="bookmark" title="C Tutorial &#8211; Functions and Global/Local variables">C Tutorial &#8211; Functions and Global/Local variables</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-c-functions" rel="bookmark" title="C Tutorial &#8211; More on Functions">C Tutorial &#8211; More on Functions</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-pointers" rel="bookmark" title="C Tutorial &#8211; How to use Pointers">C Tutorial &#8211; How to use Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-more-on-pointers" rel="bookmark" title="C Tutorial &#8211; More on Pointers">C Tutorial &#8211; More on Pointers</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-strings-and-string-library-functions" rel="bookmark" title="C Tutorial &#8211; strings and string Library Functions">C Tutorial &#8211; strings and string Library Functions</a></li>
+									<li><a href="http://www.codingunit.com/printf-format-specifiers-format-conversions-and-formatted-output" rel="bookmark" title="C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output">C Tutorial &#8211; printf, Format Specifiers, Format Conversions and Formatted Output</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-structures-unions-typedef" rel="bookmark" title="C Tutorial &#8211; structures, unions, typedef">C Tutorial &#8211; structures, unions, typedef</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-file-io-using-text-files" rel="bookmark" title="C Tutorial &#8211; File I/O (using text files)">C Tutorial &#8211; File I/O (using text files)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-the-functions-malloc-and-free" rel="bookmark" title="C Tutorial &#8211; The functions malloc and free">C Tutorial &#8211; The functions malloc and free</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-binary-file-io" rel="bookmark" title="C Tutorial &#8211; Binary File I/O">C Tutorial &#8211; Binary File I/O</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-and-renaming-a-file" rel="bookmark" title="C Tutorial &#8211; Deleting and Renaming a File">C Tutorial &#8211; Deleting and Renaming a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-copying-a-file-in-c" rel="bookmark" title="C Tutorial &#8211; Copying a File">C Tutorial &#8211; Copying a File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-command-line-parameter-parsing" rel="bookmark" title="C Tutorial &#8211; Command Line Parameter Parsing">C Tutorial &#8211; Command Line Parameter Parsing</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-how-to-use-time-and-date-in-c" rel="bookmark" title="How to use Time and Date in C">How to use Time and Date in C</a></li>
+									<li><a href="http://www.codingunit.com/writing-memory-to-a-file-and-reading-memory-from-a-file-in-c" rel="bookmark" title="Writing Memory to a File and Reading Memory from a File in C">Writing Memory to a File and Reading Memory from a File in C</a></li>
+									<li><a href="http://www.codingunit.com/how-to-make-a-calendar-in-c" rel="bookmark" title="How to make a Calendar in C">How to make a Calendar in C</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-searching-for-strings-in-a-text-file" rel="bookmark" title="C Tutorial &#8211; Searching for Strings in a Text File">C Tutorial &#8211; Searching for Strings in a Text File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-number-of-seconds-in-decade-and-visaversa" rel="bookmark" title="C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa">C Tutorial &#8211; Number of Seconds in Decade and Visa-Versa</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-a-star-pyramid-and-string-triangle-using-for-loops" rel="bookmark" title="C Tutorial – A Star pyramid and String triangle using for loops">C Tutorial – A Star pyramid and String triangle using for loops</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference" rel="bookmark" title="C Tutorial – Call by Value or Call by Reference">C Tutorial – Call by Value or Call by Reference</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file" rel="bookmark" title="C Tutorial – Deleting a Record from a Binary File">C Tutorial – Deleting a Record from a Binary File</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files" rel="bookmark" title="C Tutorial – Splitting a Text File into Multiple Files">C Tutorial – Splitting a Text File into Multiple Files</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-error-handling-exception-handling" rel="bookmark" title="C Tutorial – Error Handling (Exception Handling)">C Tutorial – Error Handling (Exception Handling)</a></li>
+									<li><a href="http://www.codingunit.com/c-tutorial-queues" rel="bookmark" title="C Tutorial &#8211; Queues">C Tutorial &#8211; Queues</a></li>
+								
+			</ul>
+					</div>
+</div>
+<br class="clear" />
+</div>
+
+<div id="column3">
+<div class="container-right">
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+			<ul><li class="listHeader"><h2>Latest Posts</h2></li>
+		<hr/>
+				<li><a href='http://www.codingunit.com/c-tutorial-queues'>C Tutorial &#8211; Queues</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-error-handling-exception-handling'>C Tutorial – Error Handling (Exception Handling)</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-splitting-a-text-file-into-multiple-files'>C Tutorial – Splitting a Text File into Multiple Files</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-deleting-a-record-from-a-binary-file'>C Tutorial – Deleting a Record from a Binary File</a></li>
+	<li><a href='http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference'>C Tutorial – Call by Value or Call by Reference</a></li>
+	<li><a href='http://www.codingunit.com/checking-for-palindrome-strings-or-numbers-in-c-language'>Checking for Palindrome Strings or Numbers in C Language</a></li>
+	<li><a href='http://www.codingunit.com/linear-search-algorithm-in-c-language'>Linear Search Algorithm in C Language</a></li>
+	<li><a href='http://www.codingunit.com/determining-the-area-of-different-shaped-triangles-in-c'>Determining the Area of Different Shaped Triangles in C</a></li>
+	<li><a href='http://www.codingunit.com/area-of-a-rectangle-circle-and-trapezium-in-c'>Area of a Rectangle Circle and Trapezium in C</a></li>
+	<li><a href='http://www.codingunit.com/how-to-print-floyds-triangle-in-c'>How to Print Floyds Triangle in C</a></li>
+		</ul>
+		<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+	<div class="google-skyscraper"><script type="text/javascript"><!--
+google_ad_client = "pub-7868601750853261";
+/* 300x250, created 9/24/08 */
+google_ad_slot = "9605146122";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+</div>
+</div>
+
+<br class="clear" />
+
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-2735312-4");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<div id="footer">
+	<hr/>
+    <p>&copy; 2015 <a href="http://www.codingunit.com">CodingUnit Programming Tutorials</a>. All Rights Reserved. | <a href="mailto:contact@codingunit.com?subject=Question">Contact</a></p>
+	<p><a href="http://www.codingunit.com/terms" target="_blank">TERMS</a> 
+	  and <a href="http://www.codingunit.com/privacy-policy" target="_blank">Privacy Policy</a> 
+	  UNDER WHICH THIS SERVICE IS PROVIDED TO YOU.</p>
+</div>
+
+</div>
+
+
+</div>
+</div>
+        <!-- 28 queries. 0.618 seconds. -->
+</body>
+</html>
+

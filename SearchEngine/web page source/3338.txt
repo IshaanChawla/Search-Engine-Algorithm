@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The Code for the Survey itself</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">PHP Survey code</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing Survey/Poll tutorial. The first part is 
+  here: <a href="php15p1.html">Build your own Survey/Poll</a>, along with all 
+  the files you need.</i></p>
+<p>&nbsp;</p>
+<p>In the <a href="php15p3.html">previous section</a>, you saw how to code for 
+  setting a question in your Survey. We'll now look at the Survey page.</p>
+<p>The survey itslef can be found in the survey folder and is called <b>survey.php</b>. 
+  Open up this page in a browser by typing the following address:</p>
+<p class="TextIndent3">127.0.0.1/survey/survey.php</p>
+<p>You should see this:</p>
+<p align="center"><img src="images/survey10.jpg" width="171" height="207" border="1" alt="The Survey"></p>
+<p align="left">&nbsp;</p>
+<p align="left">All we have here is a question, and three possible answers. To 
+  vote, you select an answer and click the button. When you do, you're taken to 
+  another page which thanks you for voting. On the page, there is also a button 
+  that allows you to view the results. Let's see how it all works.</p>
+<p>To see the code for the survey, open up <b>survey.php</b> in your text editor. 
+  The first line you'll see is this:</p>
+<p class="indent_big_no_bold"><b>include</b> 'sqlSurvey.php';</p>
+<p>The include file is an important one. Open up this file (also in the survey 
+  folder), and you'll see that it's just a SQL command. This SQL is used to pull 
+  a question from the database. </p>
+<p>The code is this:</p>
+<p class="indent_small">$qNum = 'q4';</p>
+<p class="indent_small">$SQL = &quot;SELECT * FROM tblquestions WHERE tblquestions.QID 
+  = '$qNum'&quot;;</p>
+<p>Only two lines long! The first line sets the question number. This is the QID 
+  field from the tblQuestions table. To set a new question, the only thing you 
+  have to change is this value. Try it. Change 'q4' to one of the other three 
+  values in the table: q3, q2, or q1. Save the file, and reload survey.php in 
+  your browser. You should see the question and answers change.</p>
+<p>The important part of the SQL line is this:</p>
+<p class="TextIndent3">WHERE tblquestions.QID = '$qNum'</p>
+<p>We're saying select all the records WHERE the QID field matches the value in 
+  the variable called <b>$qNum</b>. That's enough to pull the question and answers 
+  from the table! But although the file is included on the first line, the code 
+  inside of it doesn't get run till a little later.</p>
+<p>The next few lines just set up some variables, and put default values in them. 
+  After that, we add the code that opens up the database. You've met all this 
+  before, so we won't go into it.</p>
+<p>The part of the code that uses the include file is this:</p>
+<p class="TextIndent3">$result = mysql_query($SQL);</p>
+<p>The variable called<b> $SQL</b> is in the include file. The survey code can 
+  see this variable because of the include directive. So it knows what's inside 
+  of it.</p>
+<p>If mysql_query( ) succeeds, we can put the values into an array with the next 
+  line (though you should write could for false values inside of $result):</p>
+<p class="indent_big_no_bold">$db_field = <b>mysql_fetch_assoc(</b> $result <b>)</b>;</p>
+<p>The data from the SQL is then placed into an array called <b>$db_field</b>. 
+  You can get at these values like this:</p>
+<P class="indent_big">$qID = $db_field['QID'];<br>
+  $question = $db_field['Question'];<br>
+  $A = $db_field['qA'];<br>
+  $B = $db_field['qB'];<br>
+  $C = $db_field['qC'];</P>
+<p>Here, we're returning the values from the following fields in the table: QID, 
+  Question, qA, qB, and qC. We've put these into variables of their own.</p>
+<p>Once we have the question and the answers, we can put these into the HTML on 
+  the page. There are two HTML forms on the page. The first is this:</p>
+<p class="TextIndent2">&lt;FORM NAME =&quot;form1&quot; METHOD =&quot;GET&quot; 
+  ACTION =&quot;process.php&quot;&gt;</p>
+<p class="TextIndent2">&lt;?PHP print $question; ?&gt;</p>
+<p class="indent_small">&lt;P&gt;<br>
+  &lt;INPUT TYPE = 'Radio' Name ='q' value= 'A' &lt;?PHP print $answerA; ?&gt;&gt;&lt;?PHP 
+  print $A; ?&gt;<br>
+  &lt;P&gt;<br>
+  &lt;INPUT TYPE = 'Radio' Name ='q' value= 'B' &lt;?PHP print $answerB; ?&gt;&gt;&lt;?PHP 
+  print $B; ?&gt;<br>
+  &lt;P&gt;<br>
+  &lt;INPUT TYPE = 'Radio' Name ='q' value= 'C' &lt;?PHP print $answerC; ?&gt;&gt;&lt;?PHP 
+  print $C; ?&gt;<br>
+  &lt;P&gt;</p>
+<p class="indent_small">&lt;INPUT TYPE = &quot;Submit&quot; Name = &quot;Submit1&quot; 
+  VALUE = &quot;Click here to vote&quot;&gt;</p>
+<p class="TextIndent2">&lt;/FORM&gt;</p>
+<p>The question from our code is placed on the page with this line:</p>
+<p class="indent_big">&lt;?PHP print $question; ?&gt;</p>
+<p>This is the value that we got from the field in the tblQuestions table. </p>
+<p>The code for the answers is then added to the radio button on the form:</p>
+<p class="indent_small">value= 'A' &lt;?PHP print $answerA; ?&gt;&gt;&lt;?PHP 
+  print $A; ?&gt;</p>
+<p>The &quot;print $answerA&quot; part will just add a value of checked or unchecked 
+  to the radio button, depending on whether it was selected or not. An answer 
+  is added to the radio button like this:</p>
+<p class="indent_small">&lt;?PHP print $A; ?&gt;</p>
+<p>Whatever data we pulled from the <b>A</b> &quot;field&quot; in the table will 
+  end up in the variable called <b>$A</b>. This is then printed to the page. </p>
+<p>If the button is clicked, though, we're sending it to a page called process.php. 
+  We'll take a look at that in a moment, but notice the second Form on the page:</p>
+<p class="indent_small">&lt;FORM NAME =&quot;form2&quot; METHOD =&quot;GET&quot; 
+  ACTION =&quot;viewResults.php&quot;&gt;</p>
+<P class="indent_big">&lt;INPUT TYPE = &quot;Submit&quot; Name = &quot;Submit2&quot; 
+  VALUE = &quot;View results&quot;&gt;<br>
+  &lt;INPUT TYPE = &quot;Hidden&quot; Name = &quot;h1&quot; VALUE = &lt;?PHP print 
+  $qID; ?&gt;&gt;</P>
+<p class="indent_small">&lt;/FORM&gt;</p>
+<P>This is for the &quot;View Results&quot; page. When this button is clicked, 
+  it goes to a new page: viewResults.php. But there is a crucial HTML form element 
+  in the form code:</P>
+<P class="indent_small">&lt;INPUT TYPE = &quot;Hidden&quot; Name = &quot;h1&quot; 
+  VALUE = &lt;?PHP print $qID; ?&gt;&gt;</P>
+<p>This sends the QID number to the viewResults page. We can then use this value 
+  to pull the correct records from the two tables. You'll see how this works soon. 
+  But one more thing to notice: both forms use the GET method to hand data to 
+  the next page. Now let's move on to the code for the <b>process.php</b> page.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php15p3.html">&lt;-- Back One Page</a> | <a href="php15p5.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

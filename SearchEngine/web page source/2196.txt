@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Hadoop Training Course: Building Big-Data Apps in the Cloud</title>
+<meta name="description" content="Live training course on Hadoop programming. From experienced developer Karthik Shyamsunder and coreservlets.com. Co-sponsored by Johns Hopkins University." />
+<script src="../../scripts/sniffer.js" type="text/javascript"></script>
+<script src="../../scripts/menus.js" type="text/javascript"></script>
+<script src="../../scripts/toc.js" type="text/javascript"></script>
+<link href="../../styles/screen.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="../../styles/print.css" rel="stylesheet" type="text/css" media="print" />
+<script type="text/javascript">
+<!--
+chooseCss();
+//-->
+</script>
+<style type="text/css">
+  .norway { font-size: xx-small;
+	          color: #330066 }
+</style>
+<script src="../../scripts/jquery/js/jquery.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/jquery-ui.js" type="text/javascript"></script>
+<script src="../../scripts/jquery/js/setup.js" type="text/javascript"></script>
+<link href="../../scripts/jquery/css/current-theme/current-theme.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+
+<body>
+<!-- Begin Banner Table -->
+<a name="top"></a>
+<table id="banner_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="logo"><a href="http://www.coreservlets.com/"><img src="../../images/banner.jpg" alt="logo" width="601" height="86" border="0" /></a><img src="../../images/Gosling.jpg" alt="Hall and Gosling" /></td>
+  <td id="martyPic"><img src="../../images/marty-hall.jpg" alt="Marty Hall" width="96" height="86" /></td>
+  <td id="banner_bg">&nbsp;</td>
+  </tr>
+</table>
+<!-- End Banner Table -->
+
+<!-- Begin SubNav Table -->
+<table id="subnav_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td id="subnav"><a href="http://www.coreservlets.com/">home</a> <a href="mailto:hall@coreservlets.com">contact</a> <a href="http://www.coreservlets.com/sitemap.html">sitemap</a> </td>
+  </tr>
+</table>
+<!-- End SubNav Table -->
+
+<!-- Begin Nav Bar Table with Google search -->
+<form method="get" action="http://www.google.com/search">
+<table id="navbar_Table" width="100%"  border="0" cellspacing="0" cellpadding="0">
+  <tr id="navbar">
+  <td id="nav_training" nowrap="nowrap"><a href="http://courses.coreservlets.com/" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">Training</a></td>
+  <td id="nav_tutorials" nowrap="nowrap"><a href="http://courses.coreservlets.com/Course-Materials/" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">Tutorials</a></td>
+  <td id="nav_books" nowrap="nowrap"><a href="http://books.coreservlets.com/" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">Books</a></td>
+  <td id="nav_consulting" nowrap="nowrap"><a href="http://consulting.coreservlets.com/">Consulting&nbsp;&amp;&nbsp;Outsourcing</a></td>
+  <td id="nav_resources" nowrap="nowrap"><a href="http://resources.coreservlets.com/" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">Programming Resources</a></td>
+  <td id="nav_jobs" nowrap="nowrap"><a href="http://jobs.coreservlets.com/">Jobs</a></td>
+  <td colspan="2"></td>
+  <td id="search_cell" colspan="2" nowrap="nowrap">
+<!-- SiteSearch Google -->
+<input type="hidden" name="ie" value="iso-8859-1" />
+<input type="hidden" name="oe" value="iso-8859-1" />
+<input id="search" type="text" name="q" maxlength="255" value="" /><input id="search_button" type="submit" name="btnG" value="search" />
+<input type="hidden" name="sitesearch" value="coreservlets.com" />
+<!-- SiteSearch Google -->
+  </td>
+  </tr>
+  <tr>
+  <td colspan="9">&nbsp;</td>
+  </tr>
+</table>
+</form>
+<!-- End Nav Bar Table with Google search -->
+
+<!-- Begin Drop-down Menus -->
+<div id="submenu">
+<div id="submenu_training" onmouseover="showTrainingMenu();" onmouseout="hideTrainingMenu();">
+<a href="http://www.courses.coreservlets.com/about-instructor.html">About the Instructor</a>
+<a href="http://www.courses.coreservlets.com/student-reviews.html">Training Course Reviews</a>
+<a href="http://courses.coreservlets.com/jsf-training.html">JSF 2 Training<br/>&amp; PrimeFaces Training</a>
+<a href="http://courses.coreservlets.com/java-training.html">Java Training<br/>(Java 7 &amp; 8 Programming)</a>
+<a href="http://courses.coreservlets.com/android-training.html">Android Training</a>
+<a href="http://courses.coreservlets.com/ajax-training.html">Ajax Training<br/>(w/ jQuery, HTML5, etc.)</a>
+<a href="http://courses.coreservlets.com/hadoop-training.html">Hadoop Training</a>
+<a href="http://courses.coreservlets.com/web-services-training.html">Web Services Training<br/>(RESTful &amp; SOAP-Based)</a>
+<a href="http://courses.coreservlets.com/spring-training.html">Spring Training</a>
+<a href="http://courses.coreservlets.com/hibernate-training.html">Hibernate &amp; JPA Training</a>
+<a href="http://courses.coreservlets.com/gwt-training.html">GWT Training</a>
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html">Servlet &amp; JSP Training</a>
+<a href="http://courses.coreservlets.com/scwcd-training.html">SCWCD Training</a>
+<a href="http://courses.coreservlets.com/">Customized On-Site Training</a> 
+<a href="http://courses.coreservlets.com/public-courses/">Public Course Schedule</a>
+</div>
+<div id="submenu_tutorials" onmouseover="showTutorialsMenu();" onmouseout="hideTutorialsMenu();">
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+Tomcat &amp; Eclipse Tutorial</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+JSF (JavaServer Faces)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+&nbsp;&nbsp;&nbsp;JSF 2 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+&nbsp;&nbsp;&nbsp;PrimeFaces Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+&nbsp;&nbsp;&nbsp;JSF 1 Tutorial<br/>&nbsp;&nbsp;&nbsp;(with Eclipse)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+Java 7 and Java 8 Programming Tutorial</a>
+<a href="http://www.coreservlets.com/android-tutorial/">
+Android Programming Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+Ajax Tutorial (&amp; GWT)</a>
+<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+&nbsp;&nbsp;&nbsp;Basics &amp; JavaScript</a>
+<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+&nbsp;&nbsp;&nbsp;Prototype Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+&nbsp;&nbsp;&nbsp;Scriptaculous Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+&nbsp;&nbsp;&nbsp;jQuery Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+&nbsp;&nbsp;&nbsp;Dojo Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+&nbsp;&nbsp;&nbsp;GWT Tutorial</a>
+<a href="http://www.coreservlets.com/html5-tutorial/">
+HTML5 Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+Spring Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+JPA &amp; Hibernate Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+Intermediate Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+Advanced Servlets &amp; JSP</a>
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+EJB3 &amp; Web Services</a>
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+SCWCD Tutorial</a>
+<a href="http://www.courses.coreservlets.com/Course-Materials/struts.html">
+Jakarta Struts Tutorial</a>
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+Tutorials in Chinese</a>
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+Tutorials in Japanese</a>	
+</div>
+<div id="submenu_books" onmouseover="showBooksMenu();" onmouseout="hideBooksMenu();">
+<a href="http://volume1.coreservlets.com/">Core Servlets &amp; JSP Vol I</a>
+<a href="http://volume2.coreservlets.com/">Core Servlets &amp; JSP Vol II</a>
+<a href="http://www.moreservlets.com/">More Servlets &amp; JSP</a>
+<a href="http://pdf.coreservlets.com/">Core Servlets &amp; JSP E-Book</a>
+<a href="http://pdf.moreservlets.com/">More Servlets &amp; JSP E-Book</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Recommended Java EE Books</a>
+<a href="http://www.corewebprogramming.com/">Core Web Programming</a>
+<a href="http://www.coreservlets.com/first-edition.html">Core Servlets &amp; JSP 1st Ed.</a>
+</div>
+<div id="submenu_resources" onmouseover="showResourcesMenu();" onmouseout="hideResourcesMenu();">
+<a href="http://resources.coreservlets.com/quick-summary.html">Quick Ref to APIs &amp; Docs</a>
+<a href="http://resources.coreservlets.com/jsp-docs.html">Specifications &amp; Documentation</a>
+<a href="http://resources.coreservlets.com/jsp-servers.html">Servers</a>
+<a href="http://resources.coreservlets.com/jsp-ides.html">IDEs</a>
+<a href="http://resources.coreservlets.com/j2ee-jobs.html">Java-Related Jobs</a>
+<a href="http://resources.coreservlets.com/jsf.html">JSF (JavaServer Faces)</a>
+<a href="http://resources.coreservlets.com/java-ee-books.html">Books</a>
+<a href="http://resources.coreservlets.com/jsp-hosting.html">Web Hosting Providers</a>
+<a href="http://www.apl.jhu.edu/~hall/java/">Java Programming</a>
+<a href="http://coreservlets.tradepub.com/">Free trade magazines &amp; whitepapers</a>
+</div>
+</div>
+<!-- End Drop-down Menus -->
+
+<div id="main_table">
+<table width="100%"  border="0" cellspacing="0" cellpadding="0">  
+<tr>
+<!-- Begin Left Sidebar -->
+<td id="sidebar_left" nowrap="nowrap"><!-- #BeginLibraryItem "/Library/TrainingSideLinks.lbi" -->      
+<div id="sidebar_left_heading"><a href="http://courses.coreservlets.com/">training courses</a></div>
+<div class="list">
+
+<a href="http://courses.coreservlets.com/about-instructor.html"><span class="smallCaps">A</span>BOUT THE <span class="smallCaps">I</span>NSTRUCTOR</a><br/>
+  
+<a href="http://courses.coreservlets.com/student-reviews.html"><span class="smallCaps">C</span>OURSE <span class="smallCaps">R</span>EVIEWS</a><br/>
+  
+<a href="http://courses.coreservlets.com/jsf-training.html">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span> &amp;
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+<a href="http://courses.coreservlets.com/java-training.html"><span class="smallCaps">J</span>AVA 7 &amp; <span class="smallCaps">J</span>AVA 8 <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/android-training.html"><span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://courses.coreservlets.com/ajax-training.html">
+<span class="smallCaps">A</span>JAX (w/ J<span class="smallCaps">Q</span>UERY, <span class="smallCaps">HTML</span>5, 
+<span class="smallCaps">E</span>TC.)</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/hadoop-training.html"><span class="smallCaps">R</span>ESTful
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES</a><br/>
+
+<a href="http://courses.coreservlets.com/gwt-training.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://courses.coreservlets.com/spring-training.html"><span class="smallCaps">S</span>PRING 
+<span class="smallCaps">F</span>RAMEWORK</a><br/>
+
+<a href="http://courses.coreservlets.com/hibernate-training.html"><span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/servlet+jsp-training.html"><span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/scwcd-training.html"><span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/"><span class="smallCaps">C</span>USTOMIZED <span class="smallCaps">O</span>N-SITE</a><br/>
+  
+<a href="http://courses.coreservlets.com/public-courses/"><span class="smallCaps">P</span>UBLIC <span class="smallCaps">T</span>RAINING <span class="smallCaps">S</span>CHEDULE</a><br/><br/>
+</div><!-- #EndLibraryItem --><!-- #BeginLibraryItem "/Library/TutorialsSideLinks.lbi" -->    <div class="sidebar_left_heading2"><a href="http://courses.coreservlets.com/Course-Materials/">free tutorials</a></div>
+<div class="list"> 
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">6</span></a><br/>
+
+<a href="http://www.coreservlets.com/Apache-Tomcat-Tutorial/tomcat-7-with-eclipse.html">
+<span class="smallCaps">A</span>PACHE <span class="smallCaps">T</span>OMCAT 
+<span class="smallCaps">7</span></a><br/>
+
+<a href="http://www.coreservlets.com/JSF-Tutorial/">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>ERVER <span class="smallCaps">F</span>ACES <span class="smallCaps">(JSF)</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf2/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">2</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/primefaces/">
+<span class="smallCaps">P</span>RIME<span class="smallCaps">F</span>ACES</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/JSF-Tutorial/jsf1/">
+<span class="smallCaps">JSF</span> <span class="smallCaps">1</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/java.html">
+<span class="smallCaps">G</span>ENERAL <span class="smallCaps">J</span>AVA <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+&nbsp;&nbsp;<a href="http://www.coreservlets.com/java-8-tutorial/">
+<span class="smallCaps">J</span>AVA <span class="smallCaps">8</span> <span class="smallCaps">L</span>AMBDAS &amp; <span class="smallCaps">S</span>TREAMS</a><br/>
+
+<a href="http://www.coreservlets.com/android-tutorial/">
+<span class="smallCaps">A</span>NDROID <span class="smallCaps">P</span>ROGRAMMING</a><br/>
+
+<a href="http://www.coreservlets.com/hadoop-tutorial/">
+<span class="smallCaps">H</span>ADOOP</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/ajax.html">
+<span class="smallCaps">A</span>JAX &amp; <span class="smallCaps">GWT</span></a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/ajax-basics.html">
+<span class="smallCaps">J</span>AVA<span class="smallCaps">S</span>CRIPT &amp;
+<span class="smallCaps">A</span>JAX <span class="smallCaps">B</span>ASICS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/prototype.html">
+<span class="smallCaps">P</span>ROTOTYPE</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/scriptaculous.html">
+<span class="smallCaps">S</span>CRIPTACULOUS</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/jquery.html">
+J<span class="smallCaps">Q</span>UERY</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/dojo.html">
+<span class="smallCaps">D</span>OJO</a><br/>
+
+&nbsp;&nbsp;<a href="http://courses.coreservlets.com/Course-Materials/gwt.html">
+<span class="smallCaps">GWT</span></a><br/>
+
+<a href="http://www.coreservlets.com/html5-tutorial/">
+<span class="smallCaps">HTML 5</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/csajsp2.html">
+<span class="smallCaps">I</span>NTERMEDIATE <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/msajsp.html">
+<span class="smallCaps">A</span>DVANCED <span class="smallCaps">S</span>ERVLETS &amp; <span class="smallCaps">JSP</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/spring.html">
+<span class="smallCaps">S</span>PRING</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/hibernate.html">
+<span class="smallCaps">H</span>IBERNATE &amp; <span class="smallCaps">JPA</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/struts.html">
+<span class="smallCaps">J</span>AKARTA <span class="smallCaps">S</span>TRUTS</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">EJB</span>3</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/java-ee.html">
+<span class="smallCaps">W</span>EB <span class="smallCaps">S</span>ERVICES WITH <span class="smallCaps">A</span>XIS2</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/scwcd.html">
+<span class="smallCaps">SCWCD</span></a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/chinese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">C</span>HINESE</a><br/>
+
+<a href="http://courses.coreservlets.com/Course-Materials/japanese.html">
+<span class="smallCaps">T</span>UTORIALS IN <span class="smallCaps">J</span>APANESE</a><br/><br/>	
+
+</div><!-- #EndLibraryItem --><br /><p>&nbsp;</p>
+  </td>
+<!-- End Left Sidebar -->
+
+<!-- Begin Main Content -->
+<td  id="content" colspan="7"><div itemscope itemtype="http://data-vocabulary.org/Event"> <!-- Event Microdata -->
+  <meta itemprop="url" content="http://courses.coreservlets.com/public-courses/hadoop/"/>
+
+<h1 class="highlight_heading" itemprop="summary">Hadoop: Building Big-Data Apps in the Cloud</h1>
+<h2 class="subtitle"><font color="blue">February 23-27 2015, JHU Dorsey Center, Elkridge MD<br/>
+  Co-Sponsored by Johns Hopkins <i>Engineering for Professionals</i><br/>
+</font><img src="../../images/jhu_ep_logo_blue.jpg" alt="JHU/EP Logo"/></h2>
+<br clear="all"/>
+
+<!-- #BeginLibraryItem "/Library/ClassOver.lbi" -->
+<table align="center" bgcolor="red">
+  <tr>
+    <th> <font color="yellow"> This class is now over. Next public version is tentatively set for summer or fall 2015 
+      at the same Johns Hopkins location in Maryland.
+      In the meantime, please contact <a href="mailto:hall@coreservlets.com">hall@coreservlets.com</a> for information on a customized onsite version at <i>your</i> location. Lower price, more convenient for your developers,
+      and customizable content. Full-day courses can be held at any location worldwide, but for clients in the Baltimore/Washington area, late afternoon, evening, or weekend sessions can also be arranged. </font></th>
+  </tr>
+</table>
+<br/>
+<!-- #EndLibraryItem --><!-- #BeginLibraryItem "/Library/Quotes.lbi" -->
+<div class="pull_quote" style="width: 230px; margin-right: 10px; margin-bottom: 10px;">
+<p>&ldquo;Wonderful. In 20 years,
+this is the best organized, most pragmatic and
+enjoyable course I've taken.&rdquo;</p>
+<p>&ldquo;The best instructor-led 
+course I have attended, by far.&rdquo;</p>
+<p>&ldquo;Best short course ever!&rdquo;</p>
+<p>&ldquo;Compared to the other short courses I have taken, this one completely redefined my scale from 1-10.&rdquo;</p>
+<p>&ldquo;In my 35+ years of taking technical courses,
+Marty's classes consistently come out ranking #1 on my list. Highly relevant
+material is delivered with enthusiasm, humor, and a high degree of class 
+interaction that is unmatched anywhere.&rdquo;</p>
+<p><a href="http://courses.coreservlets.com/student-reviews.html">more student reviews</a></p>
+</div><!-- #EndLibraryItem -->
+
+<p>
+  <img src="../../images/hadoop-logo.png" align="right" alt="Hadoop Logo"/> 
+  This page describes the public (open enrollment) training course on Hadoop development to be held 
+  <font color="red">February 23-27 2015</font> at<!-- #BeginLibraryItem "/Library/JHU-Dorsey-Microformats2.lbi" --><span itemprop="location" itemscope itemtype="http://data-vocabulary.org/Organization">
+    <a href="../jhu-dorsey-travel-info.html" itemprop="url"><span itemprop="name">the Johns Hopkins Dorsey Center</span></a> </span><!-- #EndLibraryItem -->in Elkridge, MD (co-sponsored by the Johns Hopkins University <i>Engineering for Professionals</i> program).
+  The entire course is <i>personally</i> developed and taught by experienced Hadoop developer and instructor 
+  Karthik Shyamsunder. No contract instructor regurgitating someone else's materials! 
+  Coreservlets.com has presented Java-related courses onsite for 
+  <a href="../../about-instructor.html#clients">dozens of organizations</a> in the US, Canada, Mexico, Australia, 
+  Japan, Puerto Rico, India, Cambodia, Norway, and the Philippines, all to <a href="../../student-reviews.html">rave reviews</a>.</p><!-- #BeginLibraryItem "/Library/CustomCoursePlug.lbi" -->
+<p> 
+If you are looking for customized training courses on Java 7 or 8, JSF 2, PrimeFaces, Android, Ajax, jQuery, Hadoop (and Hadoop cerfication), GWT,
+Spring, Hibernate, Servlets, JSP, HTML5, or RESTful Web Services taught on-site at <i>your</i> company, please see <a href="../../index.html">this page</a>.
+</p><!-- #EndLibraryItem --><p> 
+  <b>Register Early!</b> 
+  Five of coreservlets.com's previous public short courses were full, so reserve your spot today. 
+  <a href="course-registration-form.html">Registrations</a> are taken in the order they are received.
+</p>
+ 
+<br clear="all"/>
+<div class="accordion-div">
+
+<h1 class="book_part"><a name="Overview"><b>Course Overview</b></a></h1>
+<div> <!-- Accordion content -->
+<p itemprop="description">
+  Apache Hadoop is a framework that allows for the distributed processing of massive data sets across clusters of computers using a simple programming model. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage.
+  Hadoop has established itself as an industry-leading platform for deploying cloud-based applications and services. The Hadoop eco-system is large, and it 
+  includes such popular products as HDFS, Map/Reduce, HBase, Zookeeper, Oozie, Pig, and Hive. However, with such versatility comes complexity and difficulty
+  in deciding on appropriate use cases. This course breaks down the walls of complexity by providing a practical approach to developing Java applications on top of the Hadoop platform.
+</p>
+<p>
+  <img src="../../images/hadoop-logo.png" align="left" alt="Hadoop Logo"/>
+  The course presents the material as small building blocks with a thorough coverage of each component in the Hadoop stack. We begin by looking at Hadoop’s architecture and its underlying parts with topdown identification of component interactions within the Hadoop eco-system. The course then provides in-depth coverage of Hadoop Distributed FileSystem (HDFS), HBase, Map/Reduce, Oozie, Pig and Hive. To re-enforce concepts, each section is followed by a set of hands-on exercises. The exercises come in various complexities to accommodate developers with various levels of expertise.
+</p>
+<p>
+  Coreservlets normally runs 
+  <a href="../../index.html">on-site training courses</a> at customer locations. 
+  This is easier administratively, is better for clients since the topics and schedule can be customized, and is 
+  more cost effective for students since no travel is required. However, due to demand from those 
+  who do not have enough students for an on-site course, Coreservlets will be running a public 
+  (open enrollment) Hadoop training course at the Johns Hopkins Dorsey Center in Elkridge MD.
+  This course is <i>personally</i> developed by the instructor Karthik Shyamsunder, an experienced Java Enterprise
+  developer who builds and deploys Hadoop-based applications on a daily basis.
+</p>
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Instructor"><b>About the Instructor</b></a></h1>
+<div> <!-- Accordion content -->
+<p>
+  Karthik Shyamsunder has been working with Apache and Big Data since 2009, and was the main architect for a company-wide storage and computing platform at a major Internet Infrastructure company. Besides having extensive industry experience, Karthik also designed and taught the first <i>Big Data Processing using Apache Hadoop</i> course at the Johns Hopkins University "Engineering for Professionals" program, where he was awarded the Excellence in Teaching award. Karthik also gave three talks on Big Data at the national JavaOne conference. 
+</p>
+<p>
+  Karthik is now the Principal Architect and consultant for a major Internet Infrastructure company, architecting solutions, and advising the software engineering department on industry and technology trends. He has given talks and lectures at various conferences including JavaOne, Northern Virginia Software Symposium, and AJAX World. In 2011, Karthik was inducted into the Oracle/JavaOne hall of fame and obtained the "Rock Star" award for his JavaOne presentations.
+</p>
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Prerequisites"><b>Prerequisites</b></a></h1>
+<div> <!-- Accordion content -->
+<p>
+  The course consists of an approximately equal mixture of lecture and hands-on lab time. 
+  The course assumes that all students already have at least moderate previous Java experience, 
+  but not necessarily any experience with Hadoop or cloud computing. Although the course will use Java 7, 
+  previous experience with earlier Java versions is sufficient. However, the course will <i>definitely</i> 
+  move too fast for those with little or no previous experience with Java. 
+  Working knowledge of XML is helpful but not absolutely required.
+</p>
+</div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Venue"><b>Venue</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/CourseVenueSection.lbi" -->
+<p>
+<img src="../../images/jhu_epp_logo_red.gif" alt="JHU/EP Logo" align="right"/>
+The course will be held at
+<a href="../jhu-dorsey-travel-info.html">the Johns Hopkins Dorsey Center</a> in 
+Elkridge, Maryland. This is a modern, comfortable venue with separate computers for each student, fast internet connections, 
+and with coffee, snacks, and meals included. Class meets from 8:30 am to 4:30 pm daily. For students who
+prefer to bring their own laptops, fast wifi is available, and you can 
+<a href="mailto:hall@coreservlets.com">email the instructor</a> for information
+on installing the class software in advance.
+</p>
+<p>
+For Maryland residents, the location is centrally located 5 minutes from BWI airport and has plenty of free parking.
+For out-of-town students, there are many hotels within 1 mile. 
+</p><!-- #EndLibraryItem --> </div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Registration"><b>Registration</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/CourseRegistrationSection.lbi" -->
+<p>
+The five-day course costs $2695 per student and includes an extensive course notebook, a commercial textbook, exercises, and exercise solutions. <b>Free</b> breakfast, snacks, and lunch. Compare this price to courses from  
+Learning Tree, GlobalKnowledge, and Oracle University that cost $3500-$4200 for five-day courses
+and $2800-$3000 for <i>four</i>-day courses and that do not include textbooks or meals. Besides, those courses almost always use an unknown instructor who did not develop the course materials and often lacks significant real-world development experience.
+</p>
+<p>
+To register, fill out and send in the 
+<a href="javascript:window.location.href='course-registration-form.html'">course registration form</a>.
+Space is limited: five previous offerings of coreservlets.com courses were full.
+<b>Bonus:</b> Register at least two weeks in advance and get a $100 gift certificate from amazon.com.
+</p><!-- #EndLibraryItem --> </div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="MoreInfo"><b>Questions and More Info</b></a></h1>
+<div> <!-- Accordion content --><!-- #BeginLibraryItem "/Library/CoursesMoreInfoSection.lbi" -->
+<table><tr><td>
+<br/>
+<ul>
+  <li>Want details on the topics? See the detailed curriculum below.</li>
+  <li>Have questions on the topics even after reading that? 
+      Email the instructor at <a href="mailto:hall@coreservlets.com">
+	    hall@coreservlets.com</a>.</li>
+  <li>Want information on the instructor? See <a href="../../about-instructor.html">
+      this brief bio</a>.</li>
+  <li>Want to register? See <a href="javascript:window.location.href='course-registration-form.html'"> 
+      the course registration form</a>.</li>
+  <li>Registration questions? Email the registrar at 
+      <a href="mailto:registrar@coreservlets.com">registrar@coreservlets.com</a> 
+	    or phone (410) 429-5535.</li>
+</ul>
+</td><td width="10"></td><td>
+<br/>
+<ul>
+  <li><b>Guinea pigs? No!</b> Marty's courses are well-tested, having been taught
+      in 8 countries and dozens of US venues. We
+      don't use your developers as guinea pigs for new materials.</li>
+  <li><b>Regurgitation? No!</b> Marty developed all his own materials. No
+      contract instructor regurgitating memorized PowerPoint slides.</li>
+  <li><b>Green? No!</b> Marty is an experienced developer, and
+      is the author of 6 popular Java EE texts from Prentice Hall. The course
+      gives best practices and real-world strategies. No newbie
+      instructor dodging tough questions.</li>
+</ul>
+</td></tr></table><!-- #EndLibraryItem --></div> 
+<!-- Accordion content -->
+
+<h1 class="book_part"><a name="Syllabus"><b>Syllabus</b></a></h1>
+<div> <!-- Accordion content -->
+<h3 class="topics">The Big Data Economy</h3>
+  <ul>
+    <li>Data! Data! Data!</li>
+    <li>Data Economy </li>
+    <li>Data Analytics</li>
+    <li>Data Science </li>
+    <li>Traditional Data Processing Technologies</li>
+  </ul>
+
+<h3 class="topics">Apache Hadoop Architecture and Ecosystem</h3>
+  <ul>
+    <li>Hadoop Background</li>
+    <li>Hadoop Architecture</li>
+    <li>Hadoop and RDBMS</li>
+    <li>Hadoop Subprojects</li>
+    <li>Hadoop Distributions</li>
+    <li>Hadoop Documentation</li>
+  </ul>
+
+<h3 class="topics">Setting up Hadoop</h3>
+  <ul>
+    <li>Installing Hadoop</li>
+    <li>Configuring Hadoop</li>
+    <li>Starting Hadoop</li>
+    <li>Running Hadoop Clients</li>
+    <li>Browsing Hadoop UI Consoles </li>
+  </ul>
+
+<h3 class="topics">HDFS Architecture</h3>
+  <ul>
+    <li>Hadoop 1.0 HDFS Architecture</li>
+    <li>Hadoop 1.0 HDFS Architectural Capabilities - – Performance, Scalability, Availability, Installability, Comnfigurability, Operability, Usability, Security</li>
+    <li>Hadoop 2.0 HDFS Architecture</li>
+  </ul>
+
+<h3 class="topics">HDFS Programming Basics</h3>
+  <ul>
+    <li>Hadoop Configuration API</li>
+    <li>HDFS API Overview</li>
+    <li>HDFS File CRUD API</li>
+    <li>HDFS Directory CRUD API</li>
+  </ul>
+
+<h3 class="topics">HDFS Programming Advanced</h3>
+  <ul>
+    <li>File Compression Decompression</li>
+    <li>Type Serialization Deserialization</li>
+    <li>Sequence Files</li>
+  </ul>
+
+<h3 class="topics">MapReduce Architecture</h3>
+  <ul>
+    <li>Hadoop 1.0 MapReduce Architecture</li>
+    <li>Hadoop 1.0 MapReduce Architectural Capabilities – Performance, Scalability, Availability, Installability, Comnfigurability, Operability, Usability, Programmability</li>
+    <li>Hadoop  2.0 MapReduce Architecture </li>
+  </ul>
+
+<h3 class="topics">MapReduce Programming Basics</h3>
+  <ul>
+    <li>MapReduce Programming Concepts – Map Phase and Reduce Phase</li>
+    <li>MapReduce API – Key Java Classes and their Hierarchy</li>
+    <li>Steps to Write a MapReduce Program</li>
+  </ul>
+
+<h3 class="topics">MapReduce Programming Intermediate</h3>
+  <ul>
+    <li>Setting Mapper Counts and Reducer Counts</li>
+    <li>MapReduce Configuration</li>
+    <li>Combiners</li>
+    <li>Partitioners</li>
+    <li>Speculative Execution</li>
+    <li>Task JVM Reuse</li>
+    <li>Compression</li>
+  </ul>
+
+<h3 class="topics">MapReduce Programming Advanced</h3>
+  <ul>
+    <li>Output Format</li>
+    <li>Custom data Format</li>
+    <li>Input Format</li>
+    <li>Built in Mappers and Reducers</li>
+    <li>Counters</li>
+    <li>Multithreading</li>
+    <li>Distributed Cache</li>
+  </ul>
+
+<h3 class="topics">MapReduce Streaming and Pipes</h3>
+  <ul>
+    <li>MapReduce using Hadoop Streaming</li>
+    <li>MapReduce using Hadoop Pipes</li>
+  </ul>
+
+<h3 class="topics">MapReduce Development Best Practices</h3>
+  <ul>
+    <li>Logging in Hadooop</li>
+    <li>Exception Handling</li>
+    <li>Running Jobs Locally</li>
+    <li>Unit Testing with MRUnit</li>
+    <li>Top 10 Hadoop Anti-Patterns</li>
+  </ul>
+
+<h3 class="topics">Querying Data using Hive</h3>
+  <ul>
+    <li>Hive Background</li>
+    <li>Hive Architecture</li>
+    <li>Downloading, Installing and Configuring Hive</li>
+    <li>Simple Hive Example</li>
+    <li>Loading Data into Hive</li>
+    <li>Hive Query Statements</li>
+    <li>Hive Schema Violations</li>
+    <li>Using Built-in Hive Functions</li>
+    <li>Partitioning Data using Hive</li>
+    <li>Joining Data</li>
+  </ul>
+<h3 class="topics">Querying Data using Pig</h3>
+  <ul>
+    <li>Pig Background</li>
+    <li>Architecture</li>
+    <li>Downloading, Installing and Configuring Pig</li>
+    <li>Running Pig</li>
+    <li>Pig Latin Language Basics</li>
+    <li>Core Relational Operators – DISTINCT, FILTER, SPLIT, ORDER BY, LIMIT, GROUP, FOREACH</li>
+    <li>Built-in Functions</li>
+    <li>Relational Join Operators</li>
+    <li>Debug Operators</li>
+  </ul>
+
+<h3 class="topics">Realtime Database using HBase</h3>
+  <ul>
+    <li>HBase Overview</li>
+    <li>Data Model</li>
+    <li>Architecture</li>
+    <li>Downloading, Installing and Configuring HBase</li>
+    <li>HBase Shell</li>
+    <li>HBase Java API for CRUD Operations</li>
+  </ul>
+
+</div> 
+<!-- Accordion content -->
+
+</div>  <!-- Overall accordion-div -->
+</div>  <!-- Event Microdata -->
+
+
+</td>
+<!-- End Main Content -->
+
+<!-- Begin Right Sidebar -->
+<td id="sidebar_right" nowrap="nowrap">
+<div style="border-right: #533859 1px solid; border-left: #533859 1px solid; border-bottom: #533859 2px solid;">
+<div id="announcements"><font color="yellow">2014 AND<br/>2015 Courses</font></div>
+
+<p id="announcements_intro">
+Too few developers for<br/>
+onsite courses? Try<br/>
+our public courses in MD,<br/>
+co-sponsored by Johns<br/>
+Hopkins "Engineering<br/>
+for Professionals"<br/>
+<font color="red">&nbsp;&nbsp;(Updated Schedule)</font>
+</p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/jsf2/">
+JSF2: Modern Web <br/>Apps in Java</a><br/>
+(with PrimeFaces)</p>
+<p class="course_info"><font color="blue">November 10-14 2014</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/hadoop/">
+Hadoop: Big-Data<br/>Apps in the Cloud</a></p>
+<p class="course_info"><font color="blue">February 23-27 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java8/">
+Java 8 Mini-Course:<br/>
+Lambdas &amp; Streams</a></p>
+<p class="course_info"><font color="blue">January 22-23 2015</font></p>
+
+<p class="course_title">
+<a href="http://courses.coreservlets.com/public-courses/java/">
+Java Programming:<br/>A Crash Course</a></p>
+<p class="course_info"><font color="blue">January 26-30 2015</font></p>
+
+<p class="course_title"><a href="http://courses.coreservlets.com/">
+Customized<br/>
+On-Site Training</a>
+</p>
+<p class="course_info"><font color="blue">Courses at<br/> <i>YOUR</i> Location</font><br/>
+&nbsp;&#8226; Customized content<br/>
+&nbsp;&#8226; Flexible dates<br/>
+&nbsp;&#8226; Any country</p>
+</div><p>&nbsp;</p>
+</td>
+<!-- End Right Sidebar -->
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td id="copyright" colspan="7">
+&copy; 2015 coreservlets.com 
+| Design by <a href="http://www.tbiq.com/designedby.html" target="_blank">TBIQ</a> 
+| Java hosting from <a href="http://www.kattare.com/hosting-pricing-chart.kvws?ref=martyhall" target="_blank">Kattare</a></td>
+<td>&nbsp;</td>
+</tr>  
+</table>
+</div>
+</body></html>
+

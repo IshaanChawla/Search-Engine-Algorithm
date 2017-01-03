@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: Working with CSV files</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">CSV files and PHP</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p>CSV is a type of file. It means Comma Separated Values. Spreadsheets software 
+  like Excel will offer you the opportunity to save files with the CSV extension. 
+  We'll see how to work with these types of files now.</p>
+<p>The image below shows an Excel spreadsheets. It's just a simple price list:</p>
+<p align="center"><img src="images/excel_csv_file.png" alt="An Excel price list"></p>
+<p>The next image shows the spreadsheet being saved as a CSV file:</p>
+<p align="center"><img src="images/saving_a_csv_file.png" alt="Save As a CSV file"></p>
+<p align="left">And here's what the data looks like in a text editor:</p>
+<p align="center"><img src="images/excel3.jpg" width="434" height="313" alt="A CSV file in a text editor"></p>
+<p>The above CSV file is the one we want to work with. It shows each line separated 
+  by commas.</p>
+<p>PHP has a function that allows you to work with CSV file. It's called fgetcsv( 
+  ). It's just like the <a href="php10p3.html">fgets </a>function you used earlier. 
+  The difference is that fgetcsv( ) separates each line on the commas, and puts 
+  each part into an array. Before trying the next code, make sure you copy the 
+  <b>widgets.csv</b> file, from the <a href="../downloads.html">ones you downloaded,</a> 
+  over to the same folder where your script is. The widgets.csv file is in the 
+  scripts folder. Here's the code:</p>
+<p class="TextIndent1">&lt;?PHP</p>
+<p class="indent_big">$file_handle = fopen(&quot;widgets.csv&quot;, &quot;r&quot;);</p>
+<p class="indent_big">while (!feof($file_handle) ) {</p>
+<p class="indent_bigger">$line_of_text = fgetcsv($file_handle, 1024);</p>
+<p class="indent_bigger">print $line_of_text[0] . $line_of_text[1]. $line_of_text[2] 
+  . &quot;&lt;BR&gt;&quot;;</p>
+<p class="indent_big">}</p>
+<p class="indent_big">fclose($file_handle);</p>
+<p class="TextIndent1">?&gt;</p>
+<p>When you run the script, you should see all the lines of text printed out. 
+  Here's how it works.</p>
+<p>The first two lines you've already met: get a handle to the file you want to 
+  open, then create a while loop to loop round it.</p>
+<p class="indent_big">$file_handle = fopen(&quot;widgets.csv&quot;, &quot;r&quot;);</p>
+<p class="indent_bigger">while ( !feof($file_handle) ) {</p>
+<p class="indent_big">}</p>
+<p>Inside the while loop, though, we have our fgetcsv line:</p>
+<p class="indent_big_no_bold">$line_of_text = <b>fgetcsv(</b> $file_handle, 1024 
+  <b>)</b>;</p>
+<p>In between the round brackets of <b>fgetcsv</b>, we've typed to things: our 
+  file handle, and the size of the line to read. The size, in this case, is 1024 
+  - 1 kilobyte. You can change this value. When the function gets the line of 
+  text, it puts it into the variable we've called <b>$line_of_text</b>.</p>
+<p>But <b>$line_of_text</b> will now be an array. Each line of our text file looks 
+  like this:</p>
+<p class="TextIndent3">Widget1, blue, &pound;10</p>
+<p>The <b>fgetcsv</b> function will split this line when it sees the comma. It 
+  then creates a position in the array to hold each part of the line. So it will 
+  set up an array with three positions, in our case. Those positions will be as 
+  follows:</p>
+<p class="indent_big">$line_of_text[0]<br>
+  $line_of_text[1]<br>
+  $line_of_text[2]</p>
+<p>To print it all out, we had a this line:</p>
+<p class="TextIndent3">print $line_of_text[0] . $line_of_text[1]. $line_of_text[2] 
+  . &quot;&lt;BR&gt;&quot;;</p>
+<p>All we're doing here is to print out what is in each position of the array. 
+  We've then added a HTML line break, just for display purposes.</p>
+<p>If you have CSV files from a spreadsheet that you need to display on a web 
+  page, the <b>fgetcsv</b> function can come in quite handy!</p>
+<p>&nbsp;</p>
+<p>In the next part, you'll see other options for reading a text file line by 
+  line</p>
+</SECTION></ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php10p5.html">&lt;-- Back One Page</a> | <a href="php10p7.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

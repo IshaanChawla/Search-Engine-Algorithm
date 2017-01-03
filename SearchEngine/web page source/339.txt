@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="ie ie8"> <![endif]-->
+<!--[if IE 9]><html class="ie ie9"> <![endif]-->
+<!--[if gt IE 9]><!-->	<html> <!--<![endif]-->
+<head>
+<!-- Basic -->
+<meta charset="utf-8">
+<title>SQL Tutorial</title>
+<meta name="description" content="SQL Tutorial - Learn SQL (Structured Programming Language) in simple and easy steps starting from basics to advanced concepts. This tutorial would give you complete understanding on database concepts, SQL Syntax, SELECT, INSERT, DELETE, UPDATE, DROP, TRUNCATE, DISTINCT, ORDER BY, GROUP BY, WHERE clauses." />
+<meta name="keywords" content="Learning, SQL, Structured, Programming, Language, Syntax, Database, Clauses, database concepts, SQL Syntax, SELECT, INSERT, DELETE, UPDATE, DROP, TRUNCATE, DISTINCT, ORDER BY, GROUP BY, WHERE." />
+<base href="http://www.tutorialspoint.com/" />
+<link rel="shortcut icon" href="http://cdn.tutorialspoint.com/favicon.ico" type="image/x-icon" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
+<meta name="author" content="tutorialspoint.com">
+<meta property="fb:app_id" content="471319149685276" />
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/script-min-v1.js"></script>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/style-min-v1.css">
+<!-- Head Libs -->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE]>
+<link rel="stylesheet" href="http://cdn.tutorialspoint.com/theme/css/ie.css">
+<![endif]-->
+<!--[if lte IE 8]>
+<script src="http://cdn.tutorialspoint.com/theme/vendor/respond.js"></script>
+<![endif]-->
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie8.css">
+<![endif]-->
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href="http://cdn.tutorialspoint.com/theme/css/ie9.css">
+<![endif]-->
+<!-- Front Page related changes -->
+<style>
+div.feature-box div.feature-box-icon, .col-md-3 .course-box, li.heading, footer div.footer-ribon, div.footer-copyright { background: #57B847 url(/images/pattern.png) repeat center center !important; }
+header nav ul.nav-main li a:hover, header nav ul.nav-main li.dropdown:hover a.dropdown-toggle { background: #57B847;} 
+header nav ul.nav-main li.dropdown:hover > ul{ border:2px solid #57B847}
+header nav ul.nav-main ul.dropdown-menu > li > a:hover, #mainMenu > li:hover, header nav.mega-menu ul.nav-main .mega-menu-content ul.sub-menu li:hover{ background: #57B847 !important;}
+img.mobile-apps { border: 1px solid #57B847 !important; }
+footer i.icon, footer ul.list.icons li i { color: #57B847 !important; }
+button.btn-responsive-nav, header div.search button.btn-default { background: #57B847 !important;}
+.social-icons-top { display:none; }
+</style>
+</head>
+<script>
+$(document).ready(function() {
+  $('input[name="q"]').keydown(function(event){
+    if(event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+});
+</script>
+<body onload="prettyPrint()">
+<div class="wrapLoader">
+   <div class="imgLoader">
+      <img  src="http://cdn.tutorialspoint.com/images/loading-cg.gif" alt="" width="70" height="70" />
+   </div>
+</div>
+<div id="divGoogle"></div>
+<div class="body">
+<header>
+   <div class="container">			
+      <h1 class="logo">
+      <a href="index.htm" title="tutorialspoint">
+      <img alt="tutorialspoint" src="/sql/images/logo.png">
+      </a>
+      </h1>			
+      <div class="search" id="searchBar">
+         <form method="get" id="searchform" name="searchform" action="http://www.google.com/search" target="_blank">
+            <input type="hidden" name="sitesearch" value="www.tutorialspoint.com">
+            <div class="input-group">
+               <input type="text" class="form-control search" name="q" id="q" autocomplete="off" placeholder="Search your tutorials..." onfocus="if (this.value == 'Search your tutorials...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search your tutorials...';}">
+               <input value="FORID:11" name="cof" type="hidden">
+               <input type="hidden" name="ie" value="ISO-8859-1">
+               <span class="input-group-btn"> <button class="btn btn-default" type="submit" onclick="javascript:void(0);"><i class="icon icon-search"></i></button> </span>
+            </div>
+         </form>
+      </div>
+      <nav>
+         <ul class="nav nav-pills nav-top">
+            <li><a  id="free-training-icon" href="absoluteclasses.htm"><img src="http://cdn.tutorialspoint.com/images/free-training.jpg" style="width:100px; position:absolute;left:-158px; top:-7px; z-index:99;" title="Free Online Training"></a></li>
+            <li> <a href="shared-tutorials.php"><i class="icon icon-user"></i> &nbsp;Shared</a> </li>
+            <li> <a href="shorttutorials"><i class="icon icon-file-text-o"></i> &nbsp;Articles</a> </li>
+            <li>
+            <div class="social-icons social-icons-top">
+               <ul class="social-icons">
+               <li class="facebook"><a href="http://www.facebook.com/tutorialspointindia" target="_blank" title="Facebook">Facebook</a></li>
+               <li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" title="Twitter">Twitter</a></li>
+               <li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+               <li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" title="tutorialspoint @ Linkedin">Linkedin</a></li>
+               </ul>
+            </div>
+            </li>
+         </ul>
+      </nav>
+         <!-- search code here  --> 
+      <button class="btn btn-responsive-nav btn-inverse" data-toggle="collapse" data-target=".nav-main-collapse" id="pull"> <i class="icon icon-bars"></i> </button>
+   </div>
+   <div class="navbar nav-main">
+      <div class="container">
+         <nav class="nav-main mega-menu">
+            <ul class="nav nav-pills nav-main" id="mainMenu">
+               <li class="dropdown"> <a class="dropdown" href="index.htm"><i class="icon icon-home"></i> Home</a> </li>   
+               <li class="dropdown"><a class="dropdown-toggle tut-lib" href="tutorialslibrary.htm"> Tutorials Library </a>
+      <ul class="dropdown-menu" id="submenu">
+         <li>
+            <div class="mega-menu-content">
+              <div class="row">
+                 <div class="col-md-6">
+                    <ul class="sub-menu">
+                     <li><a href="academic_tutorials.htm">Academic</a></li>
+                     <li><a href="big_data_tutorials.htm">Big Data</a></li>
+                     <li><a href="database_tutorials.htm">Databases</a></li>
+                     <li><a href="java_technology_tutorials.htm">Java Technologies</a></li>
+                     <li><a href="mainframe_tutorials.htm">Mainframe</a></li>
+                     <li><a href="management_tutorials.htm">Management</a></li>
+                     <li><a href="microsoft_technologies_tutorials.htm">Microsoft Technologies</a></li>
+                     <li><a href="questions_and_answers.htm">Questions and Answers</a></li>
+                     <li><a href="misc_tutorials.htm">Miscellaneous</a></li>
+                   </ul>
+                 </div>
+                 <div class="col-md-6">
+                  <ul class="sub-menu">
+                     <li><a href="mobile_development_tutorials.htm">Mobile Development</a></li>
+                     <li><a href="computer_programming_tutorials.htm">Programming</a></li>
+                     <li><a href="scripting_lnaguage_tutorials.htm">Scripts</a></li>
+                     <li><a href="software_quality_tutorials.htm">Software Quality</a></li>
+                     <li><a href="telecom_tutorials.htm">Telecom</a></li>
+                     <li><a href="web_development_tutorials.htm">Web Development</a></li>
+                     <li><a href="xml_technologies_tutorials.htm">XML Technologies</a></li>
+                     <li><a href="multi_language_tutorials.htm">Multi Language Tutorials</a></li>
+                  </ul>
+                 </div>
+              </div>
+            </div>
+         </li>
+       </ul>
+               </li>
+               <li class="dropdown"><a class="dropdown" href="codingground.htm"><i class="fa-code"></i> Coding Ground</a> </li>
+                  <li class="dropdown"> 							
+                     <a class="dropdown-toggle tut-plus" href="absoluteclasses.htm">Absolute Classes</a>                     <ul class="dropdown-menu" id="submenu1">
+                                                <li class="current-menu-ancestor current-menu-parent active dropdown-submenu" style="border-bottom:none;">
+                        <li style="border-bottom:none;"><a href="absoluteclasses/userlogin.htm"><i class="fa-sign-in"></i>&nbsp;Login</a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px" class="stickyhide">&nbsp;</li>
+                        <li><a href="absoluteclasses/usersignup.htm"><i class="fa-pencil-square-o"></i>&nbsp;Sign Up&nbsp;</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/upcomingclasses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> Upcoming Classes </a></li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc; height:1px; padding:0px; margin:0px 10px 0px 10px">&nbsp;</li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/allcourses.htm" style="border-bottom:none;"><i class="fa-book book-head"></i> All Courses </a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/testimonials.htm" style="border-bottom:none;"><i class="fa-check check"></i> Testimonial</a></li>
+                        <li style="border-bottom:1px dashed #ccc;;"><a href="absoluteclasses/help.htm" style="border-bottom:none;"><i class="fa-question book-head"></i> Help/FAQ</a></li>
+                        <li style="border-bottom:none;"><a href="absoluteclasses/contact_abc.htm" style="border-bottom:none;"><i class="fa fa-envelope-o"></i> Contact</a></li>
+                                             
+                     </ul>
+                  </li>
+            </ul>
+         </nav>
+      </div>
+   </div>	
+</header>
+<div style="clear:both;"></div>
+<div role="main" class="main">
+<div class="container">
+<div class="row">
+<div class="col-md-2">
+<aside class="sidebar">
+<div class="mini-logo">
+<img src="/sql/images/sql-mini-logo.jpg" alt="SQL Tutorial" />
+</div>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">SQL Tutorial</li>
+<li><a target="_top" href="/sql/index.htm">SQL - Home</a></li>
+<li><a target="_top" href="/sql/sql-overview.htm" >SQL - Overview</a></li>
+<li><a target="_top" href="/sql/sql-rdbms-concepts.htm">SQL - RDBMS Concepts</a></li>
+<li><a target="_top" href="/sql/sql-databases.htm" >SQL - Databases</a></li>
+<li><a target="_top" href="/sql/sql-syntax.htm" >SQL - Syntax</a></li>
+<li><a target="_top" href="/sql/sql-data-types.htm" >SQL - Data Types</a></li>
+<li><a target="_top" href="/sql/sql-operators.htm" >SQL - Operators</a></li>
+<li><a target="_top" href="/sql/sql-expressions.htm" >SQL - Expressions</a></li>
+<li><a target="_top" href="/sql/sql-create-database.htm" >SQL - Create Database</a></li>
+<li><a target="_top" href="/sql/sql-drop-database.htm" >SQL - Drop Database</a></li>
+<li><a target="_top" href="/sql/sql-select-database.htm" >SQL - Select Database</a></li>
+<li><a target="_top" href="/sql/sql-create-table.htm" >SQL - Create Table</a></li>
+<li><a target="_top" href="/sql/sql-drop-table.htm" >SQL - Drop Table</a></li>
+<li><a target="_top" href="/sql/sql-insert-query.htm" >SQL - Insert Query</a></li>
+<li><a target="_top" href="/sql/sql-select-query.htm" >SQL - Select Query</a></li>
+<li><a target="_top" href="/sql/sql-where-clause.htm" >SQL - Where Clause</a></li>
+<li><a target="_top" href="/sql/sql-and-or-clauses.htm" >SQL - AND &amp; OR Clauses</a></li>
+<li><a target="_top" href="/sql/sql-update-query.htm" >SQL - Update Query</a></li>
+<li><a target="_top" href="/sql/sql-delete-query.htm" >SQL - Delete Query</a></li>
+<li><a target="_top" href="/sql/sql-like-clause.htm" >SQL - Like Clause</a></li>
+<li><a target="_top" href="/sql/sql-top-clause.htm" >SQL - Top Clause</a></li>
+<li><a target="_top" href="/sql/sql-order-by.htm" >SQL - Order By</a></li>
+<li><a target="_top" href="/sql/sql-group-by.htm" >SQL - Group By</a></li>
+<li><a target="_top" href="/sql/sql-distinct-keyword.htm" >SQL - Distinct Keyword</a></li>
+<li><a target="_top" href="/sql/sql-sorting-results.htm" >SQL - Sorting Results</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">Advanced SQL</li>
+<li><a target="_top" href="/sql/sql-constraints.htm" >SQL - Constraints</a></li>
+<li><a target="_top" href="/sql/sql-using-joins.htm" >SQL - Using Joins</a></li>
+<li><a target="_top" href="/sql/sql-unions-clause.htm" >SQL - Unions Clause</a></li>
+<li><a target="_top" href="/sql/sql-null-values.htm" >SQL - NULL Values</a></li>
+<li><a target="_top" href="/sql/sql-alias-syntax.htm" >SQL - Alias Syntax</a></li>
+<li><a target="_top" href="/sql/sql-indexes.htm" >SQL - Indexes</a></li>
+<li><a target="_top" href="/sql/sql-alter-command.htm" >SQL - Alter Command</a></li>
+<li><a target="_top" href="/sql/sql-truncate-table.htm" >SQL - Truncate Table</a></li>
+<li><a target="_top" href="/sql/sql-using-views.htm" >SQL - Using Views</a></li>
+<li><a target="_top" href="/sql/sql-having-clause.htm" >SQL - Having Clause</a></li>
+<li><a target="_top" href="/sql/sql-transactions.htm" >SQL - Transactions</a></li>
+<li><a target="_top" href="/sql/sql-wildcards.htm" >SQL - Wildcards</a></li>
+<li><a target="_top" href="/sql/sql-date-functions.htm" >SQL - Date Functions</a></li>
+<li><a target="_top" href="/sql/sql-temporary-tables.htm" >SQL - Temporary Tables</a></li>
+<li><a target="_top" href="/sql/sql-clone-tables.htm" >SQL - Clone Tables</a></li>
+<li><a target="_top" href="/sql/sql-sub-queries.htm" >SQL - Sub Queries</a></li>
+<li><a target="_top" href="/sql/sql-using-sequences.htm" >SQL - Using Sequences</a></li>
+<li><a target="_top" href="/sql/sql-handling-duplicates.htm" >SQL - Handling Duplicates</a></li>
+<li><a target="_top" href="/sql/sql-injection.htm" >SQL - Injection</a></li>
+</ul>
+<ul class="nav nav-list primary left-menu" >
+<li class="heading">SQL Useful Resources</li>
+<li><a target="_top" href="/sql/sql-quick-guide.htm" >SQL - Quick Guide</a></li>
+<li><a target="_top" href="/sql/sql-useful-functions.htm" >SQL - Useful Functions</a></li>
+<li><a target="_top" href="/sql/sql-useful-resources.htm" >SQL - Useful Resources</a></li>
+<li><a target="_top" href="/sql/sql-discussion.htm" >SQL - Discussion</a></li>
+</ul>
+<ul class="nav nav-list primary push-bottom left-menu special">
+<li class="sreading">Selected Reading</li>
+<li><a target="_top" href="/developers_best_practices/index.htm">Developer's Best Practices</a></li>
+<li><a target="_top" href="/questions_and_answers.htm">Questions and Answers</a></li>
+<li><a target="_top" href="/effective_resume_writing.htm">Effective Resume Writing</a></li>
+<li><a target="_top" href="/computer_glossary.htm">Computer Glossary</a></li>
+<li><a target="_top" href="/computer_whoiswho.htm">Who is Who</a></li>
+</ul>
+</aside>
+</div>
+<!-- PRINTING STARTS HERE -->
+<div class="row">
+<div class="content">
+<div class="col-md-7 middle-col">
+<div class="cover">
+<img class="img-responsive" src="/sql/images/sql.jpg" alt="SQL tutorial" />
+</div>
+<hr />
+<div class="pre-btn">
+<a href="/index.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="nxt-btn">
+<a href="/sql/sql-overview.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<div class="clearer"></div>
+<hr />
+<h1>SQL Tutorial</h1>
+<div class="center-aligned tutorial-menu">
+<form action="/job_search.php" method="POST">
+<input type="hidden" name="search_string" value="SQL" />
+<button type="button" class="btn btn-default btn-sm btn-buy-tutorial"><i class="icon  icon-file-pdf-o"></i><a href="/sql/sql_pdf_version.htm"> PDF Version</a></button>
+<button type="button" class="btn btn-default btn-sm btn-quick-guide"><i class="icon  icon-book"></i> <a href ="/sql/sql-quick-guide.htm">Quick Guide</a></button>
+<button type="button" class="btn btn-default btn-sm btn-extra-links"><i class="icon  icon-external-link"></i> <a href="/sql/sql-useful-resources.htm"> Resources</a></button>
+<button type="submit" class="btn btn-default btn-sm btn-job-search"><i class="icon  icon-suitcase"></i> Job Search</button>
+<button type="button" class="btn btn-default btn-sm btn-extra-links"><i class="icon fa fa-wechat"></i> <a href="/sql/sql-discussion.htm"> Discussion</a></button>
+</form>
+</div>
+<p>SQL is a database computer language designed for the retrieval and management of data in relational database. SQL stands for Structured Query Language.</p>
+<p>This tutorial will give you quick start with SQL.</p>
+<h1>Audience</h1>
+<p>This reference has been prepared for the beginners to help them understand the basic to advanced concepts related to SQL languages.</p>
+<h1>Prerequisites</h1>
+<p>Before you start doing practice with various types of examples given in this reference, I'm making an assumption that you are already aware about what is database, especially RDBMS and what is a computer programming language.</p>
+<h1>Compile/Execute SQL Programs</h1>
+<p>If you are willing to compile and execute SQL programs with Oracle 11g RDBMS but you do not have a setup for the same, then do not worry. The <a target="_blank" rel="nofollow" href="oracle_terminal_online.php" title="Execute SQL Online">Coding Ground</a> is available on a high end dedciated server giving you real programming experience. Yes! it is absolutely free and its online.</p>
+<hr />
+<div class="pre-btn">
+<a href="/index.htm"><i class="icon icon-arrow-circle-o-left big-font"></i> Previous Page</a>
+</div>
+<div class="print-btn center">
+<a href="/cgi-bin/printpage.cgi" target="_blank"><i class="icon icon-print big-font"></i> Print</a>
+</div>
+<div class="nxt-btn">
+<a href="/sql/sql-overview.htm">Next Page <i class="icon icon-arrow-circle-o-right big-font"></i>&nbsp;</a>
+</div>
+<hr />
+<!-- PRINTING ENDS HERE -->
+<div class="bottomgooglead">
+<div class="bottomadtag">Advertisements</div>
+<script type="text/javascript"><!--
+var width = 580;
+var height = 400;
+var format = "580x400_as";
+if( window.innerWidth < 468 ){
+   width = 300;
+   height = 250;
+   format = "300x250_as";
+}
+google_ad_client = "pub-7133395778201029";
+google_ad_width = width;
+google_ad_height = height;
+google_ad_format = format;
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-3" id="rightbar">
+<!-- AddThis Button BEGIN -->
+<!--
+<div class="simple-ad">
+<div class="addthis_sharing_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-4f661ec623a400f0"></script>
+</div>
+-->
+<!-- AddThis Button END -->
+<!--
+<div class="google-ad" style="position:relative; left:20px;">Advertisements</div>
+-->
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 250;
+google_ad_format = "300x250_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "pub-7133395778201029";
+google_ad_width = 300;
+google_ad_height = 600;
+google_ad_format = "300x600_as";
+google_ad_type = "image";
+google_ad_channel ="";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+<div class="rightgooglead">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-2537027957187252";
+/* Right Side Ad */
+google_ad_slot = "right_side_ad";
+google_ad_width = 300;
+google_ad_height = 250;
+//-->
+</script>
+<script type="text/javascript"
+src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="inner">
+<div class="container">
+<div class="row">
+<div class="footer-ribon">
+<span>Extras</span>
+</div>
+<div class="col-md-2">
+<h4>Mobile First</h4>
+<ul class="list icons list-unstyled">
+<li><a id="iphone" href="https://itunes.apple.com/om/app/tutorials-point/id914891263?mt=8" target="_blank" rel="nofollow"><img alt="tutorialspoint iPhone App" src="http://cdn.tutorialspoint.com/images/apple_store.jpg" class="mobile-apps"/></a></li>
+<li><a id="android" href="https://play.google.com/store/apps/details?id=com.tutorialspoint.onlineviewer" target="_blank" rel="nofollow"><img alt="tutorialspoint Android app" src="http://cdn.tutorialspoint.com/images/google_play.jpg" class="mobile-apps"/></a></li>
+<li><a id="microsoft" href="http://www.windowsphone.com/s?appid=91249671-7184-4ad6-8a5f-d11847946b09" target="_blank" rel="nofollow"><img alt="tutorialspoint Windows app" src="http://cdn.tutorialspoint.com/images/windows_store.jpg" class="mobile-apps"/></a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>About us</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="/about/index.htm">Company</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_team.htm">Team</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_careers.htm">Careers</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_privacy.htm">Privacy Policy</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="/about/about_terms_of_use.htm">Terms of use</a></li>
+</ul>
+</div>
+<div class="col-md-2">
+<h4>Extra Links</h4>
+<ul class="list icons list-unstyled">
+<li><i class="icon icon-caret-right"></i> <a href="forums/index.php">Forums</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shorttutorials/">Articles</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="shared-tutorials.php">Shared</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="seo_tools.htm">Seo Tools</a></li>
+<li><i class="icon icon-caret-right"></i> <a href="about/contact_us.htm">Contact</a></li>
+</ul>
+</div>
+<div class="col-md-3">
+<div class="contact-details">
+<h4>Contact Us</h4>
+<ul class="contact">
+<li><p><i class="icon icon-map-marker"></i> <strong>Address:</strong> 388-A , Road no 22, Jubilee Hills, Hyderabad Telangana, INDIA-500033</p></li>
+<li><p><i class="icon icon-envelope"></i> <strong>Email:</strong> <a href="about/contact_us.htm">Click Here</a></p></li>
+<li><p><i class="icon icon-dribbble"></i> <strong>Website:</strong> <a href="http://www.tutorialspoint.com">www.tutorialspoint.com</a></p></li>
+</ul>
+</div>
+<div class="social-icons">
+<ul class="social-icons">
+<li class="facebook"><a href="https://www.facebook.com/tutorialspointindia" target="_blank" data-placement="bottom" title="tutorialspoint @ Facebook">Facebook</a></li>
+<li class="googleplus"><a href="https://plus.google.com/u/0/116678774017490391259/posts" target="_blank" data-placement="bottom" title="tutorialspoint @ Google+">Google+</a></li>
+<li class="twitter"><a href="http://www.twitter.com/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Twitter">Twitter</a></li>
+<li class="linkedin"><a href="http://www.linkedin.com/company/tutorialspoint" target="_blank" data-placement="bottom"  title="tutorialspoint @ Linkedin">Linkedin</a></li>
+<li class="rss"><a href="http://feeds.feedburner.com/SharedTutorials" target="_blank" data-placement="bottom" title="tutorialspoint RSS">RSS</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="footer-copyright">
+<div class="container">
+<div class="row">
+<div class="col-md-1">
+<a href="index.htm" class="logo">
+<img alt="Tutorials Point" class="img-responsive" src="http://cdn.tutorialspoint.com/scripts/img/logo-footer.png">
+</a>
+</div>
+<div class="col-md-6">
+<p>&copy; Copyright 2015. All Rights Reserved.</p>
+</div>
+<div class="col-md-4">
+<nav id="sub-menu">
+<ul>
+<li><a href="/about/tutorials_writing.htm">Write for us</a></li>
+<li><a href="/about/faq.htm">FAQ's</a></li>
+<li><a href="/about/about_helping.htm">Helping</a></li>
+<li><a href="/about/contact_us.htm">Contact</a></li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<!-- Libs -->
+<script type="text/javascript" src="http://cdn.tutorialspoint.com/theme/js/custom-min.js"></script>
+<script src="http://www.google-analytics.com/urchin.js">
+</script>
+<script type="text/javascript">
+_uacct = "UA-232293-6";
+urchinTracker();
+$('.pg-icon').click(function(){
+   $('.wrapLoader').show();
+});
+</script>
+</div>
+</body>
+</html>
+

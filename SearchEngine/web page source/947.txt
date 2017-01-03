@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>Print the tutorial on - FileReader and FileWriter example program in Java</title>
+</head>
+<body bgcolor="#003366">
+
+<table width="800" bgcolor="#ffffff" align="center">
+  <tr>
+    <td>
+      <table cellSpacing="0" cellPadding="0" border="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="spacer" colSpan="2">&nbsp;</td>
+          </tr>
+          <tr>
+            <td >
+              <div align="right">
+                <a href="http://www.java-samples.com"><img src="http://www.java-samples.com/images/java-samples.jpg" align="left" border="0"></a>
+              </div>
+            </td>
+            <td class="categoryHead"><font face="Arial"><b>FileReader and FileWriter example program in Java</b></font></td>
+            </tr>
+          <tr>
+            <td class="spacer" align="middle" colSpan="2" height="2">&nbsp;</td>
+          </tr>
+          <tr bgColor="#000000">
+            <td class="spacer" colSpan="2" height="2">
+              <table cellSpacing="1" cellPadding="0" width="100%" border="0">
+                <tbody>
+                  <tr>
+                    <td class="content" align="middle" bgColor="#000000" height="15">
+                      <div align="left">
+                        <p align="center"><font color="#FFFFFF" size="4"><b></b>
+                        </font>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  <tr>
+    <td>
+      <table cellSpacing="0" cellPadding="0" border="0">
+        <tbody>
+          <tr>
+            <td class="reportHeadLine" vAlign="top" width="100%">
+              <table cellSpacing="0" cellPadding="0" width="100%" border="0">
+                <tbody>
+                  
+                  <tr>
+                    <td class="content"><br><p>
+<b>
+FileReader </b></p>
+<p>The <b>FileReader </b>class creates a <b>Reader </b>that you can
+use to read the contents of a file. Its two most commonly used constructors are shown here:</p>
+<p>
+<code>FileReader(String <i>filePath</i>)
+<br>FileReader(File <i>fileObj</i>)
+</code></p>
+<p>Either can throw a <b>FileNotFoundException</b>. Here, <i>filePath
+</i>is the full path name of a file, and <i>fileObj </i>is a <b>File </b>object that describes the
+file.</p>
+<p>The following example shows how to read lines from a file and
+print these to the standard output stream. It reads its own source file, which must be in
+the current directory.</p>
+<p>
+  <code>// Demonstrate FileReader.
+<br>import java.io.*;
+<br>class FileReaderDemo {
+<br>public static void main(String args[]) throws Exception {
+<br>FileReader fr = new FileReader(&quot;FileReaderDemo.java&quot;);
+<br>BufferedReader br = new BufferedReader(fr);
+<br>String s;
+<br>while((s = br.readLine()) != null) {
+<br>System.out.println(s);
+<br>}
+<br>fr.close();
+<br>}
+<br>}</code>
+</p>
+<p>
+<b>
+FileWriter </b></p>
+<p>
+<b>
+FileWriter </b>creates a <b>Writer </b>that you can use to write
+to a file. Its most commonly used constructors are shown here:</p>
+<p>
+<code>FileWriter(String <i>filePath</i>)&nbsp;
+<br>FileWriter(String <i>filePath, </i>boolean <i>append)</p>
+</i>
+<br>FileWriter(File <i>fileObj</i>)
+</code></p>
+<p>They can throw an <b>IOException </b>or a <b>SecurityException</b>.
+Here, <i>filePath </i>is the full path name of a file, and <i>fileObj </i>is a <b>File </b>object that
+describes the file. If <i>append </i>is <b>true</b>, then output is appended to the end of the file.</p>
+<p>Creation of a <b>FileWriter </b>is not dependent on the file
+already existing. <b>FileWriter </b>will create the file before opening it for output when you create the
+object. In the case where you attempt to open a read-only file, an <b>IOException </b>will
+be thrown.</p>
+<p>The following example is a character stream version of an
+example shown earlier when
+<b>
+FileOutputStream </b>was discussed. This version creates a
+sample buffer of characters by first making a <b>String </b>and then using the <b>getChars( ) </b>method
+to extract the character array equivalent. It then creates three files. The first, <b>file1.txt</b>,
+will contain every other character from the sample. The second, <b>file2.txt</b>, will
+contain the entire set of characters. Finally, the third, <b>file3.txt</b>, will contain only the last
+quarter.</p>
+<p>
+  <code>// Demonstrate FileWriter.
+<br>import java.io.*;
+<br>class FileWriterDemo {
+<br>public static void main(String args[]) throws Exception {
+<br>String source = &quot;Now is the time for all good men\\n&quot;
+<br>+ &quot; to come to the aid of their country\\n&quot;
+<br>+ &quot; and pay their due taxes.&quot;;
+<br>char buffer[] = new char[source.length()];
+<br>source.getChars(0, source.length(), buffer, 0);
+<br>FileWriter f0 = new FileWriter(&quot;file1.txt&quot;);
+<br>for (int i=0; i &lt; buffer.length; i += 2) {
+<br>f0.write(buffer[i]);
+<br>}
+<br>f0.close();
+<br>FileWriter f1 = new FileWriter(&quot;file2.txt&quot;);
+<br>f1.write(buffer);
+<br>f1.close();
+<br>FileWriter f2 = new FileWriter(&quot;file3.txt&quot;);
+<br>f2.write(buffer,buffer.lengthbuffer.
+<br>length/4,buffer.length/4);
+<br>f2.close();
+<br>}
+<br>}</code>
+</p>
+
+<p>This tutorial is an extract from the "The Complete Reference Part 2 by Herbert Schildt".
+</p>
+</td>
+                  </tr>
+                  <tr>
+                    <td class="subHeadtxt" align="right"></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="spacer" bgColor="#cccccc" height="1">&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td vAlign="top" align="right" width="76" rowSpan="3">
+            </td>
+          </tr>
+          <tr>
+            <td vAlign="top" width="100%">&nbsp;</td>
+          </tr>
+           <tr>
+            <td>
+              <table cellSpacing="0" cellPadding="0" align="center" border="0">
+                <tbody>
+                  <tr>
+                    <td class="spacer" height="10">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td height="1"></td>
+                  </tr>
+                  <tr>
+                    <td class="spacer" height="10">&nbsp;</td>
+                  </tr>
+                  <tr>
+                    <td class="content" align="middle" height="15">
+                      <div align="center">
+                        <b>COPYRIGHT? 2006 java-samples.com. ALL RIGHTS RESERVED</b><span class="subHeadtxt"><b>.</b></span>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="spacer" align="middle" height="5">&nbsp;</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</table>
+<script language="javascript">
+	var i;
+	window.print();
+	setTimeout('window.close()',5000);
+</script>
+</body>
+</html>
+

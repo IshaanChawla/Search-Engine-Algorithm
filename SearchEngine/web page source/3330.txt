@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>PHP Tutorials: The login page</TITLE>
+	<LINK REL=Stylesheet TYPE ="text/css" HREF="two_col_style_1-2.css">
+		<meta name="description" content="">
+		<meta itemprop="name" content="Home and Learn">
+		<meta itemprop="description" content="Free PHP Course">
+		<meta itemprop="image" content="http://www.homeandlearn.co.uk/logo5.jpg">
+		<link rel="publisher" href="https://plus.google.com/104045712242599534737" />
+		<link rel="author" href="https://plus.google.com/104045712242599534737" />
+		<SCRIPT LANGUAGE="JavaScript" type="text/javascript" src="links.js"></SCRIPT>
+		
+	</HEAD>
+
+
+	<BODY>
+		<HEADER ID="Banner"><P>&nbsp;</P>
+			<H1><SPAN class="Logo_Text">Free</SPAN> <SPAN class="Logo_Text2">PHP </SPAN> <SPAN class="Logo_Text">Tutorials</SPAN></H1>
+		</HEADER>
+<HR />
+
+<NAV ID="left_menu">
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3>Computer Courses</H3>
+            <ul>
+            <LI><a href="../index.html">Home</a></LI>
+            <LI><a href="../BC/BeginnersComputing.html">Beginners Computing </a></LI>
+            <LI><a href="../word2007_2010/Word-2007-2010.html">Word 2007 to 2013</a></LI>
+            <LI><a href="../MW/MicrosoftWord.html">Word 2000 to 2003</a></LI>
+            <LI><a href="../excel2007/Excel2007.html">Excel 2007 to 2013</a></LI>
+            <LI><a href="../ME/MicrosoftExcel.html">Excel to 2003</a></LI>
+            <LI><a href="../NET/excel_vba.html">Excel VBA Programming for Beginners</a></LI>
+            <LI><a href="../WD/WebDesign.html">Web Design</a></LI>
+            <LI><a href="../JS/javascript.html">Javascript</a></LI>
+            <LI><a href="../NET/vbNet.html">Visual Basic .NET</a></LI>
+            <LI><a href="php.html">Beginners PHP</a></LI>
+            <LI><a href="../csharp/csharp.html">C# .NET</a></LI>
+            <LI><a href="../java/java.html">Java for Beginners</a></LI>
+            </ul>
+            <P>&nbsp;</P>
+            <P>&nbsp;</P>
+            <H3 ID ="books">Buy Our Books</H3>
+            <ul>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/net.html">VB Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/csharpbook.htm">C# Net eBook - &pound;5.49</a></LI>
+            <LI><a href="http://www.homeandlearn.co.uk/bookshop/programming_offer.htm">5 Programming Books: &pound;10</a></LI>
+            </ul>
+            </NAV> <SECTION ID="Wrapper"> <ARTICLE> <HEADER> 
+<H1 ID="Article">A PHP login page</H1>
+</HEADER><SECTION><p align="center">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PHP Top Banner -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-3498263538959058"
+     data-ad-slot="3955904819"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</p>
+<P>&nbsp;</P>
+<p><i>This lesson is part of an ongoing User Authentication tutorial. The first 
+  part is here: <a href="php14p1.html">User Authentication</a> along with all 
+  the files you need. </i></p>
+<p>&nbsp;</p>
+<p>The first script to take a look at in your login folder is <b>login.php</b>. 
+  Open up this script in a text editor, and well see how it works. Of course, 
+  you can fire up your server and try it out. What you'll see is a simple login 
+  page with textboxes for username and password, as well as a submit button. It 
+  will look like this:</p>
+<P align="center"><img src="images/login.jpg" width="474" height="116" alt="The login page" border="1"></P>
+<p>The HTML for this form can be seen at the bottom of the <b>login.php</b> script 
+  that you have (hopefully) by now opened. There's nothing special about it. But 
+  notice that there's a PHP print statement in the HTML Body section:</p>
+<p class="TextIndent3">&lt;?PHP print $errorMessage;?&gt;</p>
+<p>This is for displaying error messages for the user.</p>
+<p>The first few line of the script, though, just set up some variables:</p>
+<p class="indent_big">$uname = &quot;&quot;;<br>
+  $pword = &quot;&quot;;<br>
+  $errorMessage = &quot;&quot;;<br>
+  $num_rows = 0;</p>
+<p>The <b>$errorMessage</b> variable is an important one. We'll add something 
+  to this variable, if an error occurs. We'll then check to see if it's blank 
+  or not.</p>
+<p>The next part of the code is just the SQL checking function you met earlier. 
+  This aims to prevent SQL injection attacks. After this code, we check to see 
+  if the form has been POSTED or not (was the Submit button clicked):</p>
+<p class="TextIndent3">if ($_SERVER['REQUEST_METHOD'] == 'POST') {</p>
+<p class="TextIndent3">}</p>
+<p>Most of our code goes between the curly brackets of this if statement. The 
+  first thing to do is to get the username and password from the textboxes:</p>
+<p class="indent_big">$uname = $_POST['username'];<br>
+  $pword = $_POST['password'];</p>
+<p>We then deal with any unwanted HTML (scripting attacks):</p>
+<p class="indent_big">$uname = htmlspecialchars($uname);<br>
+  $pword = htmlspecialchars($pword);</p>
+<p>Next, we attempt to connect to the database:</p>
+<p class="indent_big">$user_name = &quot;root&quot;;<br>
+  $pass_word = &quot;&quot;;<br>
+  $database = &quot;login&quot;;<br>
+  $server = &quot;127.0.0.1&quot;;</p>
+<p class="indent_big">$db_handle = mysql_connect($server, $user_name, $pass_word);<br>
+  $db_found = mysql_select_db($database, $db_handle);</p>
+<p>If the database was found, then the variable called $db_found will be true. 
+  We check for this in the next lines:</p>
+<p class="indent_big">if ($db_found) {</p>
+<p class="indent_big">}<br>
+  else {</p>
+<p class="indent_bigger">$errorMessage = &quot;Error logging on&quot;;</p>
+<p class="indent_big">}</p>
+<p>If the database isn't found, then some text is added to the error message variable. 
+  If the database was found, strip the incoming text of any unwanted characters 
+  (SQL Injection attacks). These next two lines call the function at the top of 
+  the code:</p>
+<p class="indent_big">$uname = quote_smart($uname, $db_handle);<br>
+  $pword = quote_smart($pword, $db_handle);</p>
+<p>With the username and password sanitised, we can then set up a SQL command. 
+  We're selecting all the records in the database where the incoming username 
+  and password match the database table fields called L1 and L2:</p>
+<p class="indent_big">$SQL = &quot;SELECT * FROM login WHERE L1 = $uname AND L2 
+  = $pword&quot;;</p>
+<p>Next, issue the SQL command using mysql_query( ):</p>
+<p class="TextIndent3">$result = mysql_query($SQL);</p>
+<p>We need to check what is returned by the mysql_query() function. The value 
+  in <b>$result </b>will either be true (if any records are returned) or false 
+  (if none are returned). We're checking to see if there were any errors when 
+  the SQL command was issued against the database table. If so, put something 
+  in the error message variable:<br>
+</p>
+<p class="TextIndent1">if ($result) {</p>
+<p class="TextIndent1">}<br>
+  else {</p>
+<p class="indent_big">$errorMessage = &quot;Error logging on&quot;;</p>
+<p class="TextIndent1">}</p>
+<p>If the SQL command was issued successfully, you can see how many rows were 
+  returned from the database table. The inbuilt function mysql_num_rows( ) is 
+  used for this. If no rows were returned, then that tells you that there's something 
+  wrong with either the username or password.</p>
+<p class="indent_big">$num_rows = mysql_num_rows($result);</p>
+<p>Next, we test the $num_rows variable to see if it's greater than zero. If it 
+  is, then you have a successful logon. If not, then it's invalid:</p>
+<p class="indent_big">if ($num_rows &gt; 0) {</p>
+<p class="indent_bigger">$errorMessage= &quot;logged on &quot;;</p>
+<p class="indent_big">}<br>
+  else {</p>
+<p class="indent_bigger">$errorMessage= &quot;Invalid Logon&quot;;</p>
+<p class="indent_big">}</p>
+<p>In the above code, the number of rows returned could be greater than 1. That 
+  would mean that 2 or more people have the same username and password. If you 
+  have a website where each user has to be unique, then you obviously want to 
+  check if $num_rows = 1. For some websites, it doesn't really matter if 2 or 
+  more people have the same login details. But for things like forums, where people 
+  are posting and replying to the input of others, then it does matter. After 
+  all, you want to credit forum users with the correct posts. For the purpose 
+  of this tutorial, assume that it doesn't matter if login details are the same.</p>
+<p>&nbsp;</p>
+<h3></h3>
+<h3>Setting a Session </h3>
+<p>So that a user can be remembered across different web pages, you can use something 
+  called a Session. A session is simply the time spent at a particular site or 
+  sites. You can store values with sessions, and these values will be available 
+  to all pages on the site. When you close your browser, the sessions will end. 
+  There are quite a lot of ways to use sessions, but we're only interested in 
+  saving a value so that it can be referred to across different pages.</p>
+<p>In the previous code, the part that checked if the user was OK was this:</p>
+<p class="indent_big">if ($num_rows &gt; 0) {</p>
+<p class="indent_bigger">$errorMessage= &quot;logged on &quot;;</p>
+<p class="indent_big">}<br>
+  else {</p>
+<p class="indent_bigger">$errorMessage= &quot;Invalid Logon&quot;;</p>
+<p class="indent_big">}</p>
+<p>The code checks to see if the number of rows returned from a SQL command is 
+  greater than zero. If it is, then the user is OK. But the code in the login.php 
+  script is slightly different. It's this:</p>
+<p class="indent_big">if ($num_rows &gt; 0) {</p>
+<p class="indent_bigger">session_start();<br>
+  $_SESSION['login'] = &quot;1&quot;;<br>
+  header (&quot;Location: page1.php&quot;);</p>
+<p class="indent_big">}</p>
+<p>What the code does is to set up a session variable. The value in the variable 
+  will be 1, if the user logs on successfully. To set up a session variable, you 
+  need to issue the start command:</p>
+<p class="TextIndent3">session_start( );</p>
+<p>This starts a PHP session. To set up a session variable that you can use to 
+  store values, you use this:</p>
+<p class="TextIndent3">$_SESSION[ ]</p>
+<p>In between the square brackets of $_SESSION, you type the name of your variable. 
+  Like all variable names, you can call it almost anything you like. Storing values 
+  in the session variable is just the same as storing values in a normal variable:</p>
+<p class="TextIndent3">$_SESSION['login'] = &quot;1&quot;;</p>
+<p>After the script runs, you'll have a session variable called 'login' that is 
+  set to a value of 1, if the user is OK. You can then use the &quot;header&quot; 
+  function to redirect the user to the page on your site for members, page1.php 
+  in the code above. </p>
+<p class="TextIndent3">header (&quot;Location: page1.php&quot;);</p>
+<p>For the else part of the if statement, the code is this:</p>
+<p class="indent_big">if ($num_rows &gt; 0) {</p>
+<p class="indent_bigger">session_start();<br>
+  $_SESSION['login'] = &quot;1&quot;;<br>
+  header (&quot;Location: page1.php&quot;);</p>
+<p class="indent_big">}<br>
+  else {</p>
+<p class="indent_bigger">$errorMessage = &quot;Invalid Login&quot;;<br>
+  session_start();<br>
+  $_SESSION['login'] = '';</p>
+<p class="indent_big">}</p>
+<p>Here, we add something to the error message variable:</p>
+<p class="TextIndent3">$errorMessage = &quot;Invalid Login&quot;;</p>
+<p> Next, we issue the &quot;start session&quot; command:</p>
+<p class="TextIndent3">session_start();</p>
+<p>But the next line puts something different in to the session variable:</p>
+<p class="TextIndent3">$_SESSION['login'] = '';</p>
+<p>We're using the same session name (login), but this time we set it to a blank 
+  string. If the user tries to gain access to a restricted part of the site, we'll 
+  check for a blank string. A blank string means that the user hasn't logged on 
+  successfully, so we'll redirect them to the login page. </p>
+<p>A note of caution here. If you switch cookies off in your browser, the script 
+  above refuses to work! This is because when you use session_start, PHP sends 
+  the browser something called a session ID. This is a long string of letters 
+  and numbers. PHP attempts to save the session ID as a cookie. But it only does 
+  this if a line in php.ini from your Apache server is set. This line:</p>
+<p class="TextIndent3">session.use_cookies = 1</p>
+<p>If you set this value to 0, then you should be able to log on whether cookies 
+  are set or not. The problem is, there's a good chance that you can't set this 
+  to zero. Especially if you have web hosting with someone else. The solution, 
+  in that case, is to check whether cookies are enabled or not. </p>
+<p>You don't actually need PHP to check if cookies are enabled. You can use Javascript. 
+  Try this search string in Google:</p>
+<p align="center"><b>javascript +cookies +enabled</b></p>
+<p>You should then find plenty of ideas for scripts. Of course, you'd first need 
+  to check if Javascript is enabled!</p>
+<p>And that's about it for the login script. Here's a run down on what we did:</p>
+<ul>
+  <li>Got the username and password from textboxes on a form</li>
+  <li>Opened a connection to a database</li>
+  <li> Validated the username and password</li>
+  <li> Checked to see if any rows were returned from the database</li>
+  <li> If rows were returned, set a session variable to 1</li>
+  <li>If no rows were returned, set a session variable to a blank string</li>
+  <li>Built up an error message throughout the code</li>
+</ul>
+<P>&nbsp;</P>
+<p>But the point about setting a session variable is so that you can then check 
+  its value when users go to other pages on your site. We'll see how to do that 
+  now.</p>
+</SECTION> </ARTICLE> </SECTION> <FOOTER> 
+<p align="right"><a href="php14p1.html">&lt;-- Back One Page</a> | <a href="php14p3.html">Move on to the Next Part --&gt;</a></p>
+		<P><A HREF="php.html">Back to the PHP Contents Page</A>
+      		<P>&copy; All course material copyright Home and Learn</P>
+    	</FOOTER>
+
+  </BODY>
+</HTML>
+
+

@@ -1,0 +1,1063 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Creating PDF with Java and iText - Tutorial</title>
+      <script type='text/javascript'>window.mod_pagespeed_start = Number(new Date());</script><link rel="stylesheet" type="text/css" href="http://www.vogella.com/css/A.articles.css.pagespeed.cf.R8TsdYc8Ks.css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.77.1">
+      <meta name="description" content="Java and PDF with iText This article demonstrate how to create PDF files with Java and the iText library. In this tutorial iText version 5.0.x is used">
+      <link rel="shortcut icon" href="http://www.vogella.com/favicon.ico">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      
+      
+      <!-- Google analytics (Jennifer) -->
+      
+      <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-3967758-1']);_gaq.push(['_setDomainName','vogella.com']);_gaq.push(['_setAllowLinker',true]);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+      
+      
+      
+      <!-- Load jQuery -->
+      <script type="text/javascript" src="http://www.vogella.com/javascript/jquery/jquery.js.pagespeed.jm.LynoS8h5RR.js"></script>
+      
+      <!-- jQuery Hide Buttons -->
+      <script type="text/javascript">//<![CDATA[
+var fixed=false;$(document).scroll(function(){if($(this).scrollTop()>955){if(!fixed){fixed=true;$('.bottom_left').css({display:'block'});$('.bottom_right').css({display:'block'});}}else{if(fixed){fixed=false;$('.bottom_left').css({display:'none'});$('.bottom_right').css({display:'none'});}}});
+//]]></script>
+      
+      
+      <!-- Lake Quincy Ads - old way now replaced with Lake Quincy Ads Responsive
+<script type='text/javascript'>
+	function _dmBootstrap(file) {
+		var _dma = document.createElement('script');
+		_dma.type = 'text/javascript';
+		_dma.async = true;
+		_dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(_dma);
+	}
+	function _dmFollowup(file) { if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');}
+	(function () { _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup, 2000);})();
+</script>-->
+      
+      
+      <!-- Lake Quincy Ads Responsive -->  
+      <script type="text/javascript">var googletag=googletag||{};googletag.cmd=googletag.cmd||[];(function(){var gads=document.createElement('script');gads.async=true;gads.type='text/javascript';var useSSL='https:'==document.location.protocol;gads.src=(useSSL?'https:':'http:')+'//www.googletagservices.com/tag/js/gpt.js';var node=document.getElementsByTagName('script')[0];node.parentNode.insertBefore(gads,node);})();</script>
+      
+      <script type="text/javascript">googletag.cmd.push(function(){var mapping=googletag.sizeMapping().addSize([320,700],[300,250]).addSize([750,200],[300,250]).addSize([1170,200],[728,90]).build();googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/right',[160,600],'ad-left').addService(googletag.pubads()).setTargeting('left');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/beforeTOC',[[300,250],[728,90]],'ad-beforeTOC').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('beforeTOC');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween01',[[300,250],[728,90]],'ad-inBetween01').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween01');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween02',[[300,250],[728,90]],'ad-inBetween02').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween02');googletag.defineSlot('/6839/lqm.javaeclipseandroid.site/inBetween03',[[300,250],[728,90]],'ad-inBetween03').defineSizeMapping(mapping).addService(googletag.pubads()).setTargeting('inBetween03');googletag.pubads().enableSingleRequest();googletag.enableServices();});</script>
+      
+      <div id="headerpart">
+         
+         	
+         <div id="logo">
+            		<a title="vogella.com" href="http://www.vogella.com">
+               			<img src="http://www.vogella.com/img/logo/xindex_logo.png.pagespeed.ic.W70tcDQqll.png" alt="vogella.com"> 
+               		</a>
+            	
+         </div> 
+         <!-- logo -->
+         	
+         	
+         <div id="topnav">
+            		
+            <ul id="home" class="topnav">
+               			
+               <li id="home-icon"><a href="http://www.vogella.com/"></a></li>
+               			
+               <li class="currentpage"> <a href="http://www.vogella.com/tutorials/">Tutorials</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/android.html">Android Programming</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/eclipse.html">Eclipse RCP/Plug-ins</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/versioncontrol.html">Version Control</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/web.html">Web</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/java.html">Java</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/technology.html">Technology</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/google.html">Google</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/algorithms.html">Algorithms</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/tutorials/designpattern.html">Design Pattern</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               			
+               <li><a href="http://www.vogella.com/training/">Services</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/training/android/index.html">Android Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidprofessional.html">Android Professional</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/android/androidtesting.html">Android Testing and Appl. Optimization</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/eclipse/index.html">Eclipse Development Training</a>
+                        						
+                        <ul>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercp.html">Eclipse RCP</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseide.html">Eclipse IDE Expert</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsercpmigration.html">Eclipse RCP Migration</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsecontribution.html">	Contributing to Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseplugin.html">Eclipse IDE Plug-in Development</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/tycho.html">Maven/Tycho</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/rcpjavaeespring.html">Eclipse RCP with Java EE and Spring</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipseoxygen.html">oXygen in Eclipse</a></li>
+                           							
+                           <li><a href="http://www.vogella.com/training/eclipse/eclipsenattable.html">NatTable</a></li>
+                           						
+                        </ul>
+                        					
+                     </li>
+                     					
+                     <li><a href="http://www.vogella.com/training/git.html">Git Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/groovy.html">Groovy Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/gradle.html">Gradle Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/java.html">Java Training</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/training/spring.html">Spring Workshop</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/consulting/">Expert Consulting</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/products/">Products</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://saneclipse.vogella.com">saneclipse</a></li>
+                     					
+                     <li><a href="http://codemodify.vogella.com">CodeModify</a></li>
+                     					
+                     <li><a href="http://preferencespy.vogella.com">PreferenceSpy</a></li>
+                     					
+                     <!--<li><a href="http://e4tools.vogella.com">e4 tools</a></li>
+					<li><a href="http://e4perspectiveswitcher.vogella.com">e4 perspectiveSwitcher</a></li>-->
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/books/">Books</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsecontribution.html">Contributing to the Eclipse Project</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipsercp.html">Eclipse RCP</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/eclipseide.html">Eclipse IDE</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/git.html">Git</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/books/android.html">Android SQlite and ContentProvider</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/company/">Company</a>
+                  				
+                  <ul>
+                     					
+                     <li><a href="http://www.vogella.com/aboutvogella.html">About us</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/people/index.html">People at vogella</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/customers.html" onclick="_gaq.push(['_trackEvent', 'Customers', 'clicked', 'Header']);">Reference Customers</a></li>
+                     					
+                     <li><a href="http://blog.vogella.com/">Blog</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/jobs/">Jobs</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/faq.html">FAQ</a></li>
+                     					
+                     <li><a href="http://www.vogella.com/legal.html">Legal</a></li>
+                     				
+                  </ul>
+                  			
+               </li>
+               			
+               <li><a href="http://www.vogella.com/support.html">Donate</a></li>
+               			
+               <li><a href="http://www.vogella.com/contact.html">Contact us</a></li>
+               		
+            </ul>
+            	
+         </div>
+         <!-- topnav -->
+         	
+         
+         	
+         <div id="searchfixed">
+            		
+            <form action="http://www.vogella.com/search.html" id="cse-search-box">
+               			
+               <div id="searchwrapper">
+                  
+                  				<input type="hidden" name="cx" value="partner-pub-3851443674951530:3991491935">
+                  				<input type="hidden" name="cof" value="FORID:10">
+                  				<input type="hidden" name="ie" value="UTF-8">
+                  				<input type="text" placeholder="Search" id="search_field" name="q" size="55">
+                  				<input type="image" src="http://www.vogella.com/img/icons/xsrch.png.pagespeed.ic.BP8TtuQRzJ.png" id="search_button" name="sa" alt="Search">
+                  			
+               </div>
+               		
+            </form>
+            	
+         </div> 
+         <!-- searchfixed -->
+         
+         
+      </div> 
+      <!-- headerpart -->
+      
+      
+      <div id="leftcol">
+         
+         	<br>
+         	<br>
+         	
+         	<a href="http://www.vogella.com/support.html">
+            		<img src="http://www.vogella.com/img/common/140x150xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="140" height="150" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Top tutorial']);"></a>
+         
+         	<br>
+         	<br>
+         
+         	<script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         	
+         <!-- LeftColumn -->
+         	<ins class="adsbygoogle" style="display:inline-block;width:160px;height:600px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="6294971031"></ins>
+         	<script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         
+         	<p></p>
+         	
+         	<br>
+         	<br>
+         
+         	
+         <!-- Nonresponsive Lake Quincy 160x600 Wide Skycraper code
+	<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="right" data-format="160x600"></div>-->
+         	
+         	
+         <!-- Responsive Lake Quincy Ads -->
+         	
+         <div id="ad-left">
+            		<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-left');});</script>
+            	</div>
+         
+      </div> 
+      <!-- leftcolumn -->
+      
+      
+      <div id="rightcol">
+         
+         	
+         <!-- vogellas own advertising for training and books --> 	
+         	
+         <p class="training-bg">
+            		<a class="image-z" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'whole Box']);">
+               			<img src="http://www.vogella.com/img/training/200x364xvogellatraining_ad.png.pagespeed.ic.KQGlbyMRAP.png" height="364" width="200" alt="vogella training">
+               		</a>
+            		<a class="btn-training button1" href="http://www.vogella.com/training/" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'training']);">Training</a>
+            		<a class="btn-training button2" href="http://www.vogella.com/books/index.html" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'books']);">Books</a>
+            	
+         </p> 
+         	
+         	
+         <div class="bottom_right">
+            		
+            <div class="social_media">
+               			<a href="http://www.twitter.com/vogellacompany">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xtwitter.png.pagespeed.ic.5z4YhYIkb2.png" alt="Follow me on twitter">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            
+            		
+            <div class="social_media">
+               			<a rel="me" href="https://profiles.google.com/104044918586174763681">
+                  				
+                  <h1>FOLLOW<br>ME ON
+                  </h1> 
+                  				<img src="http://www.vogella.com/img/tutoriallinks/xgoogle_plus.png.pagespeed.ic.d6W0KZShGF.png" alt="Follow me on Google+">
+                  			</a>
+               		
+            </div>
+            <!-- social_media -->
+            	
+         </div> 
+         <!-- bottom_right -->
+         	
+         	
+         <div class="bottom_left">
+            	
+            <div class="services">
+               		<a href="http://www.vogella.com/training/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xtraining.png.pagespeed.ic.xjFDFI8z_E.png" alt="Get training" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left training']);">
+                  	
+                  <h1>GET TRAINING</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">
+               	<a href="http://www.vogella.com/books/index.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/books.png.pagespeed.ce.iDpNUUudib.png" alt="Purchase books" onclick="_gaq.push(['_trackEvent', 'vogella Services', 'clicked', 'Fix buttom left books']);">
+                  	
+                  <h1>PURCHASE BOOKS</h1>
+                  	</a>
+               
+            </div>
+            <!-- services -->
+            	
+            <div class="services">	
+               	<a href="http://www.vogella.com/support.html">
+                  	<img src="http://www.vogella.com/img/tutoriallinks/xdonate.png.pagespeed.ic.DDVinfleA6.png" alt="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Fix buttom left']);">
+                  	
+                  <h1>SUPPORT FREE TUTORIAL</h1>
+                  	</a>
+               
+               
+            </div> 
+            <!-- services -->       
+            
+         </div> 
+         <!-- bottom_left -->
+         
+         
+      </div> 
+      <!--rightcol-->
+      
+      
+      <div class="article">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="d436132e1"></a>Creating PDF with Java and iText - Tutorial
+                  </h2>
+               </div>
+               <div>
+                  <div class="author">
+                     <h3 class="author"><span class="firstname">Lars</span> <span class="surname">Vogel</span></h3>
+                  </div>
+               </div>
+               <div>
+                  <p class="releaseinfo">
+                     
+                  </p>
+                  <p>Version 0.5</p>
+                  <p class="releaseinfo">
+                     
+                  </p>
+               </div>
+               <div>
+                  <p class="copyright">Copyright ? 2008 -2010 vogella GmbH</p>
+               </div>
+               <div>
+                  <p class="pubdate">11.10.2010</p>
+               </div>
+               <div>
+                  <div class="abstract"><a name="abstract"></a><p class="title"><b>Java and PDF with iText</b></p>
+                     <p> This article demonstrate how to create PDF files with Java and
+                        the iText library. In this tutorial iText version 5.0.x is used
+                        
+                     </p>
+                  </div>
+               </div>
+            </div>
+            <div>
+               <div xmlns:fo="http://www.w3.org/1999/XSL/Format" id="ad-beforeTOC"><script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-beforeTOC');});</script></div>
+            </div>
+            <hr>
+         </div>
+         <div class="toc">
+            <p><b>Table of Contents</b></p>
+            <dl>
+               <dt><span class="section"><a href="#itext">1. Overview</a></span></dt>
+               <dt><span class="section"><a href="#installation">2. Installation</a></span></dt>
+               <dt><span class="section"><a href="#createpdf">3. Create a PDF</a></span></dt>
+               <dt><span class="section"><a href="#format">4. Formatting your output</a></span></dt>
+               <dt><span class="section"><a href="#readpdf">5. Read an existing pdf</a></span></dt>
+               <dt><span class="section"><a href="#supportandlicense">6. About this website</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#thankyou">6.1. Donate to support free tutorials</a></span></dt>
+                     <dt><span class="section"><a href="#questions">6.2. Questions and discussion</a></span></dt>
+                     <dt><span class="section"><a href="#thankyou">6.3. License for this tutorial and its code</a></span></dt>
+                  </dl>
+               </dd>
+               <dt><span class="section"><a href="#resources">7. Links and Literature</a></span></dt>
+               <dd>
+                  <dl>
+                     <dt><span class="section"><a href="#sourcecode">7.1. Source Code</a></span></dt>
+                     <dt><span class="section"><a href="#resources_pdf">7.2. iText Resources</a></span></dt>
+                     <dt><span class="section"><a href="#resources_general">7.3. vogella Resources</a></span></dt>
+                  </dl>
+               </dd>
+            </dl>
+         </div>
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Responsive - After Table of Content -->
+         <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3851443674951530" data-ad-slot="4470606330" data-ad-format="auto"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="itext"></a>1.&nbsp;Overview
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               iText is a Java library originally created by Bruno Lowagie which
+               allows to create PDF, read PDF and manipulate them.
+               The following
+               tutorial will show how to create PDF files with
+               iText. This tutorial
+               assumes that you have basis
+               <a class="ulink" href="http://www.vogella.com/tutorials/JavaIntroduction/article.html" target="_top"> Java</a>
+               and
+               <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html" target="_top"> Eclipse</a>
+               knowledge.
+               
+            </p>
+            <p>iText has a hierarchical structure. The smallest text unit is a
+               "Chunk" which is a String with a pre-defined font. A "Phrase" combines
+               several Chunks and allows to define line spacing. "Paragraph" is a
+               subclass of "Phrase" and allows to define more layout attributes, e.g.
+               margins. The class "Anchor" is a subclass of "Paragraph" and serves as
+               the basis for hyperlinks in the generated PDF.
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="installation"></a>2.&nbsp;Installation
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Download the iText core binary from the webpage
+               <a class="ulink" href="http://sourceforge.net/projects/itext/" target="_top">
+                  http://sourceforge.net/projects/itext/</a>. The download contains one jar which is required if you want to use
+               iText.
+               
+            </p>
+         </div>
+         <!-- Non responsive Lake Quincy Ads
+<div data-type="ad" data-publisher="lqm.javaeclipseandroid.site" data-zone="inBetween01" data-format="728x90">
+</div> -->
+         <!-- Responsive Lake Quincy Ads -->
+         <div id="ad-inBetween01">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween01');});</script>
+            </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="createpdf"></a>3.&nbsp;Create a PDF
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Create a new Java project "de.vogella.itext.write" with the package
+               "de.vogella.itext.write".
+               Create a folder
+               "lib" and put the iText library
+               (jar file) into
+               this
+               folder.
+               <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html#classpath" target="_top">
+                  Add the jar to your classpath.</a>
+               
+            </p>
+            <p>
+               Create the following class "FirstPdf.java" .
+               I assume that the
+               code is
+               pretty much self-explaining. I tried
+               to add lots of comments
+               to make it
+               easier to understand. For more
+               complex examples have a look
+               at the
+               <a class="ulink" href="http://www.lowagie.com/iText/" target="_top">
+                  iText Homepage</a>.
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.itext.write;
+
+<span class="hl-keyword">import</span> java.io.FileOutputStream;
+<span class="hl-keyword">import</span> java.util.Date;
+
+<span class="hl-keyword">import</span> com.itextpdf.text.Anchor;
+<span class="hl-keyword">import</span> com.itextpdf.text.BadElementException;
+<span class="hl-keyword">import</span> com.itextpdf.text.BaseColor;
+<span class="hl-keyword">import</span> com.itextpdf.text.Chapter;
+<span class="hl-keyword">import</span> com.itextpdf.text.Document;
+<span class="hl-keyword">import</span> com.itextpdf.text.DocumentException;
+<span class="hl-keyword">import</span> com.itextpdf.text.Element;
+<span class="hl-keyword">import</span> com.itextpdf.text.Font;
+<span class="hl-keyword">import</span> com.itextpdf.text.List;
+<span class="hl-keyword">import</span> com.itextpdf.text.ListItem;
+<span class="hl-keyword">import</span> com.itextpdf.text.Paragraph;
+<span class="hl-keyword">import</span> com.itextpdf.text.Phrase;
+<span class="hl-keyword">import</span> com.itextpdf.text.Section;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfPCell;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfPTable;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfWriter;
+
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> FirstPdf {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> String FILE = <span class="hl-string" style="color:blue">"c:/temp/FirstPdf.pdf"</span>;
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> Font catFont = <span class="hl-keyword">new</span> Font(Font.FontFamily.TIMES_ROMAN, <span class="hl-number">18</span>,
+      Font.BOLD);
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> Font redFont = <span class="hl-keyword">new</span> Font(Font.FontFamily.TIMES_ROMAN, <span class="hl-number">12</span>,
+      Font.NORMAL, BaseColor.RED);
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> Font subFont = <span class="hl-keyword">new</span> Font(Font.FontFamily.TIMES_ROMAN, <span class="hl-number">16</span>,
+      Font.BOLD);
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> Font smallBold = <span class="hl-keyword">new</span> Font(Font.FontFamily.TIMES_ROMAN, <span class="hl-number">12</span>,
+      Font.BOLD);
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <span class="hl-keyword">try</span> {
+      Document document = <span class="hl-keyword">new</span> Document();
+      PdfWriter.getInstance(document, <span class="hl-keyword">new</span> FileOutputStream(FILE));
+      document.open();
+      addMetaData(document);
+      addTitlePage(document);
+      addContent(document);
+      document.close();
+    } <span class="hl-keyword">catch</span> (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  <em class="hl-comment" style="color: #080">// iText allows to add metadata to the PDF which can be viewed in your Adobe</em>
+  <em class="hl-comment" style="color: #080">// Reader</em>
+  <em class="hl-comment" style="color: #080">// under File -&gt; Properties</em>
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> addMetaData(Document document) {
+    document.addTitle(<span class="hl-string" style="color:blue">"My first PDF"</span>);
+    document.addSubject(<span class="hl-string" style="color:blue">"Using iText"</span>);
+    document.addKeywords(<span class="hl-string" style="color:blue">"Java, PDF, iText"</span>);
+    document.addAuthor(<span class="hl-string" style="color:blue">"Lars Vogel"</span>);
+    document.addCreator(<span class="hl-string" style="color:blue">"Lars Vogel"</span>);
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> addTitlePage(Document document)
+      <span class="hl-keyword">throws</span> DocumentException {
+    Paragraph preface = <span class="hl-keyword">new</span> Paragraph();
+    <em class="hl-comment" style="color: #080">// We add one empty line</em>
+    addEmptyLine(preface, <span class="hl-number">1</span>);
+    <em class="hl-comment" style="color: #080">// Lets write a big header</em>
+    preface.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Title of the document"</span>, catFont));
+
+    addEmptyLine(preface, <span class="hl-number">1</span>);
+    <em class="hl-comment" style="color: #080">// Will create: Report generated by: _name, _date</em>
+    preface.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Report generated by: "</span> + System.getProperty(<span class="hl-string" style="color:blue">"user.name"</span>) + <span class="hl-string" style="color:blue">", "</span> + <span class="hl-keyword">new</span> Date(), <em class="hl-comment" style="color: #080">//$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$</em>
+        smallBold));
+    addEmptyLine(preface, <span class="hl-number">3</span>);
+    preface.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This document describes something which is very important "</span>,
+        smallBold));
+
+    addEmptyLine(preface, <span class="hl-number">8</span>);
+
+    preface.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This document is a preliminary version and not subject to your license agreement or any other agreement with vogella.com ;-)."</span>,
+        redFont));
+
+    document.add(preface);
+    <em class="hl-comment" style="color: #080">// Start a new page</em>
+    document.newPage();
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> addContent(Document document) <span class="hl-keyword">throws</span> DocumentException {
+    Anchor anchor = <span class="hl-keyword">new</span> Anchor(<span class="hl-string" style="color:blue">"First Chapter"</span>, catFont);
+    anchor.setName(<span class="hl-string" style="color:blue">"First Chapter"</span>);
+
+    <em class="hl-comment" style="color: #080">// Second parameter is the number of the chapter</em>
+    Chapter catPart = <span class="hl-keyword">new</span> Chapter(<span class="hl-keyword">new</span> Paragraph(anchor), <span class="hl-number">1</span>);
+
+    Paragraph subPara = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Subcategory 1"</span>, subFont);
+    Section subCatPart = catPart.addSection(subPara);
+    subCatPart.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Hello"</span>));
+
+    subPara = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Subcategory 2"</span>, subFont);
+    subCatPart = catPart.addSection(subPara);
+    subCatPart.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Paragraph 1"</span>));
+    subCatPart.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Paragraph 2"</span>));
+    subCatPart.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Paragraph 3"</span>));
+
+    <em class="hl-comment" style="color: #080">// add a list</em>
+    createList(subCatPart);
+    Paragraph paragraph = <span class="hl-keyword">new</span> Paragraph();
+    addEmptyLine(paragraph, <span class="hl-number">5</span>);
+    subCatPart.add(paragraph);
+
+    <em class="hl-comment" style="color: #080">// add a table</em>
+    createTable(subCatPart);
+
+    <em class="hl-comment" style="color: #080">// now add all this to the document</em>
+    document.add(catPart);
+
+    <em class="hl-comment" style="color: #080">// Next section</em>
+    anchor = <span class="hl-keyword">new</span> Anchor(<span class="hl-string" style="color:blue">"Second Chapter"</span>, catFont);
+    anchor.setName(<span class="hl-string" style="color:blue">"Second Chapter"</span>);
+
+    <em class="hl-comment" style="color: #080">// Second parameter is the number of the chapter</em>
+    catPart = <span class="hl-keyword">new</span> Chapter(<span class="hl-keyword">new</span> Paragraph(anchor), <span class="hl-number">1</span>);
+
+    subPara = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"Subcategory"</span>, subFont);
+    subCatPart = catPart.addSection(subPara);
+    subCatPart.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This is a very important message"</span>));
+
+    <em class="hl-comment" style="color: #080">// now add all this to the document</em>
+    document.add(catPart);
+
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> createTable(Section subCatPart)
+      <span class="hl-keyword">throws</span> BadElementException {
+    PdfPTable table = <span class="hl-keyword">new</span> PdfPTable(<span class="hl-number">3</span>);
+
+    <em class="hl-comment" style="color: #080">// t.setBorderColor(BaseColor.GRAY);</em>
+    <em class="hl-comment" style="color: #080">// t.setPadding(4);</em>
+    <em class="hl-comment" style="color: #080">// t.setSpacing(4);</em>
+    <em class="hl-comment" style="color: #080">// t.setBorderWidth(1);</em>
+
+    PdfPCell c1 = <span class="hl-keyword">new</span> PdfPCell(<span class="hl-keyword">new</span> Phrase(<span class="hl-string" style="color:blue">"Table Header 1"</span>));
+    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    table.addCell(c1);
+
+    c1 = <span class="hl-keyword">new</span> PdfPCell(<span class="hl-keyword">new</span> Phrase(<span class="hl-string" style="color:blue">"Table Header 2"</span>));
+    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    table.addCell(c1);
+
+    c1 = <span class="hl-keyword">new</span> PdfPCell(<span class="hl-keyword">new</span> Phrase(<span class="hl-string" style="color:blue">"Table Header 3"</span>));
+    c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+    table.addCell(c1);
+    table.setHeaderRows(<span class="hl-number">1</span>);
+
+    table.addCell(<span class="hl-string" style="color:blue">"1.0"</span>);
+    table.addCell(<span class="hl-string" style="color:blue">"1.1"</span>);
+    table.addCell(<span class="hl-string" style="color:blue">"1.2"</span>);
+    table.addCell(<span class="hl-string" style="color:blue">"2.1"</span>);
+    table.addCell(<span class="hl-string" style="color:blue">"2.2"</span>);
+    table.addCell(<span class="hl-string" style="color:blue">"2.3"</span>);
+
+    subCatPart.add(table);
+
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> createList(Section subCatPart) {
+    List list = <span class="hl-keyword">new</span> List(true, false, <span class="hl-number">10</span>);
+    list.add(<span class="hl-keyword">new</span> ListItem(<span class="hl-string" style="color:blue">"First point"</span>));
+    list.add(<span class="hl-keyword">new</span> ListItem(<span class="hl-string" style="color:blue">"Second point"</span>));
+    list.add(<span class="hl-keyword">new</span> ListItem(<span class="hl-string" style="color:blue">"Third point"</span>));
+    subCatPart.add(list);
+  }
+
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> addEmptyLine(Paragraph paragraph, <span class="hl-keyword">int</span> number) {
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">0</span>; i &lt; number; i++) {
+      paragraph.add(<span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">" "</span>));
+    }
+  }
+} </pre><p>
+               
+            </p>
+            <p> The resulting pdf should look like the following.</p>
+            <p>
+               
+            </p>
+            <div class="mediaobject"><img src="images/xpdfwrite10.gif.pagespeed.ic.a9ipPwqBJT.png"></div>
+            <p>
+               
+            </p>
+         </div> 
+         
+         <!-- Responsive Lake Quincy Ads -->
+         
+         <div id="ad-inBetween02">
+            	<script type="text/javascript">googletag.cmd.push(function(){googletag.display('ad-inBetween02');});</script>
+            </div>
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="format"></a>4.&nbsp;Formatting your output
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               Paragraph allows to set the alignment and the indentation. For
+               this example create project "de.vogella.itext.position" similar to the
+               previously created ones.
+               Create the following class "PositionPdf.java".
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.itext.position;
+
+<span class="hl-keyword">import</span> java.io.FileOutputStream;
+
+<span class="hl-keyword">import</span> com.itextpdf.text.Document;
+<span class="hl-keyword">import</span> com.itextpdf.text.Element;
+<span class="hl-keyword">import</span> com.itextpdf.text.Paragraph;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfWriter;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> PositionPdf {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> String FILE = <span class="hl-string" style="color:blue">"PositionPdf.pdf"</span>;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) {
+    <span class="hl-keyword">try</span> {
+      Document document = <span class="hl-keyword">new</span> Document();
+      PdfWriter.getInstance(document, <span class="hl-keyword">new</span> FileOutputStream(FILE));
+      document.open();
+      <em class="hl-comment" style="color: #080">// Left</em>
+      Paragraph paragraph = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This is right aligned text"</span>);
+      paragraph.setAlignment(Element.ALIGN_RIGHT);
+      document.add(paragraph);
+      <em class="hl-comment" style="color: #080">// Centered</em>
+      paragraph = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This is centered text"</span>);
+      paragraph.setAlignment(Element.ALIGN_CENTER);
+      document.add(paragraph);
+      <em class="hl-comment" style="color: #080">// Left</em>
+      paragraph = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This is left aligned text"</span>);
+      paragraph.setAlignment(Element.ALIGN_LEFT);
+      document.add(paragraph);
+      <em class="hl-comment" style="color: #080">// Left with indentation</em>
+      paragraph = <span class="hl-keyword">new</span> Paragraph(<span class="hl-string" style="color:blue">"This is left aligned text with indentation"</span>);
+      paragraph.setAlignment(Element.ALIGN_LEFT);
+      paragraph.setIndentationLeft(<span class="hl-number">50</span>);
+      document.add(paragraph);
+
+      document.close();
+    } <span class="hl-keyword">catch</span> (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+} </pre><p>
+               
+            </p>
+         </div>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="readpdf"></a>5.&nbsp;Read an existing pdf
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>
+               iText allows to read existing pdf's and include them into your
+               own
+               pdf. The following example will create page 2 of the previous
+               example
+               and create a new document with this page. 
+               
+            </p>
+            <p>
+               Create a new Java project
+               "de.vogella.itext.readpdf" with the package
+               "de.vogella.itext.read".
+               Create a folder
+               "lib" and put the iText library
+               (jar file) into
+               this
+               folder.
+               <a class="ulink" href="http://www.vogella.com/tutorials/Eclipse/article.html#classpath" target="_top">
+                  Add the jar to your classpath.</a>
+               Create the following class "ReadAndUsePdf.java".
+               
+            </p>
+            <p>
+               
+            </p><pre class="programlisting"><span class="hl-keyword">package</span> de.vogella.itext.read;
+
+<span class="hl-keyword">import</span> java.io.FileOutputStream;
+<span class="hl-keyword">import</span> java.io.IOException;
+
+<span class="hl-keyword">import</span> com.itextpdf.text.Document;
+<span class="hl-keyword">import</span> com.itextpdf.text.DocumentException;
+<span class="hl-keyword">import</span> com.itextpdf.text.Image;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfImportedPage;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfReader;
+<span class="hl-keyword">import</span> com.itextpdf.text.pdf.PdfWriter;
+
+<span class="hl-keyword">public</span> <span class="hl-keyword">class</span> ReadAndUsePdf {
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> String INPUTFILE = <span class="hl-string" style="color:blue">"c:/temp/FirstPdf.pdf"</span>;
+  <span class="hl-keyword">private</span> <span class="hl-keyword">static</span> String OUTPUTFILE = <span class="hl-string" style="color:blue">"c:/temp/ReadPdf.pdf"</span>;
+
+  <span class="hl-keyword">public</span> <span class="hl-keyword">static</span> <span class="hl-keyword">void</span> main(String[] args) <span class="hl-keyword">throws</span> DocumentException,
+      IOException {
+    Document document = <span class="hl-keyword">new</span> Document();
+
+    PdfWriter writer = PdfWriter.getInstance(document,
+        <span class="hl-keyword">new</span> FileOutputStream(OUTPUTFILE));
+    document.open();
+    PdfReader reader = <span class="hl-keyword">new</span> PdfReader(INPUTFILE);
+    <span class="hl-keyword">int</span> n = reader.getNumberOfPages();
+    PdfImportedPage page;
+    <em class="hl-comment" style="color: #080">// Go through all pages</em>
+    <span class="hl-keyword">for</span> (<span class="hl-keyword">int</span> i = <span class="hl-number">1</span>; i &lt;= n; i++) {
+      <em class="hl-comment" style="color: #080">// only page number 2 will be included</em>
+      <span class="hl-keyword">if</span> (i == <span class="hl-number">2</span>) {
+        page = writer.getImportedPage(reader, i);
+        Image instance = Image.getInstance(page);
+        document.add(instance);
+      }
+    }
+    document.close();
+
+  }
+
+} </pre><p>
+               
+            </p>
+         </div> 
+         <script async="async" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+         
+         <!-- Article - Before Support 336 x 280 -->
+         <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-3851443674951530" data-ad-slot="3645921933"></ins>
+         <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="supportandlicense"></a>6.&nbsp;About this website
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.1.&nbsp;Donate to support free tutorials
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  
+                  	
+               </p>
+               <p>
+                  		Please consider a contribution
+                  	<a href="http://www.vogella.com/support.html">
+                     			<img src="http://www.vogella.com/img/common/40x50xvogella-donate.png.pagespeed.ic.gMuY8kQC6X.png" width="40" height="50" alt="Support free tutorials" title="Support free tutorials" onclick="_gaq.push(['_trackEvent', 'Donations', 'clicked', 'Buttom tutorial in thank you']);"></a>
+                  			if this article helped you. It will help to maintain our content and our Open Source activities.
+                  	
+               </p>
+               <p>
+                  
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="questions"></a>6.2.&nbsp;Questions and discussion
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  Writing and updating these tutorials is a lot of work.
+                  If this
+                  free community service was helpful,
+                  you can support the cause by
+                  giving
+                  a tip
+                  as well as reporting typos and factual errors.
+                  
+               </p>
+               <p>
+                  If you find errors in this tutorial, please notify me
+                  (see the
+                  <a class="ulink" href="#top" target="_top">top of the page</a>).
+                  Please note that due to the high volume of feedback I
+                  receive, I
+                  cannot answer questions to your implementation. Ensure you
+                  have read
+                  the
+                  <a class="ulink" href="http://www.vogella.com/faq.html" target="_top">vogella FAQ</a>
+                  as
+                  I don't respond to questions already answered there.
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="thankyou"></a>6.3.&nbsp;License for this tutorial and its code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  This tutorial is Open Content under the
+                  <a class="ulink" href="http://creativecommons.org/licenses/by-nc-sa/3.0/de/deed.en" target="_top">
+                     CC BY-NC-SA 3.0 DE
+                     </a>
+                  license. Source code in this tutorial is distributed under the
+                  <a class="ulink" href="https://www.eclipse.org/legal/epl-v10.html" target="_top">Eclipse Public License</a>.
+                  See the
+                  <a class="ulink" href="http://www.vogella.com/license.html" target="_top">vogella License</a>
+                  page
+                  for details on the terms of reuse.
+                  
+               </p>
+            </div>
+         </div>
+         
+         
+         <div class="section">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title"><a name="resources"></a>7.&nbsp;Links and Literature
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="sourcecode"></a>7.1.&nbsp;Source Code
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.vogella.com/code/index.html" target="_top">Source Code of Examples</a>
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_pdf"></a>7.2.&nbsp;iText Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>
+                  <a class="ulink" href="http://www.lowagie.com/iText/" target="_top">
+                     iText Homepage</a>
+                  
+               </p>
+               <p>
+                  <a class="ulink" href="http://itextdocs.lowagie.com/tutorial/" target="_top">
+                     http://itextdocs.lowagie.com/tutorial/</a>
+                  Tutorial from iText homepage, lots of specific examples
+                  
+               </p>
+            </div>
+            <div class="section">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="resources_general"></a>7.3.&nbsp;vogella Resources
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="informaltable">
+                  <table border="0">
+                     <colgroup>
+                        <col width="50%" align="left">
+                        <col width="50%" align="left">
+                     </colgroup>
+                     <thead>
+                        <tr>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/training/" target="_top">TRAINING</a></th>
+                           <th align="left"><a class="ulink" href="http://www.vogella.com/consulting/" target="_top">SERVICE &amp; SUPPORT</a></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td align="left">
+                              The vogella company provides comprehensive <a class="ulink" href="http://www.vogella.com/training/" target="_top">training and education services</a> 
+                              from experts in the areas of Eclipse RCP, Android, Git, Java, Gradle and Spring.
+                              We offer both public and inhouse training. Whichever course you decide to take, you are guaranteed to experience 
+                              what many before you refer to as 
+                              <a class="ulink" href="http://www.vogella.com/training/" target="_top">&#8220;The best IT class I have ever attended&#8221;</a>.
+                              
+                           </td>
+                           <td align="left">
+                              The vogella company offers <a class="ulink" href="http://www.vogella.com/consulting/" target="_top">expert consulting</a> services, development support and coaching. Our customers range from
+                              Fortune 100 corporations to individual developers.  
+                              
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div><img src="http://vg04.met.vgwort.de/na/adab980571a84b4b800f15f4b6aeac9d" width="1" height="1" alt=""></div>
+      
+      
+      
+   <script pagespeed_no_defer="">//<![CDATA[
+(function(){window.pagespeed=window.pagespeed||{};var f=window.pagespeed,h=function(e,a,c,b){this.c=e;this.a=a;this.b=c;this.d=b};f.beaconUrl="";
+var k=function(e){var a=e.c,c=window.mod_pagespeed_start,b=Number(new Date)-c,a=a+(-1==a.indexOf("?")?"?":"&"),a=a+"ets="+("load"==e.a?"load:":"unload:"),a=a+b;if("beforeunload"!=e.a||!window.mod_pagespeed_loaded){a+="&r"+e.a+"=";if(window.performance){var b=window.performance.timing,d=b.navigationStart,g=b.requestStart,a=a+(b[e.a+"EventStart"]-d),a=a+("&nav="+(b.fetchStart-d)),a=a+("&dns="+(b.domainLookupEnd-b.domainLookupStart)),a=a+("&connect="+(b.connectEnd-b.connectStart)),a=a+("&req_start="+
+(g-d)),a=a+("&ttfb="+(b.responseStart-g)),a=a+("&dwld="+(b.responseEnd-b.responseStart)),a=a+("&dom_c="+(b.domContentLoadedEventStart-d));window.performance.navigation&&(a+="&nt="+window.performance.navigation.type);d=-1;b.msFirstPaint?d=b.msFirstPaint:window.chrome&&window.chrome.loadTimes&&(d=Math.floor(1E3*window.chrome.loadTimes().firstPaintTime));d=d-g;0<=d&&(a+="&fp="+d)}else a+=b;f.getResourceTimingData&&window.parent==window&&(a+=f.getResourceTimingData());a+=window.parent!=window?"&ifr=1":
+"&ifr=0";"load"==e.a&&(window.mod_pagespeed_loaded=!0,(b=window.mod_pagespeed_num_resources_prefetched)&&(a+="&nrp="+b),(b=window.mod_pagespeed_prefetch_start)&&(a+="&htmlAt="+(c-b)));f.panelLoader&&(c=f.panelLoader.getCsiTimingsString(),""!=c&&(a+="&b_csi="+c));f.criticalCss&&(c=f.criticalCss,a+="&ccis="+c.total_critical_inlined_size+"&cces="+c.total_original_external_size+"&ccos="+c.total_overhead_size+"&ccrl="+c.num_replaced_links+"&ccul="+c.num_unreplaced_links);""!=e.b&&(a+=e.b);document.referrer&&
+(a+="&ref="+encodeURIComponent(document.referrer));a+="&url="+encodeURIComponent(e.d);f.beaconUrl=a;(new Image).src=a}};f.e=function(e,a,c,b){var d=new h(e,a,c,b);window.addEventListener?window.addEventListener(a,function(){k(d)},!1):window.attachEvent("on"+a,function(){k(d)})};f.addInstrumentationInit=f.e;})();
+
+pagespeed.addInstrumentationInit('/mod_pagespeed_beacon', 'load', '', 'http://www.vogella.com/tutorials/JavaPDF/article.html');
+//]]></script></body>
+</html>
+
